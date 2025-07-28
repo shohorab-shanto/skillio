@@ -86,12 +86,6 @@ Entities & Relationships:
 - created_at
 
 8. ChatMessages
-- id (PK)
-- session_id (FK)
-- sender_id (FK)
-- receiver_id (FK)
-- message
-- sent_at
 
 Other Notes:
 - Multi-language support: Use translation tables or JSON fields for translatable content (e.g., category/course names)

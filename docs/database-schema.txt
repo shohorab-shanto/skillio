@@ -1,0 +1,109 @@
+Skillio – Online Education & Business Platform (2025 Edition)
+Database Schema Design (MVP)
+
+Entities & Relationships:
+
+1. Users
+- id (PK)
+- name
+- email
+- password
+- phone
+- address
+- role (user/mentor/admin)
+- status (active/inactive)
+- created_at
+- updated_at
+
+2. Mentors (extends Users)
+- user_id (FK)
+- bio
+- photo
+- work_experience
+- certifications
+- availability (available/unavailable)
+- working_hours
+- time_slots (JSON)
+- verified (boolean)
+
+3. Categories
+- id (PK)
+- name
+- description
+- parent_id (FK, nullable, for sub-categories)
+- created_at
+- updated_at
+
+4. Courses
+- id (PK)
+- mentor_id (FK)
+- category_id (FK)
+- sub_category_id (FK, nullable)
+- title
+- description
+- thumbnail
+- price
+- discount
+- duration_days
+- status (pending/approved/rejected)
+- rejection_reason (nullable)
+- created_at
+- updated_at
+
+5. Sessions
+- id (PK)
+- course_id (FK, nullable)
+- mentor_id (FK)
+- user_id (FK)
+- type (online/in-person)
+- time_slot
+- fee
+- status (booked/completed/cancelled)
+- payment_status (paid/unpaid)
+- created_at
+- updated_at
+
+6. Transactions
+- id (PK)
+- session_id (FK, nullable)
+- course_id (FK, nullable)
+- user_id (FK)
+- mentor_id (FK)
+- amount
+- commission (platform share)
+- payment_method (Credit Card/PayPal/Apple Pay)
+- payment_status
+- created_at
+- updated_at
+
+7. Reviews
+- id (PK)
+- user_id (FK)
+- mentor_id (FK, nullable)
+- course_id (FK, nullable)
+- rating (1-5)
+- comment
+- created_at
+
+8. ChatMessages
+- id (PK)
+- session_id (FK)
+- sender_id (FK)
+- receiver_id (FK)
+- message
+- sent_at
+
+Other Notes:
+- Multi-language support: Use translation tables or JSON fields for translatable content (e.g., category/course names)
+- GDPR consent: Add consent fields to Users table
+- Notification system: Table for notifications (id, user_id, type, content, read_at)
+
+Relationships:
+- Users can be mentors or admins (role field)
+- Mentors create courses and sessions
+- Users enroll in courses and book sessions
+- Transactions link to sessions/courses
+- Reviews can be for mentors or courses
+- ChatMessages are linked to sessions
+
+This schema covers all MVP requirements and is ready for migration and implementation.

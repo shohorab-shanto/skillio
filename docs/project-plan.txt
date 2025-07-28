@@ -1,0 +1,47 @@
+Skillio – Online Education & Business Platform (2025 Edition)
+Project Plan: 1-Month Development Timeline
+
+Overview:
+This plan outlines the phased development of Skillio, covering all major requirements for Admin, Mentor, User panels, and system-wide features. The goal is to deliver a functional MVP in 1 month, prioritizing core features and scalable architecture.
+
+Week 1: Project Setup & Core Models
+- Set up Laravel project, Vite, Tailwind CSS, and version control
+- Define database schema: Users, Mentors, Categories, Sub-Categories, Courses, Transactions, Sessions, Reviews
+- Implement authentication (Google/Apple/Email)
+- Create migration, seeder, and model files for all entities
+- Build basic admin dashboard UI
+
+Week 2: Admin Panel Features
+- CRUD for categories & sub-categories (with predefined list)
+- Mentor verification workflow (approve/reject, availability toggle)
+- Course moderation (review, approve/reject, notification system)
+- User & mentor management (list, search, status toggle)
+- Transaction management: 80/20 split, financial reporting (exportable)
+- Analytics dashboard: enrollments, revenue, top categories/mentors
+
+Week 3: Mentor & User Panel Features
+- Mentor registration, profile setup, working hours, time slots, availability toggle
+- Mentor course creation & management (submit, edit, resubmit, track enrollments)
+- Session booking: time slot selection, payment integration, confirmation
+- User onboarding: registration, onboarding questionnaire, preference-based recommendations
+- Course & mentor discovery: filtering, search, details view
+- Enrollment & payment: secure checkout, GDPR consent, payment methods (Credit Card, PayPal, Apple Pay)
+
+Week 4: Communication, Reviews, System-Wide Features
+- In-app chat (active only during sessions/courses)
+- Reviews & ratings (public display, 1-5 stars, comments)
+- Multi-language support (Slovenian, Bosnian, Croatian, Serbian, Macedonian)
+- Automated notifications (booking confirmations, reminders)
+- Security & compliance (GDPR, encrypted payments)
+- Final QA, bug fixes, documentation, deployment
+
+Deliverables:
+- Fully functional MVP with all core features
+- Admin, Mentor, User panels
+- Responsive UI, secure backend
+- Documentation for setup, deployment, and usage
+
+Notes:
+- Prioritize core flows; advanced analytics, scalability, and integrations can be extended post-MVP
+- Use agile sprints, daily standups, and weekly reviews
+- Ensure code quality, testing, and compliance throughout

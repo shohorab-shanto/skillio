@@ -7,11 +7,13 @@ Entities & Relationships:
 - id (PK)
 - name
 - email
-- password
+- password (nullable, for social login)
 - phone
 - address
-- role (user/mentor/admin)
 - status (active/inactive)
+- google_id (nullable, for Google login)
+- apple_id (nullable, for Apple login)
+- gdpr_consent (boolean)
 - created_at
 - updated_at
 
@@ -30,7 +32,14 @@ Entities & Relationships:
 - id (PK)
 - name
 - description
-- parent_id (FK, nullable, for sub-categories)
+- created_at
+- updated_at
+
+4. SubCategories
+- id (PK)
+- category_id (FK)
+- name
+- description
 - created_at
 - updated_at
 
@@ -38,30 +47,53 @@ Entities & Relationships:
 - id (PK)
 - mentor_id (FK)
 - category_id (FK)
-- sub_category_id (FK, nullable)
 - title
 - description
 - thumbnail
+- cover_photo
 - price
 - discount
 - duration_days
 - status (pending/approved/rejected)
-- rejection_reason (nullable)
+- rejection_reason (nullable, admin note when rejected)
+- needs_reapproval (boolean, true if mentor edits after approval)
 - created_at
 - updated_at
 
-5. Sessions
+courses_sub_categories
 - id (PK)
-- course_id (FK, nullable)
+- course_id (FK)
+- sub_category_id (FK)
+
+ 
+ Note: When a published course is edited by a mentor, the course remains published, but the updated data is only reflected after admin approves the changes.
+course_edits
+- id (PK)
+- course_id (FK)
 - mentor_id (FK)
-- user_id (FK)
-- type (online/in-person)
-- time_slot
-- fee
-- status (booked/completed/cancelled)
-- payment_status (paid/unpaid)
-- created_at
-- updated_at
+- title (nullable)
+- description (nullable)
+- thumbnail (nullable)
+- cover_photo (nullable)
+- price (nullable)
+- discount (nullable)
+- duration_days (nullable)
+- submitted_at
+- status (pending/approved/rejected)
+- admin_note (nullable)
+ 
+ 5. SessionBookings
+ - id (PK)
+ - course_id (FK, nullable)
+ - mentor_id (FK)
+ - user_id (FK)
+ - type (online/in-person)
+ - time_slot
+ - fee
+ - status (booked/completed/cancelled)
+ - payment_status (paid/unpaid)
+ - created_at
+ - updated_at
 
 6. Transactions
 - id (PK)
@@ -86,18 +118,71 @@ Entities & Relationships:
 - created_at
 
 8. ChatMessages
+- id (PK)
+- session_booking_id (FK, nullable)
+- sender_id (FK)
+- receiver_id (FK)
+- message
+- sent_at
+- read_at (nullable)
+- created_at
+- updated_at
 
 Other Notes:
+account_details (morph table)
+- id (PK)
+- accountable_id (FK)
+- accountable_type (User/Mentor/Admin)
+- stripe_customer_id (nullable)
+- stripe_payment_method_id (nullable)
+- stripe_account_id (nullable, for payouts)
+- bank_name (nullable)
+- bank_account_number (nullable)
+- created_at
+- updated_at
+
+
+user_preferences
+- id (PK)
+- user_id (FK)
+- education_type (in-person/online/both)
+- category_id (FK, nullable)
+- sub_category_id (FK, nullable)
+- country (nullable)
+- city (nullable)
+- wants_courses (boolean)
+- wants_mentoring (boolean)
+- created_at
+- updated_at
+ 
+ roles
+ - id (PK)
+ - name
+ - guard_name
+ - created_at
+ - updated_at
+ 
+ permissions
+ - id (PK)
+ - name
+ - guard_name
+ - created_at
+ - updated_at
+ 
+ model_has_roles
+ - role_id (FK)
+ - model_type
+ - model_id
+ 
+ model_has_permissions
+ - permission_id (FK)
+ - model_type
+ - model_id
+ 
+ role_has_permissions
+ - permission_id (FK)
+ - role_id (FK)
 - Multi-language support: Use translation tables or JSON fields for translatable content (e.g., category/course names)
 - GDPR consent: Add consent fields to Users table
-- Notification system: Table for notifications (id, user_id, type, content, read_at)
-
-Relationships:
 - Users can be mentors or admins (role field)
 - Mentors create courses and sessions
-- Users enroll in courses and book sessions
-- Transactions link to sessions/courses
-- Reviews can be for mentors or courses
-- ChatMessages are linked to sessions
-
-This schema covers all MVP requirements and is ready for migration and implementation.

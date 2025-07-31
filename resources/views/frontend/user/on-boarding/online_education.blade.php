@@ -14,11 +14,17 @@
         <h2 class="text-2xl md:text-3xl font-semibold text-center mb-8 mt-2">Online Education Options</h2>
 
         <!-- Options -->
-        <form class="w-full max-w-5xl flex flex-col items-center" method="POST" action="#">
+        <form class="w-full max-w-5xl flex flex-col items-center" method="POST" action="{{ route('user.onboarding.online_education.submit') }}">
             @csrf
+            @php
+                $selectedOption = old('education_option');
+                if (!$selectedOption && isset($selectedEducationOption)) {
+                    $selectedOption = $selectedEducationOption;
+                }
+            @endphp
             <div class="w-full flex flex-col md:flex-row gap-4 mb-8">
                 <label class="flex-1 cursor-pointer group">
-                    <input type="radio" name="education_option" value="course" class="peer sr-only" checked>
+                    <input type="radio" name="education_option" value="courses" class="peer sr-only" {{ ($selectedOption === 'courses' || !$selectedOption) ? 'checked' : '' }}>
                     <div class="flex flex-row items-center border-2 border-transparent peer-checked:border-purple-600 rounded-xl bg-white px-6 py-5 transition-all duration-200 shadow-sm peer-checked:shadow-lg hover:border-purple-400">
                         <img src="{{ asset('assests/images/Layer_1.png') }}" alt="Course from a mentor" class="w-12 h-12 mr-4">
                         <div>
@@ -28,7 +34,7 @@
                     </div>
                 </label>
                 <label class="flex-1 cursor-pointer group">
-                    <input type="radio" name="education_option" value="mentoring" class="peer sr-only">
+                    <input type="radio" name="education_option" value="mentoring" class="peer sr-only" {{ $selectedOption === 'mentoring' ? 'checked' : '' }}>
                     <div class="flex flex-row items-center border-2 border-transparent peer-checked:border-purple-600 rounded-xl bg-white px-6 py-5 transition-all duration-200 shadow-sm peer-checked:shadow-lg hover:border-purple-400">
                         <img src="{{ asset('assests/images/Layer_1.png') }}" alt="One-on-one mentoring" class="w-12 h-12 mr-4">
                         <div>
@@ -38,7 +44,7 @@
                     </div>
                 </label>
                 <label class="flex-1 cursor-pointer group">
-                    <input type="radio" name="education_option" value="both" class="peer sr-only">
+                    <input type="radio" name="education_option" value="both" class="peer sr-only" {{ $selectedOption === 'both' ? 'checked' : '' }}>
                     <div class="flex flex-row items-center border-2 border-transparent peer-checked:border-purple-600 rounded-xl bg-white px-6 py-5 transition-all duration-200 shadow-sm peer-checked:shadow-lg hover:border-purple-400">
                         <img src="{{ asset('assests/images/Layer_1.png') }}" alt="Both combined" class="w-12 h-12 mr-4">
                         <div>

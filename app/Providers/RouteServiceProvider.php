@@ -27,5 +27,6 @@ class RouteServiceProvider extends ServiceProvider
         Route::aliasMiddleware('admin_auth', AdminAuth::class);
         Route::aliasMiddleware('mentor_auth', MentorAuth::class);
         Route::aliasMiddleware('user_auth', UserAuth::class);
+        Route::aliasMiddleware('onboarding_complete', \App\Http\Middleware\EnsureUserOnboardingComplete::class);
     }
 }

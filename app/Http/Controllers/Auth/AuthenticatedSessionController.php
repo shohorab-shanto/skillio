@@ -34,7 +34,7 @@ class AuthenticatedSessionController extends Controller
             } elseif ($user->role === 'mentor') {
                 return redirect()->intended(route('mentor.dashboard', absolute: false));
             } else {
-                return redirect()->intended(route('dashboard', absolute: false));
+                return redirect()->intended(route('user.dashboard', absolute: false));
             }
         } catch (\Illuminate\Validation\ValidationException $e) {
             return back()

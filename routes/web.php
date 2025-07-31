@@ -9,6 +9,7 @@ Route::get('/', function () {
 });
 
 require base_path('/routes/user/on-boarding.php');
+require base_path('/routes/user/dashboard.php');
 // Google
 Route::get('/login/google', [SocialAuthController::class, 'redirectToGoogle'])->name('login.google');
 Route::get('/login/google/callback', [SocialAuthController::class, 'handleGoogleCallback'])->name('login.google.callback');

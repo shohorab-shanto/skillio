@@ -14,13 +14,13 @@
         <h2 class="text-2xl md:text-3xl font-semibold text-center mb-8 mt-2">Do you prefer in-person or online education?</h2>
 
         <!-- Options -->
-        <form class="w-full max-w-3xl flex flex-col items-center" method="POST" action="#">
+        <form class="w-full max-w-3xl flex flex-col items-center" method="POST" action="{{ route('user.onboarding.in_person_or_online.submit') }}">
             @csrf
             <div class="w-full flex flex-col md:flex-row gap-4 mb-8">
                 <label class="flex-1 cursor-pointer group">
-                    <input type="radio" name="education_mode" value="in_person" class="peer sr-only" checked>
+                    <input type="radio" name="education_type" value="in-person" class="peer sr-only" {{ old('education_type', isset($selectedEducationType) ? $selectedEducationType : null) == 'in-person' ? 'checked' : '' }}>
                     <div class="flex flex-row items-center border-2 border-transparent peer-checked:border-purple-600 rounded-xl bg-white px-6 py-5 transition-all duration-200 shadow-sm peer-checked:shadow-lg hover:border-purple-400">
-                        <img src="{{ asset('assests/images/in-person.png') }}" alt="In-person education" class="w-12 h-12 mr-4">
+                        <img src="{{ asset('assests/images/Layer_1.png') }}" alt="In-person education" class="w-12 h-12 mr-4">
                         <div>
                             <span class="font-semibold text-base text-gray-900 mb-1 block">In-person education</span>
                             <span class="text-sm text-gray-500 text-left block">Attend classes or sessions physically.</span>
@@ -28,9 +28,9 @@
                     </div>
                 </label>
                 <label class="flex-1 cursor-pointer group">
-                    <input type="radio" name="education_mode" value="online" class="peer sr-only">
+                    <input type="radio" name="education_type" value="online" class="peer sr-only" {{ old('education_type', isset($selectedEducationType) ? $selectedEducationType : null) == 'online' ? 'checked' : '' }}>
                     <div class="flex flex-row items-center border-2 border-transparent peer-checked:border-purple-600 rounded-xl bg-white px-6 py-5 transition-all duration-200 shadow-sm peer-checked:shadow-lg hover:border-purple-400">
-                        <img src="{{ asset('assests/images/online.png') }}" alt="Online education" class="w-12 h-12 mr-4">
+                        <img src="{{ asset('assests/images/Layer_1.png') }}" alt="Online education" class="w-12 h-12 mr-4">
                         <div>
                             <span class="font-semibold text-base text-gray-900 mb-1 block">Online education</span>
                             <span class="text-sm text-gray-500 text-left block">Learn remotely from anywhere.</span>

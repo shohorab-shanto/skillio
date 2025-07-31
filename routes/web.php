@@ -1,7 +1,9 @@
+
 <?php
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\LanguageController;
 use App\Http\Controllers\SocialAuthController;
 
 Route::get('/', function () {
@@ -10,6 +12,8 @@ Route::get('/', function () {
 
 require base_path('/routes/user/on-boarding.php');
 require base_path('/routes/user/dashboard.php');
+
+Route::post('/lang/switch', [LanguageController::class, 'switch'])->name('lang.switch');
 // Google
 Route::get('/login/google', [SocialAuthController::class, 'redirectToGoogle'])->name('login.google');
 Route::get('/login/google/callback', [SocialAuthController::class, 'handleGoogleCallback'])->name('login.google.callback');

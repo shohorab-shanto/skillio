@@ -28,5 +28,6 @@ class RouteServiceProvider extends ServiceProvider
         Route::aliasMiddleware('mentor_auth', MentorAuth::class);
         Route::aliasMiddleware('user_auth', UserAuth::class);
         Route::aliasMiddleware('onboarding_complete', \App\Http\Middleware\EnsureUserOnboardingComplete::class);
+        Route::aliasMiddleware('set_locale', \App\Http\Middleware\SetLocale::class);
     }
 }

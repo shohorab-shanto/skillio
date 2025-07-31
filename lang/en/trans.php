@@ -1,0 +1,75 @@
+<?php
+return [
+    'welcome' => 'Welcome to Skillio!',
+    'online_education_options' => 'Online Education Options',
+    'course_from_mentor' => 'A course from a mentor',
+    'one_on_one_mentoring' => 'One-on-one mentoring',
+    'both_combined' => 'Both combined',
+    'continue' => 'Continue',
+    'back' => 'Back',
+    'select_category' => 'Select Category',
+    'category_service_heading' => 'What type of category or service are you looking for?',
+    'choose_your_skill' => 'Choose your skill',
+    // In-person or Online
+    'in_person_or_online_title' => 'In Person or Online',
+    'in_person_or_online_description' => 'Choose in-person or online education for your Skillio experience.',
+    'in_person_or_online_keywords' => 'in person, online, education, Skillio, onboarding',
+    'in_person_or_online_heading' => 'Do you prefer in-person or online education?',
+    'in_person_education' => 'In-person education',
+    'attend_classes_physically' => 'Attend classes or sessions physically.',
+    'online_education' => 'Online education',
+    'learn_remotely' => 'Learn remotely from anywhere.',
+
+    // In-person Education Location
+    'in_person_education_location_title' => 'In Person Education Location',
+    'in_person_education_location_description' => 'Provide your in-person education location for Skillio.',
+    'in_person_education_location_keywords' => 'in person, education, location, Skillio, onboarding',
+    'in_person_education_location_heading' => 'In-person Education Location',
+    'country' => 'Country',
+    'select_country' => 'Select a country',
+    'city' => 'City',
+    'enter_your_city' => 'Enter your city',
+
+    // Online Education
+    'online_education_title' => 'Online Education',
+    'online_education_meta_description' => 'Explore online education options on Skillio.',
+    'online_education_meta_keywords' => 'online, education, Skillio, onboarding',
+    'learn_through_mentor' => 'Learn through a guided mentor',
+    'get_direct_support' => 'Get direct support from a mentor.',
+    'access_course_and_mentoring' => 'Access a course and direct mentoring.',
+    'both' => 'Both',
+
+    // Login
+    'login_title' => 'User Login',
+    'login_meta_description' => 'Login to your Skillio account to access courses and features.',
+    'login_meta_keywords' => 'login, user login, Skillio, courses, account access',
+    'login_heading' => 'Login to your account',
+    'login_subheading' => 'Enter your details to login.',
+    'or' => 'OR',
+    'email_address' => 'Email Address',
+    'email_placeholder' => 'hello@alignui.com',
+    'password' => 'Password',
+    'keep_me_logged_in' => 'Keep me logged in',
+    'forgot_password' => 'Forgot password?',
+    'login_button' => 'Login',
+    'dont_have_account' => 'Don’t have an account?',
+    'register' => 'Register',
+
+    // Register
+    'register_title' => 'User Registration',
+    'register_meta_description' => 'Register a new Skillio account to access courses and exclusive features.',
+    'register_meta_keywords' => 'register, user registration, Skillio, sign up, create account, courses',
+    'register_heading' => 'Create a new account as User',
+    'register_subheading' => 'Enter your details to register.',
+    'full_name' => 'Full Name',
+    'full_name_placeholder' => 'Full Name',
+    'password_hint' => 'Must contain 1 uppercase letter, 1 number, min. 8 characters.',
+    'gdpr_consent' => 'I agree to the Privacy Policy (GDPR)',
+    'register_button' => 'Register',
+    'already_have_account' => 'Already have an account?',
+    'login' => 'Login',
+
+    'nested' => [
+        'key' => 'Some string'
+    ],
+];

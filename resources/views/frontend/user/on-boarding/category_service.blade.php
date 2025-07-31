@@ -1,8 +1,8 @@
 @extends('frontend.layouts.on-boarding')
 
-@section('title', 'Select Category')
-@section('meta_description', 'Choose your preferred skill category to personalize your Skillio experience and discover relevant services.')
-@section('meta_keywords', 'login, user login, Skillio, courses, account access')
+@section('title', __('trans.select_category'))
+@section('meta_description', __('trans.select_category_description'))
+@section('meta_keywords', __('trans.select_category_keywords'))
 
 @section('content')
 <div class="min-h-screen flex flex-col justify-between bg-gradient-to-br from-purple-100 via-white to-purple-100 px-2 md:px-0">
@@ -11,11 +11,10 @@
         <a href="/" class="mt-8 mb-2">
             <img src="{{ asset('assests/images/logo.png') }}" alt="" class="mx-auto mt-20">
         </a>
-        <h2 class="text-2xl md:text-3xl font-semibold text-center mb-4 mt-2">What type of category or service are you looking for?</h2>
+        <h2 class="text-2xl md:text-3xl font-semibold text-center mb-4 mt-2">{{ __('trans.category_service_heading') }}</h2>
         <p class="text-center mb-6 text-[#605C6D]">
-        Choose your skill
+            {{ __('trans.choose_your_skill') }}
         </p>
-
         <!-- Category Cards Form -->
         <form id="categoryForm" method="POST" action="{{ route('user.onboarding.category_service.submit') }}">
             @csrf
@@ -49,11 +48,11 @@
                 <div class="flex gap-3 w-full max-w-xs">
                     <button type="button"
                         class="btn border rounded-3xl w-1/2 h-12 border-purple-700 text-purple-700 bg-transparent hover:bg-purple-700 hover:text-white transition-colors duration-300">
-                        &lt; Back
+                        &lt; {{ __('trans.back') }}
                     </button>
                     <button type="submit"
                         class="btn border rounded-3xl w-1/2 h-12 hover:border-purple-700 hover:bg-transparent hover:text-purple-700 bg-purple-700 text-white transition-colors duration-300 flex items-center justify-center">
-                        Continue &gt;
+                        {{ __('trans.continue') }} &gt;
                     </button>
                 </div>
             </div>

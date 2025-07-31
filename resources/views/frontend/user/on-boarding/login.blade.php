@@ -1,8 +1,8 @@
 @extends('frontend.layouts.on-boarding')
 
-@section('title', 'User Login')
-@section('meta_description', 'Login to your Skillio account to access courses and features.')
-@section('meta_keywords', 'login, user login, Skillio, courses, account access')
+@section('title', __('trans.login_title'))
+@section('meta_description', __('trans.login_meta_description'))
+@section('meta_keywords', __('trans.login_meta_keywords'))
 
 @section('content')
     <div class="grid grid-cols-1 md:grid-cols-2 min-h-screen bg-gradient-to-b from-pink-50 to-white">
@@ -19,8 +19,8 @@
                         <img src="{{ asset('assests/images/login.png') }}" alt="">
                     </div>
 
-                    <h2 class="text-xl font-semibold text-center">Login to your account</h2>
-                    <p class="text-sm text-gray-500 text-center">Enter your details to login.</p>
+                    <h2 class="text-xl font-semibold text-center">{{ __('trans.login_heading') }}</h2>
+                    <p class="text-sm text-gray-500 text-center">{{ __('trans.login_subheading') }}</p>
 
                     <!-- Social Login -->
                     <div class="flex gap-4">
@@ -35,7 +35,7 @@
                         </a>
                     </div>
 
-                    <div class="text-center text-gray-400 text-sm">OR</div>
+                    <div class="text-center text-gray-400 text-sm">{{ __('trans.or') }}</div>
 
                     <!-- Login Form -->
                     <form method="POST" action="{{ route('login') }}" class="space-y-4 mt-2">
@@ -55,15 +55,15 @@
 
                         <!-- Email -->
                         <div class="space-y-1">
-                            <label class="text-sm font-medium" for="email">Email Address*</label>
-                            <input type="email" name="email" id="email" placeholder="hello@alignui.com"
+                            <label class="text-sm font-medium" for="email">{{ __('trans.email_address') }}*</label>
+                            <input type="email" name="email" id="email" placeholder="{{ __('trans.email_placeholder') }}"
                                 class="w-full px-4 py-2 border-none bg-base-100 rounded-md focus:outline-none focus:ring-2 focus:ring-purple-500"
                                 required />
                         </div>
 
                         <!-- Password -->
                         <div class="space-y-1">
-                            <label class="text-sm font-medium" for="password">Password*</label>
+                            <label class="text-sm font-medium" for="password">{{ __('trans.password') }}*</label>
                             <div class="relative">
                                 <input type="password" name="password" id="password"
                                     class="w-full px-4 py-2 border-none bg-base-100 rounded-md focus:outline-none focus:ring-2 focus:ring-purple-500 pr-10"
@@ -88,22 +88,22 @@
                         <div class="flex justify-between items-center text-sm">
                             <label class="flex items-center gap-2">
                                 <input type="checkbox" name="remember" class="accent-purple-500" />
-                                Keep me logged in
+                                {{ __('trans.keep_me_logged_in') }}
                             </label>
-                            <a href="{{ route('password.request') }}" class="text-purple-500 hover:underline">Forgot password?</a>
+                            <a href="{{ route('password.request') }}" class="text-purple-500 hover:underline">{{ __('trans.forgot_password') }}</a>
                         </div>
 
                         <!-- Login Button -->
                         <button type="submit"
                             class="w-full bg-purple-600 hover:bg-purple-700 text-white py-2 rounded-md transition duration-300">
-                            Login
+                            {{ __('trans.login_button') }}
                         </button>
                     </form>
 
                     <!-- Register Link -->
                     <p class="text-center text-sm text-gray-600">
-                        Don’t have an account?
-                        <a href="{{ route('user.onboarding.register') }}" class="text-purple-600 hover:underline">Register</a>
+                        {{ __('trans.dont_have_account') }}
+                        <a href="{{ route('user.onboarding.register') }}" class="text-purple-600 hover:underline">{{ __('trans.register') }}</a>
                     </p>
                 </div>
             </div>

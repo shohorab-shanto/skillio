@@ -1,8 +1,8 @@
 @extends('frontend.layouts.on-boarding')
 
-@section('title', 'User Registration')
-@section('meta_description', 'Register a new Skillio account to access courses and exclusive features.')
-@section('meta_keywords', 'register, user registration, Skillio, sign up, create account, courses')
+@section('title', __('trans.register_title'))
+@section('meta_description', __('trans.register_meta_description'))
+@section('meta_keywords', __('trans.register_meta_keywords'))
 
 @section('content')
     <div class="grid grid-cols-1 md:grid-cols-2 min-h-screen bg-gradient-to-b from-pink-50 to-white">
@@ -19,8 +19,8 @@
                         <img src="{{ asset('assests/images/login.png') }}" alt="">
                     </div>
 
-                    <h2 class="text-xl font-semibold text-center">Create a new account as User</h2>
-                    <p class="text-sm text-gray-500 text-center">Enter your details to register.</p>
+                    <h2 class="text-xl font-semibold text-center">{{ __('trans.register_heading') }}</h2>
+                    <p class="text-sm text-gray-500 text-center">{{ __('trans.register_subheading') }}</p>
 
                     <!-- Social Login -->
                     <div class="flex gap-4 mb-2">
@@ -35,7 +35,7 @@
                         </a>
                     </div>
 
-                    <div class="text-center text-gray-400 text-sm">OR</div>
+                    <div class="text-center text-gray-400 text-sm">{{ __('trans.or') }}</div>
 
                     <!-- Registration Form -->
                     <form method="POST" action="{{ route('register') }}" class="space-y-4 mt-2">
@@ -45,8 +45,8 @@
 
                         <!-- Full Name -->
                         <div class="space-y-1">
-                            <label class="text-sm font-medium" for="name">Full Name*</label>
-                            <input type="text" name="name" id="name" placeholder="Full Name"
+                            <label class="text-sm font-medium" for="name">{{ __('trans.full_name') }}*</label>
+                            <input type="text" name="name" id="name" placeholder="{{ __('trans.full_name_placeholder') }}"
                                 class="w-full px-4 py-2 border-none bg-base-100 rounded-md focus:outline-none focus:ring-2 focus:ring-purple-500"
                                 value="{{ old('name') }}" required />
                             @error('name')
@@ -55,8 +55,8 @@
                         </div>
                         <!-- Email -->
                         <div class="space-y-1">
-                            <label class="text-sm font-medium" for="email">Email Address*</label>
-                            <input type="email" name="email" id="email" placeholder="Email Address"
+                            <label class="text-sm font-medium" for="email">{{ __('trans.email_address') }}*</label>
+                            <input type="email" name="email" id="email" placeholder="{{ __('trans.email_placeholder') }}"
                                 class="w-full px-4 py-2 border-none bg-base-100 rounded-md focus:outline-none focus:ring-2 focus:ring-purple-500"
                                 value="{{ old('email') }}" required />
                             @error('email')
@@ -66,7 +66,7 @@
 
                         <!-- Password -->
                         <div class="space-y-1">
-                            <label class="text-sm font-medium" for="password">Password*</label>
+                            <label class="text-sm font-medium" for="password">{{ __('trans.password') }}*</label>
                             <div class="relative">
                                 <input type="password" name="password" id="password"
                                     class="w-full px-4 py-2 border-none bg-base-100 rounded-md focus:outline-none focus:ring-2 focus:ring-purple-500 pr-10"
@@ -91,7 +91,7 @@
                             </div>
                             <p class="text-gray-500 text-sm flex items-center justify-center gap-1">
                                 <span class="w-3 h-3 rounded-full bg-gray-200 text-black flex items-center justify-center text-sm">!</span>
-                                Must contain 1 uppercase letter, 1 number, min. 8 characters.
+                                {{ __('trans.password_hint') }}
                             </p>
                             @error('password')
                                 <span class="text-red-500 text-xs">{{ $message }}</span>
@@ -102,7 +102,7 @@
                         <!-- GDPR Consent -->
                         <div class="flex items-center gap-2">
                             <input type="checkbox" name="gdpr_consent" id="gdpr_consent" class="accent-purple-500" required />
-                            <label for="gdpr_consent" class="text-sm">I agree to the <a href="#" class="text-purple-500 underline">Privacy Policy (GDPR)</a></label>
+                            <label for="gdpr_consent" class="text-sm">{{ __('trans.gdpr_consent') }}</label>
                         </div>
                         @error('gdpr_consent')
                             <span class="text-red-500 text-xs">{{ $message }}</span>
@@ -111,14 +111,14 @@
                         <!-- Register Button -->
                         <button type="submit"
                             class="w-full bg-purple-600 hover:bg-purple-700 text-white py-2 rounded-md transition duration-300">
-                            Register
+                            {{ __('trans.register_button') }}
                         </button>
                     </form>
 
                     <!-- Register Link -->
                     <p class="text-center text-sm text-gray-600">
-                        Already have an account?
-                        <a href="{{ route('user.onboarding.login') }}" class="text-purple-600 hover:underline">Login</a>
+                        {{ __('trans.already_have_account') }}
+                        <a href="{{ route('user.onboarding.login') }}" class="text-purple-600 hover:underline">{{ __('trans.login') }}</a>
                     </p>
                 </div>
             </div>

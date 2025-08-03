@@ -32,10 +32,12 @@ class RegisteredUserController extends Controller
         $request->validate([
             'name' => ['required', 'string', 'max:255'],
             'email' => ['required', 'string', 'lowercase', 'email', 'max:255', 'unique:'.User::class],
-            'password' => ['required', Rules\Password::defaults()],
-            'role' => ['required', 'in:user,mentor'], // Ensure role is either 'user' or 'admin'
+            'password' => ['required', 'confirmed', Rules\Password::defaults()],
+            'role' => ['required', 'in:user,mentor'],
             'gdpr_consent' => ['required', 'accepted'],
         ]);
+
+        // dd($request->all()); // Debugging line to check the request data
 
 
         $userData = [
@@ -43,13 +45,12 @@ class RegisteredUserController extends Controller
             'email' => $request->email,
             'password' => Hash::make($request->password),
             'role' => $request->role,
+            'gdpr_consent' => $request->has('gdpr_consent'),
         ];
 
-        if ($request->role === 'user') {
-            $userData['gdpr_consent'] = $request->gdpr_consent;
+        if ($request->role == 'user') {
             $userData['status'] = 'active';
-        } elseif ($request->role === 'mentor') {
-            $userData['gdpr_consent'] = null;
+        } elseif ($request->role == 'mentor') {
             $userData['status'] = 'pending';
         }
 
@@ -59,6 +60,15 @@ class RegisteredUserController extends Controller
 
         Auth::login($user);
 
-        return redirect(route('dashboard', absolute: false));
+        // Redirect based on user role
+        if ($user->role === 'admin') {
+            return redirect()->intended(route('admin.dashboard', absolute: false));
+        } elseif ($user->role === 'mentor') {
+            return redirect()->intended(route('mentor.dashboard', absolute: false));
+        }else{
+            return redirect()->intended(route('user.dashboard', absolute: false));
+        }
+
+        
     }
 }

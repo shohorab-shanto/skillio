@@ -25,7 +25,6 @@ Entities & Relationships:
 - certifications
 - availability (available/unavailable)
 - working_hours
-- time_slots (JSON)
 - verified (boolean)
 
 3. Categories

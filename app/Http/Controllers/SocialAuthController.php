@@ -26,7 +26,9 @@ class SocialAuthController extends Controller
                 'google_id' => $googleUser->getId(),
                 'password' => bcrypt(Str::random(16)),
                 'status' => 'active',
+                'role' => 'user', // Default role, can be adjusted based on your logic
                 'gdpr_consent' => true, // or handle this via a consent screen
+                'email_verified_at' => now(),
             ]
         );
 
@@ -51,6 +53,9 @@ class SocialAuthController extends Controller
                 'apple_id' => $appleUser->getId(),
                 'password' => bcrypt(Str::random(16)),
                 'status' => 'active',
+                'role' => 'user', // Default role, can be adjusted based on your logic
+                'email_verified_at' => now(),
+                'apple_user_id' => $appleUser->getId(),
                 'gdpr_consent' => true, // or handle this via a consent screen
             ]
         );

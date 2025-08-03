@@ -21,6 +21,14 @@ class User extends Authenticatable
         'name',
         'email',
         'password',
+        'role',
+        'email_verified_at',
+        'gdpr_consent',
+        'status',
+        'apple_id', // Added for Apple authentication
+        'google_id', // Added for Google authentication
+        'phone',
+        'address'
     ];
 
     /**
@@ -44,5 +52,43 @@ class User extends Authenticatable
             'email_verified_at' => 'datetime',
             'password' => 'hashed',
         ];
+    }
+
+    /**
+     * Check if the user is an admin.
+     *
+     * @return bool
+     */
+    public function isAdmin(): bool
+    {
+        return $this->role === 'admin';
+    }
+
+    /**
+     * Check if the user is a mentor.
+     *
+     * @return bool
+     */
+    public function isMentor(): bool
+    {
+        return $this->role === 'mentor';
+    }
+
+    /**
+     * Check if the user is a regular user/student.
+     *
+     * @return bool
+     */
+    public function isUser(): bool
+    {
+        return $this->role === 'user' || $this->role === 'student';
+    }
+
+    /**
+     * Get the mentor profile for this user.
+     */
+    public function mentor()
+    {
+        return $this->hasOne(Mentor::class);
     }
 }

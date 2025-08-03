@@ -38,7 +38,7 @@
                     <div class="text-center text-gray-400 text-sm">{{ __('trans.or') }}</div>
 
                     <!-- Login Form -->
-                    <form method="POST" action="{{ route('login') }}" class="space-y-4 mt-2">
+                    <form method="POST" action="{{ route('login.post') }}" class="space-y-4 mt-2">
                         @csrf
 
                         @if(session('error'))

@@ -1,0 +1,213 @@
+    body {
+        font-family: 'Poppins', sans-serif;
+    }
+
+    /* Force light mode styles */
+    html, body {
+        color-scheme: light !important;
+    }
+    
+    html[data-theme="dark"], 
+    html[data-theme="night"] {
+        color-scheme: light !important;
+    }
+    
+    * {
+        color-scheme: light !important;
+    }
+
+    .sidebar-item {
+        display: flex !important;
+        align-items: center;
+        padding: 12px 16px;
+        margin: 2px 8px;
+        border-radius: 12px;
+        color: #581c87;
+        text-decoration: none;
+        transition: all 0.2s ease;
+        cursor: pointer;
+        width: calc(100% - 16px);
+        font-weight: 500;
+        border: none;
+        background: none;
+        font-family: inherit;
+        font-size: inherit;
+    }
+
+    .sidebar-item:hover {
+        background-color: #8b5cf6;
+        color: white;
+    }
+
+    .sidebar-item.active {
+        background: #8b5cf6;
+        color: white;
+    }
+
+    .sidebar-item i {
+        width: 20px;
+        text-align: center;
+        margin-right: 12px;
+        flex-shrink: 0;
+    }
+
+    .sidebar-label {
+        white-space: nowrap;
+        flex: 1;
+    }
+
+    .mobile-menu-overlay {
+        position: fixed;
+        inset: 0;
+        background-color: rgba(0, 0, 0, 0.5);
+        z-index: 40;
+    }
+
+    .mobile-menu-overlay.hidden {
+        display: none;
+    }
+
+    @media (min-width: 1024px) {
+        .mobile-menu-overlay {
+            display: none !important;
+        }
+    }
+
+    /* Mobile sidebar animations */
+    #sidebar {
+        transition: width 0.3s ease-in-out, transform 0.3s ease-in-out;
+    }
+
+    /* Ensure mobile header is always visible on small screens */
+    @media (max-width: 1023px) {
+        #sidebar {
+            transform: translateX(-100%);
+            position: fixed;
+            left: 0;
+            top: 0;
+            height: 100vh;
+            z-index: 60;
+            border-radius: 0;
+            margin: 0;
+            overflow-y: auto;
+            overflow-x: hidden;
+            border: none;
+        }
+
+        #sidebar.translate-x-0 {
+            transform: translateX(0);
+        }
+
+        .mobile-menu-overlay {
+            top: 0;
+            z-index: 50;
+        }
+    }
+
+    /* Minimized sidebar styles */
+    .sidebar-minimized {
+        width: 64px !important;
+    }
+
+    .sidebar-minimized .sidebar-item {
+        width: 48px;
+        padding: 12px;
+        margin: 2px auto;
+        justify-content: center;
+    }
+
+    .sidebar-minimized .sidebar-item i {
+        margin-right: 0;
+    }
+
+    .sidebar-minimized .border-t {
+        margin: 16px 4px;
+    }
+
+    .sidebar-minimized .sidebar-label {
+        display: none;
+    }
+
+    .sidebar-minimized #logo-text {
+        display: none;
+    }
+
+    /* Hide user profile text in minimized state */
+    .sidebar-minimized .user-info {
+        display: none !important;
+    }
+
+    /* Center user avatar in minimized state */
+    .sidebar-minimized .user-profile {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        padding: 16px 8px;
+    }
+
+    .sidebar-minimized .user-avatar {
+        margin-right: 0;
+    }
+
+    /* Ensure sidebar content scrolls vertically only */
+    #sidebar {
+        overflow-x: hidden;
+        overflow-y: auto;
+        /* Hide scrollbar for webkit browsers */
+        scrollbar-width: none; /* Firefox */
+        -ms-overflow-style: none; /* Internet Explorer 10+ */
+    }
+    
+    /* User profile section styling */
+    .user-profile {
+        border-top: 1px solid #f3f4f6;
+        padding: 16px;
+        flex-shrink: 0;
+    }
+    
+    .user-profile .user-avatar {
+        width: 40px;
+        height: 40px;
+        border-radius: 50%;
+        object-fit: cover;
+        border: 2px solid #581c87;
+        flex-shrink: 0;
+        margin-right: 12px;
+    }
+    
+    .user-profile .user-info {
+        flex: 1;
+        min-width: 0;
+    }
+    
+    .user-profile .user-name {
+        font-size: 14px;
+        font-weight: 500;
+        color: #374151;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+    }
+    
+    .user-profile .user-role {
+        font-size: 12px;
+        color: #6b7280;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+    }
+
+    /* Ensure navigation area scrolls properly */
+    nav {
+        overflow-x: hidden;
+        overflow-y: auto;
+        /* Hide scrollbar for webkit browsers */
+        scrollbar-width: none; /* Firefox */
+        -ms-overflow-style: none; /* Internet Explorer 10+ */
+    }
+    
+    /* Hide scrollbar for webkit browsers */
+    nav::-webkit-scrollbar {
+        display: none;
+    }
+

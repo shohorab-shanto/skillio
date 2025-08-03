@@ -28,13 +28,17 @@ class AuthenticatedSessionController extends Controller
             $request->authenticate();
             $request->session()->regenerate();
             $user = Auth::user();
-            // Redirect based on user role
+            
+            // Debug: Check user role (remove this after debugging)
+            // dd($user->role, route('mentor.dashboard'));
+            
+            // Redirect based on user role - don't use intended() to avoid conflicts
             if ($user->role === 'admin') {
-                return redirect()->intended(route('admin.dashboard', absolute: false));
+                return redirect()->route('admin.dashboard');
             } elseif ($user->role === 'mentor') {
-                return redirect()->intended(route('mentor.dashboard', absolute: false));
+                return redirect()->route('mentor.dashboard');
             } else {
-                return redirect()->intended(route('user.dashboard', absolute: false));
+                return redirect()->route('user.dashboard');
             }
         } catch (\Illuminate\Validation\ValidationException $e) {
             return back()

@@ -12,6 +12,8 @@ Route::get('/', function () {
 
 require base_path('/routes/user/on-boarding.php');
 require base_path('/routes/user/dashboard.php');
+require base_path('/routes/mentor/on-boarding.php');
+require base_path('/routes/mentor/dashboard.php');
 
 Route::post('/lang/switch', [LanguageController::class, 'switch'])->name('lang.switch');
 // Google

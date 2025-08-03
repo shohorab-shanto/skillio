@@ -11,17 +11,17 @@ class Review extends Model
     use HasFactory;
 
     protected $fillable = [
-        "user_id",
-        "mentor_id", 
-        "course_id",
-        "rating",
-        "comment",
+        'user_id',
+        'mentor_id',
+        'course_id',
+        'rating',
+        'comment',
     ];
 
     protected $casts = [
-        "rating" => "integer",
-        "created_at" => "datetime",
-        "updated_at" => "datetime",
+        'rating' => 'integer',
+        'created_at' => 'datetime',
+        'updated_at' => 'datetime',
     ];
 
     public function user(): BelongsTo
@@ -31,7 +31,7 @@ class Review extends Model
 
     public function mentor(): BelongsTo
     {
-        return $this->belongsTo(User::class, "mentor_id");
+        return $this->belongsTo(User::class, 'mentor_id');
     }
 
     public function course(): BelongsTo
@@ -41,27 +41,27 @@ class Review extends Model
 
     public function scopeMentorReviews($query)
     {
-        return $query->whereNotNull("mentor_id");
+        return $query->whereNotNull('mentor_id');
     }
 
     public function scopeCourseReviews($query)
     {
-        return $query->whereNotNull("course_id");
+        return $query->whereNotNull('course_id');
     }
 
     public function scopeByRating($query, $rating)
     {
-        return $query->where("rating", $rating);
+        return $query->where('rating', $rating);
     }
 
     public function scopeMinRating($query, $minRating)
     {
-        return $query->where("rating", ">=", $minRating);
+        return $query->where('rating', '>=', $minRating);
     }
 
     public function getStarsAttribute(): string
     {
-        return str_repeat("★", $this->rating) . str_repeat("☆", 5 - $this->rating);
+        return str_repeat('★', $this->rating) . str_repeat('☆', 5 - $this->rating);
     }
 
     public function isMentorReview(): bool

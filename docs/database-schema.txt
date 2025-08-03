@@ -46,6 +46,7 @@ Entities & Relationships:
 - id (PK)
 - mentor_id (FK)
 - category_id (FK)
+- sub_category_id (FK)
 - title
 - description
 - thumbnail

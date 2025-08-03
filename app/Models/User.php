@@ -91,4 +91,44 @@ class User extends Authenticatable
     {
         return $this->hasOne(Mentor::class);
     }
+
+    /**
+     * Get reviews written by this user.
+     */
+    public function reviews()
+    {
+        return $this->hasMany(Review::class);
+    }
+
+    /**
+     * Get reviews received by this user (as a mentor).
+     */
+    public function receivedReviews()
+    {
+        return $this->hasMany(Review::class, 'mentor_id');
+    }
+
+    /**
+     * Get average rating for this user as a mentor.
+     */
+    public function averageRating()
+    {
+        return $this->receivedReviews()->avg('rating');
+    }
+
+    /**
+     * Get total number of reviews for this user as a mentor.
+     */
+    public function totalReviews()
+    {
+        return $this->receivedReviews()->count();
+    }
+
+    /**
+     * Get courses created by this user (if they are a mentor).
+     */
+    public function courses()
+    {
+        return $this->hasMany(Course::class, 'mentor_id');
+    }
 }

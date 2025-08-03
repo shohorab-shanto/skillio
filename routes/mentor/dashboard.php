@@ -9,5 +9,6 @@ Route::middleware(['mentor_auth'])->group(function () {
     Route::post('/mentor/profile-update', [App\Http\Controllers\backend\mentor\ProfileController::class, 'update'])->name('mentor.profile.update');
     Route::post('/mentor/password-update', [App\Http\Controllers\backend\mentor\ProfileController::class, 'updatePassword'])->name('mentor.profile.updatePassword');
     Route::post('/mentor/update-status', [App\Http\Controllers\backend\mentor\ProfileController::class, 'updateStatus'])->name('mentor.profile.updateStatus');
-
+    // mentor reviews
+    Route::get('/mentor/reviews', [App\Http\Controllers\backend\mentor\ReviewController::class, 'index'])->name('mentor.reviews.index');
 });

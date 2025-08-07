@@ -35,13 +35,15 @@
 <div class="w-full">
     <div class="mt-5 mx-auto bg-white rounded-xl shadow-md overflow-hidden">
         <!-- Course Image -->
-        @if($course->cover_photo)
-            <img src="{{ asset('storage/' . $course->cover_photo) }}" alt="{{ $course->title }}" class="w-full h-[500px] object-cover">
-        @else
-            <div class="w-full h-[500px] bg-gradient-to-br from-purple-600 via-fuchsia-500 to-pink-500 flex items-center justify-center">
-                <i class="fa-solid fa-graduation-cap text-8xl text-white/50"></i>
-            </div>
-        @endif
+        <div class="p-3">
+            @if($course->cover_photo)
+                <img src="{{ asset('storage/' . $course->cover_photo) }}" alt="{{ $course->title }}" class="w-full h-[500px] object-cover rounded-xl">
+            @else
+                <div class="w-full h-[500px] bg-gradient-to-br from-purple-600 via-fuchsia-500 to-pink-500 flex items-center justify-center rounded-xl">
+                    <i class="fa-solid fa-graduation-cap text-8xl text-white/50"></i>
+                </div>
+            @endif
+        </div>
 
         <!-- Course Info -->
         <div class="p-6">

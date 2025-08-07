@@ -11,4 +11,13 @@ Route::middleware(['mentor_auth'])->group(function () {
     Route::post('/mentor/update-status', [App\Http\Controllers\backend\mentor\ProfileController::class, 'updateStatus'])->name('mentor.profile.updateStatus');
     // mentor reviews
     Route::get('/mentor/reviews', [App\Http\Controllers\backend\mentor\ReviewController::class, 'index'])->name('mentor.reviews.index');
+
+    //mentor courses
+    Route::get('/mentor/courses', [App\Http\Controllers\backend\mentor\CourseController::class, 'index'])->name('mentor.courses.index');
+    Route::get('/mentor/courses/create', [App\Http\Controllers\backend\mentor\CourseController::class, 'create'])->name('mentor.courses.create');
+    Route::post('/mentor/courses/store', [App\Http\Controllers\backend\mentor\CourseController::class, 'store'])->name('mentor.courses.store');
+    Route::get('/mentor/courses/{course}', [App\Http\Controllers\backend\mentor\CourseController::class, 'show'])->name('mentor.courses.show');
+    Route::get('/mentor/courses/{course}/edit', [App\Http\Controllers\backend\mentor\CourseController::class, 'edit'])->name('mentor.courses.edit');
+    Route::post('/mentor/courses/{course}/update', [App\Http\Controllers\backend\mentor\CourseController::class, 'update'])->name('mentor.courses.update');
+    Route::delete('/mentor/courses/{course}/delete', [App\Http\Controllers\backend\mentor\CourseController::class, 'destroy'])->name('mentor.courses.delete');
 });

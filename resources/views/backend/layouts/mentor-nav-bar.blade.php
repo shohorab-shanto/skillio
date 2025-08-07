@@ -5,7 +5,7 @@
                         <span class="sidebar-label">Dashboard</span>
                     </a>
                     
-                    <a href="#" class="sidebar-item">
+                    <a href="{{ route('mentor.courses.index') }}" class="sidebar-item">
                         <i class="fa-solid fa-book"></i>
                         <span class="sidebar-label">My Course</span>
                     </a>

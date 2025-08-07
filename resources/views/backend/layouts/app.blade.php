@@ -311,7 +311,7 @@
                 </div>
                 
                 
-                <div class="p-4 lg:p-8  pt-4">
+                <div class="p-4 lg:p-8  pt-2 lg:pt-2">
                     @include('backend.layouts.message')
                     @yield('content')
                 </div>

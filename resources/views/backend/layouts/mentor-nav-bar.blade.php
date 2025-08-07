@@ -10,7 +10,7 @@
                         <span class="sidebar-label">My Course</span>
                     </a>
                     
-                    <a href="#" class="sidebar-item {{ request()->routeIs('mentor.time-slots*') ? 'active' : '' }}">
+                    <a href="{{ route('mentor.time-slots.index') }}" class="sidebar-item {{ request()->routeIs('mentor.time-slots*') ? 'active' : '' }}">
                         <i class="fa-solid fa-business-time"></i>
                         <span class="sidebar-label">Time Slots</span>
                     </a>

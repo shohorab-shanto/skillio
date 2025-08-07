@@ -20,4 +20,13 @@ Route::middleware(['mentor_auth'])->group(function () {
     Route::get('/mentor/courses/{course}/edit', [App\Http\Controllers\backend\mentor\CourseController::class, 'edit'])->name('mentor.courses.edit');
     Route::post('/mentor/courses/{course}/update', [App\Http\Controllers\backend\mentor\CourseController::class, 'update'])->name('mentor.courses.update');
     Route::delete('/mentor/courses/{course}/delete', [App\Http\Controllers\backend\mentor\CourseController::class, 'destroy'])->name('mentor.courses.delete');
+
+    // Time Slots (Session Bookings)
+    Route::get('/mentor/time-slots', [App\Http\Controllers\backend\mentor\TimeSlotController::class, 'index'])->name('mentor.time-slots.index');
+    Route::get('/mentor/time-slots/create', [App\Http\Controllers\backend\mentor\TimeSlotController::class, 'create'])->name('mentor.time-slots.create');
+    Route::post('/mentor/time-slots', [App\Http\Controllers\backend\mentor\TimeSlotController::class, 'store'])->name('mentor.time-slots.store');
+    Route::get('/mentor/time-slots/{time_slot}', [App\Http\Controllers\backend\mentor\TimeSlotController::class, 'show'])->name('mentor.time-slots.show');
+    Route::get('/mentor/time-slots/{time_slot}/edit', [App\Http\Controllers\backend\mentor\TimeSlotController::class, 'edit'])->name('mentor.time-slots.edit');
+    Route::put('/mentor/time-slots/{time_slot}', [App\Http\Controllers\backend\mentor\TimeSlotController::class, 'update'])->name('mentor.time-slots.update');
+    Route::delete('/mentor/time-slots/{time_slot}', [App\Http\Controllers\backend\mentor\TimeSlotController::class, 'destroy'])->name('mentor.time-slots.destroy');
 });

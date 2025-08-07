@@ -141,10 +141,10 @@ class User extends Authenticatable
     }
 
     /**
-     * Get booked sessions for this user.
+     * Get booked sessions for this user (same as sessionBookings since user_id is the foreign key).
      */
     public function bookedSessions()
     {
-        return $this->sessionBookings()->whereNotNull('user_id');
+        return $this->sessionBookings();
     }
 }

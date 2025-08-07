@@ -114,6 +114,7 @@
             <div>
                 <label for="address" class="block text-sm font-medium text-gray-700 mb-2">Location</label>
                 <input type="text" id="address" name="address" value="{{ old('address', $user->address) }}" 
+                       maxlength="255"
                        class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent text-sm" 
                        placeholder="City,Country">
                 @error('address')
@@ -125,6 +126,7 @@
             <div>
                 <label for="phone" class="block text-sm font-medium text-gray-700 mb-2">Phone Number</label>
                 <input type="text" id="phone" name="phone" value="{{ old('phone', $user->phone) }}" 
+                       maxlength="20"
                        class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent text-sm" 
                        placeholder="contact number">
                 @error('phone')
@@ -136,6 +138,7 @@
             <div>
                 <label for="work_experience" class="block text-sm font-medium text-gray-700 mb-2">Work Experience</label>
                 <input type="text" id="work_experience" name="work_experience" value="{{ old('work_experience', $mentor->work_experience) }}" 
+                       maxlength="255"
                        class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent text-sm" 
                        placeholder="e.g., Designer">
                 @error('work_experience')
@@ -147,11 +150,17 @@
             <div>
                 <label for="bio" class="block text-sm font-medium text-gray-700 mb-2">Bio/Work Experience</label>
                 <textarea id="bio" name="bio" rows="4" 
+                          maxlength="1000"
                           class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent text-sm" 
                           placeholder="I'm a motivated learner passionate about personal...">{{ old('bio', $mentor->bio) }}</textarea>
-                @error('bio')
-                    <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
-                @enderror
+                <div class="flex justify-between items-center mt-1">
+                    <div>
+                        @error('bio')
+                            <p class="text-sm text-red-600">{{ $message }}</p>
+                        @enderror
+                    </div>
+                    <span id="bio-counter" class="text-xs text-gray-500">0/1000</span>
+                </div>
             </div>
 
             <!-- Submit Button -->
@@ -203,10 +212,19 @@
                     <p class="text-sm text-gray-900">{{ $user->phone ?? 'N/A' }}</p>
                 </div>
             </div>
+            <div class="grid grid-cols-2 gap-6">
+                <div>
+                    <label class="block text-sm font-medium text-gray-500 mb-1">Work Experience</label>
+                    <p class="text-sm text-gray-900">{{ $mentor->work_experience ?? 'Designer' }}</p>
+                </div>
 
-            <div>
-                <label class="block text-sm font-medium text-gray-500 mb-1">Work Experience</label>
-                <p class="text-sm text-gray-900">{{ $mentor->work_experience ?? 'Designer' }}</p>
+                <div>
+                    <label class="block text-sm font-medium text-gray-500 mb-1">Mentor Type</label>
+                    <p class="text-sm text-gray-900 flex items-center">
+                        <i class="fa-solid fa-{{ $mentor->type === 'online' ? 'video' : 'location-dot' }} mr-2 text-purple-600"></i>
+                        {{ ucfirst($mentor->type ?? 'online') }}
+                    </p>
+                </div>
             </div>
 
             <div>
@@ -230,6 +248,7 @@
                                 <i class="fa-solid fa-lock text-gray-400"></i>
                             </div>
                             <input type="password" id="current_password" name="current_password" 
+                                   maxlength="255"
                                    class="w-full pl-10 pr-10 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent text-sm" 
                                    placeholder="• • • • • • • • • •">
                             <button type="button" onclick="togglePassword('current_password')" class="absolute inset-y-0 right-0 pr-3 flex items-center">
@@ -248,6 +267,7 @@
                                 <i class="fa-solid fa-lock text-gray-400"></i>
                             </div>
                             <input type="password" id="password" name="password" 
+                                   maxlength="255"
                                    class="w-full pl-10 pr-10 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent text-sm" 
                                    placeholder="• • • • • • • • • •">
                             <button type="button" onclick="togglePassword('password')" class="absolute inset-y-0 right-0 pr-3 flex items-center">
@@ -270,6 +290,7 @@
                             <i class="fa-solid fa-lock text-gray-400"></i>
                         </div>
                         <input type="password" id="password_confirmation" name="password_confirmation" 
+                               maxlength="255"
                                class="w-full pl-10 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent text-sm" 
                                placeholder="• • • • • • • • • •">
                     </div>
@@ -422,6 +443,33 @@ document.getElementById('phone').addEventListener('input', function() {
         validationDiv.textContent = 'Please enter a valid phone number (e.g., +1234567890)';
         
         this.parentNode.appendChild(validationDiv);
+    }
+});
+
+// Character counter for bio field
+document.getElementById('bio').addEventListener('input', function() {
+    const bioCounter = document.getElementById('bio-counter');
+    const currentLength = this.value.length;
+    const maxLength = 1000;
+    
+    bioCounter.textContent = `${currentLength}/${maxLength}`;
+    
+    // Change color based on usage
+    if (currentLength > maxLength * 0.9) {
+        bioCounter.className = 'text-xs text-red-500';
+    } else if (currentLength > maxLength * 0.7) {
+        bioCounter.className = 'text-xs text-yellow-500';
+    } else {
+        bioCounter.className = 'text-xs text-gray-500';
+    }
+});
+
+// Initialize character counter on page load
+document.addEventListener('DOMContentLoaded', function() {
+    const bioField = document.getElementById('bio');
+    if (bioField) {
+        const event = new Event('input', { bubbles: true });
+        bioField.dispatchEvent(event);
     }
 });
 

@@ -16,7 +16,6 @@ return new class extends Migration
             $table->foreignId('category_id')->constrained('categories')->onDelete('cascade');
             $table->foreignId('mentor_id')->constrained('mentors')->onDelete('cascade');
             $table->foreignId('user_id')->nullable()->constrained('users')->onDelete('cascade');
-            $table->enum('type', ['online', 'in-person'])->default('online');
             $table->date('date');
             $table->time('start_time');
             $table->time('end_time');
@@ -29,7 +28,6 @@ return new class extends Migration
             $table->index('category_id');
             $table->index('mentor_id');
             $table->index('user_id');
-            $table->index('type');
             $table->index('status');
             $table->index('payment_status');
             $table->index('date');

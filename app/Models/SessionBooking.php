@@ -16,7 +16,6 @@ class SessionBooking extends Model
         'category_id',
         'mentor_id',
         'user_id',
-        'type',
         'date',
         'start_time',
         'end_time',
@@ -71,7 +70,7 @@ class SessionBooking extends Model
     // Scopes
     public function scopeAvailableSlots($query)
     {
-        return $query->whereNull('user_id')->where('status', 'booked');
+        return $query->whereNull('user_id')->where('status', 'active');
     }
 
     public function scopeBookedSessions($query)
@@ -112,7 +111,7 @@ class SessionBooking extends Model
     // Accessors & Mutators
     public function getIsAvailableAttribute(): bool
     {
-        return is_null($this->user_id) && $this->status === 'booked';
+        return is_null($this->user_id) && $this->status === 'active';
     }
 
     public function getIsBookedAttribute(): bool
@@ -165,11 +164,4 @@ class SessionBooking extends Model
         $this->update(['payment_status' => 'paid']);
         return true;
     }
-}space App\Models;
-
-use Illuminate\Database\Eloquent\Model;
-
-class SessionBooking extends Model
-{
-    //
 }

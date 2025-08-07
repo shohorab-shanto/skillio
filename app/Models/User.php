@@ -131,4 +131,20 @@ class User extends Authenticatable
     {
         return $this->hasMany(Course::class, 'mentor_id');
     }
+
+    /**
+     * Get session bookings where this user is the student.
+     */
+    public function sessionBookings()
+    {
+        return $this->hasMany(SessionBooking::class);
+    }
+
+    /**
+     * Get booked sessions for this user.
+     */
+    public function bookedSessions()
+    {
+        return $this->sessionBookings()->whereNotNull('user_id');
+    }
 }

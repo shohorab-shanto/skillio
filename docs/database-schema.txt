@@ -24,6 +24,7 @@ Entities & Relationships:
 - work_experience
 - certifications
 - availability (available/unavailable)
+- type(online/in-person)
 - working_hours
 - verified (boolean)
 
@@ -84,16 +85,23 @@ course_edits
  
  5. SessionBookings
  - id (PK)
- - course_id (FK, nullable)
+ - category_id (FK)
  - mentor_id (FK)
  - user_id (FK)
  - type (online/in-person)
- - time_slot
+ - Date
+ - start_time
+ - end_time
  - fee
  - status (booked/completed/cancelled)
  - payment_status (paid/unpaid)
  - created_at
  - updated_at
+
+ SessionBookings_sub_categories
+- id (PK)
+- session_booking_id (FK)
+- sub_category_id (FK)
 
 6. Transactions
 - id (PK)

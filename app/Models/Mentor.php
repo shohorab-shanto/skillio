@@ -20,6 +20,7 @@ class Mentor extends Model
         'availability',
         'working_hours',
         'verified',
+        'type',
     ];
 
     protected $casts = [
@@ -134,6 +135,30 @@ class Mentor extends Model
     public function approvedCourses(): HasMany
     {
         return $this->courses()->where('status', 'approved');
+    }
+
+    /**
+     * Get session bookings (time slots) created by this mentor.
+     */
+    public function sessionBookings(): HasMany
+    {
+        return $this->hasMany(SessionBooking::class);
+    }
+
+    /**
+     * Get available time slots created by this mentor.
+     */
+    public function availableSlots(): HasMany
+    {
+        return $this->sessionBookings()->availableSlots();
+    }
+
+    /**
+     * Get booked sessions for this mentor.
+     */
+    public function bookedSessions(): HasMany
+    {
+        return $this->sessionBookings()->bookedSessions();
     }
 
     /**

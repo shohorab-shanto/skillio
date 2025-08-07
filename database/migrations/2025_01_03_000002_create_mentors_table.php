@@ -19,6 +19,7 @@ return new class extends Migration
             $table->text('work_experience')->nullable();
             $table->json('certifications')->nullable(); // Store certifications as JSON
             $table->enum('availability', ['available', 'unavailable'])->default('available');
+            $table->enum('type', ['online', 'in-person'])->default('online');
             $table->json('working_hours')->nullable(); // Store working hours as JSON
             $table->boolean('verified')->default(false);
             $table->timestamps();
@@ -26,6 +27,7 @@ return new class extends Migration
             // Indexes
             $table->index('user_id');
             $table->index('availability');
+            $table->index('type');
             $table->index('verified');
         });
     }

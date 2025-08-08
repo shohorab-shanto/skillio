@@ -17,6 +17,25 @@
 @endsection
 
 @section('content')
+<!-- Flash Messages -->
+@if(session('error'))
+    <div class="mb-4 p-4 bg-red-100 border border-red-400 text-red-700 rounded-lg">
+        <div class="flex items-center">
+            <i class="fa-solid fa-exclamation-triangle mr-2"></i>
+            {{ session('error') }}
+        </div>
+    </div>
+@endif
+
+@if(session('success'))
+    <div class="mb-4 p-4 bg-green-100 border border-green-400 text-green-700 rounded-lg">
+        <div class="flex items-center">
+            <i class="fa-solid fa-check-circle mr-2"></i>
+            {{ session('success') }}
+        </div>
+    </div>
+@endif
+
 <div class="flex bg-white rounded-xl shadow-sm border border-gray-100 overflow-hidden" style="height: calc(100vh - 7rem); min-height: 500px;">
     <!-- Left Sidebar - Conversations -->
     <div class="w-1/3 border-r border-gray-200 flex flex-col">
@@ -69,8 +88,8 @@
                         $unreadCount = $conversation->unreadMessagesCount(auth()->id());
                         $lastMessage = $conversation->latestMessage;
                     @endphp
-                    <div class="conversation-item p-4 border-b border-gray-100 hover:bg-gray-50 cursor-pointer transition-colors {{ request()->route('conversation')?->id == $conversation->id ? 'bg-purple-50 border-r-4 border-r-purple-600' : '' }}"
-                         onclick="loadConversation({{ $conversation->id }})">
+                    <div class="conversation-item p-4 border-b border-gray-100 hover:bg-gray-50 cursor-pointer transition-colors {{ request()->route('code') == $conversation->unique_code ? 'bg-purple-50 border-r-4 border-r-purple-600' : '' }}"
+                         onclick="loadConversation('{{ $conversation->unique_code }}')">>
                         <div class="flex items-center space-x-3">
                             <!-- Avatar -->
                             <div class="relative">
@@ -131,7 +150,30 @@
 
     <!-- Right Side - Chat Area -->
     <div class="flex-1 flex flex-col">
-        @if(request()->route('conversation'))
+        @if(isset($error))
+            <!-- Error Message -->
+            <div class="flex-1 flex items-center justify-center">
+                <div class="text-center">
+                    <div class="w-20 h-20 bg-red-100 rounded-full flex items-center justify-center mx-auto mb-4">
+                        <i class="fa-solid fa-exclamation-triangle text-3xl text-red-600"></i>
+                    </div>
+                    <h3 class="text-xl font-semibold text-gray-900 mb-2">Access Denied</h3>
+                    <p class="text-gray-500 mb-4">{{ $error }}</p>
+                    @if($errorType === 'no_permission')
+                        <div class="text-sm text-gray-600">
+                            <p>This conversation belongs to other users. You can only access conversations where you are either:</p>
+                            <ul class="mt-2 space-y-1">
+                                <li>• The student participant</li>
+                                <li>• The mentor participant</li>
+                            </ul>
+                        </div>
+                    @endif
+                    <button onclick="window.location.href='/chat'" class="mt-4 px-4 py-2 bg-purple-600 text-white rounded-lg hover:bg-purple-700 transition-colors">
+                        Back to Conversations
+                    </button>
+                </div>
+            </div>
+        @elseif(request()->route('code'))
             @include('chat.conversation')
         @else
             <!-- Welcome Screen -->
@@ -196,8 +238,8 @@
 <script>
 let selectedUserId = null;
 
-function loadConversation(conversationId) {
-    window.location.href = `/chat/${conversationId}`;
+function loadConversation(conversationCode) {
+    window.location.href = `/chat/${conversationCode}`;
 }
 
 // New Conversation Modal Functions
@@ -309,7 +351,7 @@ document.getElementById('start-conversation-btn').addEventListener('click', asyn
         
         if (response.ok) {
             const result = await response.json();
-            window.location.href = `/chat/${result.conversation_id}`;
+            window.location.href = `/chat/${result.conversation_code}`;
         } else {
             const error = await response.json();
             alert(error.message || 'Failed to start conversation');

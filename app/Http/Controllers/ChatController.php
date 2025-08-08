@@ -34,15 +34,37 @@ class ChatController extends Controller
     }
 
     /**
-     * Show specific conversation.
+     * Show a specific conversation.
      */
-    public function show(Conversation $conversation)
+    public function show($code)
     {
+        $conversation = Conversation::findByCode($code);
+        
+        if (!$conversation) {
+            abort(404, 'Conversation not found.');
+        }
+        
         $user = Auth::user();
         
         // Check if user can access this conversation
         if (!$conversation->canAccess($user->id)) {
-            abort(403, 'Unauthorized access to conversation.');
+            // Get all conversations for the sidebar
+            $conversations = Conversation::where(function($query) use ($user) {
+                // User is a student in conversation
+                $query->where('user_id', $user->id);
+            })->orWhereHas('mentor', function($query) use ($user) {
+                // User is a mentor in conversation
+                $query->where('user_id', $user->id);
+            })
+            ->with(['mentor.user', 'user', 'latestMessage'])
+            ->orderBy('last_message_at', 'desc')
+            ->get();
+
+            return view('chat.index', [
+                'conversations' => $conversations,
+                'error' => 'You do not have permission to access this conversation.',
+                'errorType' => 'no_permission'
+            ]);
         }
 
         // Get all conversations for the sidebar
@@ -72,13 +94,25 @@ class ChatController extends Controller
     /**
      * Send a new message.
      */
-    public function sendMessage(Request $request, Conversation $conversation)
+    public function sendMessage(Request $request, $code)
     {
+        $conversation = Conversation::findByCode($code);
+        
+        if (!$conversation) {
+            abort(404, 'Conversation not found.');
+        }
+        
         $user = Auth::user();
         
         // Check if user can access this conversation
         if (!$conversation->canAccess($user->id)) {
-            abort(403, 'Unauthorized access to conversation.');
+            if ($request->expectsJson()) {
+                return response()->json([
+                    'success' => false,
+                    'message' => 'You do not have permission to send messages in this conversation.',
+                ], 403);
+            }
+            return redirect()->route('chat.index')->with('error', 'You do not have permission to send messages in this conversation.');
         }
 
         $request->validate([
@@ -90,7 +124,7 @@ class ChatController extends Controller
             'conversation_id' => $conversation->id,
             'sender_id' => $user->id,
             'type' => 'text',
-            'content' => $request->content,
+            'content' => $request->content, // Always store user's text message
         ];
 
         // Handle file upload
@@ -100,15 +134,10 @@ class ChatController extends Controller
             $filePath = $file->storeAs('chat_files', $fileName, 'public');
             
             $messageData['type'] = str_starts_with($file->getMimeType(), 'image/') ? 'image' : 'file';
-            $messageData['file_path'] = $filePath;
+            $messageData['file_path'] = $filePath; // Store file path in file_path field
             $messageData['file_name'] = $file->getClientOriginalName();
             $messageData['file_size'] = $file->getSize();
             $messageData['file_type'] = $file->getMimeType();
-            
-            // If it's just a file without content, remove the content field
-            if (!$request->content) {
-                unset($messageData['content']);
-            }
         }
 
         $message = Message::create($messageData);
@@ -195,7 +224,7 @@ class ChatController extends Controller
 
         return response()->json([
             'success' => true,
-            'conversation_id' => $conversation->id,
+            'conversation_code' => $conversation->unique_code,
         ]);
     }
 

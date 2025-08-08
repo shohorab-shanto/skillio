@@ -19,8 +19,8 @@ require base_path('/routes/mentor/dashboard.php');
 // Chat Routes
 Route::middleware(['auth'])->group(function () {
     Route::get('/chat', [ChatController::class, 'index'])->name('chat.index');
-    Route::get('/chat/{conversation}', [ChatController::class, 'show'])->name('chat.show');
-    Route::post('/chat/{conversation}/send', [ChatController::class, 'sendMessage'])->name('chat.send');
+    Route::get('/chat/{code}', [ChatController::class, 'show'])->name('chat.show');
+    Route::post('/chat/{code}/send', [ChatController::class, 'sendMessage'])->name('chat.send');
     Route::post('/chat/create', [ChatController::class, 'getOrCreateConversation'])->name('chat.create');
     
     // API route for user search

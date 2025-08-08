@@ -11,6 +11,7 @@ class Conversation extends Model
     protected $fillable = [
         'mentor_id',
         'user_id',
+        'unique_code',
         'status',
         'last_message_at',
     ];
@@ -87,5 +88,39 @@ class Conversation extends Model
         }
         
         return false;
+    }
+
+    /**
+     * Generate a unique 15-digit code for the conversation.
+     */
+    public static function generateUniqueCode()
+    {
+        do {
+            $code = str_pad(random_int(0, 999999999999999), 15, '0', STR_PAD_LEFT);
+        } while (self::where('unique_code', $code)->exists());
+        
+        return $code;
+    }
+
+    /**
+     * Find conversation by unique code.
+     */
+    public static function findByCode($code)
+    {
+        return self::where('unique_code', $code)->first();
+    }
+
+    /**
+     * Boot method to automatically generate unique code on creation.
+     */
+    protected static function boot()
+    {
+        parent::boot();
+        
+        static::creating(function ($conversation) {
+            if (empty($conversation->unique_code)) {
+                $conversation->unique_code = self::generateUniqueCode();
+            }
+        });
     }
 }

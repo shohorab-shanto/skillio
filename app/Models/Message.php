@@ -13,6 +13,7 @@ class Message extends Model
         'sender_id',
         'type',
         'content',
+        'file_path',
         'file_name',
         'file_size',
         'file_type',
@@ -68,8 +69,8 @@ class Message extends Model
      */
     public function getFileUrl()
     {
-        if ($this->isFile() && $this->content) {
-            return Storage::url($this->content);
+        if ($this->isFile() && $this->file_path) {
+            return Storage::url($this->file_path);
         }
         return null;
     }

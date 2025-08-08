@@ -86,9 +86,7 @@
                 <div class="flex flex-col {{ $isMyMessage ? 'items-end' : 'items-start' }}">
                     <!-- Message Bubble -->
                     <div class="relative {{ $isMyMessage ? 'bg-purple-600 text-white' : 'bg-white text-gray-900' }} rounded-2xl px-4 py-2 shadow-sm">
-                        @if($message->type == 'text')
-                            <p class="text-sm">{{ $message->content }}</p>
-                        @elseif($message->type == 'image')
+                        @if($message->type == 'image')
                             <div class="mb-2">
                                 <img src="{{ $message->getFileUrl() }}" alt="Shared image" 
                                      class="max-w-full h-auto rounded-lg cursor-pointer"
@@ -101,12 +99,11 @@
                             <div class="flex items-center space-x-2 p-2 {{ $isMyMessage ? 'bg-purple-700' : 'bg-gray-100' }} rounded-lg">
                                 <i class="fa-solid fa-file text-lg"></i>
                                 <div class="flex-1 min-w-0">
-                                    <p class="text-sm font-medium truncate">{{ $message->file_name }}</p>
                                     <p class="text-xs {{ $isMyMessage ? 'text-purple-200' : 'text-gray-500' }}">
-                                        {{ number_format($message->file_size / 1024, 1) }} KB
+                                        {{ $message->file_size ? number_format($message->file_size / 1024, 1) . ' KB' : 'File' }}
                                     </p>
                                 </div>
-                                <a href="{{ $message->getFileUrl() }}" download="{{ $message->file_name }}" 
+                                <a href="{{ $message->getFileUrl() }}" download="{{ $message->file_name ?? basename($message->file_path) }}" 
                                    class="text-sm font-medium hover:underline">
                                     Download
                                 </a>
@@ -114,6 +111,8 @@
                             @if($message->content)
                                 <p class="text-sm mt-2">{{ $message->content }}</p>
                             @endif
+                        @else
+                            <p class="text-sm">{{ $message->content }}</p>
                         @endif
                     </div>
                     
@@ -300,7 +299,7 @@ document.getElementById('message-form').addEventListener('submit', async functio
     }
     
     try {
-        const response = await fetch(`/chat/{{ $conversation->id }}/send`, {
+        const response = await fetch(`/chat/{{ $conversation->unique_code }}/send`, {
             method: 'POST',
             body: formData
         });

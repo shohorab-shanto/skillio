@@ -42,6 +42,9 @@
     
     <!-- Custom Styles Stack -->
     @stack('styles')
+    
+    <!-- Vite Assets -->
+    @vite(['resources/css/app.css', 'resources/js/app.js'])
 </head>
 
 <body class="bg-gradient-to-br from-purple-50 to-pink-50 min-h-screen">

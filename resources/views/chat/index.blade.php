@@ -83,7 +83,7 @@
                         $lastMessage = $conversation->latestMessage;
                     @endphp
                     <div class="conversation-item p-4 border-b border-gray-100 hover:bg-gray-50 cursor-pointer transition-colors {{ request()->route('code') == $conversation->unique_code ? 'bg-purple-50 border-r-4 border-r-purple-600' : '' }}"
-                         onclick="loadConversation('{{ $conversation->unique_code }}')">>
+                         onclick="loadConversation('{{ $conversation->unique_code }}')">
                         <div class="flex items-center space-x-3">
                             <!-- Avatar -->
                             <div class="relative">
@@ -125,7 +125,7 @@
                                         <span class="bg-purple-600 text-white text-xs rounded-full px-2 py-1 min-w-[20px] text-center">{{ $unreadCount }}</span>
                                     @endif
                                 </div>
-                                <p class="text-xs text-gray-500">{{ $otherUserRole }} • UI/UX Designer & Developer</p>
+                                <p class="text-xs text-gray-500">{{ $otherUserRole }}</p>
                             </div>
                         </div>
                     </div>

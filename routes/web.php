@@ -11,6 +11,24 @@ Route::get('/', function () {
     return view('welcome');
 });
 
+// WebSocket Connection Test (for development)
+Route::get('/test-websocket', function () {
+    return view('test-websocket');
+})->name('test.websocket');
+
+Route::get('/test-realtime', function () {
+    return view('test-realtime');
+})->name('test.realtime');
+
+// Debug route to check authentication
+Route::get('/debug/auth', function () {
+    return response()->json([
+        'authenticated' => auth()->check(),
+        'user' => auth()->user() ? auth()->user()->only(['id', 'name', 'email']) : null,
+        'session_id' => session()->getId(),
+    ]);
+})->name('debug.auth');
+
 require base_path('/routes/user/on-boarding.php');
 require base_path('/routes/user/dashboard.php');
 require base_path('/routes/mentor/on-boarding.php');
@@ -48,3 +66,6 @@ Route::middleware('auth')->group(function () {
 });
 
 require __DIR__.'/auth.php';
+
+// Include debug routes
+require __DIR__.'/debug-routes.php';

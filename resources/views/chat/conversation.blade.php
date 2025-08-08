@@ -301,10 +301,27 @@ document.getElementById('message-form').addEventListener('submit', async functio
     try {
         const response = await fetch(`/chat/{{ $conversation->unique_code }}/send`, {
             method: 'POST',
-            body: formData
+            body: formData,
+            headers: {
+                'X-Requested-With': 'XMLHttpRequest',
+                'Accept': 'application/json'
+            }
         });
         
+        console.log('Response status:', response.status);
+        console.log('Response headers:', response.headers);
+        
+        if (response.status === 302) {
+            console.error('Received 302 redirect - likely authentication issue');
+            alert('Session expired. Please refresh the page and try again.');
+            window.location.reload();
+            return;
+        }
+        
         if (response.ok) {
+            const result = await response.json();
+            console.log('Success response:', result);
+            
             // Clear form
             messageInput.value = '';
             messageInput.style.height = 'auto';
@@ -313,10 +330,27 @@ document.getElementById('message-form').addEventListener('submit', async functio
             document.getElementById('image-input').value = '';
             document.getElementById('file-preview').classList.add('hidden');
             
-            // Reload messages (in a real app, you'd use WebSockets)
-            location.reload();
+            // Add the message to chat immediately (optimistic update)
+            if (result.message) {
+                addMessageToChat({
+                    ...result.message,
+                    sender: {
+                        id: {{ auth()->id() }},
+                        name: '{{ auth()->user()->name }}'
+                    },
+                    formatted_time: new Date().toLocaleTimeString('en-US', { 
+                        hour: '2-digit', 
+                        minute: '2-digit', 
+                        hour12: false 
+                    }),
+                    file_url: result.message.file_path ? `/storage/${result.message.file_path}` : null
+                });
+                scrollToBottom();
+            }
         } else {
-            alert('Failed to send message. Please try again.');
+            const errorText = await response.text();
+            console.error('Error response:', response.status, errorText);
+            alert(`Failed to send message (${response.status}). Please try again.`);
         }
     } catch (error) {
         console.error('Error sending message:', error);
@@ -343,7 +377,188 @@ function closeImageModal() {
 document.addEventListener('DOMContentLoaded', function() {
     const container = document.getElementById('messages-container');
     container.scrollTop = container.scrollHeight;
+    
+    // Set up real-time messaging with Laravel Echo
+    setupRealtimeMessaging();
 });
+
+// Real-time messaging setup
+function setupRealtimeMessaging() {
+    console.log('Setting up real-time messaging...');
+    
+    if (typeof window.Echo !== 'undefined') {
+        console.log('Echo is available, setting up listeners...');
+        
+        const channelName = 'conversation.{{ $conversation->unique_code }}';
+        console.log('Subscribing to channel:', channelName);
+        
+        // Use ONLY private channel (remove public channel to avoid duplicates)
+        const channel = window.Echo.private(channelName);
+        
+        // Test channel subscription
+        channel.subscribed(() => {
+            console.log('Successfully subscribed to channel:', channelName);
+        });
+        
+        channel.error((error) => {
+            console.error('Channel subscription error:', error);
+        });
+        
+        // Listen for the message event (use ONLY one listener)
+        channel.listen('.message.sent', (e) => {
+            console.log('New message received via Echo:', e);
+            if (e.message && e.message.sender.id !== {{ auth()->id() }}) {
+                // Only add message if it's NOT from current user (avoid optimistic duplicate)
+                addMessageToChat(e.message);
+                scrollToBottom();
+            } else {
+                console.log('Ignoring own message to avoid duplicate');
+            }
+        });
+            
+        // Test if Echo connection is working
+        window.Echo.connector.pusher.connection.bind('connected', function() {
+            console.log('Pusher connected successfully');
+        });
+        
+        window.Echo.connector.pusher.connection.bind('disconnected', function() {
+            console.log('Pusher disconnected');
+        });
+        
+        window.Echo.connector.pusher.connection.bind('error', function(error) {
+            console.error('Pusher connection error:', error);
+        });
+        
+        // Log relevant pusher events for debugging
+        window.Echo.connector.pusher.bind_global(function(eventName, data) {
+            if (eventName !== 'pusher:pong' && eventName !== 'pusher:ping') {
+                console.log('Pusher event received:', eventName, data);
+            }
+        });
+        
+    } else {
+        console.error('Laravel Echo is not available');
+        console.log('Available window properties:', Object.keys(window));
+    }
+}
+
+// Add new message to chat
+function addMessageToChat(messageData) {
+    const messagesContainer = document.getElementById('messages-container');
+    const currentUserId = {{ auth()->id() }};
+    const isMyMessage = messageData.sender.id === currentUserId;
+    
+    // Check if message already exists (prevent duplicates)
+    const existingMessage = messagesContainer.querySelector(`[data-message-id="${messageData.id}"]`);
+    if (existingMessage) {
+        console.log('Message already exists, skipping duplicate:', messageData.id);
+        return;
+    }
+    
+    // Get other user info for avatar
+    @php
+        $currentUser = auth()->user();
+        $currentUserMentor = $currentUser->mentor ?? null;
+        
+        if ($conversation->user_id == $currentUser->id) {
+            $otherUser = $conversation->mentor->user;
+            $otherUserPhoto = $conversation->mentor->photo;
+        } else {
+            $otherUser = $conversation->user;
+            $otherUserPhoto = null;
+        }
+    @endphp
+    
+    const messageHtml = createMessageHtml(messageData, isMyMessage);
+    messagesContainer.insertAdjacentHTML('beforeend', messageHtml);
+}
+
+// Create message HTML
+function createMessageHtml(messageData, isMyMessage) {
+    const otherUserPhoto = @json($otherUserPhoto ?? null);
+    const currentUserMentorPhoto = @json($currentUserMentor->photo ?? null);
+    
+    let avatarHtml = '';
+    let myAvatarHtml = '';
+    
+    if (!isMyMessage) {
+        if (otherUserPhoto) {
+            avatarHtml = `<img src="{{ asset('storage/') }}/${otherUserPhoto}" alt="${messageData.sender.name}" class="w-8 h-8 rounded-full object-cover">`;
+        } else {
+            avatarHtml = `<div class="w-8 h-8 rounded-full bg-purple-100 flex items-center justify-center">
+                <i class="fa-solid fa-user text-purple-600 text-xs"></i>
+            </div>`;
+        }
+    }
+    
+    if (isMyMessage) {
+        if (currentUserMentorPhoto) {
+            myAvatarHtml = `<img src="{{ asset('storage/') }}/${currentUserMentorPhoto}" alt="{{ auth()->user()->name }}" class="w-8 h-8 rounded-full object-cover">`;
+        } else {
+            myAvatarHtml = `<div class="w-8 h-8 rounded-full bg-purple-100 flex items-center justify-center">
+                <i class="fa-solid fa-user text-purple-600 text-xs"></i>
+            </div>`;
+        }
+    }
+    
+    let messageContentHtml = '';
+    
+    if (messageData.type === 'image') {
+        messageContentHtml = `
+            <div class="mb-2">
+                <img src="${messageData.file_url}" alt="Shared image" 
+                     class="max-w-full h-auto rounded-lg cursor-pointer"
+                     onclick="openImageModal('${messageData.file_url}')">
+            </div>
+            ${messageData.content ? `<p class="text-sm">${messageData.content}</p>` : ''}
+        `;
+    } else if (messageData.type === 'file') {
+        messageContentHtml = `
+            <div class="flex items-center space-x-2 p-2 ${isMyMessage ? 'bg-purple-700' : 'bg-gray-100'} rounded-lg">
+                <i class="fa-solid fa-file text-lg"></i>
+                <div class="flex-1 min-w-0">
+                    <p class="text-xs ${isMyMessage ? 'text-purple-200' : 'text-gray-500'}">
+                        ${messageData.file_size ? Math.round(messageData.file_size / 1024) + ' KB' : 'File'}
+                    </p>
+                </div>
+                <a href="${messageData.file_url}" download="${messageData.file_name}" 
+                   class="text-sm font-medium hover:underline">
+                    Download
+                </a>
+            </div>
+            ${messageData.content ? `<p class="text-sm mt-2">${messageData.content}</p>` : ''}
+        `;
+    } else {
+        messageContentHtml = `<p class="text-sm">${messageData.content}</p>`;
+    }
+    
+    return `
+        <div class="flex ${isMyMessage ? 'justify-end' : 'justify-start'}" data-message-id="${messageData.id}">
+            <div class="flex items-start space-x-2 max-w-xs lg:max-w-md">
+                ${!isMyMessage ? `<div class="flex-shrink-0">${avatarHtml}</div>` : ''}
+                
+                <div class="flex flex-col ${isMyMessage ? 'items-end' : 'items-start'}">
+                    <div class="relative ${isMyMessage ? 'bg-purple-600 text-white' : 'bg-white text-gray-900'} rounded-2xl px-4 py-2 shadow-sm">
+                        ${messageContentHtml}
+                    </div>
+                    
+                    <div class="flex items-center mt-1 space-x-1">
+                        <span class="text-xs text-gray-500">${messageData.formatted_time}</span>
+                        ${isMyMessage ? '<span class="text-xs text-gray-500"><i class="fa-solid fa-check"></i></span>' : ''}
+                    </div>
+                </div>
+                
+                ${isMyMessage ? `<div class="flex-shrink-0">${myAvatarHtml}</div>` : ''}
+            </div>
+        </div>
+    `;
+}
+
+// Scroll to bottom
+function scrollToBottom() {
+    const container = document.getElementById('messages-container');
+    container.scrollTop = container.scrollHeight;
+}
 
 // Mobile navigation
 function goBackToConversations() {

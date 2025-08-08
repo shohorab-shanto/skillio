@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Events\MessageSent;
 use App\Models\Conversation;
 use App\Models\Message;
 use App\Models\User;
@@ -148,7 +149,8 @@ class ChatController extends Controller
         // Load sender relationship for response
         $message->load('sender');
 
-        // TODO: Broadcast message with Reverb here
+        // Broadcast message with Reverb
+        broadcast(new MessageSent($message))->toOthers();
 
         if ($request->expectsJson()) {
             return response()->json([

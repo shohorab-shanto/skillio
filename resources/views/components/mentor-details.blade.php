@@ -46,7 +46,11 @@
             <span class="px-6 py-2 bg-gray-100 text-gray-800 rounded-full whitespace-nowrap">Content Creation</span>
         </div>
 
-        <div>
+        <div class="flex gap-3">
+            <button onclick="startConversationWithMentor({{ $mentor->user_id ?? 1 }})" 
+                    class="px-4 py-2 border border-purple-700 text-purple-700 hover:bg-purple-700 hover:text-white rounded transition-colors duration-300 text-center whitespace-nowrap">
+                <i class="fa-solid fa-message mr-2"></i>Message
+            </button>
             <a href="#"
                 class="block px-4 py-2 border hover:border-purple-700 hover:bg-base-100 hover:text-purple-700 rounded bg-purple-700 text-white transition-colors duration-300 text-center whitespace-nowrap">
                 Review
@@ -60,3 +64,51 @@
 
 
 </section>
+
+<script>
+async function startConversationWithMentor(mentorUserId) {
+    // Check if user is logged in
+    if (!document.querySelector('meta[name="csrf-token"]') && !document.querySelector('input[name="_token"]')) {
+        alert('Please log in to start a conversation.');
+        window.location.href = '/login';
+        return;
+    }
+    
+    try {
+        const token = document.querySelector('meta[name="csrf-token"]')?.getAttribute('content') || 
+                     document.querySelector('input[name="_token"]')?.value;
+        
+        if (!token) {
+            alert('Please log in to start a conversation.');
+            window.location.href = '/login';
+            return;
+        }
+        
+        const response = await fetch('/chat/create', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'Accept': 'application/json',
+                'X-CSRF-TOKEN': token
+            },
+            body: JSON.stringify({
+                other_user_id: mentorUserId
+            })
+        });
+        
+        if (response.ok) {
+            const result = await response.json();
+            window.location.href = `/chat/${result.conversation_id}`;
+        } else if (response.status === 401) {
+            alert('Please log in to start a conversation.');
+            window.location.href = '/login';
+        } else {
+            const error = await response.json();
+            alert(error.message || 'Failed to start conversation. Please try again.');
+        }
+    } catch (error) {
+        console.error('Error starting conversation:', error);
+        alert('Failed to start conversation. Please try again.');
+    }
+}
+</script>

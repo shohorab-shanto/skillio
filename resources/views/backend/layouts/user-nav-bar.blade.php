@@ -30,7 +30,7 @@
             <span class="sidebar-label">Find Mentors</span>
         </a>
         
-        <a href="{{ route('user.chat.index') }}" class="sidebar-item {{ request()->routeIs('user.chat*') ? 'active' : '' }}">
+        <a href="{{ route('chat.index') }}" class="sidebar-item {{ request()->routeIs('chat*') ? 'active' : '' }}">
             <i class="fa-regular fa-comment-dots"></i>
             <span class="sidebar-label">Messages</span>
         </a>

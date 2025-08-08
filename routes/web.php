@@ -5,6 +5,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\LanguageController;
 use App\Http\Controllers\SocialAuthController;
+use App\Http\Controllers\ChatController;
 
 Route::get('/', function () {
     return view('welcome');
@@ -14,6 +15,17 @@ require base_path('/routes/user/on-boarding.php');
 require base_path('/routes/user/dashboard.php');
 require base_path('/routes/mentor/on-boarding.php');
 require base_path('/routes/mentor/dashboard.php');
+
+// Chat Routes
+Route::middleware(['auth'])->group(function () {
+    Route::get('/chat', [ChatController::class, 'index'])->name('chat.index');
+    Route::get('/chat/{conversation}', [ChatController::class, 'show'])->name('chat.show');
+    Route::post('/chat/{conversation}/send', [ChatController::class, 'sendMessage'])->name('chat.send');
+    Route::post('/chat/create', [ChatController::class, 'getOrCreateConversation'])->name('chat.create');
+    
+    // API route for user search
+    Route::get('/api/users/search', [ChatController::class, 'searchUsers'])->name('api.users.search');
+});
 
 Route::post('/lang/switch', [LanguageController::class, 'switch'])->name('lang.switch');
 // Google

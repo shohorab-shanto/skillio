@@ -25,7 +25,7 @@
                         <span class="sidebar-label">Profile</span>
                     </a>
                     
-                    <a href="#" class="sidebar-item">
+                    <a href="{{ route('chat.index') }}" class="sidebar-item {{ request()->routeIs('chat*') ? 'active' : '' }}">
                         <i class="fa-regular fa-comment-dots"></i>
                         <span class="sidebar-label">Student Chat</span>
                     </a>

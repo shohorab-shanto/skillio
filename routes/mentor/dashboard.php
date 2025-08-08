@@ -35,4 +35,5 @@ Route::middleware(['mentor_auth'])->group(function () {
     Route::get('/mentor/time-slots/{time_slot}/edit', [TimeSlotController::class, 'edit'])->name('mentor.time-slots.edit');
     Route::put('/mentor/time-slots/{time_slot}', [TimeSlotController::class, 'update'])->name('mentor.time-slots.update');
     Route::delete('/mentor/time-slots/{time_slot}', [TimeSlotController::class, 'destroy'])->name('mentor.time-slots.destroy');
+    
 });

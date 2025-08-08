@@ -39,6 +39,9 @@
 
     <!-- Custom CSS -->
     <link rel="stylesheet" href="{{ asset('assests/css/admin.css') }}">
+    
+    <!-- Custom Styles Stack -->
+    @stack('styles')
 </head>
 
 <body class="bg-gradient-to-br from-purple-50 to-pink-50 min-h-screen">
@@ -321,6 +324,9 @@
 
     <!-- Enhanced JavaScript for Sidebar and Mobile Menu -->
     <script src="{{ asset('assests/js/admin.js') }}"></script>
+    
+    <!-- Custom Scripts Stack -->
+    @stack('scripts')
 
 </body>
 

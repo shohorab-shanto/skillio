@@ -5,27 +5,27 @@
             <span class="sidebar-label">Dashboard</span>
         </a>
         
-        <a href="{{ route('user.courses.index') }}" class="sidebar-item {{ request()->routeIs('user.courses*') ? 'active' : '' }}">
+        <a href="#" class="sidebar-item {{ request()->routeIs('user.courses*') ? 'active' : '' }}">
             <i class="fa-solid fa-book-open"></i>
             <span class="sidebar-label">Browse Courses</span>
         </a>
         
-        <a href="{{ route('user.my-courses.index') }}" class="sidebar-item {{ request()->routeIs('user.my-courses*') ? 'active' : '' }}">
+        <a href="#" class="sidebar-item {{ request()->routeIs('user.my-courses*') ? 'active' : '' }}">
             <i class="fa-solid fa-graduation-cap"></i>
             <span class="sidebar-label">My Courses</span>
         </a>
         
-        <a href="{{ route('user.sessions.index') }}" class="sidebar-item {{ request()->routeIs('user.sessions*') ? 'active' : '' }}">
+        <a href="#" class="sidebar-item {{ request()->routeIs('user.sessions*') ? 'active' : '' }}">
             <i class="fa-solid fa-video"></i>
             <span class="sidebar-label">My Sessions</span>
         </a>
         
-        <a href="{{ route('user.bookings.index') }}" class="sidebar-item {{ request()->routeIs('user.bookings*') ? 'active' : '' }}">
+        <a href="#" class="sidebar-item {{ request()->routeIs('user.bookings*') ? 'active' : '' }}">
             <i class="fa-solid fa-calendar-check"></i>
             <span class="sidebar-label">My Bookings</span>
         </a>
         
-        <a href="{{ route('user.mentors.index') }}" class="sidebar-item {{ request()->routeIs('user.mentors*') ? 'active' : '' }}">
+        <a href="#" class="sidebar-item {{ request()->routeIs('user.mentors*') ? 'active' : '' }}">
             <i class="fa-solid fa-chalkboard-user"></i>
             <span class="sidebar-label">Find Mentors</span>
         </a>
@@ -35,12 +35,12 @@
             <span class="sidebar-label">Messages</span>
         </a>
         
-        <a href="{{ route('user.payments.index') }}" class="sidebar-item {{ request()->routeIs('user.payments*') ? 'active' : '' }}">
+        <a href="#" class="sidebar-item {{ request()->routeIs('user.payments*') ? 'active' : '' }}">
             <i class="fa-solid fa-credit-card"></i>
             <span class="sidebar-label">Payment History</span>
         </a>
         
-        <a href="{{ route('user.profile.edit') }}" class="sidebar-item {{ request()->routeIs('user.profile*') ? 'active' : '' }}">
+        <a href="#" class="sidebar-item {{ request()->routeIs('user.profile*') ? 'active' : '' }}">
             <i class="fa-regular fa-circle-user"></i>
             <span class="sidebar-label">Profile</span>
         </a>

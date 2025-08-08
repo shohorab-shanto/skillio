@@ -7,12 +7,6 @@
         <div>
             <h1 class="text-2xl font-bold text-gray-900">Chat</h1>
         </div>
-        <div class="flex items-center space-x-3">
-            <button class="relative p-2 text-gray-600 hover:text-gray-900 transition-colors">
-                <i class="fa-solid fa-bell text-xl"></i>
-                <span class="absolute -top-1 -right-1 bg-purple-600 text-white text-xs rounded-full h-5 w-5 flex items-center justify-center">3</span>
-            </button>
-        </div>
     </div>
 @endsection
 

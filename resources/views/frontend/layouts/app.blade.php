@@ -33,21 +33,32 @@
     <!-- Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link
-        href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap"
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap"
         rel="stylesheet">
 
-    <!-- Custom CSS -->
-    <link rel="stylesheet" href="{{ asset('assests/css/admin.css') }}">
+        <style>
+        * {
+            font-family: 'Poppins', sans-serif !important;
+
+        }
+
+        body {
+            background-color: #f7f7f7;
+        }
+    </style>
+
     
     <!-- Custom Styles Stack -->
     @stack('styles')
+    
+    <!-- Navbar Styles -->
+    @yield('navbar-style')
     
     <!-- Vite Assets -->
     @vite(['resources/css/app.css', 'resources/js/app.js'])
 </head>
 
-<body class="bg-gradient-to-br from-purple-50 to-pink-50">
+<body>
 
     <!-- Navigation Bar -->
     @include('frontend.layouts.nav-bar')

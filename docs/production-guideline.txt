@@ -1,3 +1,5 @@
+composer update or install
+php artisan migrate
 npm run build
 Need queue worker (php artisan queue:work)
 Need WebSocket server (php artisan reverb:start)

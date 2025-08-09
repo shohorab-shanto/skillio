@@ -7,9 +7,7 @@ use App\Http\Controllers\LanguageController;
 use App\Http\Controllers\SocialAuthController;
 use App\Http\Controllers\ChatController;
 
-Route::get('/', function () {
-    return view('welcome');
-});
+Route::get('/', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 
 // WebSocket Connection Test (for development)
 Route::get('/test-websocket', function () {

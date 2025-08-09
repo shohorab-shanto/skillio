@@ -5,46 +5,35 @@
             <span class="sidebar-label">Dashboard</span>
         </a>
         
-        <a href="#" class="sidebar-item {{ request()->routeIs('user.courses*') ? 'active' : '' }}">
-            <i class="fa-solid fa-book-open"></i>
-            <span class="sidebar-label">Browse Courses</span>
-        </a>
-        
         <a href="#" class="sidebar-item {{ request()->routeIs('user.my-courses*') ? 'active' : '' }}">
             <i class="fa-solid fa-graduation-cap"></i>
-            <span class="sidebar-label">My Courses</span>
+            <span class="sidebar-label">Courses</span>
         </a>
         
         <a href="#" class="sidebar-item {{ request()->routeIs('user.sessions*') ? 'active' : '' }}">
             <i class="fa-solid fa-video"></i>
-            <span class="sidebar-label">My Sessions</span>
+            <span class="sidebar-label">Sessions</span>
         </a>
-        
-        <a href="#" class="sidebar-item {{ request()->routeIs('user.bookings*') ? 'active' : '' }}">
-            <i class="fa-solid fa-calendar-check"></i>
-            <span class="sidebar-label">My Bookings</span>
-        </a>
-        
-        <a href="#" class="sidebar-item {{ request()->routeIs('user.mentors*') ? 'active' : '' }}">
-            <i class="fa-solid fa-chalkboard-user"></i>
-            <span class="sidebar-label">Find Mentors</span>
-        </a>
-        
-        <a href="{{ route('chat.index') }}" class="sidebar-item {{ request()->routeIs('chat*') ? 'active' : '' }}">
-            <i class="fa-regular fa-comment-dots"></i>
-            <span class="sidebar-label">Messages</span>
-        </a>
-        
+
         <a href="#" class="sidebar-item {{ request()->routeIs('user.payments*') ? 'active' : '' }}">
             <i class="fa-solid fa-credit-card"></i>
             <span class="sidebar-label">Payment History</span>
         </a>
         
-        <a href="#" class="sidebar-item {{ request()->routeIs('user.profile*') ? 'active' : '' }}">
+        <a href="{{ route('chat.index') }}" class="sidebar-item {{ request()->routeIs('chat*') ? 'active' : '' }}">
+            <i class="fa-regular fa-comment-dots"></i>
+            <span class="sidebar-label">Chat</span>
+        </a>
+
+
+        <a href="{{ route('user.profile.show') }}" class="sidebar-item {{ request()->routeIs('user.profile*') ? 'active' : '' }}">
             <i class="fa-regular fa-circle-user"></i>
             <span class="sidebar-label">Profile</span>
         </a>
-        
+        <a href="{{ route('user.onboarding.category_service') }}" class="sidebar-item {{ request()->routeIs('user.preferences*') ? 'active' : '' }}">
+            <i class="fa-solid fa-sliders"></i>
+            <span class="sidebar-label">Preferences</span>
+        </a>
         <div style="border-top: 1px solid #f3f4f6; margin: 16px 8px;"></div>
         
         <button onclick="showLogoutModal()" class="sidebar-item w-full text-left">

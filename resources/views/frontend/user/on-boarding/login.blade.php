@@ -10,13 +10,13 @@
         <!-- Left Panel -->
         <div class="grid content-between px-8 py-12 md:px-24 bg-gradient-to-b from-pink-50 to-white">
             <!-- Logo header -->
-            <a href="/"><img src="{{ asset('assests/images/logo.png') }}" alt=""></a>
+            <a href="/"><img src="{{ asset('assets/images/logo.png') }}" alt=""></a>
             {{-- center --}}
             <div>
                 <div class="max-w-md w-full mx-auto space-y-6">
                     <!-- Icon -->
                     <div class="w-20 h-20 bg-gray-100 rounded-full flex items-center justify-center mx-auto text-xl">
-                        <img src="{{ asset('assests/images/login.png') }}" alt="">
+                        <img src="{{ asset('assets/images/login.png') }}" alt="">
                     </div>
 
                     <h2 class="text-xl font-semibold text-center">{{ __('trans.login_heading') }}</h2>
@@ -31,7 +31,7 @@
                         </a>
                         <a href="{{ route('login.google') }}"
                             class="flex-1 px-4 py-2 border-none bg-base-100 rounded-md flex items-center justify-center gap-2 text-sm">
-                            <img src="{{ asset('assests/images/google.png') }}" class="w-4 h-4" />
+                            <img src="{{ asset('assets/images/google.png') }}" class="w-4 h-4" />
                         </a>
                     </div>
 
@@ -110,14 +110,14 @@
             <!-- bottom Footer -->
             <div class="mt-28 flex justify-around text-xs text-gray-400 text-center">
                 <h2>© 2025 Skillio Course</h2>
-                <h2>🌐 ENG <span><img src="{{ asset('assests/down-arrow-svgrepo-com.svg') }}" alt="Dropdown arrow" class="w-2 h-2 inline-block" /></span></h2>
+                <h2>🌐 ENG <span><img src="{{ asset('assets/down-arrow-svgrepo-com.svg') }}" alt="Dropdown arrow" class="w-2 h-2 inline-block" /></span></h2>
             </div>
         </div>
 
         <!-- Right Panel -->
         <div class="hidden md:flex w-full max-h-screen p-2">
             <!-- Clouds (Use your own assets or local ones) -->
-            <img src="{{ asset('assests/images/login-image-cloud.png') }}" alt=""class="" />
+            <img src="{{ asset('assets/images/login-image-cloud.png') }}" alt=""class="" />
         </div>
     </div>
 @endsection

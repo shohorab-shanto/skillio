@@ -9,7 +9,7 @@
     <div class="flex-1 flex flex-col items-center justify-center">
         <!-- Logo and Title -->
         <a href="/" class="mt-8 mb-2">
-            <img src="{{ asset('assests/images/logo.png') }}" alt="" class="mx-auto mt-20">
+            <img src="{{ asset('assets/images/logo.png') }}" alt="" class="mx-auto mt-20">
         </a>
         <h2 class="text-2xl md:text-3xl font-semibold text-center mb-8 mt-2">{{ __('trans.in_person_or_online_heading') }}</h2>
 
@@ -20,7 +20,7 @@
                 <label class="flex-1 cursor-pointer group">
                     <input type="radio" name="education_type" value="in-person" class="peer sr-only" {{ old('education_type', isset($selectedEducationType) ? $selectedEducationType : null) == 'in-person' ? 'checked' : '' }}>
                     <div class="flex flex-row items-center border-2 border-transparent peer-checked:border-purple-600 rounded-xl bg-white px-6 py-5 transition-all duration-200 shadow-sm peer-checked:shadow-lg hover:border-purple-400">
-                        <img src="{{ asset('assests/images/Layer_1.png') }}" alt="In-person education" class="w-12 h-12 mr-4">
+                        <img src="{{ asset('assets/images/Layer_1.png') }}" alt="In-person education" class="w-12 h-12 mr-4">
                         <div>
                             <span class="font-semibold text-base text-gray-900 mb-1 block">{{ __('trans.in_person_education') }}</span>
                             <span class="text-sm text-gray-500 text-left block">{{ __('trans.attend_classes_physically') }}</span>
@@ -30,7 +30,7 @@
                 <label class="flex-1 cursor-pointer group">
                     <input type="radio" name="education_type" value="online" class="peer sr-only" {{ old('education_type', isset($selectedEducationType) ? $selectedEducationType : null) == 'online' ? 'checked' : '' }}>
                     <div class="flex flex-row items-center border-2 border-transparent peer-checked:border-purple-600 rounded-xl bg-white px-6 py-5 transition-all duration-200 shadow-sm peer-checked:shadow-lg hover:border-purple-400">
-                        <img src="{{ asset('assests/images/Layer_1.png') }}" alt="Online education" class="w-12 h-12 mr-4">
+                        <img src="{{ asset('assets/images/Layer_1.png') }}" alt="Online education" class="w-12 h-12 mr-4">
                         <div>
                             <span class="font-semibold text-base text-gray-900 mb-1 block">{{ __('trans.online_education') }}</span>
                             <span class="text-sm text-gray-500 text-left block">{{ __('trans.learn_remotely') }}</span>
@@ -58,7 +58,7 @@
 
     <!-- Footer -->
     <div class="mb-2 md:mb-6">
-        @include('frontend.layouts.footer')
+        @include('frontend.layouts.footer-onboard')
     </div>
 </div>
 @endsection

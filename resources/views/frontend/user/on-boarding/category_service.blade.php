@@ -9,7 +9,7 @@
     <div class="flex-1 flex flex-col items-center justify-center">
         <!-- Logo -->
         <a href="/" class="mt-8 mb-2">
-            <img src="{{ asset('assests/images/logo.png') }}" alt="" class="mx-auto mt-20">
+            <img src="{{ asset('assets/images/logo.png') }}" alt="" class="mx-auto mt-20">
         </a>
         <h2 class="text-2xl md:text-3xl font-semibold text-center mb-4 mt-2">{{ __('trans.category_service_heading') }}</h2>
         <p class="text-center mb-6 text-[#605C6D]">
@@ -30,7 +30,7 @@
                                 @if(!empty($category->image))
                                     <img src="{{ asset($category->image) }}" alt="{{ $category->name }}" class="w-12 h-12 mr-4">
                                 @else
-                                    <img src="{{ asset('assests/images/Layer_1.png') }}" alt="" class="w-12 h-12 mr-4">
+                                    <img src="{{ asset('assets/images/Layer_1.png') }}" alt="" class="w-12 h-12 mr-4">
                                 @endif
                                 <div>
                                     <h1 class="font-bold text-base text-gray-900 mb-1">{{ $category->name }}</h1>
@@ -62,7 +62,7 @@
     </div>
     <!-- bottom Footer -->
     <div class="mb-2 md:mb-6">
-        @include('frontend.layouts.footer')
+        @include('frontend.layouts.footer-onboard')
     </div>
 </div>
 @endsection

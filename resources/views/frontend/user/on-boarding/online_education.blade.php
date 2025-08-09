@@ -9,7 +9,7 @@
     <div class="flex-1 flex flex-col items-center justify-center">
         <!-- Logo and Title -->
         <a href="/" class="mt-8 mb-2">
-            <img src="{{ asset('assests/images/logo.png') }}" alt="" class="mx-auto mt-20">
+            <img src="{{ asset('assets/images/logo.png') }}" alt="" class="mx-auto mt-20">
         </a>
         <h2 class="text-2xl md:text-3xl font-semibold text-center mb-8 mt-2">{{ __('trans.online_education_options') }}</h2>
 
@@ -26,7 +26,7 @@
                 <label class="flex-1 cursor-pointer group">
                     <input type="radio" name="education_option" value="courses" class="peer sr-only" {{ ($selectedOption === 'courses' || !$selectedOption) ? 'checked' : '' }}>
                     <div class="flex flex-row items-center border-2 border-transparent peer-checked:border-purple-600 rounded-xl bg-white px-6 py-5 transition-all duration-200 shadow-sm peer-checked:shadow-lg hover:border-purple-400">
-                        <img src="{{ asset('assests/images/Layer_1.png') }}" alt="Course from a mentor" class="w-12 h-12 mr-4">
+                        <img src="{{ asset('assets/images/Layer_1.png') }}" alt="Course from a mentor" class="w-12 h-12 mr-4">
                         <div>
                             <span class="font-semibold text-base text-gray-900 mb-1 block">{{ __('trans.course_from_mentor') }}</span>
                             <span class="text-sm text-gray-500 text-left block">{{ __('trans.learn_through_mentor') }}</span>
@@ -36,7 +36,7 @@
                 <label class="flex-1 cursor-pointer group">
                     <input type="radio" name="education_option" value="mentoring" class="peer sr-only" {{ $selectedOption === 'mentoring' ? 'checked' : '' }}>
                     <div class="flex flex-row items-center border-2 border-transparent peer-checked:border-purple-600 rounded-xl bg-white px-6 py-5 transition-all duration-200 shadow-sm peer-checked:shadow-lg hover:border-purple-400">
-                        <img src="{{ asset('assests/images/Layer_1.png') }}" alt="One-on-one mentoring" class="w-12 h-12 mr-4">
+                        <img src="{{ asset('assets/images/Layer_1.png') }}" alt="One-on-one mentoring" class="w-12 h-12 mr-4">
                         <div>
                             <span class="font-semibold text-base text-gray-900 mb-1 block">{{ __('trans.one_on_one_mentoring') }}</span>
                             <span class="text-sm text-gray-500 text-left block">{{ __('trans.get_direct_support') }}</span>
@@ -46,7 +46,7 @@
                 <label class="flex-1 cursor-pointer group">
                     <input type="radio" name="education_option" value="both" class="peer sr-only" {{ $selectedOption === 'both' ? 'checked' : '' }}>
                     <div class="flex flex-row items-center border-2 border-transparent peer-checked:border-purple-600 rounded-xl bg-white px-6 py-5 transition-all duration-200 shadow-sm peer-checked:shadow-lg hover:border-purple-400">
-                        <img src="{{ asset('assests/images/Layer_1.png') }}" alt="Both combined" class="w-12 h-12 mr-4">
+                        <img src="{{ asset('assets/images/Layer_1.png') }}" alt="Both combined" class="w-12 h-12 mr-4">
                         <div>
                             <span class="font-semibold text-base text-gray-900 mb-1 block">{{ __('trans.both_combined') }}</span>
                             <span class="text-sm text-gray-500 text-left block">{{ __('trans.access_course_and_mentoring') }}</span>
@@ -74,7 +74,7 @@
 
     <!-- Footer -->
     <div class="mb-2 md:mb-6">
-        @include('frontend.layouts.footer')
+        @include('frontend.layouts.footer-onboard')
     </div>
 </div>
 @endsection

@@ -5,13 +5,13 @@
             <div class="flex-shrink-0">
                 <a href="{{ route('home') }}" class="flex items-center">
                     <span class="text-2xl font-bold drop-shadow-sm">
-                        <img src="{{ asset('assests/images/logo.png') }}" alt="logo">
+                        <img src="{{ asset('assets/images/logo.png') }}" alt="logo">
                     </span>
                 </a>
             </div>
 
-            <!-- Desktop Navigation -->
-            <div class="hidden md:flex items-center space-x-6">
+            <!-- Desktop Navigation (Only Large Screens) -->
+            <div class="hidden lg:flex items-center space-x-6">
                 <!-- About Us Dropdown -->
                 <div class="relative group">
                     <button class="nav-item flex items-center gap-1 text-gray-700 hover:text-purple-700 transition-colors duration-300 font-medium drop-shadow-sm focus:outline-none">
@@ -36,8 +36,8 @@
                 <a href="#" class="nav-item text-gray-700 hover:text-purple-700 transition-colors duration-300 drop-shadow-sm">FAQ</a>
             </div>
 
-            <!-- Search Bar + Login Button -->
-            <div class="hidden md:flex items-center gap-3">
+            <!-- Search Bar + Login Button (Only Large Screens) -->
+            <div class="hidden lg:flex items-center gap-3">
                 <div class="relative">
                     <div class="absolute inset-y-0 left-0 pl-2 flex items-center pointer-events-none">
                         <svg class="h-4 w-4 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -52,8 +52,8 @@
                 </a>
             </div>
 
-            <!-- Mobile menu button -->
-            <div class="md:hidden">
+            <!-- Mobile menu button (Mobile + Tablet) -->
+            <div class="lg:hidden">
                 <button id="mobile-menu-button" class="text-purple-700 hover:text-purple-600 transition-colors duration-300 drop-shadow-sm focus:outline-none">
                     <svg class="h-6 w-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
@@ -62,8 +62,8 @@
             </div>
         </div>
 
-        <!-- Mobile Navigation -->
-        <div id="mobile-menu" class="md:hidden hidden">
+        <!-- Mobile Navigation (Mobile + Tablet) -->
+        <div id="mobile-menu" class="lg:hidden hidden">
             <div class="px-6 pb-4 space-y-3 bg-white border-t border-gray-100">
                 <!-- Mobile Search -->
                 <div class="px-3 py-2">
@@ -137,7 +137,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
                     // Close mobile menu on window resize
         window.addEventListener('resize', function() {
-            if (window.innerWidth >= 768) {
+            if (window.innerWidth >= 1024) {
                 mobileMenu.classList.add('hidden');
                 mobileAboutMenu.classList.add('hidden');
                 mobileAboutArrow.textContent = '▼';

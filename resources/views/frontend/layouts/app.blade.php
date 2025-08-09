@@ -62,10 +62,10 @@
 
     <!-- Navigation Bar -->
     @include('frontend.layouts.nav-bar')
+    
+    @yield('content')
 
-    <main class="pt-16">
-        @yield('content')
-    </main>
+    @include('frontend.layouts.footer')
 
     <!-- Custom Scripts Stack -->
     @stack('scripts')

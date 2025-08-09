@@ -14,12 +14,12 @@
 @endsection
 
 @section('content')
-@include('frontend.home.hero')
-@include('frontend.home.works-and-offers')
-@include('frontend.home.different')
-@include('frontend.home.potential')
-    <div class="container mx-auto">
-        <h1 class="text-4xl font-bold">Welcome to Skillio</h1>
-        <p class="mt-4">Your journey to skill mastery starts here.</p>
-    </div>
+    @include('frontend.home.hero')
+    @include('frontend.home.works-and-offers')
+    @include('frontend.home.different')
+    @include('frontend.home.potential')
+    @include('frontend.home.perfect-mentor')
+    @include('frontend.home.popular-courses')
+    @include('frontend.home.review')
+    @include('frontend.home.question-answer')
 @endsection

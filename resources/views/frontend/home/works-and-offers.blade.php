@@ -1,4 +1,4 @@
-<section class="mb-20">
+<section class="mb-20 px-6">
     <section class="container mx-auto mb-10">
         <div class="skillio-work-head text-center mb-12">
             <x-section-header title="How Skillio Works"
@@ -13,7 +13,7 @@
             <!-- Card Items 01 -->
             <div class="card bg-base-100 w-full shadow-sm">
                 <figure class="px-10 pt-10">
-                    <img src="{{ asset('assests/images/frame1.png') }}" alt="right" class="rounded-xl" />
+                    <img src="{{ asset('assets/images/frame1.png') }}" alt="right" class="rounded-xl" />
                 </figure>
                 <div class="card-body items-center text-center">
                     <h2 class="card-title">Register & Get Verified</h2>
@@ -26,7 +26,7 @@
             <!-- Card items 02 -->
             <div class="card bg-base-100 w-full shadow-sm">
                 <figure class="px-10 pt-10">
-                    <img src="{{ asset('assests/images/fram2.png') }}" alt="people" class="rounded-xl" />
+                    <img src="{{ asset('assets/images/fram2.png') }}" alt="people" class="rounded-xl" />
                 </figure>
                 <div class="card-body items-center text-center">
                     <h2 class="card-title">
@@ -42,7 +42,7 @@
             <!-- Card items 03 -->
             <div class="card bg-base-100 w-full shadow-sm">
                 <figure class="px-10 pt-10">
-                    <img src="{{ asset('assests/images/frame3.png') }}" alt="earn" class="rounded-xl" />
+                    <img src="{{ asset('assets/images/frame3.png') }}" alt="earn" class="rounded-xl" />
                 </figure>
                 <div class="card-body items-center text-center">
                     <h2 class="card-title">Earn & Inspire</h2>
@@ -55,21 +55,16 @@
         </div>
     </section>
     <section>
-        <div class="skillio-different-head">
-            <h1 class="text-6xl font-bold text-center mb-8 pt-24">
-                What Does Skillio Offer?
-            </h1>
-            <p class="text-center mb-9">
-                Skillio connects learners with expert mentors and interactive
-                courses <br />
-                both online and offline. Transform your learning journey today.
-            </p>
-        </div>
+        <x-section-header 
+            title="What Does Skillio Offer?" 
+            subtitle="Skillio connects learners with expert mentors and interactive courses both online and offline. Transform your learning journey today." 
+            class="pt-24 mb-9"
+        />
         <div class="max-w-[1200px] w-full mx-auto grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-y-8 gap-x-6 justify-items-center pt-5">
             <!-- Card items 01 -->
             <div class="card bg-base-100 w-full shadow-sm">
                 <figure class="px-10 pt-10">
-                    <img src="{{ asset('assests/images/SD-1.png') }}" alt="Shoes" class="rounded-xl" />
+                    <img src="{{ asset('assets/images/SD-1.png') }}" alt="Shoes" class="rounded-xl" />
                 </figure>
                 <div class="card-body items-center text-center">
                     <h2 class="card-title">Verified Mentors</h2>
@@ -81,7 +76,7 @@
             <!-- Card items 02 -->
             <div class="card bg-base-100 w-full shadow-sm">
                 <figure class="px-10 pt-10">
-                    <img src="{{ asset('assests/images/SD-2.png') }}" alt="Shoes" class="rounded-xl" />
+                    <img src="{{ asset('assets/images/SD-2.png') }}" alt="Shoes" class="rounded-xl" />
                 </figure>
                 <div class="card-body items-center text-center">
                     <h2 class="card-title">Personalized Recommendations</h2>
@@ -93,7 +88,7 @@
             <!-- Card items 03 -->
             <div class="card bg-base-100 w-full shadow-sm">
                 <figure class="px-10 pt-10">
-                    <img src="{{ asset('assests/images/SD-3.png') }}" alt="Shoes" class="rounded-xl" />
+                    <img src="{{ asset('assets/images/SD-3.png') }}" alt="Shoes" class="rounded-xl" />
                 </figure>
                 <div class="card-body items-center text-center">
                     <h2 class="card-title">Online + In-Person Options</h2>
@@ -105,7 +100,7 @@
             <!-- Card items 04 -->
             <div class="card bg-base-100 w-full shadow-sm">
                 <figure class="px-10 pt-10">
-                    <img src="{{ asset('assests/images/SD-4.png') }}" alt="Shoes" class="rounded-xl" />
+                    <img src="{{ asset('assets/images/SD-4.png') }}" alt="Shoes" class="rounded-xl" />
                 </figure>
                 <div class="card-body items-center text-center">
                     <h2 class="card-title">Secure In-App Chat</h2>
@@ -117,7 +112,7 @@
             <!-- Card items 05 -->
             <div class="card bg-base-100 w-full shadow-sm">
                 <figure class="px-10 pt-10">
-                    <img src="{{ asset('assests/images/SD-5.png') }}" alt="Shoes" class="rounded-xl" />
+                    <img src="{{ asset('assets/images/SD-5.png') }}" alt="Shoes" class="rounded-xl" />
                 </figure>
                 <div class="card-body items-center text-center">
                     <h2 class="card-title">Quality Controlled Content</h2>
@@ -129,7 +124,7 @@
             <!-- Card items 06 -->
             <div class="card bg-base-100 w-full shadow-sm">
                 <figure class="px-10 pt-10">
-                    <img src="{{ asset('assests/images/SD-6.png') }}" alt="Shoes" class="rounded-xl" />
+                    <img src="{{ asset('assets/images/SD-6.png') }}" alt="Shoes" class="rounded-xl" />
                 </figure>
                 <div class="card-body items-center text-center">
                     <h2 class="card-title">Lifetime Access</h2>

@@ -4,7 +4,7 @@
         <div class="flex flex-col md:flex-row items-center gap-6">
             <!-- Profile Image -->
             <div class="w-[150px] h-[150px] rounded-full overflow-hidden border-2 border-blue-500">
-                <img src="{{ asset('assests/images/mentor.jpg') }}" alt="Profile" class="w-full h-full object-cover" />
+                <img src="{{ asset('assets/images/mentor.jpg') }}" alt="Profile" class="w-full h-full object-cover" />
             </div>
 
             <!-- Text Info -->

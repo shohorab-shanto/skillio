@@ -10,13 +10,13 @@
         <!-- Left Panel -->
         <div class="grid content-between px-8 py-12 md:px-24 bg-gradient-to-b from-pink-50 to-white">
             <!-- Logo header -->
-            <a href="/"><img src="{{ asset('assests/images/logo.png') }}" alt=""></a>
+            <a href="/"><img src="{{ asset('assets/images/logo.png') }}" alt=""></a>
             {{-- center --}}
             <div>
                 <div class="max-w-md w-full mx-auto space-y-6">
                     <!-- Icon -->
                     <div class="w-20 h-20 bg-gray-100 rounded-full flex items-center justify-center mx-auto text-xl">
-                        <img src="{{ asset('assests/images/login.png') }}" alt="">
+                        <img src="{{ asset('assets/images/login.png') }}" alt="">
                     </div>
 
                     <h2 class="text-xl font-semibold text-center">{{ __('trans.mentor_login_heading') }}</h2>
@@ -92,7 +92,7 @@
                 </div>
             </div>
             <!-- bottom Footer -->
-            @include('frontend.layouts.footer')
+            @include('frontend.layouts.footer-onboard')
         </div>
 
         <!-- Right Panel -->

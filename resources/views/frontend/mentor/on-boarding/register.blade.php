@@ -10,13 +10,13 @@
         <!-- Left Panel -->
         <div class="grid content-between px-8 py-12 md:px-24 bg-gradient-to-b from-pink-50 to-pink-40">
             <!-- Logo header -->
-            <a href="/"><img src="{{ asset('assests/images/logo.png') }}" alt=""></a>
+            <a href="/"><img src="{{ asset('assets/images/logo.png') }}" alt=""></a>
             {{-- center --}}
             <div>
                 <div class="max-w-md w-full mx-auto space-y-6">
                     <!-- Icon -->
                     <div class="w-20 h-20 bg-gray-100 rounded-full flex items-center justify-center mx-auto text-xl">
-                        <img src="{{ asset('assests/images/login.png') }}" alt="">
+                        <img src="{{ asset('assets/images/login.png') }}" alt="">
                     </div>
 
                     <h2 class="text-xl font-semibold text-center">{{ __('trans.mentor_register_heading') }}</h2>
@@ -136,7 +136,7 @@
             <!-- bottom Footer -->
             <div class="mt-28 flex justify-around text-xs text-gray-400 text-center">
                 <h2>© 2025 Skillio Course</h2>
-                <h2>🌐 ENG <span><img src="{{ asset('assests/down-arrow-svgrepo-com.svg') }}" alt="Dropdown arrow"
+                <h2>🌐 ENG <span><img src="{{ asset('assets/down-arrow-svgrepo-com.svg') }}" alt="Dropdown arrow"
                             class="w-2 h-2 inline-block" /></span></h2>
             </div>
         </div>

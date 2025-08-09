@@ -9,7 +9,7 @@
     <div class="flex-1 flex flex-col items-center justify-center">
         <!-- Logo and Title -->
         <a href="/" class="mt-8 mb-2">
-            <img src="{{ asset('assests/images/logo.png') }}" alt="" class="mx-auto mt-20">
+            <img src="{{ asset('assets/images/logo.png') }}" alt="" class="mx-auto mt-20">
         </a>
         <h2 class="text-2xl md:text-3xl font-semibold text-center mb-8 mt-2">{{ __('trans.in_person_education_location_heading') }}</h2>
 
@@ -29,7 +29,7 @@
                             @endforeach
                         </select>
                         <span class="absolute inset-y-0 right-3 flex items-center text-gray-400 pointer-events-none">
-                            <img src="{{ asset('assests/down-arrow-svgrepo-com.svg') }}" alt="Dropdown arrow"
+                            <img src="{{ asset('assets/down-arrow-svgrepo-com.svg') }}" alt="Dropdown arrow"
                                 class="w-3 h-3 inline-block" />
                         </span>
                     </div>
@@ -61,7 +61,7 @@
 
     <!-- Footer -->
     <div class="mb-2 md:mb-6">
-        @include('frontend.layouts.footer')
+        @include('frontend.layouts.footer-onboard')
     </div>
 </div>
 @endsection

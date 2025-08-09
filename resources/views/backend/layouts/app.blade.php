@@ -38,7 +38,7 @@
         rel="stylesheet">
 
     <!-- Custom CSS -->
-    <link rel="stylesheet" href="{{ asset('assests/css/admin.css') }}">
+    <link rel="stylesheet" href="{{ asset('assets/css/admin.css') }}">
     
     <!-- Custom Styles Stack -->
     @stack('styles')
@@ -88,7 +88,7 @@
             <!-- Logo Section -->
             <div class="flex items-center justify-between p-6 border-b border-gray-100 flex-shrink-0">
                 <div class="flex items-center">
-                    <img id="logo" class="h-8 w-auto transition-all duration-300" src="{{ asset('assests/images/logo.png') }}" alt="Skillio" />
+                    <img id="logo" class="h-8 w-auto transition-all duration-300" src="{{ asset('assets/images/logo.png') }}" alt="Skillio" />
                     {{-- <span id="logo-text" class="ml-3 text-xl font-bold text-gray-800 transition-all duration-300">Skillio</span> --}}
                 </div>
                 <button onclick="toggleSidebar()" class="hidden lg:block text-gray-500 hover:text-gray-700 transition-colors">
@@ -113,7 +113,7 @@
                 <div class="flex items-center">
                     <div class="flex-shrink-0">
                         <img class="user-avatar" 
-                             src="{{ asset('assests/images/user-avatar.svg') }}" 
+                             src="{{ asset('assets/images/user-avatar.svg') }}" 
                              alt="User Avatar" />
                     </div>
                     <div class="user-info sidebar-label">
@@ -137,7 +137,7 @@
                         <button onclick="toggleMobileMenu()" class="text-gray-500 hover:text-gray-700 transition-colors">
                             <i class="fa-solid fa-bars text-lg"></i>
                         </button>
-                        <img class="h-8 w-auto" src="{{ asset('assests/images/logo.png') }}" alt="Skillio" />
+                        <img class="h-8 w-auto" src="{{ asset('assets/images/logo.png') }}" alt="Skillio" />
                         
                         <!-- Notification Icon -->
                         <div class="relative">
@@ -326,7 +326,7 @@
     </div>
 
     <!-- Enhanced JavaScript for Sidebar and Mobile Menu -->
-    <script src="{{ asset('assests/js/admin.js') }}"></script>
+    <script src="{{ asset('assets/js/admin.js') }}"></script>
     
     <!-- Custom Scripts Stack -->
     @stack('scripts')

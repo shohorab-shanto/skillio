@@ -1,4 +1,4 @@
-<div class="bg-gray-50 py-16">
+<div id="why-we-are-different" class="bg-gray-50 py-16">
     <section class="px-6">
         <x-section-header title="What Makes Skillio Different?"
             subtitle="We believe our quality course can change a life and our thousands of learner already have." />

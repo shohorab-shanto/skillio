@@ -1,7 +1,7 @@
 <x-section-header title="What's Our Members Says"
     subtitle="Attached is just a small portion of the success of our members through our mentorships and courses." />
 
-<section class="pb-16">
+<section id="testimonials" class="pb-16">
     <div class="max-w-[1400px] mx-auto px-6">
         <!-- Testimonials Grid - 2x2 Layout -->
         <div class="grid grid-cols-1 md:grid-cols-2 gap-8">

@@ -1,7 +1,7 @@
-<section class="max-w-[1400px] mx-auto mt-20 px-6">
+<section id="mentors" class="max-w-[1400px] mx-auto mt-20 px-6">
     <x-section-header 
         title="Find Your Perfect Mentor"
-        subtitle="Connecting with mentors who have many years of knowledge and <br /> experience in their fields."
+        subtitle="Connecting with mentors who have many years of knowledge and experience in their fields."
         class="mb-8"
     />
 

@@ -1,4 +1,4 @@
-<section class="bg-white">
+<section id="unleash-your-potential" class="bg-white">
     <div class="max-w-[1400px] mx-auto px-6">
         <div class="flex flex-col lg:flex-row items-center gap-12">
             <!-- Left Side - Centered Image -->

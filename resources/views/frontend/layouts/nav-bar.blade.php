@@ -22,18 +22,18 @@
                     <!-- Dropdown Menu -->
                     <div class="absolute top-full left-0 mt-2 w-52 bg-white rounded-box shadow-md border border-gray-100 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-300 transform origin-top scale-95 group-hover:scale-100 z-10">
                         <div class="p-2">
-                            <a href="#" class="block px-4 py-2 text-gray-700 hover:bg-gray-100 hover:text-purple-700 transition-colors duration-200 rounded">How It Works</a>
-                            <a href="#" class="block px-4 py-2 text-gray-700 hover:bg-gray-100 hover:text-purple-700 transition-colors duration-200 rounded">What We Offer</a>
-                            <a href="#" class="block px-4 py-2 text-gray-700 hover:bg-gray-100 hover:text-purple-700 transition-colors duration-200 rounded">Why We are Different</a>
-                            <a href="#" class="block px-4 py-2 text-gray-700 hover:bg-gray-100 hover:text-purple-700 transition-colors duration-200 rounded">Unleash Your Potential</a>
+                            <a href="#how-it-works" class="block px-4 py-2 text-gray-700 hover:bg-gray-100 hover:text-purple-700 transition-colors duration-200 rounded">How It Works</a>
+                            <a href="#what-we-offer" class="block px-4 py-2 text-gray-700 hover:bg-gray-100 hover:text-purple-700 transition-colors duration-200 rounded">What We Offer</a>
+                            <a href="#why-we-are-different" class="block px-4 py-2 text-gray-700 hover:bg-gray-100 hover:text-purple-700 transition-colors duration-200 rounded">Why We are Different</a>
+                            <a href="#unleash-your-potential" class="block px-4 py-2 text-gray-700 hover:bg-gray-100 hover:text-purple-700 transition-colors duration-200 rounded">Unleash Your Potential</a>
                         </div>
                     </div>
                 </div>
 
-                <a href="/find-mentor" class="nav-item text-gray-700 hover:text-purple-700 transition-colors duration-300 drop-shadow-sm">Mentors</a>
-                <a href="/time-slot" class="nav-item text-gray-700 hover:text-purple-700 transition-colors duration-300 drop-shadow-sm">Courses</a>
-                <a href="#" class="nav-item text-gray-700 hover:text-purple-700 transition-colors duration-300 drop-shadow-sm">Testimonials</a>
-                <a href="#" class="nav-item text-gray-700 hover:text-purple-700 transition-colors duration-300 drop-shadow-sm">FAQ</a>
+                <a href="{{ route('mentors') }}" class="nav-item text-gray-700 hover:text-purple-700 transition-colors duration-300 drop-shadow-sm">Mentors</a>
+                <a href="#courses" class="nav-item text-gray-700 hover:text-purple-700 transition-colors duration-300 drop-shadow-sm">Courses</a>
+                <a href="#testimonials" class="nav-item text-gray-700 hover:text-purple-700 transition-colors duration-300 drop-shadow-sm">Testimonials</a>
+                <a href="#faq" class="nav-item text-gray-700 hover:text-purple-700 transition-colors duration-300 drop-shadow-sm">FAQ</a>
             </div>
 
             <!-- Search Bar + Login Button (Only Large Screens) -->
@@ -84,17 +84,17 @@
                         <span id="mobile-about-arrow" class="transition-transform duration-300">▼</span>
                     </button>
                     <div id="mobile-about-menu" class="hidden mt-2 ml-4 space-y-1">
-                        <a href="#" class="block text-sm text-gray-700 hover:text-purple-700 transition-colors duration-200">How It Works</a>
-                        <a href="#" class="block text-sm text-gray-700 hover:text-purple-700 transition-colors duration-200">What We Offer</a>
-                        <a href="#" class="block text-gray-700 hover:text-purple-700 transition-colors duration-200">Why We are Different</a>
-                        <a href="#" class="block text-sm text-gray-700 hover:text-purple-700 transition-colors duration-200">Unleash Your Potential</a>
+                        <a href="#how-it-works" class="block text-sm text-gray-700 hover:text-purple-700 transition-colors duration-200">How It Works</a>
+                        <a href="#what-we-offer" class="block text-sm text-gray-700 hover:text-purple-700 transition-colors duration-200">What We Offer</a>
+                        <a href="#why-we-are-different" class="block text-gray-700 hover:text-purple-700 transition-colors duration-200">Why We are Different</a>
+                        <a href="#unleash-your-potential" class="block text-sm text-gray-700 hover:text-purple-700 transition-colors duration-200">Unleash Your Potential</a>
                     </div>
                 </div>
 
-                <a href="/find-mentor" class="block text-gray-700 hover:text-purple-700 transition-colors duration-200">Mentors</a>
-                <a href="/time-slot" class="block text-gray-700 hover:text-purple-700 transition-colors duration-200">Courses</a>
-                <a href="#" class="block text-gray-700 hover:text-purple-700 transition-colors duration-200">Testimonials</a>
-                <a href="#" class="block text-gray-700 hover:text-purple-700 transition-colors duration-200">FAQ</a>
+                <a href="{{ route('mentors') }}" class="block text-gray-700 hover:text-purple-700 transition-colors duration-200">Mentors</a>
+                <a href="#courses" class="block text-gray-700 hover:text-purple-700 transition-colors duration-200">Courses</a>
+                <a href="#testimonials" class="block text-gray-700 hover:text-purple-700 transition-colors duration-200">Testimonials</a>
+                <a href="#faq" class="block text-gray-700 hover:text-purple-700 transition-colors duration-200">FAQ</a>
                 
                 <!-- Mobile Login Button -->
                 <div class="px-3 py-2">
@@ -124,6 +124,16 @@ document.addEventListener('DOMContentLoaded', function() {
     mobileAboutToggle.addEventListener('click', function() {
         mobileAboutMenu.classList.toggle('hidden');
         mobileAboutArrow.textContent = mobileAboutMenu.classList.contains('hidden') ? '▼' : '▲';
+    });
+
+    // Close mobile menu when clicking on navigation links
+    const mobileNavLinks = document.querySelectorAll('#mobile-about-menu a');
+    mobileNavLinks.forEach(link => {
+        link.addEventListener('click', function() {
+            mobileMenu.classList.add('hidden');
+            mobileAboutMenu.classList.add('hidden');
+            mobileAboutArrow.textContent = '▼';
+        });
     });
 
             // Close mobile menu when clicking outside

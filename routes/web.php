@@ -8,6 +8,26 @@ use App\Http\Controllers\SocialAuthController;
 use App\Http\Controllers\ChatController;
 
 Route::get('/', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+Route::get('/mentors', [App\Http\Controllers\MentorsController::class, 'index'])->name('mentors');
+Route::get('/mentors/{mentor}/profile-and-sessions', [App\Http\Controllers\MentorSessionController::class, 'show'])->name('mentor.sessions');
+
+// Checkout Routes - Generic for both sessions and courses
+Route::middleware(['user_auth'])->group(function () {
+    Route::get('/checkout/session/{sessionBooking}', [App\Http\Controllers\CheckoutController::class, 'sessionCheckout'])->name('checkout.session');
+    Route::post('/checkout/session/{sessionBooking}/process', [App\Http\Controllers\CheckoutController::class, 'processSessionPayment'])->name('checkout.session.process');
+    Route::get('/checkout/course/{course}', [App\Http\Controllers\CheckoutController::class, 'courseCheckout'])->name('checkout.course');
+    Route::post('/checkout/course/{course}/process', [App\Http\Controllers\CheckoutController::class, 'processCoursePayment'])->name('checkout.course.process');
+    
+    // Payment result pages
+    Route::get('/payment/success', [App\Http\Controllers\PaymentResultController::class, 'success'])->name('payment.success');
+    Route::get('/payment/failure', [App\Http\Controllers\PaymentResultController::class, 'failure'])->name('payment.failure');
+});
+
+// Stripe Webhook Route (no middleware - Stripe needs direct access)
+Route::post('/stripe/webhook', [App\Http\Controllers\StripeWebhookController::class, 'handleWebhook'])->name('stripe.webhook');
+
+// Webhook test route for development (remove in production)
+Route::get('/stripe/webhook/test', [App\Http\Controllers\StripeWebhookController::class, 'testWebhook'])->name('stripe.webhook.test');
 
 // WebSocket Connection Test (for development)
 Route::get('/test-websocket', function () {

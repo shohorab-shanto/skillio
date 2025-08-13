@@ -1,7 +1,7 @@
 <x-section-header title="Explore Most Popular Courses"
     subtitle="Here are the most popular courses and mentorships available on Skillio." />
 
-<section class="pb-16">
+<section id="courses" class="pb-16">
     <div class="max-w-[1400px] mx-auto px-6">
         <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
             

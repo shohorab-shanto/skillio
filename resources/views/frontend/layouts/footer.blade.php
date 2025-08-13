@@ -1,4 +1,4 @@
-<footer class="bg-white py-8">
+<footer class="bg-gray-50 py-8">
     <div class="max-w-[1400px] mx-auto px-6">
         <div class="bg-gradient-to-br from-purple-600 to-purple-800 rounded-2xl px-6 py-8 text-white">
             

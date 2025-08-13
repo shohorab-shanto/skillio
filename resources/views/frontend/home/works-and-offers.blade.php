@@ -1,5 +1,5 @@
 <section class="mb-20 px-6">
-    <section class="container mx-auto mb-10">
+    <section id="how-it-works" class="container mx-auto mb-10">
         <div class="skillio-work-head text-center mb-12">
             <x-section-header title="How Skillio Works"
                 subtitle="Skillio is structured to be simple and functional to use" />
@@ -54,7 +54,7 @@
             </div>
         </div>
     </section>
-    <section>
+    <section id="what-we-offer">
         <x-section-header 
             title="What Does Skillio Offer?" 
             subtitle="Skillio connects learners with expert mentors and interactive courses both online and offline. Transform your learning journey today." 

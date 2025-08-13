@@ -88,8 +88,10 @@
             <!-- Logo Section -->
             <div class="flex items-center justify-between p-6 border-b border-gray-100 flex-shrink-0">
                 <div class="flex items-center">
-                    <img id="logo" class="h-8 w-auto transition-all duration-300" src="{{ asset('assets/images/logo.png') }}" alt="Skillio" />
-                    {{-- <span id="logo-text" class="ml-3 text-xl font-bold text-gray-800 transition-all duration-300">Skillio</span> --}}
+                    <a href="{{ route('home') }}">
+                        <img id="logo" class="h-8 w-auto transition-all duration-300" src="{{ asset('assets/images/logo.png') }}" alt="Skillio" />
+                        {{-- <span id="logo-text" class="ml-3 text-xl font-bold text-gray-800 transition-all duration-300">Skillio</span> --}}
+                    </a>
                 </div>
                 <button onclick="toggleSidebar()" class="hidden lg:block text-gray-500 hover:text-gray-700 transition-colors">
                     <i class="fa-solid fa-angles-left text-lg"></i>

@@ -2,6 +2,17 @@
 
 @section('title', $mentorInfo['name'] . ' - Profile & Sessions')
 
+@section('navbar-style')
+    <style>
+        #navbar {
+            background-color: #f9fafb !important; /* Tailwind's bg-gray-50 */
+            border-bottom: none !important;
+            box-shadow: none !important;
+        }
+        
+    </style>
+@endsection
+
 @section('content')
     <div class="min-h-screen bg-gray-50 pt-20">
         <div class="max-w-[1400px] mx-auto px-6">

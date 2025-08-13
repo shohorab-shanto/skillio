@@ -10,7 +10,7 @@
             <span class="sidebar-label">Courses</span>
         </a>
         
-        <a href="#" class="sidebar-item {{ request()->routeIs('user.sessions*') ? 'active' : '' }}">
+        <a href="{{ route('user.sessions') }}" class="sidebar-item {{ request()->routeIs('user.sessions*') ? 'active' : '' }}">
             <i class="fa-solid fa-video"></i>
             <span class="sidebar-label">Sessions</span>
         </a>

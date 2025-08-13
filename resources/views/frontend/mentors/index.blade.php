@@ -2,6 +2,17 @@
 
 @section('title', 'Mentors')
 
+@section('navbar-style')
+    <style>
+        #navbar {
+            background-color: #f9fafb !important; /* Tailwind's bg-gray-50 */
+            border-bottom: none !important;
+            box-shadow: none !important;
+        }
+        
+    </style>
+@endsection
+
 @section('content')
     <!-- Hero Section -->
     <section class="bg-gray-50 pt-32 pb-5">

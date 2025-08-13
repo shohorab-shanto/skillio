@@ -10,7 +10,7 @@ use App\Models\PaymentTransaction;
 use App\Models\CustomerAccount;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Facades\Log;
+
 use Stripe\Stripe;
 use Stripe\PaymentIntent;
 use Stripe\Customer;
@@ -100,14 +100,6 @@ class CheckoutController extends Controller
      */
     private function processPayment(Request $request, $item, string $type)
     {
-        // Add debugging
-        Log::info('Payment process started', [
-            'type' => $type,
-            'item_id' => $item->id,
-            'user_id' => Auth::id(),
-            'payment_method_id' => $request->payment_method_id
-        ]);
-
         // Validate the request
         $request->validate([
             'payment_method_id' => 'required|string',
@@ -115,11 +107,9 @@ class CheckoutController extends Controller
 
         // Check if item is still available
         if ($type === 'session' && $item->status !== 'active') {
-            Log::error('Session not available', ['status' => $item->status]);
             return back()->withErrors(['error' => 'Session is no longer available for booking.']);
         }
         if ($type === 'course' && $item->status !== 'approved') {
-            Log::error('Course not available', ['status' => $item->status]);
             return back()->withErrors(['error' => 'Course is no longer available for enrollment.']);
         }
 
@@ -128,7 +118,6 @@ class CheckoutController extends Controller
 
             // Set Stripe API key
             $stripeKey = config('services.stripe.secret_key');
-            Log::info('Using Stripe key', ['key_prefix' => substr($stripeKey, 0, 20)]);
             Stripe::setApiKey($stripeKey);
 
             // Calculate amounts for revenue sharing
@@ -138,26 +127,10 @@ class CheckoutController extends Controller
             $mentorAmount = $netAmount * 0.80; // 80% for mentor
             $adminAmount = $netAmount * 0.20; // 20% for admin
 
-            Log::info('Amounts calculated', [
-                'gross' => $grossAmount,
-                'stripe_fee' => $stripeFee,
-                'net' => $netAmount,
-                'mentor' => $mentorAmount,
-                'admin' => $adminAmount
-            ]);
-
             // Get or create Stripe customer
             $stripeCustomerId = $this->getOrCreateStripeCustomer();
-            Log::info('Stripe customer', ['customer_id' => $stripeCustomerId]);
 
             // Create Stripe Payment Intent
-            Log::info('Creating Payment Intent', [
-                'amount' => (int)($grossAmount * 100),
-                'currency' => 'usd',
-                'customer' => $stripeCustomerId,
-                'payment_method' => $request->payment_method_id
-            ]);
-
             $paymentIntent = PaymentIntent::create([
                 'amount' => (int)($grossAmount * 100), // Convert to cents
                 'currency' => 'usd',
@@ -178,15 +151,7 @@ class CheckoutController extends Controller
                 ],
             ]);
 
-            Log::info('Payment Intent created', [
-                'id' => $paymentIntent->id,
-                'status' => $paymentIntent->status,
-                'amount' => $paymentIntent->amount,
-                'currency' => $paymentIntent->currency
-            ]);
-
             if ($paymentIntent->status === 'requires_action') {
-                Log::info('Payment requires action (3D Secure)');
                 // Handle 3D Secure authentication
                 return response()->json([
                     'requires_action' => true,
@@ -195,7 +160,6 @@ class CheckoutController extends Controller
             }
 
             if ($paymentIntent->status === 'succeeded') {
-                Log::info('Payment succeeded, creating enrollment and transaction');
                 // Create user enrollment (active for localhost testing)
                 $enrollment = UserEnrollment::create([
                     'user_id' => Auth::id(),
@@ -255,12 +219,6 @@ class CheckoutController extends Controller
             }
 
         } catch (\Exception $e) {
-            Log::error('Payment processing failed', [
-                'error' => $e->getMessage(),
-                'file' => $e->getFile(),
-                'line' => $e->getLine(),
-                'trace' => $e->getTraceAsString()
-            ]);
             DB::rollBack();
             
             // Redirect to payment failure page
@@ -297,18 +255,10 @@ class CheckoutController extends Controller
                     $stripeCustomer = Customer::retrieve($customerAccount->stripe_customer_id);
                     
                     if ($stripeCustomer && !$stripeCustomer->deleted) {
-                        Log::info('Using existing Stripe customer', [
-                            'customer_id' => $customerAccount->stripe_customer_id,
-                            'user_id' => $user->id
-                        ]);
-                        
                         return $customerAccount->stripe_customer_id;
                     }
                 } catch (\Exception $e) {
-                    Log::warning('Existing Stripe customer not found, will create new one', [
-                        'stored_customer_id' => $customerAccount->stripe_customer_id,
-                        'error' => $e->getMessage()
-                    ]);
+                    // Existing Stripe customer not found, will create new one
                 }
             }
             
@@ -331,8 +281,6 @@ class CheckoutController extends Controller
             // Skip address for now - Stripe requires complex address object
             // We can add proper address handling later if needed
             
-            Log::info('Creating Stripe customer with data', $customerData);
-            
             $stripeCustomer = Customer::create($customerData);
             
             // Store customer account in our database
@@ -350,21 +298,9 @@ class CheckoutController extends Controller
                 $accountData
             );
             
-            Log::info('New Stripe customer created and stored', [
-                'customer_id' => $stripeCustomer->id,
-                'user_id' => $user->id
-            ]);
-            
             return $stripeCustomer->id;
             
         } catch (\Exception $e) {
-            Log::error('Failed to create Stripe customer', [
-                'error' => $e->getMessage(),
-                'user_id' => Auth::id(),
-                'file' => $e->getFile(),
-                'line' => $e->getLine()
-            ]);
-            
             throw new \Exception('Unable to create Stripe customer: ' . $e->getMessage());
         }
     }

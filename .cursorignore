@@ -1,0 +1,28 @@
+# Dependencies
+node_modules/
+vendor/
+
+# Storage and cache
+storage/logs/
+storage/framework/cache/
+storage/framework/sessions/
+storage/framework/views/
+storage/debugbar/
+
+# Git
+.git/
+
+# Temporary files
+*.tmp
+*.temp
+*.log
+
+# IDE files
+.idea/
+*.swp
+*.swo
+
+# OS files
+.DS_Store
+Thumbs.db
+

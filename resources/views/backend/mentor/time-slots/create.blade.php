@@ -1,6 +1,30 @@
 @extends('backend.layouts.app')
 
 @section('title', 'Create Time Slot')
+
+@push('styles')
+<style>
+/* Force remove all dropdown arrows across all browsers */
+select.custom-dropdown {
+    -webkit-appearance: none !important;
+    -moz-appearance: none !important;
+    appearance: none !important;
+    background-image: none !important;
+    background: white !important;
+}
+
+/* Extra specificity for stubborn browsers */
+select.custom-dropdown::-ms-expand {
+    display: none;
+}
+
+/* Firefox specific */
+select.custom-dropdown:-moz-focusring {
+    color: transparent;
+    text-shadow: 0 0 0 #000;
+}
+</style>
+@endpush
 @section('pageTitle', 'Create New Course')
 @section('backUrl', route('mentor.dashboard'))
 
@@ -60,7 +84,7 @@
                     <div class="relative">
                         <select name="category_id" 
                                 id="category_id"
-                                class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent bg-white text-gray-900 cursor-pointer hover:border-gray-400 transition-colors appearance-none"
+                                class="custom-dropdown w-full px-3 py-2 pr-10 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent bg-white text-gray-900 cursor-pointer hover:border-gray-400 transition-colors"
                                 required onchange="updateSubCategories()">
                             <option value="">Select a category</option>
                             @foreach($categories as $category)
@@ -82,7 +106,7 @@
                     <div class="relative">
                         <select name="sub_category_id" 
                                 id="sub_category_id"
-                                class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent bg-white text-gray-900 cursor-pointer hover:border-gray-400 transition-colors appearance-none"
+                                class="custom-dropdown w-full px-3 py-2 pr-10 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent bg-white text-gray-900 cursor-pointer hover:border-gray-400 transition-colors"
                                 required>
                             <option value="">Select a sub category</option>
                         </select>

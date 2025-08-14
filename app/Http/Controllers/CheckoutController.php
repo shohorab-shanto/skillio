@@ -14,6 +14,7 @@ use Illuminate\Support\Facades\DB;
 use Stripe\Stripe;
 use Stripe\PaymentIntent;
 use Stripe\Customer;
+use Stripe\Transfer;
 
 class CheckoutController extends Controller
 {
@@ -207,6 +208,9 @@ class CheckoutController extends Controller
                     ]);
                 }
 
+                // Create transfer to mentor if they have a Stripe Connect account
+                $this->createMentorTransfer($item, $transaction, $mentorAmount);
+
                 DB::commit();
 
                 // Redirect to payment success page
@@ -302,6 +306,58 @@ class CheckoutController extends Controller
             
         } catch (\Exception $e) {
             throw new \Exception('Unable to create Stripe customer: ' . $e->getMessage());
+        }
+    }
+
+    /**
+     * Create a transfer to the mentor's Stripe Connect account.
+     */
+    private function createMentorTransfer($item, PaymentTransaction $transaction, $mentorAmount)
+    {
+        try {
+            // Get the mentor from the item (session or course)
+            $mentor = $item->mentor;
+            
+            // Check if mentor has an active Stripe Connect account
+            if (!$mentor->canReceiveTransfers()) {
+                // No transfer needed - mentor doesn't have active Stripe Connect account
+                return;
+            }
+
+            // Create transfer to mentor's Stripe Connect account
+            $transfer = Transfer::create([
+                'amount' => (int)($mentorAmount * 100), // Convert to cents
+                'currency' => 'usd',
+                'destination' => $mentor->stripe_connect_account_id,
+                'description' => "Payment for " . ($item instanceof \App\Models\SessionBooking 
+                    ? "session booking on " . $item->date->format('M d, Y') 
+                    : "course: " . $item->title),
+                'metadata' => [
+                    'transaction_id' => $transaction->transaction_id,
+                    'mentor_id' => $mentor->id,
+                    'mentor_user_id' => $mentor->user_id,
+                    'item_type' => $item instanceof \App\Models\SessionBooking ? 'session' : 'course',
+                    'item_id' => $item->id,
+                ],
+            ]);
+
+            // Update transaction with transfer details
+            $transaction->update([
+                'stripe_transfer_id' => $transfer->id,
+                'transfer_status' => 'pending',
+                'transfer_amount' => $mentorAmount,
+                'transfer_destination_account' => $mentor->stripe_connect_account_id,
+                'transfer_created_at' => now(),
+            ]);
+
+        } catch (\Exception $e) {
+            // Transfer failed - log the error but don't fail the entire payment
+            // The payment was successful, we just couldn't transfer to mentor
+            // This can be retried later or handled manually
+            $transaction->update([
+                'transfer_status' => 'failed',
+                'transfer_failure_reason' => 'Transfer creation failed: ' . $e->getMessage(),
+            ]);
         }
     }
 }

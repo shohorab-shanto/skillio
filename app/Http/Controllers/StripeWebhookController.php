@@ -49,6 +49,18 @@ class StripeWebhookController extends Controller
             case 'charge.dispute.created':
                 $this->handleDisputeCreated($event->data->object);
                 break;
+            case 'transfer.created':
+                $this->handleTransferCreated($event->data->object);
+                break;
+            case 'transfer.paid':
+                $this->handleTransferPaid($event->data->object);
+                break;
+            case 'transfer.failed':
+                $this->handleTransferFailed($event->data->object);
+                break;
+            case 'transfer.reversed':
+                $this->handleTransferReversed($event->data->object);
+                break;
             default:
                 Log::info('Unhandled Stripe event: ' . $event->type);
         }
@@ -226,6 +238,125 @@ class StripeWebhookController extends Controller
         } catch (\Exception $e) {
             DB::rollBack();
             Log::error('Error handling dispute created webhook: ' . $e->getMessage());
+        }
+    }
+
+    /**
+     * Handle transfer created event.
+     */
+    protected function handleTransferCreated($transfer)
+    {
+        try {
+            // Find the transaction by Stripe transfer ID
+            $transaction = PaymentTransaction::where('stripe_transfer_id', $transfer->id)->first();
+
+            if (!$transaction) {
+                Log::error('Transaction not found for transfer: ' . $transfer->id);
+                return;
+            }
+
+            // Update transfer status
+            $transaction->update([
+                'transfer_status' => 'pending',
+            ]);
+
+            Log::info('Transfer created for transaction: ' . $transaction->transaction_id);
+
+        } catch (\Exception $e) {
+            Log::error('Error handling transfer created webhook: ' . $e->getMessage());
+        }
+    }
+
+    /**
+     * Handle transfer paid event (transfer completed successfully).
+     */
+    protected function handleTransferPaid($transfer)
+    {
+        try {
+            DB::beginTransaction();
+
+            // Find the transaction by Stripe transfer ID
+            $transaction = PaymentTransaction::where('stripe_transfer_id', $transfer->id)->first();
+
+            if (!$transaction) {
+                Log::error('Transaction not found for transfer: ' . $transfer->id);
+                return;
+            }
+
+            // Mark transfer as completed
+            $transaction->markTransferCompleted();
+
+            Log::info('Transfer completed for transaction: ' . $transaction->transaction_id . 
+                     ', Amount: $' . number_format($transfer->amount / 100, 2));
+
+            DB::commit();
+
+        } catch (\Exception $e) {
+            DB::rollBack();
+            Log::error('Error handling transfer paid webhook: ' . $e->getMessage());
+        }
+    }
+
+    /**
+     * Handle transfer failed event.
+     */
+    protected function handleTransferFailed($transfer)
+    {
+        try {
+            DB::beginTransaction();
+
+            // Find the transaction by Stripe transfer ID
+            $transaction = PaymentTransaction::where('stripe_transfer_id', $transfer->id)->first();
+
+            if (!$transaction) {
+                Log::error('Transaction not found for transfer: ' . $transfer->id);
+                return;
+            }
+
+            // Mark transfer as failed
+            $failureReason = $transfer->failure_message ?? 'Transfer failed';
+            $transaction->markTransferFailed($failureReason);
+
+            Log::error('Transfer failed for transaction: ' . $transaction->transaction_id . 
+                      ', Reason: ' . $failureReason);
+
+            DB::commit();
+
+        } catch (\Exception $e) {
+            DB::rollBack();
+            Log::error('Error handling transfer failed webhook: ' . $e->getMessage());
+        }
+    }
+
+    /**
+     * Handle transfer reversed event.
+     */
+    protected function handleTransferReversed($transfer)
+    {
+        try {
+            DB::beginTransaction();
+
+            // Find the transaction by Stripe transfer ID
+            $transaction = PaymentTransaction::where('stripe_transfer_id', $transfer->id)->first();
+
+            if (!$transaction) {
+                Log::error('Transaction not found for transfer: ' . $transfer->id);
+                return;
+            }
+
+            // Mark transfer as cancelled/reversed
+            $transaction->update([
+                'transfer_status' => 'cancelled',
+                'transfer_failure_reason' => 'Transfer was reversed',
+            ]);
+
+            Log::warning('Transfer reversed for transaction: ' . $transaction->transaction_id);
+
+            DB::commit();
+
+        } catch (\Exception $e) {
+            DB::rollBack();
+            Log::error('Error handling transfer reversed webhook: ' . $e->getMessage());
         }
     }
 

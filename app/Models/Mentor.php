@@ -21,12 +21,18 @@ class Mentor extends Model
         'working_hours',
         'verified',
         'type',
+        'stripe_connect_account_id',
+        'connect_account_status',
+        'connect_account_created_at',
+        'connect_account_metadata',
     ];
 
     protected $casts = [
         'certifications' => 'array',
         'working_hours' => 'array',
         'verified' => 'boolean',
+        'connect_account_created_at' => 'datetime',
+        'connect_account_metadata' => 'array',
     ];
 
     /**
@@ -254,5 +260,38 @@ class Mentor extends Model
             'five_star_percentage' => $this->five_star_percentage,
             'has_excellent_reviews' => $this->hasExcellentReviews(),
         ];
+    }
+
+    /**
+     * Check if mentor has a Stripe Connect account set up.
+     */
+    public function hasStripeConnectAccount(): bool
+    {
+        return !empty($this->stripe_connect_account_id);
+    }
+
+    /**
+     * Check if mentor's Stripe Connect account is active.
+     */
+    public function hasActiveStripeConnectAccount(): bool
+    {
+        return $this->hasStripeConnectAccount() && $this->connect_account_status === 'active';
+    }
+
+    /**
+     * Check if mentor can receive transfers.
+     */
+    public function canReceiveTransfers(): bool
+    {
+        return $this->hasActiveStripeConnectAccount();
+    }
+
+    /**
+     * Scope to only include mentors with active Stripe Connect accounts.
+     */
+    public function scopeWithActiveStripeAccount($query)
+    {
+        return $query->where('connect_account_status', 'active')
+                    ->whereNotNull('stripe_connect_account_id');
     }
 }

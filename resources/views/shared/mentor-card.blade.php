@@ -1,10 +1,18 @@
 <div class="bg-white rounded-xl shadow-md p-6 w-full max-w-sm hover:shadow-lg transition-shadow duration-300">
     <!-- Mentor Photo and Name -->
     <div class="flex items-center space-x-4 mb-4">
+        @php
+            $photoPath = $mentor['photo']
+                ? (Str::startsWith($mentor['photo'], ['http://', 'https://', '/storage/']) 
+                    ? $mentor['photo'] 
+                    : Storage::url($mentor['photo']))
+                : asset('assets/images/user-avatar.png');
+        @endphp
         <img
             class="w-16 h-16 rounded-full object-cover"
-            src="{{ $mentor['photo'] ?? 'https://randomuser.me/api/portraits/women/44.jpg' }}"
+            src="{{ $photoPath }}"
             alt="{{ $mentor['name'] }}"
+            loading="lazy"
         />
         <div>
             <h2 class="text-xl font-bold text-gray-900">{{ $mentor['name'] }}</h2>

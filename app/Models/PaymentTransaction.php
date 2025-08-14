@@ -30,6 +30,12 @@ class PaymentTransaction extends Model
         'payment_attempts',
         'metadata',
         'description',
+        'transfer_status',
+        'transfer_amount',
+        'transfer_destination_account',
+        'transfer_created_at',
+        'transfer_completed_at',
+        'transfer_failure_reason',
     ];
 
     protected $casts = [
@@ -38,7 +44,10 @@ class PaymentTransaction extends Model
         'net_amount' => 'decimal:2',
         'mentor_amount' => 'decimal:2',
         'admin_amount' => 'decimal:2',
+        'transfer_amount' => 'decimal:2',
         'metadata' => 'array',
+        'transfer_created_at' => 'datetime',
+        'transfer_completed_at' => 'datetime',
     ];
 
     /**
@@ -47,5 +56,76 @@ class PaymentTransaction extends Model
     public function enrollments(): HasMany
     {
         return $this->hasMany(UserEnrollment::class);
+    }
+
+    /**
+     * Check if transfer has been created.
+     */
+    public function hasTransfer(): bool
+    {
+        return !empty($this->stripe_transfer_id);
+    }
+
+    /**
+     * Check if transfer is completed.
+     */
+    public function isTransferCompleted(): bool
+    {
+        return $this->transfer_status === 'completed';
+    }
+
+    /**
+     * Check if transfer has failed.
+     */
+    public function isTransferFailed(): bool
+    {
+        return $this->transfer_status === 'failed';
+    }
+
+    /**
+     * Check if transfer is pending.
+     */
+    public function isTransferPending(): bool
+    {
+        return $this->transfer_status === 'pending';
+    }
+
+    /**
+     * Mark transfer as completed.
+     */
+    public function markTransferCompleted(): void
+    {
+        $this->update([
+            'transfer_status' => 'completed',
+            'transfer_completed_at' => now(),
+        ]);
+    }
+
+    /**
+     * Mark transfer as failed.
+     */
+    public function markTransferFailed(string $reason = null): void
+    {
+        $this->update([
+            'transfer_status' => 'failed',
+            'transfer_failure_reason' => $reason,
+        ]);
+    }
+
+    /**
+     * Scope to only include transactions with pending transfers.
+     */
+    public function scopeWithPendingTransfers($query)
+    {
+        return $query->where('transfer_status', 'pending')
+                    ->whereNotNull('stripe_transfer_id');
+    }
+
+    /**
+     * Scope to only include transactions with completed transfers.
+     */
+    public function scopeWithCompletedTransfers($query)
+    {
+        return $query->where('transfer_status', 'completed');
     }
 }

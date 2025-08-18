@@ -43,10 +43,12 @@
                                 : asset('assets/images/user-avatar.png');
                         @endphp
                         <img src="{{ $photoPath }}" 
-                             alt="{{ $item->mentor->user->name }}" 
+                             alt="{{ $type === 'session' ? $item->mentor->user->name : $item->mentor->name }}" 
                              class="w-12 h-12 rounded-full object-cover">
                         <div>
-                            <h3 class="font-semibold text-gray-900">{{ $item->mentor->user->name }}</h3>
+                            <h3 class="font-semibold text-gray-900">
+                                {{ $type === 'session' ? $item->mentor->user->name : $item->mentor->name }}
+                            </h3>
                             <p class="text-sm text-gray-600">{{ $item->category->name }}</p>
                         </div>
                     </div>
@@ -68,7 +70,20 @@
                             <div class="flex justify-between items-center">
                                 <span class="text-gray-600">Duration:</span>
                                 <span class="font-semibold">
-                                    {{ \Carbon\Carbon::parse($item->start_time)->diffInHours(\Carbon\Carbon::parse($item->end_time)) }} hour
+                                    @php
+                                        $startTime = \Carbon\Carbon::parse($item->start_time);
+                                        $endTime = \Carbon\Carbon::parse($item->end_time);
+                                        $totalMinutes = $startTime->diffInMinutes($endTime);
+                                        $hours = intval($totalMinutes / 60);
+                                        $minutes = $totalMinutes % 60;
+                                    @endphp
+                                    @if($hours > 0 && $minutes > 0)
+                                        {{ $hours }}h {{ $minutes }}m
+                                    @elseif($hours > 0)
+                                        {{ $hours }} hour{{ $hours > 1 ? 's' : '' }}
+                                    @else
+                                        {{ $minutes }} minute{{ $minutes > 1 ? 's' : '' }}
+                                    @endif
                                 </span>
                             </div>
                             <div class="flex justify-between items-center">
@@ -77,24 +92,45 @@
                             </div>
                         </div>
                     @else
+                        <!-- Course Title -->
+                        <div class="p-3 bg-purple-50 rounded-lg border border-purple-200">
+                            <h3 class="text-lg font-bold text-gray-900">{{ $item->title }}</h3>
+                            @if($item->description)
+                                <p class="text-sm text-gray-600 mt-1 line-clamp-2">{{ Str::limit($item->description, 150) }}</p>
+                            @endif
+                        </div>
+                        
                         <!-- Course Info -->
                         <div class="space-y-3">
+                            @if($item->duration_days)
                             <div class="flex justify-between items-center">
                                 <span class="text-gray-600">Duration:</span>
                                 <span class="font-semibold">{{ $item->duration_days }} days</span>
                             </div>
+                            @endif
+                            
+                            @if($item->start_date)
                             <div class="flex justify-between items-center">
-                                <span class="text-gray-600">Status:</span>
-                                <span class="font-semibold capitalize">{{ $item->status }}</span>
+                                <span class="text-gray-600">Start Date:</span>
+                                <span class="font-semibold">{{ $item->start_date->format('M d, Y') }}</span>
                             </div>
+                            @endif
+                            
+                            @if($item->end_date)
+                            <div class="flex justify-between items-center">
+                                <span class="text-gray-600">End Date:</span>
+                                <span class="font-semibold">{{ $item->end_date->format('M d, Y') }}</span>
+                            </div>
+                            @endif
+                            
                             @if($item->discount > 0)
                                 <div class="flex justify-between items-center">
                                     <span class="text-gray-600">Original Price:</span>
-                                    <span class="font-semibold line-through text-gray-400">${{ number_format($item->price + $item->discount, 2) }}</span>
+                                    <span class="font-semibold line-through text-gray-400">${{ number_format($item->price, 2) }}</span>
                                 </div>
                                 <div class="flex justify-between items-center">
                                     <span class="text-gray-600">Discount:</span>
-                                    <span class="font-semibold text-green-600">-${{ number_format($item->discount, 2) }}</span>
+                                    <span class="font-semibold text-green-600">{{ $item->discount }}% OFF</span>
                                 </div>
                             @endif
                         </div>

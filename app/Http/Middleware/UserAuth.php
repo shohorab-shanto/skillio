@@ -18,6 +18,10 @@ class UserAuth
         if (auth()->check() && auth()->user()->role === 'user') {
             return $next($request);
         }
+        
+        // Store the intended URL before redirecting to login
+        $request->session()->put('url.intended', $request->fullUrl());
+        
         return redirect()->route('user.onboarding.login')->with('error', 'Please log in to continue.');
     }
 }

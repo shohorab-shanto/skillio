@@ -10,6 +10,8 @@ use App\Http\Controllers\ChatController;
 Route::get('/', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 Route::get('/mentors', [App\Http\Controllers\MentorsController::class, 'index'])->name('mentors');
 Route::get('/mentors/{mentor}/profile-and-sessions', [App\Http\Controllers\MentorSessionController::class, 'show'])->name('mentor.sessions');
+Route::get('/courses', [App\Http\Controllers\CoursesController::class, 'index'])->name('courses');
+Route::get('/courses/{course}', [App\Http\Controllers\CoursesController::class, 'show'])->name('courses.show');
 
 // Checkout Routes - Generic for both sessions and courses
 Route::middleware(['user_auth'])->group(function () {

@@ -95,7 +95,22 @@
                             @endif
                             <div class="flex justify-between">
                                 <span class="text-gray-600">Duration:</span>
-                                <span class="font-semibold text-gray-900">{{ $enrollment->enrollable->duration }} minutes</span>
+                                <span class="font-semibold text-gray-900">
+                                    @php
+                                        $startTime = \Carbon\Carbon::parse($enrollment->enrollable->start_time);
+                                        $endTime = \Carbon\Carbon::parse($enrollment->enrollable->end_time);
+                                        $totalMinutes = $startTime->diffInMinutes($endTime);
+                                        $hours = intval($totalMinutes / 60);
+                                        $minutes = $totalMinutes % 60;
+                                    @endphp
+                                    @if($hours > 0 && $minutes > 0)
+                                        {{ $hours }}h {{ $minutes }}m
+                                    @elseif($hours > 0)
+                                        {{ $hours }} hour{{ $hours > 1 ? 's' : '' }}
+                                    @else
+                                        {{ $minutes }} minute{{ $minutes > 1 ? 's' : '' }}
+                                    @endif
+                                </span>
                             </div>
                         @else
                             <!-- Course Details -->
@@ -105,7 +120,7 @@
                             </div>
                             <div class="flex justify-between">
                                 <span class="text-gray-600">Instructor:</span>
-                                <span class="font-semibold text-gray-900">{{ $enrollment->enrollable->mentor->user->name }}</span>
+                                <span class="font-semibold text-gray-900">{{ $enrollment->enrollable->mentor->name }}</span>
                             </div>
                         @endif
                         

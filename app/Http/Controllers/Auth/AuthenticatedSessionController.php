@@ -32,13 +32,14 @@ class AuthenticatedSessionController extends Controller
             // Debug: Check user role (remove this after debugging)
             // dd($user->role, route('mentor.dashboard'));
             
-            // Redirect based on user role - don't use intended() to avoid conflicts
+            // Redirect based on user role
             if ($user->role === 'admin') {
                 return redirect()->route('admin.dashboard');
             } elseif ($user->role === 'mentor') {
                 return redirect()->route('mentor.dashboard');
             } else {
-                return redirect()->route('user.dashboard');
+                // For users, redirect to intended URL (like checkout page) or dashboard as fallback
+                return redirect()->intended(route('user.dashboard'));
             }
         } catch (\Illuminate\Validation\ValidationException $e) {
             return back()

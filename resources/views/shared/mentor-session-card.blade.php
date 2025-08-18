@@ -33,8 +33,8 @@
     <!-- Time Range -->
     <div class="mb-4">
         <h4 class="text-xl font-bold text-gray-900 mb-2">
-            {{ \Carbon\Carbon::parse($session->start_time)->format('g:i A') }} - 
-            {{ \Carbon\Carbon::parse($session->end_time)->format('g:i A') }}
+            {{ \Carbon\Carbon::parse($session->start_time)->format('H:i') }} - 
+            {{ \Carbon\Carbon::parse($session->end_time)->format('H:i') }}
         </h4>
     </div>
 
@@ -64,7 +64,20 @@
         <div class="flex items-center justify-between text-sm text-gray-500 mb-2">
             <span>{{ \Carbon\Carbon::parse($session->date)->format('j F Y') }}</span>
             <span class="text-purple-600 font-medium">
-                {{ \Carbon\Carbon::parse($session->start_time)->diffInHours(\Carbon\Carbon::parse($session->end_time)) }} hour session
+                @php
+                    $startTime = \Carbon\Carbon::parse($session->start_time);
+                    $endTime = \Carbon\Carbon::parse($session->end_time);
+                    $totalMinutes = $startTime->diffInMinutes($endTime);
+                    $hours = intval($totalMinutes / 60);
+                    $minutes = $totalMinutes % 60;
+                @endphp
+                @if($hours > 0 && $minutes > 0)
+                    {{ $hours }}h {{ $minutes }}m session
+                @elseif($hours > 0)
+                    {{ $hours }} hour session
+                @else
+                    {{ $minutes }} minute session
+                @endif
             </span>
         </div>
     </div>

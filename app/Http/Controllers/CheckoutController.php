@@ -70,7 +70,7 @@ class CheckoutController extends Controller
         }
 
         // Get course details with relationships
-        $course->load(['mentor.user', 'category', 'subCategories']);
+        $course->load(['mentor', 'category', 'subCategories']);
 
         return view('frontend.checkout.index', [
             'type' => 'course',

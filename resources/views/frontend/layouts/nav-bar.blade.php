@@ -33,7 +33,7 @@
                 </div>
 
                 <a href="{{ route('mentors') }}" class="nav-item text-gray-700 hover:text-purple-700 transition-colors duration-300 drop-shadow-sm">Mentors</a>
-                <a href="/#courses" class="nav-item text-gray-700 hover:text-purple-700 transition-colors duration-300 drop-shadow-sm">Courses</a>
+                <a href="/courses" class="nav-item text-gray-700 hover:text-purple-700 transition-colors duration-300 drop-shadow-sm">Courses</a>
                 <a href="/#testimonials" class="nav-item text-gray-700 hover:text-purple-700 transition-colors duration-300 drop-shadow-sm">Testimonials</a>
                 <a href="/#faq" class="nav-item text-gray-700 hover:text-purple-700 transition-colors duration-300 drop-shadow-sm">FAQ</a>
             </div>
@@ -104,7 +104,7 @@
                 </div>
 
                 <a href="{{ route('mentors') }}" class="block text-gray-700 hover:text-purple-700 transition-colors duration-200">Mentors</a>
-                <a href="/#courses" class="block text-gray-700 hover:text-purple-700 transition-colors duration-200">Courses</a>
+                <a href="/courses" class="block text-gray-700 hover:text-purple-700 transition-colors duration-200">Courses</a>
                 <a href="/#testimonials" class="block text-gray-700 hover:text-purple-700 transition-colors duration-200">Testimonials</a>
                 <a href="/#faq" class="block text-gray-700 hover:text-purple-700 transition-colors duration-200">FAQ</a>
                 

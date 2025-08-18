@@ -159,8 +159,8 @@
                         <h3 class="font-bold text-lg text-gray-900 mb-2 line-clamp-2">{{ $course->title }}</h3>
                         
                         <!-- Course Meta -->
-                        <div class="flex items-center text-sm text-gray-600 mb-3">
-                            <span class="flex items-center mr-4">
+                        <div class="flex items-center justify-between text-sm text-gray-600 mb-3">
+                            <span class="flex items-center">
                                 <i class="fa-solid fa-tag mr-1"></i>
                                 {{ $course->category->name }}
                             </span>

@@ -5,7 +5,7 @@
             <span class="sidebar-label">Dashboard</span>
         </a>
         
-        <a href="#" class="sidebar-item {{ request()->routeIs('user.my-courses*') ? 'active' : '' }}">
+        <a href="{{ route('user.courses') }}" class="sidebar-item {{ request()->routeIs('user.courses*') ? 'active' : '' }}">
             <i class="fa-solid fa-graduation-cap"></i>
             <span class="sidebar-label">Courses</span>
         </a>

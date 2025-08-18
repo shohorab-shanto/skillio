@@ -3,6 +3,7 @@
 use App\Http\Controllers\backend\user\ProfileController;
 use App\Http\Controllers\backend\user\DashboardController;
 use App\Http\Controllers\backend\user\UserSessionsController;
+use App\Http\Controllers\backend\user\UserCoursesController;
 
 
 
@@ -12,6 +13,10 @@ Route::middleware(['user_auth', 'onboarding_complete'])->group(function () {
     // user sessions
     Route::get('/user/sessions', [UserSessionsController::class, 'index'])->name('user.sessions');
     Route::get('/user/sessions/{enrollment}', [UserSessionsController::class, 'show'])->name('user.sessions.show');
+    
+    // user courses
+    Route::get('/user/courses', [UserCoursesController::class, 'index'])->name('user.courses');
+    Route::get('/user/courses/{enrollment}', [UserCoursesController::class, 'show'])->name('user.courses.show');
     
     // user profile
     Route::get('/user/profile', [ProfileController::class, 'show'])->name('user.profile.show');

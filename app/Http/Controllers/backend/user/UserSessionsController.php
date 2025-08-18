@@ -8,6 +8,7 @@ use App\Models\UserEnrollment;
 use App\Models\SessionBooking;
 use App\Models\Conversation;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Pagination\LengthAwarePaginator;
 
 class UserSessionsController extends Controller
@@ -30,30 +31,42 @@ class UserSessionsController extends Controller
         ->where('enrollable_type', SessionBooking::class)
         ->whereIn('enrollment_status', ['active', 'completed']);
 
-        // Apply filters
+        // Apply filters - use join approach to avoid polymorphic issues
         if ($request->filled('date_from')) {
-            $query->whereHas('enrollable', function($q) use ($request) {
-                $q->where('date', '>=', $request->date_from);
+            $query->whereExists(function($q) use ($request) {
+                $q->select(\DB::raw(1))
+                  ->from('session_bookings')
+                  ->whereColumn('session_bookings.id', 'user_enrollments.enrollable_id')
+                  ->where('session_bookings.date', '>=', $request->date_from);
             });
         }
 
         if ($request->filled('date_to')) {
-            $query->whereHas('enrollable', function($q) use ($request) {
-                $q->where('date', '<=', $request->date_to);
+            $query->whereExists(function($q) use ($request) {
+                $q->select(\DB::raw(1))
+                  ->from('session_bookings')
+                  ->whereColumn('session_bookings.id', 'user_enrollments.enrollable_id')
+                  ->where('session_bookings.date', '<=', $request->date_to);
             });
         }
 
         if ($request->filled('status')) {
             if ($request->status === 'upcoming') {
                 $query->where('enrollment_status', 'active')
-                      ->whereHas('enrollable', function($q) {
-                          $q->where('date', '>', now());
+                      ->whereExists(function($q) {
+                          $q->select(\DB::raw(1))
+                            ->from('session_bookings')
+                            ->whereColumn('session_bookings.id', 'user_enrollments.enrollable_id')
+                            ->where('session_bookings.date', '>', now());
                       });
             } elseif ($request->status === 'completed') {
                 $query->where('enrollment_status', 'completed');
             } elseif ($request->status === 'past') {
-                $query->whereHas('enrollable', function($q) {
-                    $q->where('date', '<', now());
+                $query->whereExists(function($q) {
+                    $q->select(\DB::raw(1))
+                      ->from('session_bookings')
+                      ->whereColumn('session_bookings.id', 'user_enrollments.enrollable_id')
+                      ->where('session_bookings.date', '<', now());
                 });
             } else {
                 $query->where('enrollment_status', $request->status);
@@ -86,8 +99,11 @@ class UserSessionsController extends Controller
             'upcoming_sessions' => UserEnrollment::where('user_id', $user->id)
                 ->where('enrollable_type', SessionBooking::class)
                 ->where('enrollment_status', 'active')
-                ->whereHas('enrollable', function($query) {
-                    $query->where('date', '>', now());
+                ->whereExists(function($query) {
+                    $query->select(DB::raw(1))
+                          ->from('session_bookings')
+                          ->whereColumn('session_bookings.id', 'user_enrollments.enrollable_id')
+                          ->where('session_bookings.date', '>', now());
                 })
                 ->count(),
             'completed_sessions' => UserEnrollment::where('user_id', $user->id)

@@ -15,7 +15,7 @@
                         <span class="sidebar-label">Time Slots</span>
                     </a>
                     
-                    <a href="#" class="sidebar-item">
+                    <a href="{{ route('mentor.earnings') }}" class="sidebar-item {{ request()->routeIs('mentor.earnings*') ? 'active' : '' }}">
                         <i class="fa-solid fa-credit-card"></i>
                         <span class="sidebar-label">Earning History</span>
                     </a>

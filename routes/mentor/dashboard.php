@@ -7,6 +7,7 @@ use App\Http\Controllers\backend\mentor\ProfileController;
 use App\Http\Controllers\backend\mentor\ReviewController;
 use App\Http\Controllers\backend\mentor\CourseController;
 use App\Http\Controllers\backend\mentor\TimeSlotController;
+use App\Http\Controllers\backend\mentor\MentorEarningHistoryController;
 
 Route::middleware(['mentor_auth'])->group(function () {
     Route::get('/mentor/dashboard', [DashboardController::class, 'index'])->name('mentor.dashboard');
@@ -35,5 +36,8 @@ Route::middleware(['mentor_auth'])->group(function () {
     Route::get('/mentor/time-slots/{time_slot}/edit', [TimeSlotController::class, 'edit'])->name('mentor.time-slots.edit');
     Route::put('/mentor/time-slots/{time_slot}', [TimeSlotController::class, 'update'])->name('mentor.time-slots.update');
     Route::delete('/mentor/time-slots/{time_slot}', [TimeSlotController::class, 'destroy'])->name('mentor.time-slots.destroy');
+    
+    // Earning History
+    Route::get('/mentor/earnings', [MentorEarningHistoryController::class, 'index'])->name('mentor.earnings');
     
 });

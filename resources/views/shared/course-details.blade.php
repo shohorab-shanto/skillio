@@ -27,9 +27,9 @@
                 <div class="flex items-center text-sm text-gray-600 space-x-6">
                     <div class="flex items-center">
                         <svg class="w-4 h-4 mr-2 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197m13.5-9a2.25 2.25 0 11-4.5 0 2.25 2.25 0 014.5 0z"></path>
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a2 2 0 00-9-5.197m13.5-9a2 2 0 11-4.5 0 2.25 2.25 0 014.5 0z"></path>
                         </svg>
-                        <span>{{ rand(500, 999) }} Student{{ rand(500, 999) > 1 ? 's' : '' }}</span>
+                        <span>{{ $course->enrolledStudentsCount() }} Student{{ $course->enrolledStudentsCount() > 1 ? 's' : '' }}</span>
                     </div>
                     @if($course->duration_days)
                     <div class="flex items-center">

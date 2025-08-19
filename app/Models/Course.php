@@ -137,6 +137,17 @@ class Course extends Model
         return $this->reviews()->count();
     }
 
+    /**
+     * Get the total number of enrolled students for this course
+     */
+    public function enrolledStudentsCount()
+    {
+        return UserEnrollment::where('enrollable_type', Course::class)
+            ->where('enrollable_id', $this->id)
+            ->whereIn('enrollment_status', ['active', 'completed'])
+            ->count();
+    }
+
     public function getThumbnailUrlAttribute(): ?string
     {
         return $this->thumbnail ? asset('storage/' . $this->thumbnail) : null;

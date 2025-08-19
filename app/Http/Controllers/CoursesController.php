@@ -66,8 +66,10 @@ class CoursesController extends Controller
      */
     public function show(Course $course)
     {
-        // Load all necessary relationships
-        $course->load(['mentor.user', 'category', 'subCategories', 'reviews.user']);
+        // Load all necessary relationships with reviews ordered by latest first
+        $course->load(['mentor.user', 'category', 'subCategories', 'reviews.user' => function($query) {
+            $query->orderBy('created_at', 'desc');
+        }]);
         
         // Only show approved courses to public
         if (!$course->isApproved()) {

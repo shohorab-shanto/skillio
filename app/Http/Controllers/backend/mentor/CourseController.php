@@ -27,7 +27,7 @@ class CourseController extends Controller
         }
 
         // Get courses with pagination and filtering
-        $courses = Course::where('mentor_id', $user->id)
+        $courses = Course::where('mentor_id', $mentor->id)
             ->with(['category', 'subCategories', 'reviews'])
             ->when($request->status, function ($query, $status) {
                 return $query->where('status', $status);
@@ -144,9 +144,10 @@ class CourseController extends Controller
     public function show(Course $course)
     {
         $user = Auth::user();
+        $mentor = $user->mentor;
 
         // Check if the course belongs to the current mentor
-        if ($course->mentor_id !== $user->id) {
+        if ($course->mentor_id !== $mentor->id) {
             return redirect()->route('mentor.courses.index')->with('error', 'Unauthorized access to course.');
         }
 
@@ -162,9 +163,10 @@ class CourseController extends Controller
     public function edit(Course $course)
     {
         $user = Auth::user();
+        $mentor = $user->mentor;
 
         // Check if the course belongs to the current mentor
-        if ($course->mentor_id !== $user->id) {
+        if ($course->mentor_id !== $mentor->id) {
             return redirect()->route('mentor.courses.index')->with('error', 'Unauthorized access to course.');
         }
 
@@ -181,9 +183,10 @@ class CourseController extends Controller
     public function update(Request $request, Course $course)
     {
         $user = Auth::user();
+        $mentor = $user->mentor;
 
         // Check if the course belongs to the current mentor
-        if ($course->mentor_id !== $user->id) {
+        if ($course->mentor_id !== $mentor->id) {
             return redirect()->route('mentor.courses.index')->with('error', 'Unauthorized access to course.');
         }
 
@@ -307,9 +310,10 @@ class CourseController extends Controller
     public function destroy(Course $course)
     {
         $user = Auth::user();
+        $mentor = $user->mentor;
 
         // Check if the course belongs to the current mentor
-        if ($course->mentor_id !== $user->id) {
+        if ($course->mentor_id !== $mentor->id) {
             return redirect()->route('mentor.courses.index')->with('error', 'Unauthorized access to course.');
         }
 

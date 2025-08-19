@@ -203,7 +203,7 @@
                                 <div class="flex items-center justify-between text-sm text-gray-500 mb-4">
                                     <div class="flex items-center">
                                         <i class="fa-solid fa-users mr-1"></i>
-                                        <span>{{ rand(100, 999) }} Students</span>
+                                        <span>{{ $course->enrolledStudentsCount() }} Student{{ $course->enrolledStudentsCount() > 1 ? 's' : '' }}</span>
                                     </div>
                                     <div class="flex items-center">
                                         <i class="fa-solid fa-clock mr-1"></i>

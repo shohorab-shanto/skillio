@@ -271,44 +271,200 @@
                 <!-- Earning Tab -->
                 <div id="earning-content" class="tab-content hidden">
                     <section class="max-w-[1280px] mx-auto grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-x-5 gap-y-8 justify-items-center mt-5">
-                        {{-- card 1 --}}
-                        <div class="card bg-base-100 w-full h-36 rounded-xl max-w-sm flex flex-col justify-center pl-10 shadow-sm border border-gray-100">
+                        {{-- card 1: Currently Enrolled --}}
+                        <div class="card bg-white w-full h-36 rounded-xl max-w-sm flex flex-col justify-center pl-10 shadow-sm border border-gray-100">
                             <div class="flex gap-2 items-center">
-                                <div class="w-8 h-8 bg-green-100 rounded-lg flex items-center justify-center">
-                                    <svg class="w-4 h-4 text-green-600" fill="currentColor" viewBox="0 0 20 20">
-                                        <path d="M8.433 7.418c.155-.103.346-.196.567-.267v1.698a2.305 2.305 0 01-.567-.267C8.07 8.34 8 8.114 8 8c0-.114.07-.34.433-.582zM11 12.849v-1.698c.22.071.412.164.567.267.364.243.433.468.433.582 0 .114-.07.34-.433.582a2.305 2.305 0 01-.567.267z"/>
-                                        <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm1-13a1 1 0 10-2 0v.092a4.535 4.535 0 00-1.676.662C6.602 6.234 6 7.009 6 8c0 .99.602 1.765 1.324 2.246.48.32 1.054.545 1.676.662v1.941c-.391-.127-.68-.317-.843-.504a1 1 0 10-1.51 1.31c.562.649 1.413 1.076 2.353 1.253V15a1 1 0 102 0v-.092a4.535 4.535 0 001.676-.662C13.398 13.766 14 12.991 14 12c0-.99-.602-1.765-1.324-2.246A4.535 4.535 0 0011 9.092V7.151c.391.127.68.317.843.504a1 1 0 101.511-1.31c-.563-.649-1.413-1.076-2.354-1.253V5z" clip-rule="evenodd"/>
+                                <div class="w-8 h-8 bg-yellow-100 rounded-lg flex items-center justify-center">
+                                    <svg class="w-5 h-5 text-yellow-600" fill="currentColor" viewBox="0 0 20 20">
+                                        <path d="M10.394 2.08a1 1 0 00-.788 0l-7 3a1 1 0 000 1.84L5.25 8.051a.999.999 0 01.356-.257l4-1.714a1 1 0 11.788 1.838l-2.727 1.17 1.94.831a1 1 0 00.787 0l7-3a1 1 0 000-1.838l-7-3zM3.31 9.397L5 10.12v4.102a8.969 8.969 0 00-1.05-.174 1 1 0 01-.89-.89 11.115 11.115 0 01.25-3.762zM9.3 16.573A9.026 9.026 0 007 14.935v-3.882l1.818.78a3 3 0 002.482 2.88z"/>
                                     </svg>
                                 </div>
-                                <span class="text-xl text-gray-500">Total Earning</span>
+                                <span class="text-xl text-gray-500">Currently Enrolled</span>
                             </div>
-                            <p class="text-5xl font-extrabold mt-3">$0</p>
+                            <p class="text-5xl font-extrabold mt-3 text-black">{{ $course->currentlyEnrolledCount() }}</p>
                         </div>
-                        {{-- card 2 --}}
-                        <div class="card bg-base-100 w-full h-36 rounded-xl max-w-sm flex flex-col justify-center pl-10 shadow-sm border border-gray-100">
+                        {{-- card 2: Total Enrolled --}}
+                        <div class="card bg-white w-full h-36 rounded-xl max-w-sm flex flex-col justify-center pl-10 shadow-sm border border-gray-100">
                             <div class="flex gap-2 items-center">
                                 <div class="w-8 h-8 bg-blue-100 rounded-lg flex items-center justify-center">
-                                    <svg class="w-4 h-4 text-blue-600" fill="currentColor" viewBox="0 0 20 20">
+                                    <svg class="w-5 h-5 text-blue-600" fill="currentColor" viewBox="0 0 20 20">
                                         <path d="M13 6a3 3 0 11-6 0 3 3 0 016 0zM18 8a2 2 0 11-4 0 2 2 0 014 0zM14 15a4 4 0 00-8 0v3h8v-3zM6 8a2 2 0 11-4 0 2 2 0 014 0zM16 18v-3a5.972 5.972 0 00-.75-2.906A3.005 3.005 0 0119 15v3h-3zM4.75 12.094A5.973 5.973 0 004 15v3H1v-3a3 3 0 013.75-2.906z"/>
                                     </svg>
                                 </div>
                                 <span class="text-xl text-gray-500">Total Enrolled Students</span>
                             </div>
-                            <p class="text-5xl font-extrabold mt-3">0</p>
+                            <p class="text-5xl font-extrabold mt-3 text-black">{{ $course->enrolledStudentsCount() }}</p>
                         </div>
-                        {{-- card 3 --}}
-                        <div class="card bg-base-100 w-full h-36 rounded-xl max-w-sm flex flex-col justify-center pl-10 shadow-sm border border-gray-100">
+                        {{-- card 3: Total Income --}}
+                        <div class="card bg-white w-full h-36 rounded-xl max-w-sm flex flex-col justify-center pl-10 shadow-sm border border-gray-100">
                             <div class="flex gap-2 items-center">
-                                <div class="w-8 h-8 bg-purple-100 rounded-lg flex items-center justify-center">
-                                    <svg class="w-4 h-4 text-purple-600" fill="currentColor" viewBox="0 0 20 20">
-                                        <path fill-rule="evenodd" d="M6 2a1 1 0 00-1 1v1H4a2 2 0 00-2 2v10a2 2 0 002 2h12a2 2 0 002-2V6a2 2 0 00-2-2h-1V3a1 1 0 10-2 0v1H7V3a1 1 0 00-1 1zm0 5a1 1 0 000 2h8a1 1 0 100-2H6z" clip-rule="evenodd"/>
+                                <div class="w-8 h-8 bg-orange-100 rounded-lg flex items-center justify-center">
+                                    <svg class="w-5 h-5 text-orange-600" fill="currentColor" viewBox="0 0 20 20">
+                                        <path d="M8.433 7.418c.155-.103.346-.196.567-.267v1.698a2.305 2.305 0 01-.567-.267C8.07 8.34 8 8.114 8 8c0-.114.07-.34.433-.582zM11 12.849v-1.698c.22.071.412.164.567.267.364.243.433.468.433.582 0 .114-.07.34-.433.582a2.305 2.305 0 01-.567.267z"/>
+                                        <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm1-13a1 1 0 10-2 0v.092a4.535 4.535 0 00-1.676.662C6.602 6.234 6 7.009 6 8c0 .99.602 1.765 1.324 2.246.48.32 1.054.545 1.676.662v1.941c-.391-.127-.68-.317-.843-.504a1 1 0 10-1.51 1.31c.562.649 1.413 1.076 2.353 1.253V15a1 1 0 102 0v-.092a4.535 4.535 0 001.676-.662C13.398 13.766 14 12.991 14 12c0-.99-.602-1.765-1.324-2.246A4.535 4.535 0 0011 9.092V7.151c.391.127.68.317.843.504a1 1 0 101.511-1.31c-.563-.649-1.413-1.076-2.354-1.253V5z" clip-rule="evenodd"/>
                                     </svg>
                                 </div>
-                                <span class="text-xl text-gray-500">Active Sessions</span>
+                                <span class="text-xl text-gray-500">Total Income</span>
                             </div>
-                            <p class="text-5xl font-extrabold mt-3">0</p>
+                            <p class="text-5xl font-extrabold mt-3 text-black">${{ number_format($course->totalIncome(), 2) }}</p>
                         </div>
                     </section>
+
+                    <!-- Enrolled Students List -->
+                    <div class="mt-8">
+                        <div class="bg-white rounded-xl shadow-sm border border-gray-100 p-6">
+                            <div class="flex items-center justify-between mb-6">
+                                <div class="flex items-center space-x-3">
+                                    <h3 class="text-xl font-bold text-gray-900">Student List</h3>
+                                    <span class="bg-purple-100 text-purple-800 text-sm font-medium px-3 py-1 rounded-full">
+                                        ({{ $course->enrolledStudentsCount() }})
+                                    </span>
+                                </div>
+                                <div class="flex items-center space-x-3">
+                                    <div class="relative">
+                                        <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                                            <svg class="w-5 h-5 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path>
+                                            </svg>
+                                        </div>
+                                        <input type="text" id="studentSearch" placeholder="Search..." 
+                                               class="pl-10 pr-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent text-sm w-64">
+                                    </div>
+                                    <div class="relative">
+                                        <button id="filterBtn" class="flex items-center space-x-2 bg-white border border-gray-300 rounded-lg px-4 py-2 text-sm font-medium text-gray-700 hover:bg-gray-50 focus:ring-2 focus:ring-purple-500 focus:border-transparent">
+                                            <span>Filter</span>
+                                            <svg class="w-4 h-4 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
+                                            </svg>
+                                        </button>
+                                        <div id="filterDropdown" class="absolute right-0 mt-2 w-48 bg-white border border-gray-200 rounded-lg shadow-lg z-10 hidden">
+                                            <div class="py-1">
+                                                <button class="w-full text-left px-4 py-2 text-sm text-gray-700 hover:bg-gray-100" data-filter="all">All</button>
+                                                <button class="w-full text-left px-4 py-2 text-sm text-gray-700 hover:bg-gray-100" data-filter="active">Active</button>
+                                                <button class="w-full text-left px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 bg-purple-100 text-purple-700" data-filter="inactive">Inactive</button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Students Table -->
+                            <div class="overflow-x-auto">
+                                <div class="min-w-full">
+                                    <!-- Table Headers -->
+                                    <div class="grid grid-cols-5 gap-4 pb-3 border-b border-gray-200 mb-4">
+                                        <div class="text-sm font-medium text-gray-700">Student Name</div>
+                                        <div class="text-sm font-medium text-gray-700">Date</div>
+                                        <div class="text-sm font-medium text-gray-700">Duration Left -days</div>
+                                        <div class="text-sm font-medium text-gray-700">Status</div>
+                                        <div class="text-sm font-medium text-gray-700"></div>
+                                    </div>
+
+                                    <!-- Students List -->
+                                    <div id="studentsList" class="space-y-3">
+                                        @php
+                                            $enrolledStudents = $course->enrolledStudents();
+                                        @endphp
+                                        
+                                        @forelse($enrolledStudents as $enrollment)
+                                            <div class="grid grid-cols-5 gap-4 py-3 border-b border-gray-100 hover:bg-gray-50 transition-colors student-row" 
+                                                 data-status="{{ $enrollment->enrollment_status }}">
+                                                <!-- Student Name -->
+                                                <div class="flex items-center space-x-3">
+                                                    <div class="w-10 h-10 bg-purple-100 rounded-full flex items-center justify-center">
+                                                        <svg class="w-6 h-6 text-purple-600" fill="currentColor" viewBox="0 0 20 20">
+                                                            <path fill-rule="evenodd" d="M10 9a3 3 0 100-6 3 3 0 000 6zm-7 9a7 7 0 1114 0H3z" clip-rule="evenodd"/>
+                                                        </svg>
+                                                    </div>
+                                                    <div>
+                                                        <div class="font-medium text-gray-900">{{ $enrollment->user->name }}</div>
+                                                        <div class="text-sm text-gray-500">Student-ID-{{ $enrollment->user->id }}</div>
+                                                    </div>
+                                                </div>
+                                                
+                                                <!-- Date -->
+                                                <div class="text-sm text-gray-600">
+                                                    {{ $enrollment->created_at->format('F d, Y') }}
+                                                </div>
+                                                
+                                                <!-- Duration Left -->
+                                                <div class="flex items-center">
+                                                    <span class="bg-purple-100 text-purple-800 text-sm font-medium px-3 py-1 rounded-full">
+                                                        {{ $course->end_date ? max(0, $course->end_date->diffInDays(now())) : 'N/A' }}
+                                                    </span>
+                                                </div>
+                                                
+                                                <!-- Status -->
+                                                <div class="flex items-center">
+                                                    @if($enrollment->enrollment_status === 'active')
+                                                        <span class="bg-green-100 text-green-800 text-sm font-medium px-3 py-1 rounded-full">Active</span>
+                                                    @else
+                                                        <span class="bg-gray-100 text-gray-800 text-sm font-medium px-3 py-1 rounded-full">Inactive</span>
+                                                    @endif
+                                                </div>
+                                                
+                                                <!-- Chat Button -->
+                                                <div class="flex items-center">
+                                                    @php
+                                                        $conversation = \App\Models\Conversation::where('mentor_id', $course->mentor_id)
+                                                            ->where('user_id', $enrollment->user_id)
+                                                            ->first();
+                                                    @endphp
+                                                    @if($conversation)
+                                                        <a href="{{ route('chat.show', $conversation->unique_code) }}" class="bg-blue-600 hover:bg-blue-700 text-white text-sm font-medium px-4 py-2 rounded-lg transition-colors flex items-center space-x-2">
+                                                            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z"></path>
+                                                            </svg>
+                                                            <span>Chat</span>
+                                                        </a>
+                                                    @else
+                                                        <a href="{{ route('chat.index', ['user_id' => $enrollment->user_id, 'mentor_id' => $course->mentor_id]) }}" class="bg-green-600 hover:bg-green-700 text-white text-sm font-medium px-4 py-2 rounded-lg transition-colors flex items-center space-x-2">
+                                                            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"></path>
+                                                            </svg>
+                                                            <span>Start Chat</span>
+                                                        </a>
+                                                    @endif
+                                                </div>
+                                            </div>
+                                        @empty
+                                            <div class="text-center py-8">
+                                                <svg class="w-16 h-16 text-gray-300 mx-auto mb-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z"></path>
+                                                </svg>
+                                                <p class="text-gray-500">No students enrolled yet.</p>
+                                            </div>
+                                        @endforelse
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Pagination -->
+                            @if($enrolledStudents->hasPages())
+                                <div class="mt-6 flex items-center justify-center">
+                                    <div class="flex items-center space-x-2">
+                                        @if($enrolledStudents->onFirstPage())
+                                            <span class="px-3 py-2 text-sm font-medium text-gray-400 bg-gray-100 border border-gray-300 rounded-lg cursor-default">Previous</span>
+                                        @else
+                                            <a href="{{ $enrolledStudents->appends(request()->query())->previousPageUrl() }}" class="px-3 py-2 text-sm font-medium text-gray-700 bg-white border border-gray-300 rounded-lg hover:bg-gray-50">Previous</a>
+                                        @endif
+                                        
+                                        @foreach($enrolledStudents->getUrlRange(1, $enrolledStudents->lastPage()) as $page => $url)
+                                            <a href="{{ $url }}" class="px-3 py-2 text-sm font-medium {{ $page == $enrolledStudents->currentPage() ? 'bg-purple-600 text-white' : 'bg-white text-gray-700 hover:bg-gray-50' }} border border-gray-300 rounded-lg">
+                                                {{ $page }}
+                                            </a>
+                                        @endforeach
+                                        
+                                        @if($enrolledStudents->hasMorePages())
+                                            <a href="{{ $enrolledStudents->appends(request()->query())->nextPageUrl() }}" class="px-3 py-2 text-sm font-medium text-gray-700 bg-white border border-gray-300 rounded-lg hover:bg-gray-50">Next</a>
+                                        @else
+                                            <span class="px-3 py-2 text-sm font-medium text-gray-400 bg-gray-100 border border-gray-300 rounded-lg cursor-default">Next</span>
+                                        @endif
+                                    </div>
+                                </div>
+                            @endif
+                        </div>
+                    </div>
                 </div>
                 @endif
 
@@ -344,5 +500,84 @@ function showTab(tabName) {
 // Initialize default tab
 document.addEventListener('DOMContentLoaded', function() {
     showTab('about');
+    
+    // Initialize student list functionality
+    initializeStudentList();
 });
+
+function initializeStudentList() {
+    const filterBtn = document.getElementById('filterBtn');
+    const filterDropdown = document.getElementById('filterDropdown');
+    const studentSearch = document.getElementById('studentSearch');
+    
+    if (filterBtn && filterDropdown) {
+        // Toggle filter dropdown
+        filterBtn.addEventListener('click', function() {
+            filterDropdown.classList.toggle('hidden');
+        });
+        
+        // Close dropdown when clicking outside
+        document.addEventListener('click', function(event) {
+            if (!filterBtn.contains(event.target) && !filterDropdown.contains(event.target)) {
+                filterDropdown.classList.add('hidden');
+            }
+        });
+        
+        // Handle filter selection
+        filterDropdown.addEventListener('click', function(event) {
+            if (event.target.dataset.filter) {
+                const filter = event.target.dataset.filter;
+                
+                // Update active filter button
+                filterDropdown.querySelectorAll('button').forEach(btn => {
+                    btn.classList.remove('bg-purple-100', 'text-purple-700');
+                    btn.classList.add('text-gray-700', 'hover:bg-gray-100');
+                });
+                event.target.classList.remove('text-gray-700', 'hover:bg-gray-100');
+                event.target.classList.add('bg-purple-100', 'text-purple-700');
+                
+                // Update filter button text
+                filterBtn.querySelector('span').textContent = event.target.textContent;
+                
+                // Hide dropdown
+                filterDropdown.classList.add('hidden');
+                
+                // Apply filter to student rows
+                const studentRows = document.querySelectorAll('.student-row');
+                studentRows.forEach(row => {
+                    const status = row.dataset.status;
+                    if (filter === 'all' || status === filter) {
+                        row.style.display = 'grid';
+                    } else {
+                        row.style.display = 'none';
+                    }
+                });
+            }
+        });
+    }
+    
+    if (studentSearch) {
+        // Handle search functionality
+        studentSearch.addEventListener('input', function() {
+            const searchTerm = this.value.toLowerCase();
+            const studentRows = document.querySelectorAll('.student-row');
+            const currentFilter = document.querySelector('#filterDropdown button[class*="bg-purple-100"]')?.dataset.filter || 'all';
+            
+            studentRows.forEach(row => {
+                const studentName = row.querySelector('.font-medium').textContent.toLowerCase();
+                const studentId = row.querySelector('.text-sm.text-gray-500').textContent.toLowerCase();
+                const status = row.dataset.status;
+                
+                const matchesSearch = studentName.includes(searchTerm) || studentId.includes(searchTerm);
+                const matchesFilter = currentFilter === 'all' || status === currentFilter;
+                
+                if (matchesSearch && matchesFilter) {
+                    row.style.display = 'grid';
+                } else {
+                    row.style.display = 'none';
+                }
+            });
+        });
+    }
+}
 </script>

@@ -148,6 +148,41 @@ class Course extends Model
             ->count();
     }
 
+    /**
+     * Get the paginated list of enrolled students for this course
+     */
+    public function enrolledStudents($perPage = 10)
+    {
+        return UserEnrollment::where('enrollable_type', Course::class)
+            ->where('enrollable_id', $this->id)
+            ->whereIn('enrollment_status', ['active', 'completed'])
+            ->with('user')
+            ->orderBy('created_at', 'desc')
+            ->paginate($perPage);
+    }
+
+    /**
+     * Get the count of currently active enrolled students
+     */
+    public function currentlyEnrolledCount()
+    {
+        return UserEnrollment::where('enrollable_type', Course::class)
+            ->where('enrollable_id', $this->id)
+            ->where('enrollment_status', 'active')
+            ->count();
+    }
+
+    /**
+     * Get the total income from this course
+     */
+    public function totalIncome()
+    {
+        return PaymentTransaction::whereHas('enrollments', function($query) {
+            $query->where('enrollable_type', Course::class)
+                  ->where('enrollable_id', $this->id);
+        })->sum('mentor_amount');
+    }
+
     public function getThumbnailUrlAttribute(): ?string
     {
         return $this->thumbnail ? asset('storage/' . $this->thumbnail) : null;

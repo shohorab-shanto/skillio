@@ -31,7 +31,7 @@ class Review extends Model
 
     public function mentor(): BelongsTo
     {
-        return $this->belongsTo(User::class, 'mentor_id');
+        return $this->belongsTo(Mentor::class, 'mentor_id');
     }
 
     public function course(): BelongsTo

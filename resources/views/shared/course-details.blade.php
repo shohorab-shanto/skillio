@@ -281,7 +281,7 @@
                                 </div>
                                 <span class="text-xl text-gray-500">Currently Enrolled</span>
                             </div>
-                            <p class="text-5xl font-extrabold mt-3 text-black">{{ $course->currentlyEnrolledCount() }}</p>
+                            <p class="text-2xl font-extrabold mt-3 text-black">{{ $course->currentlyEnrolledCount() }}</p>
                         </div>
                         {{-- card 2: Total Enrolled --}}
                         <div class="card bg-white w-full h-36 rounded-xl max-w-sm flex flex-col justify-center pl-10 shadow-sm border border-gray-100">
@@ -293,7 +293,7 @@
                                 </div>
                                 <span class="text-xl text-gray-500">Total Enrolled Students</span>
                             </div>
-                            <p class="text-5xl font-extrabold mt-3 text-black">{{ $course->enrolledStudentsCount() }}</p>
+                            <p class="text-2xl font-extrabold mt-3 text-black">{{ $course->enrolledStudentsCount() }}</p>
                         </div>
                         {{-- card 3: Total Income --}}
                         <div class="card bg-white w-full h-36 rounded-xl max-w-sm flex flex-col justify-center pl-10 shadow-sm border border-gray-100">
@@ -306,7 +306,7 @@
                                 </div>
                                 <span class="text-xl text-gray-500">Total Income</span>
                             </div>
-                            <p class="text-5xl font-extrabold mt-3 text-black">${{ number_format($course->totalIncome(), 2) }}</p>
+                            <p class="text-2xl font-extrabold mt-3 text-black">${{ number_format($course->totalIncome(), 2) }}</p>
                         </div>
                     </section>
 

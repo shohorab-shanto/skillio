@@ -37,13 +37,34 @@ class MentorEarningHistoryController extends Controller
             });
         }
         
+        // Date range filtering
+        if ($request->filled('start_date')) {
+            $query->whereDate('created_at', '>=', $request->start_date);
+        }
+        
+        if ($request->filled('end_date')) {
+            $query->whereDate('created_at', '<=', $request->end_date);
+        }
+        
         $payments = $query->paginate(10);
         
-        // Calculate earning statistics
-        $totalEarning = PaymentTransaction::whereHas('enrollments.enrollable', function($q) use ($mentor) {
+        // Calculate earning statistics (respecting date filters)
+        $statsQuery = PaymentTransaction::whereHas('enrollments.enrollable', function($q) use ($mentor) {
             $q->where('mentor_id', $mentor->id);
-        })->where('transaction_status', 'completed')->sum('mentor_amount');
+        })->where('transaction_status', 'completed');
         
+        // Apply date filters to statistics if provided
+        if ($request->filled('start_date')) {
+            $statsQuery->whereDate('created_at', '>=', $request->start_date);
+        }
+        
+        if ($request->filled('end_date')) {
+            $statsQuery->whereDate('created_at', '<=', $request->end_date);
+        }
+        
+        $totalEarning = $statsQuery->sum('mentor_amount');
+        
+        // This month earning (always current month, regardless of date filters)
         $thisMonthEarning = PaymentTransaction::whereHas('enrollments.enrollable', function($q) use ($mentor) {
             $q->where('mentor_id', $mentor->id);
         })->where('transaction_status', 'completed')
@@ -51,6 +72,7 @@ class MentorEarningHistoryController extends Controller
           ->whereYear('created_at', Carbon::now()->year)
           ->sum('mentor_amount');
         
+        // Today's earning (always current day, regardless of date filters)
         $todayEarning = PaymentTransaction::whereHas('enrollments.enrollable', function($q) use ($mentor) {
             $q->where('mentor_id', $mentor->id);
         })->where('transaction_status', 'completed')

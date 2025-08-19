@@ -65,9 +65,11 @@
         <div class="flex justify-between items-center p-4">
             <h1 class="text-l text-gray-900">Transaction</h1>
             
-            <!-- Search Bar -->
-            <div class="relative">
-                <form method="GET" action="{{ route('mentor.earnings') }}">
+            <!-- Search and Date Range -->
+            <div class="flex items-center space-x-3">
+                <!-- Single Form for All Filters -->
+                <form method="GET" action="{{ route('mentor.earnings') }}" class="flex items-center space-x-3">
+                    <!-- Search Bar -->
                     <div class="relative">
                         <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
                             <svg class="h-4 w-4 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -78,10 +80,45 @@
                             type="text" 
                             name="search" 
                             value="{{ request('search') }}"
-                            placeholder="Search..." 
-                            class="w-48 pl-8 pr-3 py-1.5 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent outline-none transition-all duration-300 text-sm"
+                            placeholder="Search by Transaction ID or Date..." 
+                            class="w-48 pl-8 pr-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent outline-none transition-all duration-300 text-sm"
                         >
                     </div>
+                    
+                    <!-- Date Range Inputs -->
+                    <div class="flex items-center space-x-2">
+                        <input 
+                            type="date" 
+                            name="start_date"
+                            value="{{ request('start_date') }}"
+                            class="px-3 py-2 text-sm border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent outline-none transition-all duration-300"
+                        >
+                        <span class="text-gray-500 text-sm">to</span>
+                        <input 
+                            type="date" 
+                            name="end_date"
+                            value="{{ request('end_date') }}"
+                            class="px-3 py-2 text-sm border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent outline-none transition-all duration-300"
+                        >
+                    </div>
+                    
+                    <!-- Filter Button -->
+                    <button 
+                        type="submit"
+                        class="px-4 py-2 bg-purple-600 text-white rounded-lg hover:bg-purple-700 transition-colors duration-200 font-medium text-sm"
+                    >
+                        <svg class="w-4 h-4 inline mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 4a1 1 0 011-1h16a1 1 0 011 1v2.586a1 1 0 01-.293.707l-6.414 6.414a1 1 0 00-.293.707V17l-4 4v-6.586a1 1 0 00-.293-.707L6.293 13H5a1 1 0 01-1-1V4z"></path>
+                        </svg>
+                        Filter
+                    </button>
+                    
+                    @if(request('start_date') || request('end_date') || request('search'))
+                        <a href="{{ route('mentor.earnings') }}" 
+                           class="px-3 py-2 text-sm bg-gray-500 text-white rounded-lg hover:bg-gray-600 transition-colors duration-200 font-medium">
+                            Clear
+                        </a>
+                    @endif
                 </form>
             </div>
         </div>
@@ -204,7 +241,13 @@
                                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path>
                                     </svg>
                                     <h3 class="text-lg font-medium text-gray-900 mb-2">No earnings found</h3>
-                                    <p class="text-gray-500">You haven't earned any money yet.</p>
+                                    <p class="text-gray-500">
+                                        @if(request('start_date') || request('end_date') || request('search'))
+                                            No earnings found for the selected criteria.
+                                        @else
+                                            You haven't earned any money yet.
+                                        @endif
+                                    </p>
                                 </div>
                             </td>
                         </tr>
@@ -216,9 +259,11 @@
         <!-- Pagination -->
         @if($payments->hasPages())
             <div class="px-6 py-4 border-t border-gray-200">
-                @include('components.custom-pagination', ['paginator' => $payments])
+                @include('components.custom-pagination', ['paginator' => $payments->appends(request()->query())])
             </div>
         @endif
     </div>
 </div>
 @endsection
+
+

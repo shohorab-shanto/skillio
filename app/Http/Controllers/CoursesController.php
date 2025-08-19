@@ -6,6 +6,7 @@ use App\Models\User;
 use App\Models\Course;
 use App\Models\Mentor;
 use App\Models\Category;
+use App\Models\UserEnrollment;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
@@ -35,7 +36,7 @@ class CoursesController extends Controller
                   ->orWhereHas('category', function ($categoryQuery) use ($search) {
                       $categoryQuery->where('name', 'like', '%' . $search . '%');
                   })
-                  ->orWhereHas('mentor', function ($mentorQuery) use ($search) {
+                  ->orWhereHas('mentor.user', function ($mentorQuery) use ($search) {
                       $mentorQuery->where('name', 'like', '%' . $search . '%');
                   });
             });
@@ -66,14 +67,24 @@ class CoursesController extends Controller
     public function show(Course $course)
     {
         // Load all necessary relationships
-        $course->load(['mentor', 'category', 'subCategories', 'reviews.user']);
+        $course->load(['mentor.user', 'category', 'subCategories', 'reviews.user']);
         
         // Only show approved courses to public
         if (!$course->isApproved()) {
             abort(404, 'Course not found');
         }
         
-        return view('frontend.courses.show', compact('course'));
+        // Check if current user is already enrolled in this course
+        $isEnrolled = false;
+        if (auth()->check()) {
+            $isEnrolled = UserEnrollment::where('user_id', auth()->id())
+                ->where('enrollable_type', Course::class)
+                ->where('enrollable_id', $course->id)
+                ->whereIn('enrollment_status', ['active', 'completed'])
+                ->exists();
+        }
+        
+        return view('frontend.courses.show', compact('course', 'isEnrolled'));
     }
 
 }

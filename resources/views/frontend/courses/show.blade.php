@@ -16,7 +16,7 @@
     <!-- Course Details Section -->
     <section class="pt-32 pb-8 bg-gray-50">
         <div class="max-w-[1400px] mx-auto px-6">
-            @include('shared.course-details', ['course' => $course, 'showEditButton' => false, 'showEarningTab' => false])
+            @include('shared.course-details', ['course' => $course, 'showEditButton' => false, 'showEarningTab' => false, 'isEnrolled' => $isEnrolled])
         </div>
     </section>
 @endsection

@@ -123,10 +123,16 @@
             <!-- Action Button for Frontend -->
             @if(!$showEditButton)
             <div class="mb-6">
-                <a href="{{ route('checkout.course', $course) }}" 
-                   class="bg-purple-600 hover:bg-purple-700 text-white px-8 py-3 rounded-lg text-lg font-medium transition-colors inline-block">
-                    Enroll Now ${{ number_format($course->discount > 0 ? $course->discounted_price : $course->price, 2) }}
-                </a>
+                @if(isset($isEnrolled) && $isEnrolled)
+                    <div class="bg-green-100 text-green-800 px-8 py-3 rounded-lg text-lg font-medium inline-block border border-green-300">
+                        ✓ Already Enrolled
+                    </div>
+                @else
+                    <a href="{{ route('checkout.course', $course) }}" 
+                       class="bg-purple-600 hover:bg-purple-700 text-white px-8 py-3 rounded-lg text-lg font-medium transition-colors inline-block">
+                        Enroll Now ${{ number_format($course->discount > 0 ? $course->discounted_price : $course->price, 2) }}
+                    </a>
+                @endif
             </div>
             @endif
 

@@ -241,6 +241,16 @@
             </div>
             </div>
         </div>
+
+        <!-- Review Form for Session -->
+        @php
+            $existingReview = auth()->user()->reviews()->where('mentor_id', $enrollment->enrollable->mentor->user_id)->first();
+        @endphp
+        @include('components.review-form', [
+            'type' => 'mentor',
+            'item' => $enrollment->enrollable->mentor,
+            'existingReview' => $existingReview
+        ])
     </div>
 </div>
 @endsection

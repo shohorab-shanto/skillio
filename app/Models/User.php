@@ -93,6 +93,14 @@ class User extends Authenticatable
     }
 
     /**
+     * Get all enrollments for this user (courses and sessions).
+     */
+    public function enrollments()
+    {
+        return $this->hasMany(UserEnrollment::class);
+    }
+
+    /**
      * Get reviews written by this user.
      */
     public function reviews()

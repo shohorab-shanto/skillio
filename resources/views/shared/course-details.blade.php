@@ -253,6 +253,18 @@
                             <p class="text-gray-500">No reviews yet. Be the first to share your experience!</p>
                         </div>
                     @endif
+
+                    <!-- Review Form for Enrolled Users -->
+                    @if(auth()->check() && isset($isEnrolled) && $isEnrolled)
+                        @php
+                            $existingReview = auth()->user()->reviews()->where('course_id', $course->id)->first();
+                        @endphp
+                        @include('components.review-form', [
+                            'type' => 'course',
+                            'item' => $course,
+                            'existingReview' => $existingReview
+                        ])
+                    @endif
                 </div>
 
                 @if($showEarningTab)

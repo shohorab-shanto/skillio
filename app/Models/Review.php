@@ -73,4 +73,6 @@ class Review extends Model
     {
         return !is_null($this->course_id);
     }
+
+
 }

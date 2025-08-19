@@ -269,5 +269,15 @@
             </div>
         </div>
         @endif
+
+        <!-- Review Form for Enrolled Users -->
+        @php
+            $existingReview = auth()->user()->reviews()->where('course_id', $course->id)->first();
+        @endphp
+        @include('components.review-form', [
+            'type' => 'course',
+            'item' => $course,
+            'existingReview' => $existingReview
+        ])
     </div>
 @endsection

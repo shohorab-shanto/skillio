@@ -89,3 +89,10 @@ require __DIR__.'/auth.php';
 
 // Include debug routes
 require __DIR__.'/debug-routes.php';
+
+// Review routes
+Route::middleware(['auth'])->group(function () {
+    Route::post('/reviews', [App\Http\Controllers\ReviewController::class, 'store'])->name('reviews.store');
+    Route::put('/reviews/{review}', [App\Http\Controllers\ReviewController::class, 'update'])->name('reviews.update');
+    Route::delete('/reviews/{review}', [App\Http\Controllers\ReviewController::class, 'destroy'])->name('reviews.destroy');
+});

@@ -15,7 +15,7 @@
             <span class="sidebar-label">Sessions</span>
         </a>
 
-        <a href="#" class="sidebar-item {{ request()->routeIs('user.payments*') ? 'active' : '' }}">
+        <a href="{{ route('user.payments') }}" class="sidebar-item {{ request()->routeIs('user.payments*') ? 'active' : '' }}">
             <i class="fa-solid fa-credit-card"></i>
             <span class="sidebar-label">Payment History</span>
         </a>

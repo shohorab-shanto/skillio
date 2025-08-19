@@ -56,7 +56,7 @@
                         Dashboard
                     </a>
                 @else
-                    <a href="{{ route('login') }}" class="px-6 py-2 border bg-[#6E3FF3] text-white rounded hover:bg-white hover:text-[#6E3FF3] transition-colors duration-300">
+                    <a href="{{ route('user.onboarding.login') }}" class="px-6 py-2 border bg-[#6E3FF3] text-white rounded hover:bg-white hover:text-[#6E3FF3] transition-colors duration-300">
                         Login
                     </a>
                 @endauth
@@ -117,7 +117,7 @@
                             Dashboard
                         </a>
                     @else
-                        <a href="{{ route('login') }}" class="block w-full text-center px-4 py-2 border border-purple-700 text-purple-700 rounded hover:bg-purple-700 hover:text-white transition-colors duration-300">
+                        <a href="{{ route('user.onboarding.login') }}" class="block w-full text-center px-4 py-2 border border-purple-700 text-purple-700 rounded hover:bg-purple-700 hover:text-white transition-colors duration-300">
                             Login
                         </a>
                     @endauth

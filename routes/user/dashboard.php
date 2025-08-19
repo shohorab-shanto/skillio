@@ -4,6 +4,7 @@ use App\Http\Controllers\backend\user\ProfileController;
 use App\Http\Controllers\backend\user\DashboardController;
 use App\Http\Controllers\backend\user\UserSessionsController;
 use App\Http\Controllers\backend\user\UserCoursesController;
+use App\Http\Controllers\backend\user\PaymentHistoryController;
 
 
 
@@ -17,6 +18,9 @@ Route::middleware(['user_auth', 'onboarding_complete'])->group(function () {
     // user courses
     Route::get('/user/courses', [UserCoursesController::class, 'index'])->name('user.courses');
     Route::get('/user/courses/{enrollment}', [UserCoursesController::class, 'show'])->name('user.courses.show');
+    
+    // user payment history
+    Route::get('/user/payments', [PaymentHistoryController::class, 'index'])->name('user.payments');
     
     // user profile
     Route::get('/user/profile', [ProfileController::class, 'show'])->name('user.profile.show');

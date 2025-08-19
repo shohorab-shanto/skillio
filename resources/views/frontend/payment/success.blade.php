@@ -120,7 +120,7 @@
                             </div>
                             <div class="flex justify-between">
                                 <span class="text-gray-600">Instructor:</span>
-                                <span class="font-semibold text-gray-900">{{ $enrollment->enrollable->mentor->name }}</span>
+                                <span class="font-semibold text-gray-900">{{ $enrollment->enrollable->mentor->user->name }}</span>
                             </div>
                         @endif
                         

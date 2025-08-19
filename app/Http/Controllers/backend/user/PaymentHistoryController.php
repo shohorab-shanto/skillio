@@ -20,7 +20,7 @@ class PaymentHistoryController extends Controller
         $query = PaymentTransaction::whereHas('enrollments', function($q) use ($user) {
                 $q->where('user_id', $user->id);
             })
-            ->with(['enrollments.enrollable.mentor', 'enrollments.enrollable.category'])
+            ->with(['enrollments.enrollable.mentor.user', 'enrollments.enrollable.category'])
             ->orderBy('created_at', 'desc');
         
         // Search functionality - only by transaction ID and date

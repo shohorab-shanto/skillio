@@ -105,8 +105,8 @@
                                     : Storage::url($course->mentor->photo))
                                 : asset('assets/images/user-avatar.png');
                         @endphp
-                        <img src="{{ $mentorPhotoPath }}" alt="{{ $course->mentor->name }}" class="w-7 h-7 rounded-full object-cover mr-2" loading="lazy">
-                        <span class="font-medium text-black">{{ $course->mentor->name }}</span>
+                        <img src="{{ $mentorPhotoPath }}" alt="{{ $course->mentor->user->name }}" class="w-7 h-7 rounded-full object-cover mr-2" loading="lazy">
+                        <span class="font-medium text-black">{{ $course->mentor->user->name }}</span>
                     </span>
                     @endif
                     <span>| {{ $course->category->name }}

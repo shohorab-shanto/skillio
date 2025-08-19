@@ -43,11 +43,11 @@
                                 : asset('assets/images/user-avatar.png');
                         @endphp
                         <img src="{{ $photoPath }}" 
-                             alt="{{ $type === 'session' ? $item->mentor->user->name : $item->mentor->name }}" 
+                             alt="{{ $type === 'session' ? $item->mentor->user->name : $item->mentor->user->name }}" 
                              class="w-12 h-12 rounded-full object-cover">
                         <div>
                             <h3 class="font-semibold text-gray-900">
-                                {{ $type === 'session' ? $item->mentor->user->name : $item->mentor->name }}
+                                {{ $type === 'session' ? $item->mentor->user->name : $item->mentor->user->name }}
                             </h3>
                             <p class="text-sm text-gray-600">{{ $item->category->name }}</p>
                         </div>

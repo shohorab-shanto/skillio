@@ -128,10 +128,10 @@
                                 : asset('assets/images/user-avatar.png');
                         @endphp
                         <img src="{{ $mentorPhotoPath }}" 
-                             alt="{{ $course->mentor->name }}" 
+                             alt="{{ $course->mentor->user->name }}" 
                              class="w-16 h-16 rounded-full object-cover mr-4">
                         <div>
-                            <h4 class="text-lg font-semibold text-gray-900">{{ $course->mentor->name }}</h4>
+                            <h4 class="text-lg font-semibold text-gray-900">{{ $course->mentor->user->name }}</h4>
                             <p class="text-sm text-gray-600">Course Instructor</p>
                             @if($course->mentor->bio)
                                 <p class="text-sm text-gray-600 mt-1 line-clamp-2">{{ Str::limit($course->mentor->bio, 150) }}</p>

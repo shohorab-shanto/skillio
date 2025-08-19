@@ -91,9 +91,9 @@
                                     : asset('assets/images/user-avatar.png');
                             @endphp
                             <img src="{{ $mentorPhotoPath }}" 
-                                 alt="{{ $course->mentor->name }}" class="w-8 h-8 rounded-full object-cover"
+                                 alt="{{ $course->mentor->user->name }}" class="w-8 h-8 rounded-full object-cover"
                                  loading="lazy">
-                            <span class="text-sm text-gray-700">{{ $course->mentor->name }}</span>
+                            <span class="text-sm text-gray-700">{{ $course->mentor->user->name }}</span>
                         </div>
                         @endif
                         <div class="text-right">

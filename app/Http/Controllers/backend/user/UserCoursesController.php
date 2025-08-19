@@ -23,7 +23,7 @@ class UserCoursesController extends Controller
         // Base query for user's course enrollments
         $query = UserEnrollment::with([
             'enrollable' => function($query) {
-                $query->with(['mentor', 'category', 'subCategories', 'reviews']);
+                $query->with(['mentor.user', 'category', 'subCategories', 'reviews']);
             }
         ])
         ->where('user_id', $user->id)
@@ -119,7 +119,7 @@ class UserCoursesController extends Controller
         // Load relationships
         $enrollment->load([
             'enrollable' => function($query) {
-                $query->with(['mentor', 'category', 'subCategories', 'reviews.user']);
+                $query->with(['mentor.user', 'category', 'subCategories', 'reviews.user']);
             },
             'paymentTransaction'
         ]);

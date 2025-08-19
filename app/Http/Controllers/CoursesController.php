@@ -18,7 +18,7 @@ class CoursesController extends Controller
      */
     public function index(Request $request)
     {
-        $query = Course::with(['mentor', 'category', 'subCategories', 'reviews'])
+        $query = Course::with(['mentor.user', 'category', 'subCategories', 'reviews'])
                       ->approved(); // Only show approved courses
         
         // Category filtering

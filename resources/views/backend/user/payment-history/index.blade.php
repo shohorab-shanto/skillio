@@ -70,8 +70,8 @@
                                         // SessionBooking: mentor->user->name
                                         $mentorName = $enrollable->mentor->user->name ?? null;
                                     } else {
-                                        // Course: mentor->name (direct User)
-                                        $mentorName = $enrollable->mentor->name ?? null;
+                                                    // Course: mentor->user->name (through Mentor model)
+            $mentorName = $enrollable->mentor->user->name ?? null;
                                     }
                                 }
                             }

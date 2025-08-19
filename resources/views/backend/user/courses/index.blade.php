@@ -125,11 +125,11 @@
                 @endphp
                 <div class="bg-white rounded-xl shadow-sm border border-gray-100 overflow-hidden hover:shadow-md transition-shadow">
                     <!-- Course Image -->
-                    <div class="relative">
+                    <div class="relative p-2">
                         @if($course->thumbnail)
-                            <img src="{{ asset('storage/' . $course->thumbnail) }}" alt="{{ $course->title }}" class="w-full h-48 object-cover">
+                            <img src="{{ asset('storage/' . $course->thumbnail) }}" alt="{{ $course->title }}" class="w-full h-48 object-cover rounded-lg">
                         @else
-                            <div class="w-full h-48 bg-gradient-to-br from-purple-600 via-fuchsia-500 to-pink-500 flex items-center justify-center">
+                            <div class="w-full h-48 bg-gradient-to-br from-purple-600 via-fuchsia-500 to-pink-500 flex items-center justify-center rounded-lg">
                                 <svg class="w-16 h-16 text-white/50" fill="currentColor" viewBox="0 0 24 24">
                                     <path d="M12 2L2 7v10l10 5 10-5V7L12 2zm0 2.31L18.6 7 12 9.69 5.4 7 12 4.31zM4 8.5l8 4 8-4V16l-8 4-8-4V8.5z"/>
                                 </svg>

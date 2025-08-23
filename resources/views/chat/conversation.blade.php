@@ -45,20 +45,33 @@
             </div>
         </div>
         
-        <!-- Chat Actions -->
-        <div class="flex items-center space-x-3">
-            <button class="p-2 text-gray-600 hover:text-gray-900 transition-colors rounded-lg hover:bg-gray-100" title="Voice Call">
-                <i class="fa-solid fa-phone"></i>
-            </button>
-            <button class="p-2 text-gray-600 hover:text-gray-900 transition-colors rounded-lg hover:bg-gray-100" title="Video Call">
-                <i class="fa-solid fa-video"></i>
-            </button>
-            <button class="p-2 text-gray-600 hover:text-gray-900 transition-colors rounded-lg hover:bg-gray-100" title="More Options">
-                <i class="fa-solid fa-ellipsis-vertical"></i>
-            </button>
-        </div>
+        <!-- Chat End Time Info -->
+        @if(isset($chatStatus) && $chatStatus['can_chat'])
+            <div class="text-right">
+                @if($chatStatus['type'] === 'session')
+                    <p class="text-sm text-gray-600">Session ends at {{ \Carbon\Carbon::parse($chatStatus['session_end_time'])->format('H:i') }}</p>
+                @elseif($chatStatus['type'] === 'course')
+                    <p class="text-sm text-gray-600">Course ends {{ \Carbon\Carbon::parse($chatStatus['course_end_date'])->format('M d, Y') }}</p>
+                @endif
+            </div>
+        @endif
     </div>
 </div>
+
+<!-- Chat Status Display -->
+@if(isset($chatStatus) && !$chatStatus['can_chat'])
+    <div class="bg-amber-100 border border-amber-300 text-amber-800 px-4 py-3 mx-4 mt-4 rounded-lg">
+        <div class="flex items-center">
+            <svg class="w-5 h-5 mr-2" fill="currentColor" viewBox="0 0 20 20">
+                <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm8.707-7.293a1 1 0 00-1.414-1.414L11 12.586l-1.293-1.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"/>
+            </svg>
+            <div>
+                <strong class="font-medium">{{ $chatStatus['reason'] }}</strong>
+                <p class="text-sm mt-1">{{ $chatStatus['details'] }}</p>
+            </div>
+        </div>
+    </div>
+@endif
 
 <!-- Messages Area -->
 <div id="messages-container" class="flex-1 overflow-y-auto chat-scroll p-4 space-y-4 bg-gray-50 min-h-0">
@@ -161,35 +174,47 @@
 
 <!-- Message Input -->
 <div class="p-4 border-t border-gray-200 bg-white flex-shrink-0">
-    <form id="message-form" class="flex items-end space-x-3" enctype="multipart/form-data">
-        @csrf
-        <!-- File Upload -->
-        <div class="flex space-x-2">
-            <label for="file-input" class="cursor-pointer p-2 text-gray-600 hover:text-gray-900 hover:bg-gray-100 rounded-lg transition-colors" title="Attach File">
-                <i class="fa-solid fa-paperclip"></i>
-            </label>
-            <input type="file" id="file-input" name="file" class="hidden" accept="image/*,.pdf,.doc,.docx,.txt">
+    @if(isset($chatStatus) && $chatStatus['can_chat'])
+        <form id="message-form" class="flex items-end space-x-3" enctype="multipart/form-data">
+            @csrf
+            <!-- File Upload -->
+            <div class="flex space-x-2">
+                <label for="file-input" class="cursor-pointer p-2 text-gray-600 hover:text-gray-900 hover:bg-gray-100 rounded-lg transition-colors" title="Attach File">
+                    <i class="fa-solid fa-paperclip"></i>
+                </label>
+                <input type="file" id="file-input" name="file" class="hidden" accept="image/*,.pdf,.doc,.docx,.txt">
+                
+                <label for="image-input" class="cursor-pointer p-2 text-gray-600 hover:text-gray-900 hover:bg-gray-100 rounded-lg transition-colors" title="Send Image">
+                    <i class="fa-solid fa-image"></i>
+                </label>
+                <input type="file" id="image-input" name="image" class="hidden" accept="image/*">
+            </div>
             
-            <label for="image-input" class="cursor-pointer p-2 text-gray-600 hover:text-gray-900 hover:bg-gray-100 rounded-lg transition-colors" title="Send Image">
-                <i class="fa-solid fa-image"></i>
-            </label>
-            <input type="file" id="image-input" name="image" class="hidden" accept="image/*">
+            <!-- Message Input -->
+            <div class="flex-1 relative">
+                <textarea id="message-input" name="content" rows="1" 
+                          placeholder="Type your message..." 
+                          class="w-full resize-none border border-gray-300 rounded-lg px-4 py-2 focus:ring-2 focus:ring-purple-500 focus:border-transparent text-sm"
+                          style="min-height: 40px; max-height: 120px;"></textarea>
+            </div>
+            
+            <!-- Send Button -->
+            <button type="submit" id="send-button" 
+                    class="bg-purple-600 hover:bg-purple-700 text-white p-2 rounded-lg transition-colors disabled:opacity-50 disabled:cursor-not-allowed">
+                <i class="fa-solid fa-paper-plane"></i>
+            </button>
+        </form>
+    @else
+        <div class="text-center py-6">
+            <div class="text-gray-500 mb-2">
+                <svg class="w-12 h-12 mx-auto mb-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"/>
+                </svg>
+            </div>
+            <p class="text-gray-600 font-medium">{{ $chatStatus['reason'] ?? 'Chat is not available' }}</p>
+            <p class="text-sm text-gray-500 mt-1">{{ $chatStatus['details'] ?? 'You cannot send messages at this time' }}</p>
         </div>
-        
-        <!-- Message Input -->
-        <div class="flex-1 relative">
-            <textarea id="message-input" name="content" rows="1" 
-                      placeholder="Type your message..." 
-                      class="w-full resize-none border border-gray-300 rounded-lg px-4 py-2 focus:ring-2 focus:ring-purple-500 focus:border-transparent text-sm"
-                      style="min-height: 40px; max-height: 120px;"></textarea>
-        </div>
-        
-        <!-- Send Button -->
-        <button type="submit" id="send-button" 
-                class="bg-purple-600 hover:bg-purple-700 text-white p-2 rounded-lg transition-colors disabled:opacity-50 disabled:cursor-not-allowed">
-            <i class="fa-solid fa-paper-plane"></i>
-        </button>
-    </form>
+    @endif
     
     <!-- File Preview -->
     <div id="file-preview" class="hidden mt-3 p-3 bg-gray-100 rounded-lg">
@@ -276,6 +301,12 @@ document.getElementById('remove-file').addEventListener('click', function() {
 // Form submission
 document.getElementById('message-form').addEventListener('submit', async function(e) {
     e.preventDefault();
+    
+    // Check if chat is active
+    @if(isset($chatStatus) && !$chatStatus['can_chat'])
+        alert('{{ $chatStatus['reason'] }}: {{ $chatStatus['details'] }}');
+        return;
+    @endif
     
     const messageInput = document.getElementById('message-input');
     const sendButton = document.getElementById('send-button');

@@ -6,12 +6,133 @@ use App\Events\MessageSent;
 use App\Models\Conversation;
 use App\Models\Message;
 use App\Models\User;
+use App\Models\SessionBooking;
+use App\Models\UserEnrollment;
+use App\Models\Course;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
+use Carbon\Carbon;
 
 class ChatController extends Controller
 {
+    /**
+     * Check if user can chat with mentor and return detailed status
+     */
+    private function getChatPermissionStatus($userId, $mentorId)
+    {
+        $now = Carbon::now();
+        $today = $now->toDateString();
+        $currentTime = $now->format('H:i:s');
+        
+        // Check session bookings for today
+        $todaySessions = SessionBooking::where('user_id', $userId)
+            ->where('mentor_id', $mentorId)
+            ->where('status', 'booked')
+            ->where('date', $today)
+            ->get();
+        
+        foreach ($todaySessions as $session) {
+            // Skip sessions without proper time information
+            if (!$session->start_time || !$session->end_time) {
+                continue;
+            }
+            
+            if ($currentTime >= $session->start_time && $currentTime <= $session->end_time) {
+                return [
+                    'can_chat' => true,
+                    'reason' => 'Session is currently active',
+                    'type' => 'session',
+                    'details' => "You can chat during your {$session->start_time} - {$session->end_time} session today",
+                    'session_end_time' => $session->end_time
+                ];
+            }
+        }
+        
+        // Check if there are upcoming sessions today
+        $upcomingToday = $todaySessions->where('start_time', '>', $currentTime)->first();
+        if ($upcomingToday) {
+            $timeUntil = Carbon::parse("{$today} {$upcomingToday->start_time}")->diffForHumans();
+            return [
+                'can_chat' => false,
+                'reason' => 'Session not started yet',
+                'type' => 'session',
+                'details' => "Your session starts {$timeUntil} (at {$upcomingToday->start_time})"
+            ];
+        }
+        
+        // Check if there were sessions earlier today
+        $earlierToday = $todaySessions->where('end_time', '<', $currentTime)->first();
+        if ($earlierToday) {
+            return [
+                'can_chat' => false,
+                'reason' => 'Session has ended',
+                'type' => 'session',
+                'details' => "Your {$earlierToday->start_time} - {$earlierToday->end_time} session ended earlier today"
+            ];
+        }
+        
+        // Check course enrollments
+        $activeCourses = UserEnrollment::where('user_id', $userId)
+            ->where('enrollment_status', 'active')
+            ->whereHas('enrollable', function($query) use ($mentorId) {
+                $query->where('mentor_id', $mentorId);
+            })
+            ->with('enrollable')
+            ->get();
+        
+        foreach ($activeCourses as $enrollment) {
+            $course = $enrollment->enrollable;
+            
+            // Skip courses without proper date information
+            if (!$course->start_date || !$course->end_date) {
+                continue;
+            }
+            
+            // Ensure dates are Carbon instances
+            $startDate = $course->start_date instanceof Carbon ? $course->start_date : Carbon::parse($course->start_date);
+            $endDate = $course->end_date instanceof Carbon ? $course->end_date : Carbon::parse($course->end_date);
+            
+            if ($now->between($startDate, $endDate)) {
+                return [
+                    'can_chat' => true,
+                    'reason' => 'Course is currently active',
+                    'type' => 'course',
+                    'details' => "You can chat during your course period (until " . $endDate->format('M d, Y') . ")",
+                    'course_end_date' => $endDate
+                ];
+            }
+            
+            if ($now < $startDate) {
+                $timeUntil = $startDate->diffForHumans();
+                return [
+                    'can_chat' => false,
+                    'reason' => 'Course not started yet',
+                    'type' => 'course',
+                    'details' => "Your course starts {$timeUntil} (on " . $startDate->format('M d, Y') . ")"
+                ];
+            }
+            
+            if ($now > $endDate) {
+                $timeAgo = $endDate->diffForHumans();
+                return [
+                    'can_chat' => false,
+                    'reason' => 'Course has ended',
+                    'type' => 'course',
+                    'details' => "Your course ended {$timeAgo} (on " . $endDate->format('M d, Y') . ")"
+                ];
+            }
+        }
+        
+        // No active enrollments
+        return [
+            'can_chat' => false,
+            'reason' => 'No active enrollment',
+            'type' => 'none',
+            'details' => 'You need to enroll in a course or book a session to chat with this mentor'
+        ];
+    }
+
     /**
      * Display the chat interface.
      */
@@ -89,7 +210,10 @@ class ChatController extends Controller
         // Load messages with sender
         $messages = $conversation->messages()->with('sender')->orderBy('created_at', 'asc')->get();
 
-        return view('chat.index', compact('conversation', 'conversations', 'messages'));
+        // Get chat permission status for the current user
+        $chatStatus = $this->getChatPermissionStatus($user->id, $conversation->mentor_id);
+
+        return view('chat.index', compact('conversation', 'conversations', 'messages', 'chatStatus'));
     }
 
     /**
@@ -114,6 +238,21 @@ class ChatController extends Controller
                 ], 403);
             }
             return redirect()->route('chat.index')->with('error', 'You do not have permission to send messages in this conversation.');
+        }
+
+        // Check if user can chat based on time restrictions
+        $chatStatus = $this->getChatPermissionStatus($user->id, $conversation->mentor_id);
+        if (!$chatStatus['can_chat']) {
+            if ($request->expectsJson()) {
+                return response()->json([
+                    'success' => false,
+                    'message' => $chatStatus['reason'],
+                    'details' => $chatStatus['details'],
+                    'type' => $chatStatus['type'],
+                    'can_chat' => false
+                ], 403);
+            }
+            return redirect()->back()->with('error', $chatStatus['reason'] . ': ' . $chatStatus['details']);
         }
 
         $request->validate([

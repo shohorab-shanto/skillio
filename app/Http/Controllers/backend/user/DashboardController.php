@@ -9,6 +9,7 @@ use App\Models\Course;
 use App\Models\SessionBooking;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 
 class DashboardController extends Controller
 {
@@ -43,14 +44,22 @@ class DashboardController extends Controller
             ->where('enrollable_type', Course::class)
             ->count();
         
-        // Get upcoming courses (courses starting in the future)
-        $upcomingCourses = $enrollments->where('enrollable_type', Course::class)
-            ->filter(function($enrollment) {
-                $course = $enrollment->enrollable;
-                return $course->start_date && $course->start_date->isFuture();
-            });
+        // Get upcoming sessions (sessions starting in the future) - using proper approach
+        $upcomingSessions = UserEnrollment::where('user_id', $user->id)
+            ->where('enrollment_status', 'active')
+            ->where('enrollable_type', SessionBooking::class)
+            ->whereExists(function($query) {
+                $query->select(DB::raw(1))
+                      ->from('session_bookings')
+                      ->whereColumn('session_bookings.id', 'user_enrollments.enrollable_id')
+                      ->where('session_bookings.date', '>', now());
+            })
+            ->with(['enrollable' => function($query) {
+                $query->with('mentor.user', 'subCategories');
+            }])
+            ->get();
         
-        $upcomingCount = $upcomingCourses->count();
+        $upcomingCount = $upcomingSessions->count();
         
         // Calculate learning hours (this month)
         $thisMonth = Carbon::now()->startOfMonth();
@@ -65,8 +74,8 @@ class DashboardController extends Controller
             ->take(3)
             ->values();
         
-        // Get upcoming courses for display
-        $upcomingCoursesDisplay = $upcomingCourses->take(3)->values();
+        // Get upcoming sessions for display
+        $upcomingSessionsDisplay = $upcomingSessions->take(3)->values();
         
         return view('backend.user.dashboard.index', compact(
             'activeCourses',
@@ -74,7 +83,7 @@ class DashboardController extends Controller
             'upcomingCount',
             'learningHours',
             'currentCourses',
-            'upcomingCoursesDisplay',
+            'upcomingSessionsDisplay',
             'search'
         ));
     }

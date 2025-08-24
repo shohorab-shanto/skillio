@@ -134,14 +134,14 @@ class ChatController extends Controller
     }
 
     /**
-     * Display the chat interface.
+     * Show the chat index page with all conversations.
      */
     public function index()
     {
         $user = Auth::user();
         
         // Get user's conversations with latest message and unread count
-        $conversations = Conversation::where(function($query) use ($user) {
+        $list_conversations = Conversation::where(function($query) use ($user) {
             // User is a student in conversation
             $query->where('user_id', $user->id);
         })->orWhereHas('mentor', function($query) use ($user) {
@@ -152,7 +152,7 @@ class ChatController extends Controller
         ->orderBy('last_message_at', 'desc')
         ->get();
 
-        return view('chat.index', compact('conversations'));
+        return view('chat.index', compact('list_conversations'));
     }
 
     /**
@@ -166,12 +166,27 @@ class ChatController extends Controller
             abort(404, 'Conversation not found.');
         }
         
+        // Load the relationships after finding the conversation
+        $conversation->load(['mentor.user', 'user']);
+        
+        // Debug: Log the loaded conversation data
+        \Log::info('Loaded conversation data:', [
+            'conversation_id' => $conversation->id,
+            'mentor_id' => $conversation->mentor_id,
+            'user_id' => $conversation->user_id,
+            'mentor_loaded' => $conversation->relationLoaded('mentor'),
+            'mentor_user_loaded' => $conversation->mentor && $conversation->mentor->relationLoaded('user'),
+            'mentor_user_name' => $conversation->mentor && $conversation->mentor->user ? $conversation->mentor->user->name : 'null',
+            'user_loaded' => $conversation->relationLoaded('user'),
+            'user_name' => $conversation->user ? $conversation->user->name : 'null'
+        ]);
+        
         $user = Auth::user();
         
         // Check if user can access this conversation
         if (!$conversation->canAccess($user->id)) {
             // Get all conversations for the sidebar
-            $conversations = Conversation::where(function($query) use ($user) {
+            $list_conversations = Conversation::where(function($query) use ($user) {
                 // User is a student in conversation
                 $query->where('user_id', $user->id);
             })->orWhereHas('mentor', function($query) use ($user) {
@@ -183,14 +198,14 @@ class ChatController extends Controller
             ->get();
 
             return view('chat.index', [
-                'conversations' => $conversations,
+                'list_conversations' => $list_conversations,
                 'error' => 'You do not have permission to access this conversation.',
                 'errorType' => 'no_permission'
             ]);
         }
 
         // Get all conversations for the sidebar
-        $conversations = Conversation::where(function($query) use ($user) {
+        $list_conversations = Conversation::where(function($query) use ($user) {
             // User is a student in conversation
             $query->where('user_id', $user->id);
         })->orWhereHas('mentor', function($query) use ($user) {
@@ -213,7 +228,7 @@ class ChatController extends Controller
         // Get chat permission status for the current user
         $chatStatus = $this->getChatPermissionStatus($user->id, $conversation->mentor_id);
 
-        return view('chat.index', compact('conversation', 'conversations', 'messages', 'chatStatus'));
+        return view('chat.index', compact('conversation', 'list_conversations', 'messages', 'chatStatus'));
     }
 
     /**

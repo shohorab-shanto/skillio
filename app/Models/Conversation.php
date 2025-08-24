@@ -107,7 +107,20 @@ class Conversation extends Model
      */
     public static function findByCode($code)
     {
-        return self::where('unique_code', $code)->first();
+        \Log::info('findByCode called with:', ['code' => $code]);
+        
+        $conversation = self::where('unique_code', $code)->first();
+        
+        \Log::info('findByCode result:', [
+            'code_searched' => $code,
+            'conversation_found' => $conversation ? 'yes' : 'no',
+            'conversation_id' => $conversation ? $conversation->id : 'null',
+            'conversation_code' => $conversation ? $conversation->unique_code : 'null',
+            'mentor_id' => $conversation ? $conversation->mentor_id : 'null',
+            'user_id' => $conversation ? $conversation->user_id : 'null'
+        ]);
+        
+        return $conversation;
     }
 
     /**

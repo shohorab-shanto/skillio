@@ -62,28 +62,28 @@
 
         <!-- Conversations List -->
         <div class="flex-1 overflow-y-auto">
-            @if($conversations->count() > 0)
-                @foreach($conversations as $conversation)
+            @if($list_conversations->count() > 0)
+                @foreach($list_conversations as $list_conversation)
                     @php
                         // Get the other user in the conversation
                         $currentUser = auth()->user();
                         $currentUserMentor = $currentUser->mentor ?? null; // Get mentor record if user is a mentor
                         
-                        if ($conversation->user_id == $currentUser->id) {
+                        if ($list_conversation->user_id == $currentUser->id) {
                             // Current user is the student, so other user is the mentor
-                            $otherUser = $conversation->mentor->user;
+                            $otherUser = $list_conversation->mentor->user;
                             $otherUserRole = 'Mentor';
                         } else {
                             // Current user is the mentor, so other user is the student
-                            $otherUser = $conversation->user;
+                            $otherUser = $list_conversation->user;
                             $otherUserRole = 'Student';
                         }
                         
-                        $unreadCount = $conversation->unreadMessagesCount(auth()->id());
-                        $lastMessage = $conversation->latestMessage;
+                        $unreadCount = $list_conversation->unreadMessagesCount(auth()->id());
+                        $lastMessage = $list_conversation->latestMessage;
                     @endphp
-                    <div class="conversation-item p-4 border-b border-gray-100 hover:bg-gray-50 cursor-pointer transition-colors {{ request()->route('code') == $conversation->unique_code ? 'bg-purple-50 border-r-4 border-r-purple-600' : '' }}"
-                         onclick="loadConversation('{{ $conversation->unique_code }}')">
+                    <div class="conversation-item p-4 border-b border-gray-100 hover:bg-gray-50 cursor-pointer transition-colors {{ request()->route('code') == $list_conversation->unique_code ? 'bg-purple-50 border-r-4 border-r-purple-600' : '' }}"
+                         onclick="loadConversation('{{ $list_conversation->unique_code }}')">
                         <div class="flex items-center space-x-3">
                             <!-- Avatar -->
                             <div class="relative">

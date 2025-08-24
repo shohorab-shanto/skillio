@@ -1,19 +1,52 @@
 @php
-    // Get the other user in the conversation
-    $currentUser = auth()->user();
-    $currentUserMentor = $currentUser->mentor ?? null; // Get mentor record if user is a mentor
+    // Debug: Verify the conversation object being used
+    \Log::info('Conversation view - conversation object:', [
+        'conversation_id' => $conversation->id ?? 'null',
+        'conversation_unique_code' => $conversation->unique_code ?? 'null',
+        'mentor_id' => $conversation->mentor_id ?? 'null',
+        'user_id' => $conversation->user_id ?? 'null'
+    ]);
     
+    // Get the other user in the conversation - ONLY from the current conversation object
+    $currentUser = auth()->user();
+    
+    // CRITICAL: Only get mentor and student info from the CURRENT conversation object
+    $currentConversationMentor = $conversation->mentor;
+    $currentConversationStudent = $conversation->user;
+    
+    // Verify the mentor and student data is from the correct conversation
+    \Log::info('Current conversation mentor/student data:', [
+        'conversation_id' => $conversation->id,
+        'mentor_id' => $currentConversationMentor->id ?? 'null',
+        'mentor_user_id' => $currentConversationMentor->user_id ?? 'null',
+        'mentor_user_name' => $currentConversationMentor->user->name ?? 'null',
+        'student_id' => $currentConversationStudent->id ?? 'null',
+        'student_name' => $currentConversationStudent->name ?? 'null'
+    ]);
+    
+    // Determine the current user's role and who they're talking to
     if ($conversation->user_id == $currentUser->id) {
         // Current user is the student, so other user is the mentor
-        $otherUser = $conversation->mentor->user;
+        $otherUser = $currentConversationMentor->user;
         $otherUserRole = 'Mentor';
-        $otherUserPhoto = $conversation->mentor->photo; // Mentor photo from mentors table
+        $otherUserPhoto = $currentConversationMentor->photo;
+        $currentUserRole = 'Student';
     } else {
         // Current user is the mentor, so other user is the student
-        $otherUser = $conversation->user;
+        $otherUser = $currentConversationStudent;
         $otherUserRole = 'Student';
-        $otherUserPhoto = null; // Students don't have photos
+        $otherUserPhoto = null;
+        $currentUserRole = 'Mentor';
     }
+    
+    // Final verification of what will be displayed
+    \Log::info('Final display data:', [
+        'conversation_id' => $conversation->id,
+        'other_user_name' => $otherUser->name ?? 'null',
+        'other_user_role' => $otherUserRole,
+        'current_user_role' => $currentUserRole,
+        'mentor_name_from_conversation' => $currentConversationMentor->user->name ?? 'null'
+    ]);
 @endphp
 
 <!-- Chat Header -->

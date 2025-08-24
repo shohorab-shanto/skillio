@@ -38,7 +38,7 @@
                 <a href="/#faq" class="nav-item text-gray-700 hover:text-purple-700 transition-colors duration-300 drop-shadow-sm">FAQ</a>
             </div>
 
-            <!-- Search Bar + Login/Dashboard Button (Only Large Screens) -->
+            <!-- Search Bar + Login/Profile Button (Only Large Screens) -->
             <div class="hidden lg:flex items-center gap-3">
                 <div class="relative">
                     <div class="absolute inset-y-0 left-0 pl-2 flex items-center pointer-events-none">
@@ -50,11 +50,57 @@
                 </div>
                 
                 @auth
-                    <a href="{{ 
-                        auth()->user()->isMentor() ? route('mentor.dashboard') : route('user.dashboard')
-                    }}" class="px-6 py-2 border bg-[#6E3FF3] text-white rounded hover:bg-white hover:text-[#6E3FF3] transition-colors duration-300">
-                        Dashboard
-                    </a>
+                    <!-- User Profile Dropdown -->
+                    <div class="relative group">
+                        <button class="flex items-center space-x-2 p-2 rounded-full hover:bg-gray-100 transition-colors duration-200 focus:outline-none">
+                            <!-- User Avatar -->
+                            <div class="w-10 h-10 rounded-full bg-purple-100 flex items-center justify-center border-2 border-purple-200">
+                                @if(auth()->user()->profile_photo_path)
+                                    <img src="{{ asset('storage/' . auth()->user()->profile_photo_path) }}" 
+                                         alt="{{ auth()->user()->name }}" 
+                                         class="w-full h-full rounded-full object-cover">
+                                @else
+                                    <i class="fa-solid fa-user text-purple-600 text-lg"></i>
+                                @endif
+                            </div>
+                            <!-- Dropdown Arrow -->
+                            <svg class="w-4 h-4 text-gray-600 transition-transform duration-200 group-hover:rotate-180" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
+                            </svg>
+                        </button>
+                        
+                        <!-- Dropdown Menu -->
+                        <div class="absolute top-full right-0 mt-2 w-48 bg-white rounded-lg shadow-lg border border-gray-200 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 transform origin-top scale-95 group-hover:scale-100 z-50">
+                            <div class="py-2">
+                                <!-- User Info -->
+                                <div class="px-4 py-3 border-b border-gray-100">
+                                    <p class="text-sm font-medium text-gray-900">{{ auth()->user()->name }}</p>
+                                    <p class="text-xs text-gray-500">{{ auth()->user()->isMentor() ? 'Mentor' : 'Student' }}</p>
+                                </div>
+                                
+                                <!-- Dashboard Link -->
+                                <a href="{{ auth()->user()->isMentor() ? route('mentor.dashboard') : route('user.dashboard') }}" 
+                                   class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 hover:text-purple-700 transition-colors duration-200">
+                                    <i class="fa-solid fa-tachometer-alt mr-2"></i>
+                                    Dashboard
+                                </a>
+                                
+                                <!-- Profile Link -->
+                                <a href="{{ auth()->user()->isMentor() ? route('mentor.profile.show') : route('user.profile.show') }}" 
+                                   class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 hover:text-purple-700 transition-colors duration-200">
+                                    <i class="fa-solid fa-user mr-2"></i>
+                                    Profile
+                                </a>
+                                
+                                <!-- Logout Button -->
+                                <button onclick="showLogoutModal()" 
+                                        class="w-full text-left px-4 py-2 text-sm text-red-600 hover:bg-red-50 hover:text-red-700 transition-colors duration-200">
+                                    <i class="fa-solid fa-right-from-bracket mr-2"></i>
+                                    Logout
+                                </button>
+                            </div>
+                        </div>
+                    </div>
                 @else
                     <a href="{{ route('user.onboarding.login') }}" class="px-6 py-2 border bg-[#6E3FF3] text-white rounded hover:bg-white hover:text-[#6E3FF3] transition-colors duration-300">
                         Login
@@ -111,11 +157,53 @@
                 <!-- Mobile Login/Dashboard Button -->
                 <div class="px-3 py-2">
                     @auth
-                        <a href="{{ 
-                            auth()->user()->isMentor() ? route('mentor.dashboard') : route('user.dashboard')
-                        }}" class="block w-full text-center px-4 py-2 border border-purple-700 text-purple-700 rounded hover:bg-purple-700 hover:text-white transition-colors duration-300">
-                            Dashboard
-                        </a>
+                        <!-- Mobile User Profile Dropdown -->
+                        <div class="relative">
+                            <button id="mobile-profile-toggle" class="flex items-center justify-between w-full px-4 py-3 border border-gray-300 rounded-lg bg-white hover:bg-gray-50 transition-colors duration-200">
+                                <div class="flex items-center space-x-3">
+                                    <!-- User Avatar -->
+                                    <div class="w-8 h-8 rounded-full bg-purple-100 flex items-center justify-center border-2 border-purple-200">
+                                        @if(auth()->user()->profile_photo_path)
+                                            <img src="{{ asset('storage/' . auth()->user()->profile_photo_path) }}" 
+                                                 alt="{{ auth()->user()->name }}" 
+                                                 class="w-full h-full rounded-full object-cover">
+                                        @else
+                                            <i class="fa-solid fa-user text-purple-600 text-sm"></i>
+                                        @endif
+                                    </div>
+                                    <span class="text-sm font-medium text-gray-700">{{ auth()->user()->name }}</span>
+                                </div>
+                                <svg id="mobile-profile-arrow" class="w-4 h-4 text-gray-500 transition-transform duration-200" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
+                                </svg>
+                            </button>
+                            
+                            <!-- Mobile Dropdown Menu -->
+                            <div id="mobile-profile-menu" class="hidden mt-2 border border-gray-200 rounded-lg bg-white shadow-sm">
+                                <div class="py-2">
+                                    <!-- Dashboard Link -->
+                                    <a href="{{ auth()->user()->isMentor() ? route('mentor.dashboard') : route('user.dashboard') }}" 
+                                       class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 transition-colors duration-200">
+                                        <i class="fa-solid fa-tachometer-alt mr-2"></i>
+                                        Dashboard
+                                    </a>
+                                    
+                                    <!-- Profile Link -->
+                                    <a href="{{ auth()->user()->isMentor() ? route('mentor.profile.show') : route('user.profile.show') }}" 
+                                       class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 transition-colors duration-200">
+                                        <i class="fa-solid fa-user mr-2"></i>
+                                        Profile
+                                    </a>
+                                    
+                                    <!-- Logout Button -->
+                                    <button onclick="showLogoutModal()" 
+                                            class="w-full text-left px-4 py-2 text-sm text-red-600 hover:bg-red-50 transition-colors duration-200">
+                                        <i class="fa-solid fa-right-from-bracket mr-2"></i>
+                                        Logout
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
                     @else
                         <a href="{{ route('user.onboarding.login') }}" class="block w-full text-center px-4 py-2 border border-purple-700 text-purple-700 rounded hover:bg-purple-700 hover:text-white transition-colors duration-300">
                             Login
@@ -127,6 +215,37 @@
     </div>
 </nav>
 
+<!-- Logout Confirmation Modal -->
+<div id="logout-modal" class="fixed inset-0 bg-black bg-opacity-50 hidden z-[100] flex items-center justify-center p-4">
+    <div class="bg-white rounded-2xl shadow-2xl max-w-md w-full mx-4 transform transition-all duration-300 scale-95 opacity-0" id="logout-modal-content">
+        <div class="p-6">
+            <div class="flex items-center justify-center w-16 h-16 mx-auto bg-red-100 rounded-full mb-4">
+                <i class="fa-solid fa-right-from-bracket text-2xl text-red-600"></i>
+            </div>
+            <h3 class="text-xl font-semibold text-gray-900 text-center mb-2">
+                Confirm Logout
+            </h3>
+            <p class="text-gray-600 text-center mb-6">
+                Are you sure you want to logout? You will need to sign in again to access your account.
+            </p>
+            <div class="flex space-x-3">
+                <button onclick="cancelLogout()" class="flex-1 px-4 py-3 bg-gray-100 text-gray-700 rounded-xl font-medium hover:bg-gray-200 transition-colors duration-200">
+                    Cancel
+                </button>
+                <button onclick="confirmLogout()" class="flex-1 px-4 py-3 bg-red-600 text-white rounded-xl font-medium hover:bg-red-700 transition-colors duration-200">
+                    <i class="fa-solid fa-right-from-bracket mr-2"></i>
+                    Logout
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Hidden logout form -->
+<form id="logout-form" method="POST" action="{{ route('logout') }}" class="hidden">
+    @csrf
+</form>
+
 <script>
 document.addEventListener('DOMContentLoaded', function() {
     const mobileMenuButton = document.getElementById('mobile-menu-button');
@@ -134,6 +253,9 @@ document.addEventListener('DOMContentLoaded', function() {
     const mobileAboutToggle = document.getElementById('mobile-about-toggle');
     const mobileAboutMenu = document.getElementById('mobile-about-menu');
     const mobileAboutArrow = document.getElementById('mobile-about-arrow');
+    const mobileProfileToggle = document.getElementById('mobile-profile-toggle');
+    const mobileProfileMenu = document.getElementById('mobile-profile-menu');
+    const mobileProfileArrow = document.getElementById('mobile-profile-arrow');
 
     // Toggle mobile menu
     mobileMenuButton.addEventListener('click', function() {
@@ -146,32 +268,106 @@ document.addEventListener('DOMContentLoaded', function() {
         mobileAboutArrow.textContent = mobileAboutMenu.classList.contains('hidden') ? '▼' : '▲';
     });
 
+    // Toggle mobile profile submenu
+    if (mobileProfileToggle) {
+        mobileProfileToggle.addEventListener('click', function() {
+            mobileProfileMenu.classList.toggle('hidden');
+            mobileProfileArrow.classList.toggle('rotate-180');
+        });
+    }
+
     // Close mobile menu when clicking on navigation links
-    const mobileNavLinks = document.querySelectorAll('#mobile-about-menu a');
+    const mobileNavLinks = document.querySelectorAll('#mobile-about-menu a, #mobile-profile-menu a');
     mobileNavLinks.forEach(link => {
         link.addEventListener('click', function() {
             mobileMenu.classList.add('hidden');
             mobileAboutMenu.classList.add('hidden');
+            mobileAboutMenu.classList.add('hidden');
             mobileAboutArrow.textContent = '▼';
-        });
-    });
-
-            // Close mobile menu when clicking outside
-        document.addEventListener('click', function(event) {
-            if (!mobileMenuButton.contains(event.target) && !mobileMenu.contains(event.target)) {
-                mobileMenu.classList.add('hidden');
-                mobileAboutMenu.classList.add('hidden');
-                mobileAboutArrow.textContent = '▼';
-            }
-        });
-
-                    // Close mobile menu on window resize
-        window.addEventListener('resize', function() {
-            if (window.innerWidth >= 1024) {
-                mobileMenu.classList.add('hidden');
-                mobileAboutMenu.classList.add('hidden');
-                mobileAboutArrow.textContent = '▼';
+            if (mobileProfileMenu) {
+                mobileProfileMenu.classList.add('hidden');
+                mobileProfileArrow.classList.remove('rotate-180');
             }
         });
     });
+
+    // Close mobile menu when clicking outside
+    document.addEventListener('click', function(event) {
+        if (!mobileMenuButton.contains(event.target) && !mobileMenu.contains(event.target)) {
+            mobileMenu.classList.add('hidden');
+            mobileAboutMenu.classList.add('hidden');
+            mobileAboutArrow.textContent = '▼';
+            if (mobileProfileMenu) {
+                mobileProfileMenu.classList.add('hidden');
+                mobileProfileArrow.classList.remove('rotate-180');
+            }
+        }
+    });
+
+    // Close mobile menu on window resize
+    window.addEventListener('resize', function() {
+        if (window.innerWidth >= 1024) {
+            mobileMenu.classList.add('hidden');
+            mobileAboutMenu.classList.add('hidden');
+            mobileAboutArrow.textContent = '▼';
+            if (mobileProfileMenu) {
+                mobileProfileMenu.classList.add('hidden');
+                mobileProfileArrow.classList.remove('rotate-180');
+            }
+        }
+    });
+});
+
+// Logout Modal Functions
+function showLogoutModal() {
+    const modal = document.getElementById('logout-modal');
+    const modalContent = document.getElementById('logout-modal-content');
+    
+    modal.classList.remove('hidden');
+    
+    // Trigger animation after a small delay
+    setTimeout(() => {
+        modalContent.classList.remove('scale-95', 'opacity-0');
+        modalContent.classList.add('scale-100', 'opacity-100');
+    }, 10);
+    
+    document.body.style.overflow = 'hidden';
+}
+
+function cancelLogout() {
+    const modal = document.getElementById('logout-modal');
+    const modalContent = document.getElementById('logout-modal-content');
+    
+    modalContent.classList.remove('scale-100', 'opacity-100');
+    modalContent.classList.add('scale-95', 'opacity-0');
+    
+    setTimeout(() => {
+        modal.classList.add('hidden');
+        document.body.style.overflow = 'auto';
+    }, 300);
+}
+
+function confirmLogout() {
+    document.getElementById('logout-form').submit();
+}
+
+// Close logout modal when clicking outside
+document.addEventListener('click', function(event) {
+    const modal = document.getElementById('logout-modal');
+    const modalContent = document.getElementById('logout-modal-content');
+    
+    if (event.target === modal) {
+        cancelLogout();
+    }
+});
+
+// Close logout modal with Escape key
+document.addEventListener('keydown', function(event) {
+    if (event.key === 'Escape') {
+        const modal = document.getElementById('logout-modal');
+        if (!modal.classList.contains('hidden')) {
+            cancelLogout();
+        }
+    }
+});
 </script>

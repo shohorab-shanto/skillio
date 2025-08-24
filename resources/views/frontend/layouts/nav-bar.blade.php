@@ -55,12 +55,17 @@
                         <button class="flex items-center space-x-2 p-2 rounded-full hover:bg-gray-100 transition-colors duration-200 focus:outline-none">
                             <!-- User Avatar -->
                             <div class="w-10 h-10 rounded-full bg-purple-100 flex items-center justify-center border-2 border-purple-200">
-                                @if(auth()->user()->profile_photo_path)
-                                    <img src="{{ asset('storage/' . auth()->user()->profile_photo_path) }}" 
-                                         alt="{{ auth()->user()->name }}" 
+                                @php
+                                    $user = auth()->user();
+                                @endphp
+                                @if($user->isMentor() && $user->mentor && $user->mentor->photo)
+                                    <img src="{{ asset('storage/' . $user->mentor->photo) }}" 
+                                         alt="{{ $user->name }}" 
                                          class="w-full h-full rounded-full object-cover">
                                 @else
-                                    <i class="fa-solid fa-user text-purple-600 text-lg"></i>
+                                    <img src="{{ asset('assets/images/avatar.png') }}" 
+                                         alt="{{ $user->name }}" 
+                                         class="w-full h-full rounded-full object-cover">
                                 @endif
                             </div>
                             <!-- Dropdown Arrow -->
@@ -81,21 +86,21 @@
                                 <!-- Dashboard Link -->
                                 <a href="{{ auth()->user()->isMentor() ? route('mentor.dashboard') : route('user.dashboard') }}" 
                                    class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 hover:text-purple-700 transition-colors duration-200">
-                                    <i class="fa-solid fa-tachometer-alt mr-2"></i>
+                                    <svg class="mr-2 text-gray-600 w-4 h-4 inline-block" fill="currentColor" viewBox="0 0 24 24">
+                                        <rect x="3" y="3" width="7" height="7" rx="1.5" />
+                                        <rect x="14" y="3" width="7" height="7" rx="1.5" />
+                                        <rect x="14" y="14" width="7" height="7" rx="1.5" />
+                                        <rect x="3" y="14" width="7" height="7" rx="1.5" />
+                                    </svg>
                                     Dashboard
-                                </a>
-                                
-                                <!-- Profile Link -->
-                                <a href="{{ auth()->user()->isMentor() ? route('mentor.profile.show') : route('user.profile.show') }}" 
-                                   class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 hover:text-purple-700 transition-colors duration-200">
-                                    <i class="fa-solid fa-user mr-2"></i>
-                                    Profile
                                 </a>
                                 
                                 <!-- Logout Button -->
                                 <button onclick="showLogoutModal()" 
                                         class="w-full text-left px-4 py-2 text-sm text-red-600 hover:bg-red-50 hover:text-red-700 transition-colors duration-200">
-                                    <i class="fa-solid fa-right-from-bracket mr-2"></i>
+                                    <svg class="mr-2 w-4 h-4 inline-block text-red-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a2 2 0 01-2 2H7a2 2 0 01-2-2V7a2 2 0 012-2h4a2 2 0 012 2v1" />
+                                    </svg>
                                     Logout
                                 </button>
                             </div>
@@ -163,12 +168,17 @@
                                 <div class="flex items-center space-x-3">
                                     <!-- User Avatar -->
                                     <div class="w-8 h-8 rounded-full bg-purple-100 flex items-center justify-center border-2 border-purple-200">
-                                        @if(auth()->user()->profile_photo_path)
-                                            <img src="{{ asset('storage/' . auth()->user()->profile_photo_path) }}" 
-                                                 alt="{{ auth()->user()->name }}" 
+                                        @php
+                                            $user = auth()->user();
+                                        @endphp
+                                        @if($user->isMentor() && $user->mentor && $user->mentor->photo)
+                                            <img src="{{ asset('storage/' . $user->mentor->photo) }}" 
+                                                 alt="{{ $user->name }}" 
                                                  class="w-full h-full rounded-full object-cover">
                                         @else
-                                            <i class="fa-solid fa-user text-purple-600 text-sm"></i>
+                                            <img src="{{ asset('assets/images/avatar.png') }}" 
+                                                 alt="{{ $user->name }}" 
+                                                 class="w-full h-full rounded-full object-cover">
                                         @endif
                                     </div>
                                     <span class="text-sm font-medium text-gray-700">{{ auth()->user()->name }}</span>
@@ -184,21 +194,21 @@
                                     <!-- Dashboard Link -->
                                     <a href="{{ auth()->user()->isMentor() ? route('mentor.dashboard') : route('user.dashboard') }}" 
                                        class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 transition-colors duration-200">
-                                        <i class="fa-solid fa-tachometer-alt mr-2"></i>
+                                        <svg class="mr-2 text-gray-600 w-4 h-4 inline-block" fill="currentColor" viewBox="0 0 24 24">
+                                            <rect x="3" y="3" width="7" height="7" rx="1.5" />
+                                            <rect x="14" y="3" width="7" height="7" rx="1.5" />
+                                            <rect x="14" y="14" width="7" height="7" rx="1.5" />
+                                            <rect x="3" y="14" width="7" height="7" rx="1.5" />
+                                        </svg>
                                         Dashboard
-                                    </a>
-                                    
-                                    <!-- Profile Link -->
-                                    <a href="{{ auth()->user()->isMentor() ? route('mentor.profile.show') : route('user.profile.show') }}" 
-                                       class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 transition-colors duration-200">
-                                        <i class="fa-solid fa-user mr-2"></i>
-                                        Profile
                                     </a>
                                     
                                     <!-- Logout Button -->
                                     <button onclick="showLogoutModal()" 
                                             class="w-full text-left px-4 py-2 text-sm text-red-600 hover:bg-red-50 transition-colors duration-200">
-                                        <i class="fa-solid fa-right-from-bracket mr-2"></i>
+                                        <svg class="mr-2 w-4 h-4 inline-block text-red-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a2 2 0 01-2 2H7a2 2 0 01-2-2V7a2 2 0 012-2h4a2 2 0 012 2v1" />
+                                        </svg>
                                         Logout
                                     </button>
                                 </div>

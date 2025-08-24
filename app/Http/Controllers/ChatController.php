@@ -226,7 +226,9 @@ class ChatController extends Controller
         $messages = $conversation->messages()->with('sender')->orderBy('created_at', 'asc')->get();
 
         // Get chat permission status for the current user
-        $chatStatus = $this->getChatPermissionStatus($user->id, $conversation->mentor_id);
+        // Determine which user ID to check enrollment for
+        $enrollmentCheckUserId = $user->mentor ? $conversation->user_id : $user->id;
+        $chatStatus = $this->getChatPermissionStatus($enrollmentCheckUserId, $conversation->mentor_id);
 
         return view('chat.index', compact('conversation', 'list_conversations', 'messages', 'chatStatus'));
     }
@@ -256,7 +258,8 @@ class ChatController extends Controller
         }
 
         // Check if user can chat based on time restrictions
-        $chatStatus = $this->getChatPermissionStatus($user->id, $conversation->mentor_id);
+        $enrollmentCheckUserId = $user->mentor ? $conversation->user_id : $user->id;
+        $chatStatus = $this->getChatPermissionStatus($enrollmentCheckUserId, $conversation->mentor_id);
         if (!$chatStatus['can_chat']) {
             if ($request->expectsJson()) {
                 return response()->json([

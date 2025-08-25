@@ -15,10 +15,20 @@
             <span class="sidebar-label">Courses</span>
         </a>
         
-                            <a href="{{ route('admin.mentors.index') }}" class="sidebar-item {{ request()->routeIs('admin.mentors*') ? 'active' : '' }}">
-                        <i class="fa-solid fa-chalkboard-teacher"></i>
-                        <span class="sidebar-label">Mentors</span>
-                    </a>
+                                    <a href="{{ route('admin.mentors.index') }}" class="sidebar-item {{ request()->routeIs('admin.mentors*') ? 'active' : '' }}">
+            <i class="fa-solid fa-chalkboard-teacher"></i>
+            <span class="sidebar-label">Mentors</span>
+        </a>
+        
+        <a href="{{ route('admin.categories.index') }}" class="sidebar-item {{ request()->routeIs('admin.categories*') ? 'active' : '' }}">
+            <i class="fa-solid fa-tags"></i>
+            <span class="sidebar-label">Categories</span>
+        </a>
+        
+        <a href="{{ route('admin.sub-categories.index') }}" class="sidebar-item {{ request()->routeIs('admin.sub-categories*') ? 'active' : '' }}">
+            <i class="fa-solid fa-tag"></i>
+            <span class="sidebar-label">Sub-Categories</span>
+        </a>
         
         <a href="#" class="sidebar-item">
             <i class="fa-solid fa-chart-line"></i>

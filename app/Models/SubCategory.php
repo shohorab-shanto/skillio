@@ -33,4 +33,12 @@ class SubCategory extends Model
     {
         return $this->belongsToMany(Course::class, 'courses_sub_categories');
     }
+
+    /**
+     * Get session bookings that belong to this sub-category.
+     */
+    public function sessionBookings(): BelongsToMany
+    {
+        return $this->belongsToMany(SessionBooking::class, 'session_bookings_sub_categories');
+    }
 }

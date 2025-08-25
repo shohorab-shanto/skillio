@@ -16,4 +16,14 @@ class Category extends Model
     {
         return $this->hasMany(\App\Models\SubCategory::class);
     }
+
+    public function courses()
+    {
+        return $this->hasMany(\App\Models\Course::class);
+    }
+
+    public function sessionBookings()
+    {
+        return $this->hasMany(\App\Models\SessionBooking::class);
+    }
 }

@@ -6,6 +6,8 @@ use App\Http\Controllers\Admin\AdminDashboardController;
 use App\Http\Controllers\Admin\AdminUserController;
 use App\Http\Controllers\Admin\AdminMentorController;
 use App\Http\Controllers\Admin\AdminCourseController;
+use App\Http\Controllers\Admin\AdminCategoryController;
+use App\Http\Controllers\Admin\AdminSubCategoryController;
 
 /*
 |--------------------------------------------------------------------------
@@ -48,4 +50,22 @@ Route::middleware(['admin_auth'])->group(function () {
     Route::patch('/courses/{course}/approve', [AdminCourseController::class, 'approve'])->name('admin.courses.approve');
     Route::patch('/courses/{course}/reject', [AdminCourseController::class, 'reject'])->name('admin.courses.reject');
     Route::patch('/courses/{course}/toggle-status', [AdminCourseController::class, 'toggleStatus'])->name('admin.courses.toggle-status');
+    
+    // Categories Management
+    Route::get('/categories', [AdminCategoryController::class, 'index'])->name('admin.categories.index');
+    Route::get('/categories/create', [AdminCategoryController::class, 'create'])->name('admin.categories.create');
+    Route::post('/categories', [AdminCategoryController::class, 'store'])->name('admin.categories.store');
+    Route::get('/categories/{category}/edit', [AdminCategoryController::class, 'edit'])->name('admin.categories.edit');
+    Route::put('/categories/{category}', [AdminCategoryController::class, 'update'])->name('admin.categories.update');
+    Route::delete('/categories/{category}', [AdminCategoryController::class, 'destroy'])->name('admin.categories.destroy');
+    Route::get('/categories/{category}/usage-stats', [AdminCategoryController::class, 'getUsageStats'])->name('admin.categories.usage-stats');
+    
+    // Sub-Categories Management
+    Route::get('/sub-categories', [AdminSubCategoryController::class, 'index'])->name('admin.sub-categories.index');
+    Route::get('/sub-categories/create', [AdminSubCategoryController::class, 'create'])->name('admin.sub-categories.create');
+    Route::post('/sub-categories', [AdminSubCategoryController::class, 'store'])->name('admin.sub-categories.store');
+    Route::get('/sub-categories/{subCategory}/edit', [AdminSubCategoryController::class, 'edit'])->name('admin.sub-categories.edit');
+    Route::put('/sub-categories/{subCategory}', [AdminSubCategoryController::class, 'update'])->name('admin.sub-categories.update');
+    Route::delete('/sub-categories/{subCategory}', [AdminSubCategoryController::class, 'destroy'])->name('admin.sub-categories.destroy');
+    Route::get('/sub-categories/{subCategory}/usage-stats', [AdminSubCategoryController::class, 'getUsageStats'])->name('admin.sub-categories.usage-stats');
 });

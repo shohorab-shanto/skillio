@@ -156,4 +156,12 @@ class User extends Authenticatable
     {
         return $this->sessionBookings();
     }
+
+    /**
+     * Get user preferences.
+     */
+    public function userPreferences()
+    {
+        return $this->hasOne(UserPreference::class);
+    }
 }

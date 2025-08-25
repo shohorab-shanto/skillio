@@ -12,9 +12,9 @@
                 online course and mentorships. Empower yourself for 
                 success in your business career.
             </p>
-            <button class="mt-5 bg-gradient-to-r from-[#8a45ec] to-[#5b19f9] text-white px-6 py-3 rounded-xl text-sm md:text-base">
+            <a href="{{ route('mentor.dashboard') }}" class="mt-5 inline-block bg-gradient-to-r from-[#8a45ec] to-[#5b19f9] text-white px-6 py-3 rounded-xl text-sm md:text-base text-center">
                 Make Money Today
-            </button>
+            </a>
 
             <!-- Logos -->
             <div class="flex flex-wrap items-center mt-14 space-x-4">
@@ -42,19 +42,22 @@
             <!-- Avatars -->
             <div class="flex avatar-group -space-x-6">
                 <div class="avatar w-12">
-                    <img src="https://img.daisyui.com/images/profile/demo/batperson@192.webp" />
+                    <img src="{{ asset('assets/images/home_mentor-1.png') }}" alt="Mentor 1" />
                 </div>
                 <div class="avatar w-12">
-                    <img src="https://img.daisyui.com/images/profile/demo/spiderperson@192.webp" />
+                    <img src="{{ asset('assets/images/home_mentor-2.png') }}" alt="Mentor 2" />
                 </div>
                 <div class="avatar w-12">
-                    <img src="https://img.daisyui.com/images/profile/demo/spiderperson@192.webp" />
+                    <img src="{{ asset('assets/images/home_mentor-3.png') }}" alt="Mentor 3" />
                 </div>
                 <div class="avatar w-12">
-                    <img src="https://img.daisyui.com/images/profile/demo/spiderperson@192.webp" />
+                    <img src="{{ asset('assets/images/home_mentor-4.png') }}" alt="Mentor 4" />
                 </div>
                 <div class="avatar w-12">
-                    <img src="https://img.daisyui.com/images/profile/demo/averagebulk@192.webp" />
+                    <img src="{{ asset('assets/images/home_mentor-5.png') }}" alt="Mentor 5" />
+                </div>
+                <div class="avatar w-12">
+                    <img src="{{ asset('assets/images/home_mentor-6.png') }}" alt="Mentor 6" />
                 </div>
                 <div class="avatar avatar-placeholder w-12 bg-[#7649F4] text-white flex items-center justify-center rounded-full">
                     <span>+</span>

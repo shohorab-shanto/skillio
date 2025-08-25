@@ -11,18 +11,19 @@ class AdminAuth
     /**
      * Handle an incoming request.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \Closure  $next
-     * @return \Symfony\Component\HttpFoundation\Response
+     * @param  \Closure(\Illuminate\Http\Request): (\Symfony\Component\HttpFoundation\Response)  $next
      */
     public function handle(Request $request, Closure $next): Response
     {
-        // Check if user is authenticated and has 'admin' role in the 'role' column
-        if (auth()->check() && auth()->user()->role === 'admin') {
-            return $next($request);
+        if (!auth()->check()) {
+            return redirect()->route('admin.login');
         }
 
-        // Redirect to login or show unauthorized
-        return redirect()->route('admin.login')->with('error', 'Unauthorized access');
+        if (auth()->user()->role !== 'admin') {
+            auth()->logout();
+            return redirect()->route('admin.login')->with('error', 'Access denied. Admin privileges required.');
+        }
+
+        return $next($request);
     }
 }

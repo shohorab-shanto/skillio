@@ -29,5 +29,10 @@ class RouteServiceProvider extends ServiceProvider
         Route::aliasMiddleware('user_auth', UserAuth::class);
         Route::aliasMiddleware('onboarding_complete', \App\Http\Middleware\EnsureUserOnboardingComplete::class);
         Route::aliasMiddleware('set_locale', \App\Http\Middleware\SetLocale::class);
+
+        // Load admin routes
+        Route::middleware('web')
+            ->prefix('admin')
+            ->group(base_path('routes/admin.php'));
     }
 }

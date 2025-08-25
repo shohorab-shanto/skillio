@@ -27,28 +27,36 @@ class HomeController extends Controller
      */
     private function getTopRatedMentors()
     {
-        $query = Mentor::where('availability', 'available')
+        $preferredMentors = collect();
+        $regularMentors = collect();
+        
+        // Base query for all available mentors
+        $baseQuery = Mentor::where('availability', 'available')
             ->whereHas('user', function($q) {
                 $q->where('role', 'mentor');
             })
-            ->with(['user', 'sessionBookings.category', 'sessionBookings.subCategories'])
+            ->with(['user', 'sessionBookings' => function($q) {
+                $q->select('id', 'mentor_id', 'fee', 'category_id');
+            }, 'sessionBookings.category', 'sessionBookings.subCategories'])
             ->withCount(['reviews as total_reviews'])
             ->withAvg('reviews', 'rating');
 
-        // If user is logged in, apply preference matching
+        // If user is logged in, try to get preference-matched mentors first
         if (Auth::check()) {
             $user = Auth::user();
             $userPreferences = $this->getUserPreferences($user);
             
             if (!empty($userPreferences)) {
+                $preferenceQuery = clone $baseQuery;
+                
                 // Apply mentor type filter at the mentor level
                 if (!empty($userPreferences['mentor_type'])) {
-                    $query->where('type', $userPreferences['mentor_type']);
+                    $preferenceQuery->where('type', $userPreferences['mentor_type']);
                 }
                 
                 // Apply category and sub-category filters at the sessionBookings level
                 if (!empty($userPreferences['categories']) || !empty($userPreferences['sub_categories'])) {
-                    $query->whereHas('sessionBookings', function($q) use ($userPreferences) {
+                    $preferenceQuery->whereHas('sessionBookings', function($q) use ($userPreferences) {
                         $q->where(function($subQ) use ($userPreferences) {
                             // Match category preferences
                             if (!empty($userPreferences['categories'])) {
@@ -62,14 +70,60 @@ class HomeController extends Controller
                         });
                     });
                 }
+                
+                // Get preference-matched mentors (up to 6)
+                $preferredMentors = $preferenceQuery->orderBy('reviews_avg_rating', 'desc')
+                    ->orderBy('total_reviews', 'desc')
+                    ->limit(6)
+                    ->get();
             }
         }
-
-        // Get top rated mentors, ordered by rating and review count
-        return $query->orderBy('reviews_avg_rating', 'desc')
-            ->orderBy('total_reviews', 'desc')
-            ->limit(6)
-            ->get();
+        
+        // If we don't have 6 preference-matched mentors, get regular top mentors
+        $remainingSlots = 6 - $preferredMentors->count();
+        
+        if ($remainingSlots > 0) {
+            // Get regular top mentors, excluding already selected preferred mentors
+            $excludeIds = $preferredMentors->pluck('id')->toArray();
+            
+            $regularQuery = clone $baseQuery;
+            if (!empty($excludeIds)) {
+                $regularQuery->whereNotIn('id', $excludeIds);
+            }
+            
+            $regularMentors = $regularQuery->orderBy('reviews_avg_rating', 'desc')
+                ->orderBy('total_reviews', 'desc')
+                ->limit($remainingSlots)
+                ->get();
+        }
+        
+        // Combine preferred and regular mentors, with preferred ones first
+        $allMentors = $preferredMentors->merge($regularMentors);
+        
+        // Add lowest session rate for each mentor
+        $allMentors->each(function ($mentor) {
+            // Debug: Check if sessionBookings are loaded
+            if ($mentor->sessionBookings && $mentor->sessionBookings->isNotEmpty()) {
+                // Filter out null fees and get the minimum
+                $validFees = $mentor->sessionBookings
+                    ->whereNotNull('fee')
+                    ->where('fee', '>', 0)
+                    ->pluck('fee');
+                
+                if ($validFees->isNotEmpty()) {
+                    $mentor->lowest_session_rate = $validFees->min();
+                    \Log::info("Mentor {$mentor->user->name}: Found valid fees: " . $validFees->implode(', ') . ", Lowest: {$mentor->lowest_session_rate}");
+                } else {
+                    $mentor->lowest_session_rate = 0; // No valid fees
+                    \Log::info("Mentor {$mentor->user->name}: No valid fees found");
+                }
+            } else {
+                $mentor->lowest_session_rate = 0; // No sessions
+                \Log::info("Mentor {$mentor->user->name}: No sessionBookings loaded");
+            }
+        });
+        
+        return $allMentors;
     }
 
     /**

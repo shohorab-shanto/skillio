@@ -59,9 +59,9 @@
 
             <div class="mt-5 flex justify-between items-center">
                 <div class="text-xl font-bold text-gray-900">
-                    ${{ $mentor->sessionBookings->first()->price ?? '99' }}<span class="text-sm font-normal text-gray-500">/hour</span>
+                    ${{ $mentor->lowest_session_rate ?? 'N/A' }}<span class="text-sm font-normal text-gray-500">/hour</span>
                 </div>
-                <a href="{{ route('mentor.sessions', $mentor->user_id) }}" 
+                <a href="{{ route('mentor.sessions', $mentor->id) }}" 
                    class="bg-violet-600 hover:bg-violet-700 text-white px-5 py-2 rounded-lg text-sm font-semibold">
                     Book session
                 </a>
@@ -78,10 +78,8 @@
         @endforelse
     </div>
     <div class="flex justify-center mt-8">
-        <a href="/find-mentor"  class="border-2 px-5 py-3 border-violet-600 rounded-lg">
-            
-                View All Mentors
-            
+        <a href="{{ route('mentors') }}" class="border-2 px-5 py-3 border-violet-600 rounded-lg">
+            View All Mentors
         </a>
     </div>
 

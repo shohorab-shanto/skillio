@@ -44,6 +44,7 @@ Route::middleware(['admin_auth'])->group(function () {
     Route::get('/mentors/{user}/sessions', [AdminMentorController::class, 'sessions'])->name('admin.mentors.sessions');
     Route::patch('/mentors/{user}/toggle-verification', [AdminMentorController::class, 'toggleVerification'])->name('admin.mentors.toggle-verification');
     Route::patch('/mentors/{user}/update-availability', [AdminMentorController::class, 'updateAvailability'])->name('admin.mentors.update-availability');
+    Route::post('/mentors/{user}/update-account-details', [AdminMentorController::class, 'updateAccountDetails'])->name('admin.mentors.update-account-details');
     
     // Courses Management
     Route::get('/courses', [AdminCourseController::class, 'index'])->name('admin.courses.index');

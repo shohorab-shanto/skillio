@@ -9,18 +9,12 @@
 @section('content')
 <div class="mx-auto space-y-6">
     <!-- Page Header -->
-    <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
-        <div>
-            <h1 class="text-2xl font-bold text-gray-900">Sub-Categories</h1>
-            <p class="text-gray-600 mt-1">Manage course and session sub-categories</p>
-        </div>
-        <div class="flex items-center gap-3">
-            <a href="{{ route('admin.sub-categories.create') }}" 
-               class="px-4 py-2 bg-purple-600 text-white rounded-lg hover:bg-purple-700 transition-colors duration-200">
-                <i class="fa-solid fa-plus mr-2"></i>
-                Add Sub-Category
-            </a>
-        </div>
+    <div class="flex justify-end items-center gap-3">
+        <a href="{{ route('admin.sub-categories.index') }}" 
+           class="px-4 py-2 bg-gray-100 text-gray-700 rounded-lg hover:bg-gray-200 transition-colors duration-200">
+            <i class="fa-solid fa-arrow-left mr-2"></i>
+            Back to Sub-Categories
+        </a>
     </div>
 
     <!-- Sub-Categories Table -->

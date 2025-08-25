@@ -143,4 +143,35 @@ class AdminMentorController extends Controller
             'availability' => $request->availability
         ]);
     }
+
+    public function updateAccountDetails(Request $request, User $user)
+    {
+        if ($user->role !== 'mentor') {
+            return response()->json(['success' => false, 'message' => 'Invalid user type']);
+        }
+
+        $mentor = $user->mentor;
+        if (!$mentor) {
+            return response()->json(['success' => false, 'message' => 'Mentor profile not found']);
+        }
+
+        $request->validate([
+            'stripe_connect_account_id' => 'nullable|string',
+            'connect_account_status' => 'required|in:pending,active,rejected,restricted',
+        ]);
+
+        // Prepare data for update - only Stripe Connect fields
+        $updateData = [
+            'stripe_connect_account_id' => $request->stripe_connect_account_id,
+            'connect_account_status' => $request->connect_account_status,
+        ];
+
+        // Update mentor
+        $mentor->update($updateData);
+        
+        return response()->json([
+            'success' => true, 
+            'message' => 'Stripe Connect account updated successfully'
+        ]);
+    }
 }

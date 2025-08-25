@@ -35,10 +35,7 @@
             <span class="sidebar-label">Transactions</span>
         </a>
         
-        <a href="#" class="sidebar-item">
-            <i class="fa-solid fa-cog"></i>
-            <span class="sidebar-label">Settings</span>
-        </a>
+
         
         <div style="border-top: 1px solid #f3f4f6; margin: 16px 8px;"></div>
         

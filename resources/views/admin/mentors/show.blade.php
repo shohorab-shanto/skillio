@@ -95,7 +95,7 @@
         @endif
 
         <!-- Certifications Section -->
-        @if($mentor->certifications && count($mentor->certifications) > 0)
+        @if($mentor->certifications && is_array($mentor->certifications) && count($mentor->certifications) > 0)
         <div class="mt-6 pt-6 border-t border-gray-200">
             <h3 class="text-lg font-semibold text-gray-900 mb-3">Certifications</h3>
             <div class="flex flex-wrap gap-2">
@@ -187,6 +187,12 @@
                 {{ $mentor->verified ? 'Unverify' : 'Verify' }}
             </button>
             
+            <button onclick="showAccountDetailsModal()" 
+                    class="px-6 py-3 bg-purple-600 text-white rounded-lg hover:bg-purple-700 transition-colors duration-200">
+                <i class="fa-solid fa-credit-card mr-2"></i>
+                Stripe Connect
+            </button>
+            
             <button onclick="showAvailabilityModal({{ $user->id }}, '{{ $mentor->availability }}')" 
                     class="px-6 py-3 bg-orange-600 text-white rounded-lg hover:bg-orange-700 transition-colors duration-200">
                 <i class="fa-solid fa-edit mr-2"></i>
@@ -200,7 +206,7 @@
     <div class="bg-white rounded-xl shadow-lg p-6">
         <h3 class="text-lg font-semibold text-gray-900 mb-4">Recent Reviews</h3>
         <div class="space-y-4">
-            @foreach($mentor->recentReviews as $review)
+            @foreach($mentor->recentReviews()->get() as $review)
             <div class="border-l-4 border-purple-500 pl-4 py-2">
                 <div class="flex items-center justify-between mb-2">
                     <div class="flex items-center gap-2">
@@ -270,10 +276,95 @@
         </div>
     </div>
 </div>
+
+<!-- Account Details Modal -->
+<div id="account-details-modal" class="fixed inset-0 bg-black bg-opacity-50 hidden z-[100] flex items-center justify-center p-4">
+    <div class="bg-white rounded-2xl shadow-2xl max-w-2xl w-full mx-4 transform transition-all duration-300 scale-95 opacity-0" id="account-details-modal-content">
+        <div class="p-6">
+            <div class="flex items-center justify-center w-16 h-16 mx-auto bg-purple-100 rounded-full mb-4">
+                <i class="fa-solid fa-user-cog text-2xl text-purple-600"></i>
+            </div>
+            <h3 class="text-xl font-semibold text-gray-900 text-center mb-2">
+                Stripe Connect Account
+            </h3>
+            <p class="text-gray-600 text-center mb-6">
+                Manage mentor's Stripe Connect account for payment processing.
+            </p>
+            
+            <form id="account-details-form" class="space-y-4">
+                @csrf
+                <input type="hidden" name="user_id" value="{{ $user->id }}">
+                
+
+
+                <!-- Stripe Connect Information -->
+                <div class="border-t border-gray-200 pt-4">
+                    <h4 class="text-lg font-medium text-gray-900 mb-3">Stripe Connect Account</h4>
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-2">Connect Account ID</label>
+                            <input type="text" name="stripe_connect_account_id" value="{{ $mentor->stripe_connect_account_id ?? '' }}" 
+                                   placeholder="acct_..." 
+                                   class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent">
+                            <p class="text-xs text-gray-500 mt-1">Stripe Connect account ID for receiving payments</p>
+                        </div>
+                        
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-2">Account Status</label>
+                            <select name="connect_account_status" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent">
+                                <option value="pending" {{ ($mentor->connect_account_status ?? 'pending') === 'pending' ? 'selected' : '' }}>Pending</option>
+                                <option value="active" {{ ($mentor->connect_account_status ?? 'pending') === 'active' ? 'selected' : '' }}>Active</option>
+                                <option value="rejected" {{ ($mentor->connect_account_status ?? 'pending') === 'rejected' ? 'selected' : '' }}>Rejected</option>
+                                <option value="restricted" {{ ($mentor->connect_account_status ?? 'pending') === 'restricted' ? 'selected' : '' }}>Restricted</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+
+
+
+
+                
+                <div class="flex space-x-3 pt-4">
+                    <button type="button" onclick="cancelAccountDetailsUpdate()" class="flex-1 px-4 py-3 bg-gray-100 text-gray-700 rounded-xl font-medium hover:bg-gray-200 transition-colors duration-200">
+                        Cancel
+                    </button>
+                    <button type="submit" class="flex-1 px-4 py-3 bg-purple-600 text-white rounded-xl font-medium hover:bg-purple-700 transition-colors duration-200">
+                        <i class="fa-solid fa-credit-card mr-2"></i>
+                        Update Stripe Connect
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
 @endsection
 
 @push('scripts')
 <script>
+function showAccountDetailsModal() {
+    const modal = document.getElementById('account-details-modal');
+    const modalContent = document.getElementById('account-details-modal-content');
+    
+    modal.classList.remove('hidden');
+    setTimeout(() => {
+        modalContent.classList.remove('scale-95', 'opacity-0');
+        modalContent.classList.add('scale-100', 'opacity-100');
+    }, 10);
+}
+
+function cancelAccountDetailsUpdate() {
+    const modal = document.getElementById('account-details-modal');
+    const modalContent = document.getElementById('account-details-modal-content');
+    
+    modalContent.classList.add('scale-95', 'opacity-0');
+    modalContent.classList.remove('scale-100', 'opacity-100');
+    
+    setTimeout(() => {
+        modal.classList.add('hidden');
+    }, 300);
+}
+
 function toggleVerification(mentorId, currentStatus) {
     const button = event.target;
     const originalText = button.textContent;
@@ -396,6 +487,60 @@ function showNotification(message, type) {
 document.getElementById('availability-modal').addEventListener('click', function(e) {
     if (e.target === this) {
         cancelAvailabilityUpdate();
+    }
+});
+
+// Handle account details form submission
+document.getElementById('account-details-form').addEventListener('submit', function(e) {
+    e.preventDefault();
+    
+    const form = this;
+    const submitButton = form.querySelector('button[type="submit"]');
+    const originalText = submitButton.innerHTML;
+    
+    // Disable button and show loading
+    submitButton.disabled = true;
+    submitButton.innerHTML = '<i class="fa-solid fa-spinner fa-spin mr-2"></i>Updating...';
+    
+    // Collect form data
+    const formData = new FormData(form);
+    
+    fetch(`/admin/mentors/${formData.get('user_id')}/update-account-details`, {
+        method: 'POST',
+        headers: {
+            'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content'),
+        },
+        body: formData
+    })
+    .then(response => response.json())
+    .then(data => {
+        if (data.success) {
+            showNotification('Account details updated successfully!', 'success');
+            cancelAccountDetailsUpdate();
+            
+            // Reload page after a short delay to reflect changes
+            setTimeout(() => {
+                location.reload();
+            }, 1500);
+        } else {
+            showNotification(data.message || 'Failed to update account details. Please try again.', 'error');
+        }
+    })
+    .catch(error => {
+        console.error('Error:', error);
+        showNotification('An error occurred. Please try again.', 'error');
+    })
+    .finally(() => {
+        // Re-enable button and restore original text
+        submitButton.disabled = false;
+        submitButton.innerHTML = originalText;
+    });
+});
+
+// Close account details modal when clicking outside
+document.getElementById('account-details-modal').addEventListener('click', function(e) {
+    if (e.target === this) {
+        cancelAccountDetailsUpdate();
     }
 });
 </script>

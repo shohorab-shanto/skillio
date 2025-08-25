@@ -8,6 +8,7 @@ use App\Http\Controllers\Admin\AdminMentorController;
 use App\Http\Controllers\Admin\AdminCourseController;
 use App\Http\Controllers\Admin\AdminCategoryController;
 use App\Http\Controllers\Admin\AdminSubCategoryController;
+use App\Http\Controllers\Admin\AdminTransactionController;
 
 /*
 |--------------------------------------------------------------------------
@@ -68,4 +69,9 @@ Route::middleware(['admin_auth'])->group(function () {
     Route::put('/sub-categories/{subCategory}', [AdminSubCategoryController::class, 'update'])->name('admin.sub-categories.update');
     Route::delete('/sub-categories/{subCategory}', [AdminSubCategoryController::class, 'destroy'])->name('admin.sub-categories.destroy');
     Route::get('/sub-categories/{subCategory}/usage-stats', [AdminSubCategoryController::class, 'getUsageStats'])->name('admin.sub-categories.usage-stats');
+    
+    // Transactions Management
+    Route::get('/transactions', [AdminTransactionController::class, 'index'])->name('admin.transactions.index');
+    Route::get('/transactions/{transaction}', [AdminTransactionController::class, 'show'])->name('admin.transactions.show');
+    Route::get('/transactions/stats/summary', [AdminTransactionController::class, 'getTransactionStats'])->name('admin.transactions.stats');
 });

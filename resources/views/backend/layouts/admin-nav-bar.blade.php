@@ -30,9 +30,9 @@
             <span class="sidebar-label">Sub-Categories</span>
         </a>
         
-        <a href="#" class="sidebar-item">
-            <i class="fa-solid fa-chart-line"></i>
-            <span class="sidebar-label">Analytics</span>
+        <a href="{{ route('admin.transactions.index') }}" class="sidebar-item {{ request()->routeIs('admin.transactions*') ? 'active' : '' }}">
+            <i class="fa-solid fa-credit-card"></i>
+            <span class="sidebar-label">Transactions</span>
         </a>
         
         <a href="#" class="sidebar-item">

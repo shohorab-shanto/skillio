@@ -42,7 +42,7 @@
                             Date & Time
                         </th>
                         <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                            Price
+                            fee
                         </th>
                         <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
                             Status
@@ -99,11 +99,11 @@
                         <td class="px-6 py-4 whitespace-nowrap">
                             <div class="text-sm text-gray-900">
                                 @if($session->discount > 0)
-                                    <div class="line-through text-gray-400">${{ number_format($session->price, 2) }}</div>
-                                    <div class="text-green-600 font-medium">${{ number_format($session->price - $session->discount, 2) }}</div>
-                                    <div class="text-xs text-gray-500">-{{ number_format(($session->discount / $session->price) * 100, 0) }}%</div>
+                                    <div class="line-through text-gray-400">${{ number_format($session->fee, 2) }}</div>
+                                    <div class="text-green-600 font-medium">${{ number_format($session->fee - $session->discount, 2) }}</div>
+                                    <div class="text-xs text-gray-500">-{{ number_format(($session->discount / $session->fee) * 100, 0) }}%</div>
                                 @else
-                                    <div class="font-medium">${{ number_format($session->price, 2) }}</div>
+                                    <div class="font-medium">${{ number_format($session->fee, 2) }}</div>
                                 @endif
                             </div>
                         </td>

@@ -5,6 +5,7 @@ use App\Http\Controllers\Admin\AdminAuthController;
 use App\Http\Controllers\Admin\AdminDashboardController;
 use App\Http\Controllers\Admin\AdminUserController;
 use App\Http\Controllers\Admin\AdminMentorController;
+use App\Http\Controllers\Admin\AdminCourseController;
 
 /*
 |--------------------------------------------------------------------------
@@ -40,4 +41,11 @@ Route::middleware(['admin_auth'])->group(function () {
     Route::get('/mentors/{user}/sessions', [AdminMentorController::class, 'sessions'])->name('admin.mentors.sessions');
     Route::patch('/mentors/{user}/toggle-verification', [AdminMentorController::class, 'toggleVerification'])->name('admin.mentors.toggle-verification');
     Route::patch('/mentors/{user}/update-availability', [AdminMentorController::class, 'updateAvailability'])->name('admin.mentors.update-availability');
+    
+    // Courses Management
+    Route::get('/courses', [AdminCourseController::class, 'index'])->name('admin.courses.index');
+    Route::get('/courses/{course}', [AdminCourseController::class, 'show'])->name('admin.courses.show');
+    Route::patch('/courses/{course}/approve', [AdminCourseController::class, 'approve'])->name('admin.courses.approve');
+    Route::patch('/courses/{course}/reject', [AdminCourseController::class, 'reject'])->name('admin.courses.reject');
+    Route::patch('/courses/{course}/toggle-status', [AdminCourseController::class, 'toggleStatus'])->name('admin.courses.toggle-status');
 });

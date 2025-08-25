@@ -10,7 +10,7 @@
                         <span class="sidebar-label">Users</span>
                     </a>
         
-        <a href="#" class="sidebar-item">
+        <a href="{{ route('admin.courses.index') }}" class="sidebar-item {{ request()->routeIs('admin.courses*') ? 'active' : '' }}">
             <i class="fa-solid fa-book"></i>
             <span class="sidebar-label">Courses</span>
         </a>

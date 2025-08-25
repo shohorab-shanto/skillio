@@ -90,7 +90,7 @@ class AdminMentorController extends Controller
             return redirect()->back()->with('error', 'Invalid user type');
         }
 
-        $sessions = $user->sessionBookings()
+        $sessions = $user->mentor->sessionBookings()
             ->with(['category', 'subCategories'])
             ->latest()
             ->paginate(15);

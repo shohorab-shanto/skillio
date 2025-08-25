@@ -63,9 +63,9 @@
                                          alt="{{ $user->name }}" 
                                          class="w-full h-full rounded-full object-cover">
                                 @else
-                                    <img src="{{ asset('assets/images/avatar.png') }}" 
-                                         alt="{{ $user->name }}" 
-                                         class="w-full h-full rounded-full object-cover">
+                                    <div class="w-full h-full rounded-full bg-gradient-to-br from-purple-400 to-pink-400 flex items-center justify-center text-white font-bold text-lg">
+                                        {{ strtoupper(substr($user->name, 0, 1)) }}
+                                    </div>
                                 @endif
                             </div>
                             <!-- Dropdown Arrow -->
@@ -176,9 +176,9 @@
                                                  alt="{{ $user->name }}" 
                                                  class="w-full h-full rounded-full object-cover">
                                         @else
-                                            <img src="{{ asset('assets/images/avatar.png') }}" 
-                                                 alt="{{ $user->name }}" 
-                                                 class="w-full h-full rounded-full object-cover">
+                                            <div class="w-full h-full rounded-full bg-gradient-to-br from-purple-400 to-pink-400 flex items-center justify-center text-white font-bold text-sm">
+                                                {{ strtoupper(substr($user->name, 0, 1)) }}
+                                            </div>
                                         @endif
                                     </div>
                                     <span class="text-sm font-medium text-gray-700">{{ auth()->user()->name }}</span>

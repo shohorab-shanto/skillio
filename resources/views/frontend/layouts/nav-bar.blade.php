@@ -46,7 +46,12 @@
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path>
                         </svg>
                     </div>
-                    <input type="search" placeholder="Search" class="navbar-search h-10 w-48 pl-8 pr-3 text-sm border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent outline-none transition-all duration-300">
+                    <input type="search" id="desktop-search" placeholder="Search courses, mentors..." class="navbar-search h-10 w-48 pl-8 pr-3 text-sm border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent outline-none transition-all duration-300">
+                    
+                    <!-- Search Results Dropdown -->
+                    <div id="desktop-search-results" class="absolute top-full left-0 mt-2 bg-white border border-gray-200 rounded-lg shadow-lg z-50 hidden max-h-96 overflow-y-auto w-96">
+                        <!-- Results will be populated here -->
+                    </div>
                 </div>
                 
                 @auth
@@ -134,7 +139,12 @@
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path>
                             </svg>
                         </div>
-                        <input type="search" placeholder="Search" class="w-full pl-10 pr-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent outline-none">
+                        <input type="search" id="mobile-search" placeholder="Search courses, mentors..." class="w-full pl-10 pr-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent outline-none">
+                        
+                        <!-- Mobile Search Results -->
+                        <div id="mobile-search-results" class="absolute top-full left-0 right-0 mt-2 bg-white border border-gray-200 rounded-lg shadow-lg z-50 hidden max-h-96 overflow-y-auto w-full">
+                            <!-- Results will be populated here -->
+                        </div>
                     </div>
                 </div>
 
@@ -380,4 +390,162 @@ document.addEventListener('keydown', function(event) {
         }
     }
 });
+
+// Search functionality
+let searchTimeout;
+const searchInputs = ['desktop-search', 'mobile-search'];
+const searchResults = ['desktop-search-results', 'mobile-search-results'];
+
+searchInputs.forEach((inputId, index) => {
+    const input = document.getElementById(inputId);
+    const results = document.getElementById(searchResults[index]);
+    
+    if (input && results) {
+        // Handle input changes
+        input.addEventListener('input', function() {
+            const query = this.value.trim();
+            
+            // Clear previous timeout
+            clearTimeout(searchTimeout);
+            
+            // Hide results if query is too short
+            if (query.length < 2) {
+                results.classList.add('hidden');
+                return;
+            }
+            
+            // Set timeout for search (debouncing)
+            searchTimeout = setTimeout(() => {
+                performSearch(query, results);
+            }, 300);
+        });
+        
+        // Handle focus
+        input.addEventListener('focus', function() {
+            const query = this.value.trim();
+            if (query.length >= 2) {
+                results.classList.remove('hidden');
+            }
+        });
+        
+        // Handle click outside to close results
+        document.addEventListener('click', function(event) {
+            if (!input.contains(event.target) && !results.contains(event.target)) {
+                results.classList.add('hidden');
+            }
+        });
+    }
+});
+
+// Perform search function
+function performSearch(query, resultsContainer) {
+    fetch(`/search?q=${encodeURIComponent(query)}`)
+        .then(response => response.json())
+        .then(data => {
+            displaySearchResults(data.results, resultsContainer);
+            resultsContainer.classList.remove('hidden');
+        })
+        .catch(error => {
+            console.error('Search error:', error);
+            resultsContainer.classList.add('hidden');
+        });
+}
+
+// Display search results
+function displaySearchResults(results, container) {
+    if (results.length === 0) {
+        container.innerHTML = `
+            <div class="p-4 text-center text-gray-500">
+                <svg class="mx-auto h-8 w-8 text-gray-400 mb-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path>
+                </svg>
+                <p>No results found</p>
+            </div>
+        `;
+        return;
+    }
+    
+    // Helper function to truncate text
+    function truncateText(text, maxLength = 200) {
+        if (!text || text.length <= maxLength) return text;
+        return text.substring(0, maxLength) + '...';
+    }
+    
+    const resultsHTML = results.map(result => {
+        if (result.type === 'course') {
+            return `
+                <a href="${result.url}" class="block p-4 hover:bg-gray-50 border-b border-gray-100 last:border-b-0 transition-colors duration-200">
+                    <div class="flex items-start space-x-4">
+                        <div class="flex-shrink-0 w-16 h-16 bg-gray-200 rounded-lg flex items-center justify-center">
+                            ${result.thumbnail ? 
+                                `<img src="${asset('storage/' + result.thumbnail)}" alt="${result.title}" class="w-full h-full rounded-lg object-cover">` :
+                                `<svg class="w-8 h-8 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 19 7.5 19s3.332-.477 4.5-1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.246 19 16.5 19c-1.747 0-3.332-.523-4.5-1.253"></path>
+                                </svg>`
+                            }
+                        </div>
+                        <div class="flex-1 min-w-0">
+                            <div class="flex items-center space-x-2 mb-2">
+                                <span class="inline-flex items-center px-2 py-1 rounded-full text-xs font-medium bg-blue-100 text-blue-800">
+                                    Course
+                                </span>
+                                <h3 class="text-sm font-semibold text-gray-900 leading-tight">${truncateText(result.title, 60)}</h3>
+                            </div>
+                            <p class="text-xs text-gray-600 mb-2 leading-relaxed">${truncateText(result.category + (result.sub_categories ? ' • ' + result.sub_categories : ''), 80)}</p>
+                            <p class="text-xs text-gray-500 mb-2">by ${truncateText(result.mentor, 40)}</p>
+                            <div class="flex items-center justify-between">
+                                <div class="flex items-center space-x-3">
+                                    <div class="flex items-center space-x-1">
+                                        <svg class="w-3 h-3 text-yellow-400" fill="currentColor" viewBox="0 0 20 20">
+                                            <path d="M10 15l-5.878 3.09 1.123-6.545L.489 6.91l6.572-.955L10 0l2.939 5.955 6.572.955-4.756 4.635 1.123 6.545z"/>
+                                        </svg>
+                                        <span class="text-xs text-gray-600 font-medium">${result.rating ? result.rating.toFixed(1) : 'N/A'}</span>
+                                    </div>
+                                    <span class="text-xs text-gray-500">(${result.reviews_count} reviews)</span>
+                                </div>
+                                <span class="text-sm font-semibold text-gray-900">$${result.price}</span>
+                            </div>
+                        </div>
+                    </div>
+                </a>
+            `;
+        } else if (result.type === 'mentor') {
+            return `
+                <a href="${result.url}" class="block p-4 hover:bg-gray-50 border-b border-gray-100 last:border-b-0 transition-colors duration-200">
+                    <div class="flex items-start space-x-4">
+                        <div class="flex-shrink-0 w-16 h-16 bg-gray-200 rounded-lg flex items-center justify-center">
+                            ${result.thumbnail ? 
+                                `<img src="${asset('storage/' + result.thumbnail)}" alt="${result.title}" class="w-full h-full rounded-lg object-cover">` :
+                                `<svg class="w-8 h-8 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"></path>
+                                </svg>`
+                            }
+                        </div>
+                        <div class="flex-1 min-w-0">
+                            <div class="flex items-center space-x-2 mb-2">
+                                <span class="inline-flex items-center px-2 py-1 rounded-full text-xs font-medium bg-purple-100 text-purple-800">
+                                    Mentor
+                                </span>
+                                <h3 class="text-sm font-semibold text-gray-900 leading-tight">${truncateText(result.title, 60)}</h3>
+                            </div>
+                            <p class="text-xs text-gray-600 mb-2 leading-relaxed">${truncateText(result.category + (result.sub_categories ? ' • ' + result.sub_categories : ''), 80)}</p>
+                            <p class="text-xs text-gray-500 mb-2">${result.experience} years experience</p>
+                            <div class="flex items-center space-x-3">
+                                <div class="flex items-center space-x-1">
+                                    <svg class="w-3 h-3 text-yellow-400" fill="currentColor" viewBox="0 0 20 20">
+                                        <path d="M10 15l-5.878 3.09 1.123-6.545L.489 6.91l6.572-.955L10 0l2.939 5.955 6.572.955-4.756 4.635 1.123 6.545z"/>
+                                    </svg>
+                                    <span class="text-xs text-gray-600 font-medium">${result.rating ? result.rating.toFixed(1) : 'N/A'}</span>
+                                </div>
+                                <span class="text-xs text-gray-500">(${result.reviews_count} reviews)</span>
+                            </div>
+                        </div>
+                    </div>
+                </a>
+            `;
+        }
+    }).join('');
+    
+    container.innerHTML = resultsHTML;
+}
 </script>

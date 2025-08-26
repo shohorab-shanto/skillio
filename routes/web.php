@@ -13,6 +13,10 @@ Route::get('/mentors/{mentor}/profile-and-sessions', [App\Http\Controllers\Mento
 Route::get('/courses', [App\Http\Controllers\CoursesController::class, 'index'])->name('courses');
 Route::get('/courses/{course}', [App\Http\Controllers\CoursesController::class, 'show'])->name('courses.show');
 
+// Search Routes
+Route::get('/search', [App\Http\Controllers\SearchController::class, 'search'])->name('search');
+Route::get('/search/suggestions', [App\Http\Controllers\SearchController::class, 'suggestions'])->name('search.suggestions');
+
 // Checkout Routes - Generic for both sessions and courses
 Route::middleware(['user_auth'])->group(function () {
     Route::get('/checkout/session/{sessionBooking}', [App\Http\Controllers\CheckoutController::class, 'sessionCheckout'])->name('checkout.session');

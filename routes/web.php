@@ -13,6 +13,15 @@ Route::get('/mentors/{mentor}/profile-and-sessions', [App\Http\Controllers\Mento
 Route::get('/courses', [App\Http\Controllers\CoursesController::class, 'index'])->name('courses');
 Route::get('/courses/{course}', [App\Http\Controllers\CoursesController::class, 'show'])->name('courses.show');
 
+// Legal Pages
+Route::get('/terms-and-conditions', function () {
+    return view('frontend.terms-and-conditions');
+})->name('terms-and-conditions');
+
+Route::get('/privacy-policy', function () {
+    return view('frontend.privacy-policy');
+})->name('privacy-policy');
+
 // Search Routes
 Route::get('/search', [App\Http\Controllers\SearchController::class, 'search'])->name('search');
 Route::get('/search/suggestions', [App\Http\Controllers\SearchController::class, 'suggestions'])->name('search.suggestions');

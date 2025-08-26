@@ -113,11 +113,11 @@
                     <a href="{{ url('/#testimonials') }}" class="hover:underline">Testimonials</a>
                     <a href="{{ url('/#faq') }}" class="hover:underline">FAQ</a>
                 </div>
-                <!-- Part 2: Right Aligned Links -->
-                <div class="flex flex-wrap justify-center md:justify-end items-center gap-6 text-sm font-medium mt-4 md:mt-0 md:ml-8">
-                    <a href="#" class="hover:underline">Terms & Conditions</a>
-                    <a href="#" class="hover:underline">Privacy Policy</a>
-                </div>
+                                 <!-- Part 2: Right Aligned Links -->
+                 <div class="flex flex-wrap justify-center md:justify-end items-center gap-6 text-sm font-medium mt-4 md:mt-0 md:ml-8">
+                     <a href="{{ route('terms-and-conditions') }}" class="hover:underline">Terms & Conditions</a>
+                     <a href="{{ route('privacy-policy') }}" class="hover:underline">Privacy Policy</a>
+                 </div>
             </div>
         </div>
 

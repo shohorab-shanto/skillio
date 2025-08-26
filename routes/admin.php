@@ -52,6 +52,7 @@ Route::middleware(['admin_auth'])->group(function () {
     Route::patch('/courses/{course}/approve', [AdminCourseController::class, 'approve'])->name('admin.courses.approve');
     Route::patch('/courses/{course}/reject', [AdminCourseController::class, 'reject'])->name('admin.courses.reject');
     Route::patch('/courses/{course}/toggle-status', [AdminCourseController::class, 'toggleStatus'])->name('admin.courses.toggle-status');
+    Route::patch('/courses/{course}/toggle-featured', [AdminCourseController::class, 'toggleFeatured'])->name('admin.courses.toggle-featured');
     
     // Categories Management
     Route::get('/categories', [AdminCategoryController::class, 'index'])->name('admin.categories.index');

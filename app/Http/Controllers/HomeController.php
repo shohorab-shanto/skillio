@@ -8,6 +8,7 @@ use App\Models\Mentor;
 use App\Models\Review;
 use App\Models\UserEnrollment;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 
 class HomeController extends Controller
 {
@@ -19,7 +20,11 @@ class HomeController extends Controller
     public function index()
     {
         $topMentors = $this->getTopRatedMentors();
-        return view('frontend.home.index', compact('topMentors'));
+        $popularCourses = $this->getPopularCourses();
+        $newCourses = $this->getNewCourses();
+        $featuredCourses = $this->getFeaturedCourses();
+        $topReviews = $this->getTopReviews();
+        return view('frontend.home.index', compact('topMentors', 'popularCourses', 'newCourses', 'featuredCourses', 'topReviews'));
     }
 
     /**
@@ -166,5 +171,159 @@ class HomeController extends Controller
         }
 
         return $preferences;
+    }
+
+    /**
+     * Get top 6 popular courses with preference matching for logged-in users
+     */
+    private function getPopularCourses()
+    {
+        $preferredCourses = collect();
+        $regularCourses = collect();
+        
+        // Base query for all approved courses
+        $baseQuery = \App\Models\Course::with(['mentor.user', 'category', 'subCategories', 'reviews'])
+            ->approved();
+
+        // If user is logged in, try to get preference-matched courses first
+        if (Auth::check()) {
+            $user = Auth::user();
+            $userPreferences = $this->getUserPreferences($user);
+            
+            if (!empty($userPreferences)) {
+                $preferenceQuery = clone $baseQuery;
+                
+                // Apply category filter
+                if (!empty($userPreferences['categories'])) {
+                    $preferenceQuery->whereIn('category_id', $userPreferences['categories']);
+                }
+                
+                // Apply sub-category filter
+                if (!empty($userPreferences['sub_categories'])) {
+                    $preferenceQuery->whereHas('subCategories', function($q) use ($userPreferences) {
+                        $q->whereIn('id', $userPreferences['sub_categories']);
+                    });
+                }
+                
+                // Get preference-matched courses (up to 6)
+                $preferredCourses = $preferenceQuery->get()->sortByDesc(function($course) {
+                    $avgRating = $course->averageRating() ?? 0;
+                    $reviewCount = $course->totalReviews();
+                    return [$avgRating, $reviewCount, $course->created_at];
+                })->take(6);
+            }
+        }
+        
+        // If we don't have 6 preference-matched courses, get regular popular courses
+        $remainingSlots = 6 - $preferredCourses->count();
+        
+        if ($remainingSlots > 0) {
+            // Get regular popular courses, excluding already selected preferred courses
+            $excludeIds = $preferredCourses->pluck('id')->toArray();
+            
+            $regularQuery = clone $baseQuery;
+            if (!empty($excludeIds)) {
+                $regularQuery->whereNotIn('id', $excludeIds);
+            }
+            
+            $regularCourses = $regularQuery->get()->sortByDesc(function($course) {
+                $avgRating = $course->averageRating() ?? 0;
+                $reviewCount = $course->totalReviews();
+                return [$avgRating, $reviewCount, $course->created_at];
+            })->take($remainingSlots);
+        }
+        
+        // Combine preferred and regular courses, with preferred ones first
+        $allCourses = $preferredCourses->merge($regularCourses);
+        
+        return $allCourses;
+    }
+
+    /**
+     * Get top 6 newest courses with preference matching for logged-in users
+     */
+    private function getNewCourses()
+    {
+        $preferredCourses = collect();
+        $regularCourses = collect();
+        
+        // Base query for all approved courses
+        $baseQuery = \App\Models\Course::with(['mentor.user', 'category', 'subCategories', 'reviews'])
+            ->approved();
+        
+        // If user is logged in, try to get preference-matched courses first
+        if (Auth::check()) {
+            $user = Auth::user();
+            $userPreferences = $this->getUserPreferences($user);
+            
+            if (!empty($userPreferences)) {
+                $preferenceQuery = clone $baseQuery;
+                
+                // Apply category filter
+                if (!empty($userPreferences['categories'])) {
+                    $preferenceQuery->whereIn('category_id', $userPreferences['categories']);
+                }
+                
+                // Apply sub-category filter
+                if (!empty($userPreferences['sub_categories'])) {
+                    $preferenceQuery->whereHas('subCategories', function($q) use ($userPreferences) {
+                        $q->whereIn('id', $userPreferences['sub_categories']);
+                    });
+                }
+                
+                // Get preference-matched courses (up to 6) - ordered by newest first
+                $preferredCourses = $preferenceQuery->orderBy('created_at', 'desc')
+                    ->limit(6)
+                    ->get();
+            }
+        }
+        
+        // If we don't have 6 preference-matched courses, get regular new courses
+        $remainingSlots = 6 - $preferredCourses->count();
+        
+        if ($remainingSlots > 0) {
+            // Get regular new courses, excluding already selected preferred courses
+            $excludeIds = $preferredCourses->pluck('id')->toArray();
+            
+            $regularQuery = clone $baseQuery;
+            if (!empty($excludeIds)) {
+                $regularQuery->whereNotIn('id', $excludeIds);
+            }
+            
+            $regularCourses = $regularQuery->orderBy('created_at', 'desc')
+                ->limit($remainingSlots)
+                ->get();
+        }
+        
+        // Combine preferred and regular courses, with preferred ones first
+        $allCourses = $preferredCourses->merge($regularCourses);
+        
+        return $allCourses;
+    }
+
+    /**
+     * Get featured courses (up to 6)
+     */
+    private function getFeaturedCourses()
+    {
+        return \App\Models\Course::with(['mentor.user', 'category', 'subCategories', 'reviews'])
+            ->approved()
+            ->featured()
+            ->orderBy('created_at', 'desc')
+            ->limit(6)
+            ->get();
+    }
+
+    /**
+     * Get latest 12 highest-rated reviews
+     */
+    private function getTopReviews()
+    {
+        return \App\Models\Review::with(['user', 'course.mentor.user'])
+            ->where('rating', '>=', 4) // Only reviews with rating 4 or higher
+            ->orderBy('rating', 'desc')
+            ->orderBy('created_at', 'desc')
+            ->limit(12)
+            ->get();
     }
 }

@@ -1,12 +1,12 @@
-<section id="mentors" class="max-w-[1400px] mx-auto mt-20 px-6">
-    <x-section-header 
-        title="Find Your Perfect Mentor"
-        subtitle="Connecting with mentors who have many years of knowledge and experience in their fields."
-        class="mb-8"
-    />
+<section id="mentors" class="py-16 bg-gray-50">
+    <div class="max-w-[1400px] mx-auto px-6">
+        <x-section-header 
+            title="Find Your Perfect Mentor"
+            subtitle="Connecting with mentors who have many years of knowledge and experience in their fields."
+            class="mb-8"
+        />
 
-    <div
-        class="max-w-[1200px] w-full mx-auto grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-y-8 gap-x-6 justify-items-center pt-5">
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
         
         @forelse($topMentors as $mentor)
         <div class="bg-white rounded-xl shadow-md p-6 w-full max-w-sm">
@@ -115,11 +115,17 @@
             </div>
         </div>
         @endforelse
+        </div>
+        
+        <!-- View All Mentors Button -->
+        <div class="flex justify-center mt-12">
+            <a href="{{ route('mentors') }}" 
+               class="inline-flex items-center px-6 py-3 border-2 border-violet-600 text-violet-600 rounded-lg font-semibold hover:bg-violet-600 hover:text-white transition-all duration-300">
+                View All Mentors
+                <svg class="ml-2 w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
+                </svg>
+            </a>
+        </div>
     </div>
-    <div class="flex justify-center mt-8">
-        <a href="{{ route('mentors') }}" class="border-2 px-5 py-3 border-violet-600 rounded-lg">
-            View All Mentors
-        </a>
-    </div>
-
 </section>

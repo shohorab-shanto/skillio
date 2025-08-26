@@ -43,7 +43,7 @@
         }
 
         body {
-            background-color: #f7f7f7;
+            background-color: #f9fafb; /* Tailwind's bg-gray-50 */
         }
     </style>
 

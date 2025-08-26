@@ -47,6 +47,15 @@
                     Approve Course
                 </button>
             @endif
+
+            <!-- Featured Course Toggle Button -->
+            @if($course->status === 'approved')
+                <button onclick="toggleFeatured({{ $course->id }})" 
+                        class="px-4 py-2 {{ $course->isFeatured() ? 'bg-yellow-600 hover:bg-yellow-700' : 'bg-purple-600 hover:bg-purple-700' }} text-white rounded-lg transition-colors duration-200">
+                    <i class="fa-solid {{ $course->isFeatured() ? 'fa-star' : 'fa-star-half-stroke' }} mr-2"></i>
+                    {{ $course->isFeatured() ? 'Remove Featured' : 'Make Featured' }}
+                </button>
+            @endif
         </div>
     </div>
 
@@ -90,6 +99,13 @@
                             </span>
                             @break
                     @endswitch
+
+                    @if($course->isFeatured())
+                        <span class="inline-flex items-center px-3 py-1 rounded-full text-sm font-medium bg-yellow-100 text-yellow-800">
+                            <i class="fa-solid fa-star mr-1"></i>
+                            Featured
+                        </span>
+                    @endif
                 </div>
 
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
@@ -365,6 +381,41 @@ function cancelReject() {
     }, 200);
     
     document.getElementById('rejection-reason').value = '';
+}
+
+function toggleFeatured(courseId) {
+    const button = event.target;
+    const originalText = button.textContent;
+    
+    // Disable button and show loading
+    button.disabled = true;
+    button.textContent = 'Updating...';
+    
+    fetch(`/admin/courses/${courseId}/toggle-featured`, {
+        method: 'PATCH',
+        headers: {
+            'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content'),
+            'Content-Type': 'application/json',
+        },
+    })
+    .then(response => response.json())
+    .then(data => {
+        if (data.success) {
+            showNotification(data.message, 'success');
+            // Reload page to show updated featured status
+            setTimeout(() => window.location.reload(), 1000);
+        } else {
+            showNotification(data.message, 'error');
+        }
+    })
+    .catch(error => {
+        console.error('Error:', error);
+        showNotification('An error occurred while updating featured status', 'error');
+    })
+    .finally(() => {
+        button.disabled = false;
+        button.textContent = originalText;
+    });
 }
 
 function toggleCourseStatus(courseId) {

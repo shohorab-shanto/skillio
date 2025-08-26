@@ -27,6 +27,7 @@ class Course extends Model
         'status',
         'rejection_reason',
         'needs_reapproval',
+        'featured',
     ];
 
     protected $casts = [
@@ -36,6 +37,7 @@ class Course extends Model
         'start_date' => 'date',
         'end_date' => 'date',
         'needs_reapproval' => 'boolean',
+        'featured' => 'boolean',
         'created_at' => 'datetime',
         'updated_at' => 'datetime',
     ];
@@ -104,6 +106,11 @@ class Course extends Model
         return $query->where('needs_reapproval', true);
     }
 
+    public function scopeFeatured($query)
+    {
+        return $query->where('featured', true);
+    }
+
     public function isApproved(): bool
     {
         return $this->status === 'approved';
@@ -117,6 +124,11 @@ class Course extends Model
     public function isRejected(): bool
     {
         return $this->status === 'rejected';
+    }
+
+    public function isFeatured(): bool
+    {
+        return $this->featured === true;
     }
 
     public function getDiscountedPriceAttribute(): float
@@ -205,6 +217,21 @@ class Course extends Model
             'needs_reapproval' => false,
             'rejection_reason' => null,
         ]);
+    }
+
+    public function toggleFeatured(): void
+    {
+        $this->update(['featured' => !$this->featured]);
+    }
+
+    public function markAsFeatured(): void
+    {
+        $this->update(['featured' => true]);
+    }
+
+    public function removeFeatured(): void
+    {
+        $this->update(['featured' => false]);
     }
 
     public function reject(string $reason): void

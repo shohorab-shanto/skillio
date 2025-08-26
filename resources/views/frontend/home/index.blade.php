@@ -20,6 +20,7 @@
     @include('frontend.home.potential')
     @include('frontend.home.perfect-mentor')
     @include('frontend.home.popular-courses')
+    @include('frontend.home.new-and-featured-courses')
     @include('frontend.home.review')
     @include('frontend.home.question-answer')
 @endsection

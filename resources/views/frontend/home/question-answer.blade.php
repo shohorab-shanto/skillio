@@ -1,7 +1,7 @@
 <x-section-header title="Frequently Asked Questions"
     subtitle="Find answers to the most common questions about Skillio courses and mentorship programs." />
 
-<section id="faq" class="bg-white pb-16">
+<section id="faq" class="bg-gray-50 pb-16">
     <div class="max-w-[1400px] mx-auto px-6">
         <div class="space-y-4">
             

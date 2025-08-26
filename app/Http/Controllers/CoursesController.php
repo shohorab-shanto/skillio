@@ -9,6 +9,7 @@ use App\Models\Category;
 use App\Models\UserEnrollment;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Auth;
 
 class CoursesController extends Controller
 {
@@ -19,18 +20,62 @@ class CoursesController extends Controller
      */
     public function index(Request $request)
     {
-        $query = Course::with(['mentor.user', 'category', 'subCategories', 'reviews'])
-                      ->approved(); // Only show approved courses
+        $preferredCourses = collect();
+        $regularCourses = collect();
         
-        // Category filtering
-        if ($request->filled('category')) {
-            $query->where('category_id', $request->get('category'));
+        // Base query for all approved courses
+        $baseQuery = Course::with(['mentor.user', 'category', 'subCategories', 'reviews'])
+                      ->approved();
+        
+        // If user is logged in, try to get preference-matched courses first
+        if (Auth::check()) {
+            $user = Auth::user();
+            $userPreferences = $this->getUserPreferences($user);
+            
+            if (!empty($userPreferences)) {
+                $preferenceQuery = clone $baseQuery;
+                
+                // Apply category filter from preferences (if not overridden by request)
+                if (!empty($userPreferences['categories']) && !$request->filled('category')) {
+                    $preferenceQuery->whereIn('category_id', $userPreferences['categories']);
+                }
+                
+                // Apply sub-category filter from preferences
+                if (!empty($userPreferences['sub_categories'])) {
+                    $preferenceQuery->whereHas('subCategories', function($q) use ($userPreferences) {
+                        $q->whereIn('id', $userPreferences['sub_categories']);
+                    });
+                }
+                
+                // Apply mentor type filter from preferences
+                if (!empty($userPreferences['mentor_type'])) {
+                    $preferenceQuery->whereHas('mentor', function($q) use ($userPreferences) {
+                        $q->where('type', $userPreferences['mentor_type']);
+                    });
+                }
+                
+                // Get preference-matched courses
+                $preferredCourses = $preferenceQuery->get();
+            }
         }
         
-        // Search functionality
+        // Get regular courses (excluding already selected preferred courses)
+        $excludeIds = $preferredCourses->pluck('id')->toArray();
+        
+        $regularQuery = clone $baseQuery;
+        if (!empty($excludeIds)) {
+            $regularQuery->whereNotIn('id', $excludeIds);
+        }
+        
+        // Apply category filtering from request
+        if ($request->filled('category')) {
+            $regularQuery->where('category_id', $request->get('category'));
+        }
+        
+        // Apply search functionality
         if ($request->filled('search')) {
             $search = $request->get('search');
-            $query->where(function ($q) use ($search) {
+            $regularQuery->where(function ($q) use ($search) {
                 $q->where('title', 'like', '%' . $search . '%')
                   ->orWhere('description', 'like', '%' . $search . '%')
                   ->orWhereHas('category', function ($categoryQuery) use ($search) {
@@ -41,18 +86,39 @@ class CoursesController extends Controller
                   });
             });
         }
+
+        // Apply featured filter
+        if ($request->filled('featured')) {
+            $regularQuery->featured();
+        }
         
-        // Order by: 1) Average rating (DESC), 2) Rating count (DESC), 3) Created at (DESC)
-        $query->leftJoin(\DB::raw('(SELECT course_id, AVG(rating) as avg_rating, COUNT(id) as review_count FROM reviews GROUP BY course_id) as review_stats'), 
-                         'courses.id', '=', 'review_stats.course_id')
-              ->select('courses.*', 'review_stats.avg_rating', 'review_stats.review_count')
-              ->orderByRaw('CASE WHEN review_stats.avg_rating IS NULL THEN 1 ELSE 0 END')
-              ->orderBy('review_stats.avg_rating', 'desc')
-              ->orderByRaw('CASE WHEN review_stats.review_count IS NULL THEN 1 ELSE 0 END')
-              ->orderBy('review_stats.review_count', 'desc')
-              ->orderBy('courses.created_at', 'desc');
+        // Get regular courses with proper ordering
+        $regularQuery->leftJoin(\DB::raw('(SELECT course_id, AVG(rating) as avg_rating, COUNT(id) as review_count FROM reviews GROUP BY course_id) as review_stats'), 
+                               'courses.id', '=', 'review_stats.course_id')
+                    ->select('courses.*', 'review_stats.avg_rating', 'review_stats.review_count')
+                    ->orderByRaw('CASE WHEN review_stats.avg_rating IS NULL THEN 1 ELSE 0 END')
+                    ->orderBy('review_stats.avg_rating', 'desc')
+                    ->orderByRaw('CASE WHEN review_stats.review_count IS NULL THEN 1 ELSE 0 END')
+                    ->orderBy('review_stats.review_count', 'desc')
+                    ->orderBy('courses.created_at', 'desc');
         
-        $courses = $query->paginate(12);
+        $regularCourses = $regularQuery->paginate(12);
+        
+        // Combine preferred and regular courses, with preferred ones first
+        $allCourses = $preferredCourses->merge($regularCourses->items());
+        
+        // Create a custom paginator with the combined results
+        $courses = new \Illuminate\Pagination\LengthAwarePaginator(
+            $allCourses,
+            $regularCourses->total() + $preferredCourses->count(),
+            $regularCourses->perPage(),
+            $regularCourses->currentPage(),
+            [
+                'path' => $regularCourses->path(),
+                'pageName' => $regularCourses->getPageName(),
+            ]
+        );
+        
         $categories = Category::all();
         
         return view('frontend.courses.index', compact('courses', 'categories'));
@@ -89,4 +155,45 @@ class CoursesController extends Controller
         return view('frontend.courses.show', compact('course', 'isEnrolled'));
     }
 
+    /**
+     * Get user preferences from user_preferences table
+     */
+    private function getUserPreferences($user)
+    {
+        $preferences = [];
+        
+        // Get user's preferences from user_preferences table
+        $userPreference = $user->userPreferences;
+        
+        if (!$userPreference) {
+            return $preferences;
+        }
+
+        // Get category preference
+        if ($userPreference->category_id) {
+            $preferences['categories'] = [$userPreference->category_id];
+        }
+
+        // Get sub-category preference
+        if ($userPreference->sub_category_id) {
+            $preferences['sub_categories'] = [$userPreference->sub_category_id];
+        }
+
+        // Get education type preference (online/in-person)
+        if ($userPreference->education_type) {
+            switch ($userPreference->education_type) {
+                case 'online':
+                    $preferences['mentor_type'] = 'online';
+                    break;
+                case 'in-person':
+                    $preferences['mentor_type'] = 'in-person';
+                    break;
+                case 'both':
+                    // For 'both', we don't restrict by type
+                    break;
+            }
+        }
+
+        return $preferences;
+    }
 }

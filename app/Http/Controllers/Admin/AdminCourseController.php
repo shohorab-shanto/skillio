@@ -120,4 +120,15 @@ class AdminCourseController extends Controller
             'status' => $status
         ]);
     }
+
+    public function toggleFeatured(Request $request, Course $course)
+    {
+        $course->toggleFeatured();
+        
+        return response()->json([
+            'success' => true,
+            'message' => $course->isFeatured() ? 'Course marked as featured' : 'Course removed from featured',
+            'featured' => $course->isFeatured()
+        ]);
+    }
 }

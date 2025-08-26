@@ -453,7 +453,7 @@ function performSearch(query, resultsContainer) {
 
 // Display search results
 function displaySearchResults(results, container) {
-    if (results.length === 0) {
+    if (!results || results.length === 0) {
         container.innerHTML = `
             <div class="p-4 text-center text-gray-500">
                 <svg class="mx-auto h-8 w-8 text-gray-400 mb-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -471,39 +471,45 @@ function displaySearchResults(results, container) {
         return text.substring(0, maxLength) + '...';
     }
     
-    const resultsHTML = results.map(result => {
+    // Helper function to safely get nested properties
+    function safeGet(obj, path, defaultValue = 'N/A') {
+        try {
+            return path.split('.').reduce((current, key) => current && current[key], obj) || defaultValue;
+        } catch (e) {
+            return defaultValue;
+        }
+    }
+    
+    const resultsHTML = results.map((result, index) => {
         if (result.type === 'course') {
             return `
-                <a href="${result.url}" class="block p-4 hover:bg-gray-50 border-b border-gray-100 last:border-b-0 transition-colors duration-200">
+                <a href="${safeGet(result, 'url', '#')}" class="block p-4 hover:bg-gray-50 border-b border-gray-100 last:border-b-0 transition-colors duration-200">
                     <div class="flex items-start space-x-4">
                         <div class="flex-shrink-0 w-16 h-16 bg-gray-200 rounded-lg flex items-center justify-center">
-                            ${result.thumbnail ? 
-                                `<img src="${asset('storage/' + result.thumbnail)}" alt="${result.title}" class="w-full h-full rounded-lg object-cover">` :
-                                `<svg class="w-8 h-8 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 19 7.5 19s3.332-.477 4.5-1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.246 19 16.5 19c-1.747 0-3.332-.523-4.5-1.253"></path>
-                                </svg>`
-                            }
+                            <svg class="w-8 h-8 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 19 7.5 19s3.332-.477 4.5-1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.246 19 16.5 19c-1.747 0-3.332-.523-4.5-1.253"></path>
+                            </svg>
                         </div>
                         <div class="flex-1 min-w-0">
                             <div class="flex items-center space-x-2 mb-2">
                                 <span class="inline-flex items-center px-2 py-1 rounded-full text-xs font-medium bg-blue-100 text-blue-800">
                                     Course
                                 </span>
-                                <h3 class="text-sm font-semibold text-gray-900 leading-tight">${truncateText(result.title, 60)}</h3>
+                                <h3 class="text-sm font-semibold text-gray-900 leading-tight">${truncateText(safeGet(result, 'title', 'Untitled Course'), 60)}</h3>
                             </div>
-                            <p class="text-xs text-gray-600 mb-2 leading-relaxed">${truncateText(result.category + (result.sub_categories ? ' • ' + result.sub_categories : ''), 80)}</p>
-                            <p class="text-xs text-gray-500 mb-2">by ${truncateText(result.mentor, 40)}</p>
+                            <p class="text-xs text-gray-600 mb-2 leading-relaxed">${truncateText(safeGet(result, 'category', 'N/A') + (safeGet(result, 'sub_categories') ? ' • ' + safeGet(result, 'sub_categories') : ''), 80)}</p>
+                            <p class="text-xs text-gray-500 mb-2">by ${truncateText(safeGet(result, 'mentor', 'Unknown Mentor'), 40)}</p>
                             <div class="flex items-center justify-between">
                                 <div class="flex items-center space-x-3">
                                     <div class="flex items-center space-x-1">
                                         <svg class="w-3 h-3 text-yellow-400" fill="currentColor" viewBox="0 0 20 20">
                                             <path d="M10 15l-5.878 3.09 1.123-6.545L.489 6.91l6.572-.955L10 0l2.939 5.955 6.572.955-4.756 4.635 1.123 6.545z"/>
                                         </svg>
-                                        <span class="text-xs text-gray-600 font-medium">${result.rating ? result.rating.toFixed(1) : 'N/A'}</span>
+                                        <span class="text-xs text-gray-600 font-medium">${safeGet(result, 'rating') ? Number(safeGet(result, 'rating')).toFixed(1) : 'N/A'}</span>
                                     </div>
-                                    <span class="text-xs text-gray-500">(${result.reviews_count} reviews)</span>
+                                    <span class="text-xs text-gray-500">(${safeGet(result, 'reviews_count', 0)} reviews)</span>
                                 </div>
-                                <span class="text-sm font-semibold text-gray-900">$${result.price}</span>
+                                <span class="text-sm font-semibold text-gray-900">$${safeGet(result, 'price', '0')}</span>
                             </div>
                         </div>
                     </div>
@@ -511,38 +517,37 @@ function displaySearchResults(results, container) {
             `;
         } else if (result.type === 'mentor') {
             return `
-                <a href="${result.url}" class="block p-4 hover:bg-gray-50 border-b border-gray-100 last:border-b-0 transition-colors duration-200">
+                <a href="${safeGet(result, 'url', '#')}" class="block p-4 hover:bg-gray-50 border-b border-gray-100 last:border-b-0 transition-colors duration-200">
                     <div class="flex items-start space-x-4">
                         <div class="flex-shrink-0 w-16 h-16 bg-gray-200 rounded-lg flex items-center justify-center">
-                            ${result.thumbnail ? 
-                                `<img src="${asset('storage/' + result.thumbnail)}" alt="${result.title}" class="w-full h-full rounded-lg object-cover">` :
-                                `<svg class="w-8 h-8 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"></path>
-                                </svg>`
-                            }
+                            <svg class="w-8 h-8 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"></path>
+                            </svg>
                         </div>
                         <div class="flex-1 min-w-0">
                             <div class="flex items-center space-x-2 mb-2">
                                 <span class="inline-flex items-center px-2 py-1 rounded-full text-xs font-medium bg-purple-100 text-purple-800">
                                     Mentor
                                 </span>
-                                <h3 class="text-sm font-semibold text-gray-900 leading-tight">${truncateText(result.title, 60)}</h3>
+                                <h3 class="text-sm font-semibold text-gray-900 leading-tight">${truncateText(safeGet(result, 'title', 'Unknown Mentor'), 60)}</h3>
                             </div>
-                            <p class="text-xs text-gray-600 mb-2 leading-relaxed">${truncateText(result.category + (result.sub_categories ? ' • ' + result.sub_categories : ''), 80)}</p>
-                            <p class="text-xs text-gray-500 mb-2">${result.experience} years experience</p>
+                            <p class="text-xs text-gray-600 mb-2 leading-relaxed">${truncateText(safeGet(result, 'category', 'N/A') + (safeGet(result, 'sub_categories') ? ' • ' + safeGet(result, 'sub_categories') : ''), 80)}</p>
+                            <p class="text-xs text-gray-500 mb-2">${safeGet(result, 'experience', 'N/A')}</p>
                             <div class="flex items-center space-x-3">
                                 <div class="flex items-center space-x-1">
                                     <svg class="w-3 h-3 text-yellow-400" fill="currentColor" viewBox="0 0 20 20">
                                         <path d="M10 15l-5.878 3.09 1.123-6.545L.489 6.91l6.572-.955L10 0l2.939 5.955 6.572.955-4.756 4.635 1.123 6.545z"/>
                                     </svg>
-                                    <span class="text-xs text-gray-600 font-medium">${result.rating ? result.rating.toFixed(1) : 'N/A'}</span>
+                                    <span class="text-xs text-gray-600 font-medium">${safeGet(result, 'rating') ? Number(safeGet(result, 'rating')).toFixed(1) : 'N/A'}</span>
                                 </div>
-                                <span class="text-xs text-gray-500">(${result.reviews_count} reviews)</span>
+                                <span class="text-xs text-gray-500">(${safeGet(result, 'reviews_count', 0)} reviews)</span>
                             </div>
                         </div>
                     </div>
                 </a>
             `;
+        } else {
+            return ''; // Skip unknown types
         }
     }).join('');
     

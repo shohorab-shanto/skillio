@@ -136,6 +136,9 @@
                 
                 <!-- Right side header content -->
                 <div class="flex items-center space-x-4">
+                    <!-- Admin Notifications -->
+                    @include('admin.components.notification-dropdown')
+                    
                     @yield('header-right')
                 </div>
             </header>

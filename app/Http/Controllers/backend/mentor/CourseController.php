@@ -135,6 +135,9 @@ class CourseController extends Controller
         // Attach sub-categories
         $course->subCategories()->attach($validated['sub_category_ids']);
 
+        // Create notification for admin users
+        \App\Services\NotificationService::createCourseCreatedNotification($course);
+
         return redirect()->route('mentor.courses.index')->with('success', 'Course created successfully and is pending approval.');
     }
 
@@ -296,6 +299,9 @@ class CourseController extends Controller
 
         // Update sub-categories
         $course->subCategories()->sync($validated['sub_category_ids']);
+
+        // Create notification for admin users
+        \App\Services\NotificationService::createCourseUpdatedNotification($course, $needsReapproval);
 
         $message = $needsReapproval 
             ? 'Course updated successfully. Changes are pending admin approval.'

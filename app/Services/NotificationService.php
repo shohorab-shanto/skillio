@@ -137,6 +137,74 @@ class NotificationService
     }
 
     /**
+     * Create a notification for admin when mentor creates a new course.
+     */
+    public static function createCourseCreatedNotification(Course $course): void
+    {
+        // Get all admin users
+        $adminUsers = User::where('role', 'admin')->get();
+        
+        foreach ($adminUsers as $admin) {
+            $notification = Notification::create([
+                'id' => Str::uuid(),
+                'type' => 'course_created',
+                'notifiable_type' => User::class,
+                'notifiable_id' => $admin->id,
+                'entity_type' => Course::class,
+                'entity_id' => $course->id,
+                'title' => 'New Course Created',
+                'message' => "Mentor {$course->mentor->user->name} created a new course '{$course->title}'",
+                'data' => [
+                    'mentor_name' => $course->mentor->user->name,
+                    'course_title' => $course->title,
+                    'course_id' => $course->id,
+                    'action' => 'course_created',
+                ]
+            ]);
+
+            // Broadcast real-time notification
+            self::broadcastNotification($notification);
+        }
+    }
+
+    /**
+     * Create a notification for admin when mentor updates a course.
+     */
+    public static function createCourseUpdatedNotification(Course $course, bool $needsReapproval = false): void
+    {
+        // Get all admin users
+        $adminUsers = User::where('role', 'admin')->get();
+        
+        foreach ($adminUsers as $admin) {
+            $action = $needsReapproval ? 'course_updated_reapproval' : 'course_updated';
+            $message = $needsReapproval 
+                ? "Mentor {$course->mentor->user->name} updated course '{$course->title}' - requires reapproval"
+                : "Mentor {$course->mentor->user->name} updated course '{$course->title}'";
+            
+            $notification = Notification::create([
+                'id' => Str::uuid(),
+                'type' => $action,
+                'notifiable_type' => User::class,
+                'notifiable_id' => $admin->id,
+                'entity_type' => Course::class,
+                'entity_id' => $course->id,
+                'title' => $needsReapproval ? 'Course Updated - Reapproval Required' : 'Course Updated',
+                'message' => $message,
+                'data' => [
+                    'mentor_name' => $course->mentor->user->name,
+                    'course_title' => $course->title,
+                    'course_id' => $course->id,
+                    'action' => $action,
+                    'needs_reapproval' => $needsReapproval,
+                ]
+            ]);
+
+            // Broadcast real-time notification
+            self::broadcastNotification($notification);
+        }
+    }
+
+    /**
      * Check if user is active in a conversation.
      * User is considered active if they've read recent messages within the last 2 minutes.
      */

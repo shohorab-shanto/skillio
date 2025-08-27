@@ -7,9 +7,12 @@
                     🌐 {{ strtoupper(app()->getLocale()) }}
                     <span><img src="{{ asset('assets/down-arrow-svgrepo-com.svg') }}" alt="Dropdown arrow" class="w-2 h-2 inline-block" /></span>
                 </button>
-                <div class="absolute right-0 bottom-full mb-2 w-20 bg-white border rounded shadow-lg hidden z-10">
+                <div class="absolute right-0 bottom-full mb-2 w-28 bg-white border rounded shadow-lg hidden z-10">
                     <button type="submit" name="lang" value="en" class="block w-full text-left px-3 py-1 hover:bg-gray-100">ENG</button>
-                    <button type="submit" name="lang" value="bn" class="block w-full text-left px-3 py-1 hover:bg-gray-100">BN</button>
+                    <button type="submit" name="lang" value="hr" class="block w-full text-left px-3 py-1 hover:bg-gray-100">HR</button>
+                    <button type="submit" name="lang" value="sr" class="block w-full text-left px-3 py-1 hover:bg-gray-100">SR</button>
+                    <button type="submit" name="lang" value="sl" class="block w-full text-left px-3 py-1 hover:bg-gray-100">SL</button>
+                    <button type="submit" name="lang" value="mk" class="block w-full text-left px-3 py-1 hover:bg-gray-100">MK</button>
                 </div>
             </form>
         </div>

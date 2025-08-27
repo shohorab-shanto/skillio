@@ -8,7 +8,7 @@ use App\Http\Controllers\backend\user\PaymentHistoryController;
 
 
 
-Route::middleware(['user_auth', 'onboarding_complete'])->group(function () {
+Route::middleware(['user_auth', 'onboarding_complete', 'set_locale'])->group(function () {
     Route::get('/user/dashboard', [DashboardController::class, 'index'])->name('user.dashboard');
 
     // user sessions

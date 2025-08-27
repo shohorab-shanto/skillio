@@ -9,7 +9,7 @@ use App\Http\Controllers\backend\mentor\CourseController;
 use App\Http\Controllers\backend\mentor\TimeSlotController;
 use App\Http\Controllers\backend\mentor\MentorEarningHistoryController;
 
-Route::middleware(['mentor_auth'])->group(function () {
+Route::middleware(['mentor_auth', 'set_locale'])->group(function () {
     Route::get('/mentor/dashboard', [DashboardController::class, 'index'])->name('mentor.dashboard');
     // mentor profile
     Route::get('/mentor/profile', [ProfileController::class, 'show'])->name('mentor.profile.show');

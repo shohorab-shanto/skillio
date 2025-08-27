@@ -10,7 +10,7 @@ class LanguageController extends Controller
 {
     public function switch(Request $request)
     {
-        $lang = $request->request->input('lang', 'en');
+        $lang = $request->input('lang', 'en');
         if (!in_array($lang, ['en', 'hr', 'sr', 'sl', 'mk'])) {
             $lang = 'en';
         }

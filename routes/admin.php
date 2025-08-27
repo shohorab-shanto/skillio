@@ -22,13 +22,13 @@ use App\Http\Controllers\Admin\AdminTransactionController;
 */
 
 // Admin Auth Routes (no middleware)
-Route::middleware('guest')->group(function () {
+Route::middleware(['guest', 'set_locale'])->group(function () {
     Route::get('/login', [AdminAuthController::class, 'showLoginForm'])->name('admin.login');
     Route::post('/login', [AdminAuthController::class, 'login']);
 });
 
 // Admin Protected Routes
-Route::middleware(['admin_auth'])->group(function () {
+Route::middleware(['admin_auth', 'set_locale'])->group(function () {
     Route::get('/dashboard', [AdminDashboardController::class, 'index'])->name('admin.dashboard');
     Route::post('/logout', [AdminAuthController::class, 'logout'])->name('admin.logout');
     

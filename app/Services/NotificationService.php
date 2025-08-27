@@ -137,23 +137,24 @@ class NotificationService
     }
 
     /**
-     * Check if user is active in a conversation (simple check - can be enhanced).
+     * Check if user is active in a conversation.
+     * User is considered active if they've read recent messages within the last 2 minutes.
      */
-    private static function isUserActiveInConversation(int $userId, int $conversationId): bool
+    public static function isUserActiveInConversation(int $userId, int $conversationId): bool
     {
-        // For now, we'll assume user is not active if they haven't read recent messages
-        // This can be enhanced with more sophisticated activity tracking
+        // Get the most recent message from the other person in this conversation
         $recentMessage = Message::where('conversation_id', $conversationId)
             ->where('sender_id', '!=', $userId)
             ->latest()
             ->first();
 
         if (!$recentMessage) {
-            return false;
+            return false; // No messages to read, consider inactive
         }
 
-        // Check if user has read the recent message (within last 5 minutes)
-        return $recentMessage->read_at && $recentMessage->read_at->diffInMinutes(now()) < 5;
+        // Check if user has read the recent message within last 2 minutes
+        // This means they're likely still active in the conversation
+        return $recentMessage->read_at && $recentMessage->read_at->diffInMinutes(now()) < 2;
     }
 
     /**

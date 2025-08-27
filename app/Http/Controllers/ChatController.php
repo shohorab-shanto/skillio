@@ -333,12 +333,18 @@ class ChatController extends Controller
         // Load sender relationship for response
         $message->load('sender');
 
-        // Create notification for recipient if they're not active
+        // Create notification for recipient if they're not active in the conversation
         $recipientId = $user->id === $conversation->user_id ? $conversation->mentor->user_id : $conversation->user_id;
         $recipient = User::find($recipientId);
         
         if ($recipient) {
-            \App\Services\NotificationService::createNewMessageNotification($message, $recipient);
+            // Check if recipient is already active in this conversation
+            $isRecipientActive = \App\Services\NotificationService::isUserActiveInConversation($recipient->id, $conversation->id);
+            
+            // Only send notification if recipient is NOT active
+            if (!$isRecipientActive) {
+                \App\Services\NotificationService::createNewMessageNotification($message, $recipient);
+            }
         }
 
         // Broadcast message with Reverb

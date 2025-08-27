@@ -37,8 +37,8 @@ class TimeSlotController extends Controller
             }
         }
 
-        $timeSlots = $query->orderBy('date', 'asc')
-            ->orderBy('start_time', 'asc')
+        $timeSlots = $query->orderBy('date', 'desc')
+            ->orderBy('start_time', 'desc')
             ->paginate(12);
 
         return view('backend.mentor.time-slots.index', compact('timeSlots', 'request'));

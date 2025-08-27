@@ -224,11 +224,11 @@
                     <i class="fas fa-bolt text-purple-600 mr-2"></i>
                     Quick Actions
                 </h3>
-                <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
-                    @if($enrollment->enrollment_status === 'active' && $enrollment->enrollable->date && $enrollment->enrollable->date->isFuture())
-                        <button class="inline-flex items-center justify-center px-4 py-3 bg-green-600 text-white font-medium rounded-lg hover:bg-green-700 transition-colors duration-200 shadow-sm">
-                            <i class="fas fa-video mr-2"></i>
-                            Join Session
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                    @if($enrollment->enrollment_status === 'active' && $enrollment->enrollable->has_not_started)
+                        <button onclick="openSwitchSessionModal()" class="inline-flex items-center justify-center px-4 py-3 bg-orange-600 text-white font-medium rounded-lg hover:bg-orange-700 transition-colors duration-200 shadow-sm">
+                            <i class="fas fa-clock mr-2"></i>
+                            Switch Time
                         </button>
                     @endif
 
@@ -239,6 +239,54 @@
                     </a>
                 </div>
             </div>
+            </div>
+        </div>
+
+        <!-- Switch Session Modal -->
+        <div id="switchSessionModal" class="hidden fixed inset-0 bg-gray-600 bg-opacity-50 overflow-y-auto h-full w-full z-50">
+            <div class="relative top-20 mx-auto p-5 border w-96 shadow-lg rounded-lg bg-white">
+                <div class="mt-3">
+                    <!-- Header -->
+                    <div class="flex items-center justify-between mb-4">
+                        <h3 class="text-lg font-medium text-gray-900">Switch Session Time</h3>
+                        <button onclick="closeSwitchSessionModal()" class="text-gray-400 hover:text-gray-600">
+                            <i class="fas fa-times"></i>
+                        </button>
+                    </div>
+                    
+                    <!-- Loading State -->
+                    <div id="switchSessionLoading" class="text-center py-8">
+                        <div class="inline-flex items-center px-4 py-2 font-semibold leading-6 text-sm shadow rounded-md text-white bg-purple-500 hover:bg-purple-400 transition ease-in-out duration-150 cursor-not-allowed">
+                            <svg class="animate-spin -ml-1 mr-3 h-5 w-5 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                                <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+                                <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+                            </svg>
+                            Loading available sessions...
+                        </div>
+                    </div>
+
+                    <!-- Available Sessions List -->
+                    <div id="availableSessionsList" class="hidden">
+                        <p class="text-sm text-gray-600 mb-4">Select a new session time (showing all available future sessions):</p>
+                        <div id="sessionsContainer" class="space-y-3 max-h-64 overflow-y-auto">
+                            <!-- Available sessions will be loaded here -->
+                        </div>
+                    </div>
+
+                    <!-- No Sessions Available -->
+                    <div id="noSessionsAvailable" class="hidden text-center py-8">
+                        <i class="fas fa-calendar-times text-4xl text-gray-400 mb-4"></i>
+                        <p class="text-gray-600">No available sessions found</p>
+                        <p class="text-sm text-gray-500 mt-2">Try checking back later for new time slots</p>
+                    </div>
+
+                    <!-- Error State -->
+                    <div id="switchSessionError" class="hidden text-center py-8">
+                        <i class="fas fa-exclamation-triangle text-4xl text-red-400 mb-4"></i>
+                        <p class="text-red-600">Error loading sessions</p>
+                        <p class="text-sm text-gray-500 mt-2">Please try again</p>
+                    </div>
+                </div>
             </div>
         </div>
 
@@ -253,4 +301,138 @@
         ])
     </div>
 </div>
+
+<script>
+// Switch Session Modal Functions
+function openSwitchSessionModal() {
+    document.getElementById('switchSessionModal').classList.remove('hidden');
+    loadAvailableSessions();
+}
+
+function closeSwitchSessionModal() {
+    document.getElementById('switchSessionModal').classList.add('hidden');
+    resetModalState();
+}
+
+function resetModalState() {
+    document.getElementById('switchSessionLoading').classList.remove('hidden');
+    document.getElementById('availableSessionsList').classList.add('hidden');
+    document.getElementById('noSessionsAvailable').classList.add('hidden');
+    document.getElementById('switchSessionError').classList.add('hidden');
+}
+
+async function loadAvailableSessions() {
+    try {
+        const response = await fetch(`/user/sessions/{{ $enrollment->id }}/available-slots`, {
+            method: 'GET',
+            headers: {
+                'X-Requested-With': 'XMLHttpRequest',
+                'Accept': 'application/json',
+                'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content')
+            }
+        });
+
+        if (response.ok) {
+            const data = await response.json();
+            displayAvailableSessions(data.sessions);
+        } else {
+            throw new Error('Failed to load sessions');
+        }
+    } catch (error) {
+        console.error('Error loading available sessions:', error);
+        showErrorState();
+    }
+}
+
+function displayAvailableSessions(sessions) {
+    const loading = document.getElementById('switchSessionLoading');
+    const list = document.getElementById('availableSessionsList');
+    const noSessions = document.getElementById('noSessionsAvailable');
+    const container = document.getElementById('sessionsContainer');
+
+    loading.classList.add('hidden');
+
+    if (sessions.length === 0) {
+        noSessions.classList.remove('hidden');
+        return;
+    }
+
+    // Generate session options
+    const sessionsHtml = sessions.map(session => `
+        <div class="border border-gray-200 rounded-lg p-4 hover:border-purple-300 transition-colors cursor-pointer"
+             onclick="selectNewSession(${session.id})">
+            <div class="flex items-center justify-between">
+                <div>
+                    <div class="font-medium text-gray-900">${session.date}</div>
+                    <div class="text-sm text-gray-600">${session.time_slot}</div>
+                </div>
+                <div class="text-right">
+                    <div class="text-sm font-medium text-green-600">$${session.fee}</div>
+                    <div class="text-xs text-gray-500">Available</div>
+                </div>
+            </div>
+        </div>
+    `).join('');
+
+    container.innerHTML = sessionsHtml;
+    list.classList.remove('hidden');
+}
+
+function showErrorState() {
+    document.getElementById('switchSessionLoading').classList.add('hidden');
+    document.getElementById('switchSessionError').classList.remove('hidden');
+}
+
+async function selectNewSession(newSessionId) {
+    if (!confirm('Are you sure you want to switch to this session time? This action cannot be undone.')) {
+        return;
+    }
+
+    try {
+        const response = await fetch(`/user/sessions/{{ $enrollment->id }}/switch`, {
+            method: 'POST',
+            headers: {
+                'X-Requested-With': 'XMLHttpRequest',
+                'Accept': 'application/json',
+                'Content-Type': 'application/json',
+                'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content')
+            },
+            body: JSON.stringify({
+                new_session_id: newSessionId
+            })
+        });
+
+        if (response.ok) {
+            const data = await response.json();
+            if (data.success) {
+                // Show success message and reload page
+                alert('Session time switched successfully!');
+                window.location.reload();
+            } else {
+                alert('Failed to switch session: ' + data.message);
+            }
+        } else {
+            throw new Error('Failed to switch session');
+        }
+    } catch (error) {
+        console.error('Error switching session:', error);
+        alert('Error switching session. Please try again.');
+    }
+}
+
+// Close modal when clicking outside
+document.addEventListener('click', function(event) {
+    const modal = document.getElementById('switchSessionModal');
+    if (event.target === modal) {
+        closeSwitchSessionModal();
+    }
+});
+
+// Close modal with Escape key
+document.addEventListener('keydown', function(event) {
+    if (event.key === 'Escape') {
+        closeSwitchSessionModal();
+    }
+});
+</script>
 @endsection

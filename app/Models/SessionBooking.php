@@ -131,6 +131,12 @@ class SessionBooking extends Model
         return $this->start_time->format('H:i') . ' - ' . $this->end_time->format('H:i');
     }
 
+    public function getHasNotStartedAttribute(): bool
+    {
+        $sessionDateTime = $this->date->format('Y-m-d') . ' ' . $this->start_time->format('H:i:s');
+        return $sessionDateTime > now();
+    }
+
     // Methods
     public function bookSession($userId): bool
     {

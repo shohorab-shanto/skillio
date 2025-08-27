@@ -14,6 +14,8 @@ Route::middleware(['user_auth', 'onboarding_complete'])->group(function () {
     // user sessions
     Route::get('/user/sessions', [UserSessionsController::class, 'index'])->name('user.sessions');
     Route::get('/user/sessions/{enrollment}', [UserSessionsController::class, 'show'])->name('user.sessions.show');
+    Route::get('/user/sessions/{enrollment}/available-slots', [UserSessionsController::class, 'getAvailableSlots'])->name('user.sessions.available-slots');
+    Route::post('/user/sessions/{enrollment}/switch', [UserSessionsController::class, 'switchSession'])->name('user.sessions.switch');
     
     // user courses
     Route::get('/user/courses', [UserCoursesController::class, 'index'])->name('user.courses');

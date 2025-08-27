@@ -143,4 +143,159 @@ class UserSessionsController extends Controller
         
         return view('backend.user.sessions.show', compact('enrollment', 'conversation'));
     }
+
+    /**
+     * Get available session slots for switching
+     */
+    public function getAvailableSlots($enrollmentId)
+    {
+        $user = Auth::user();
+        
+        $enrollment = UserEnrollment::with(['enrollable.mentor'])
+            ->where('id', $enrollmentId)
+            ->where('user_id', $user->id)
+            ->where('enrollable_type', SessionBooking::class)
+            ->where('enrollment_status', 'active')
+            ->firstOrFail();
+
+        $currentSession = $enrollment->enrollable;
+        
+        // Check if current session hasn't started yet
+        if (!$currentSession->has_not_started) {
+            return response()->json([
+                'success' => false,
+                'message' => 'Cannot switch session that has already started'
+            ], 400);
+        }
+
+        // Get available sessions from the same mentor with same price
+        $availableSessions = SessionBooking::where('mentor_id', $currentSession->mentor_id)
+            ->where('fee', $currentSession->fee)
+            ->where('status', 'active')
+            ->whereNull('user_id')
+            ->where(function($query) {
+                $query->where('date', '>', now()->toDateString())
+                      ->orWhere(function($q) {
+                          $q->where('date', now()->toDateString())
+                            ->where('start_time', '>', now()->format('H:i:s'));
+                      });
+            })
+            ->orderBy('date')
+            ->orderBy('start_time')
+            ->get()
+            ->map(function($session) {
+                return [
+                    'id' => $session->id,
+                    'date' => $session->date->format('M d, Y'),
+                    'time_slot' => $session->formatted_time_slot,
+                    'fee' => $session->fee
+                ];
+            });
+
+        return response()->json([
+            'success' => true,
+            'sessions' => $availableSessions
+        ]);
+    }
+
+    /**
+     * Switch session time
+     */
+    public function switchSession(Request $request, $enrollmentId)
+    {
+        $user = Auth::user();
+        
+        $enrollment = UserEnrollment::with(['enrollable.mentor'])
+            ->where('id', $enrollmentId)
+            ->where('user_id', $user->id)
+            ->where('enrollable_type', SessionBooking::class)
+            ->where('enrollment_status', 'active')
+            ->firstOrFail();
+
+        $currentSession = $enrollment->enrollable;
+        $newSessionId = $request->input('new_session_id');
+        
+        // Validate request
+        $request->validate([
+            'new_session_id' => 'required|exists:session_bookings,id'
+        ]);
+
+        // Check if current session hasn't started yet
+        if (!$currentSession->has_not_started) {
+            return response()->json([
+                'success' => false,
+                'message' => 'Cannot switch session that has already started'
+            ], 400);
+        }
+
+        // Get the new session
+        $newSession = SessionBooking::where('id', $newSessionId)
+            ->where('mentor_id', $currentSession->mentor_id)
+            ->where('fee', $currentSession->fee)
+            ->where('status', 'active')
+            ->whereNull('user_id')
+            ->first();
+
+        if (!$newSession) {
+            return response()->json([
+                'success' => false,
+                'message' => 'Selected session is not available'
+            ], 400);
+        }
+
+        try {
+            DB::beginTransaction();
+
+            // Make current session available again
+            $currentSession->update([
+                'user_id' => null,
+                'status' => 'active'
+            ]);
+
+            // Book the new session
+            $newSession->update([
+                'user_id' => $user->id,
+                'status' => 'booked'
+            ]);
+
+            // Update the enrollment to point to the new session
+            $enrollment->update([
+                'enrollable_id' => $newSession->id
+            ]);
+
+            // Update payment transaction if exists
+            if ($enrollment->paymentTransaction) {
+                $enrollment->paymentTransaction->update([
+                    'description' => "Session: {$newSession->mentor->user->name} - {$newSession->date->format('M d, Y')} {$newSession->formatted_time_slot}",
+                    'metadata' => array_merge($enrollment->paymentTransaction->metadata ?? [], [
+                        'session_id' => $newSession->id,
+                        'session_date' => $newSession->date->format('Y-m-d'),
+                        'session_time' => $newSession->formatted_time_slot,
+                        'switched_from_session_id' => $currentSession->id,
+                        'switched_at' => now()->toISOString()
+                    ])
+                ]);
+            }
+
+            DB::commit();
+
+            return response()->json([
+                'success' => true,
+                'message' => 'Session time switched successfully',
+                'new_session' => [
+                    'id' => $newSession->id,
+                    'date' => $newSession->date->format('M d, Y'),
+                    'time_slot' => $newSession->formatted_time_slot
+                ]
+            ]);
+
+        } catch (\Exception $e) {
+            DB::rollBack();
+            
+            return response()->json([
+                'success' => false,
+                'message' => 'Failed to switch session. Please try again.'
+            ], 500);
+        }
+    }
 }

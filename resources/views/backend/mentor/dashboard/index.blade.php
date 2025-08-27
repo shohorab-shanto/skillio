@@ -270,8 +270,26 @@
 
             <!-- Pagination -->
             @if($students->hasPages())
-                <div class="mt-6">
-                    {{ $students->appends(request()->query())->links() }}
+                <div class="mt-6 bg-white px-6 py-4 border-t border-gray-200">
+                    <div class="flex flex-col sm:flex-row justify-between items-center gap-4">
+                        <!-- Pagination Details - Left Aligned -->
+                        <div class="text-sm text-gray-700">
+                            <p>
+                                Showing
+                                <span class="font-medium">{{ $students->firstItem() ?? 0 }}</span>
+                                to
+                                <span class="font-medium">{{ $students->lastItem() ?? 0 }}</span>
+                                of
+                                <span class="font-medium">{{ $students->total() }}</span>
+                                students
+                            </p>
+                        </div>
+
+                        <!-- Pagination Buttons - Right Aligned -->
+                        <div>
+                            @include('components.custom-pagination', ['paginator' => $students->appends(request()->query())])
+                        </div>
+                    </div>
                 </div>
             @endif
         </div>

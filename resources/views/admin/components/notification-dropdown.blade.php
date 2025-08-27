@@ -41,12 +41,6 @@
             </div>
         </div>
         
-        <!-- Footer -->
-        <div class="p-4 border-t border-gray-100">
-            <a href="#" class="block text-center text-sm text-purple-600 hover:text-purple-700 font-medium">
-                View all notifications
-            </a>
-        </div>
     </div>
 </div>
 

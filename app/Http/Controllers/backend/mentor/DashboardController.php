@@ -105,7 +105,8 @@ class DashboardController extends Controller
         
         // Apply status filter
         if ($request->filled('status') && $request->status !== 'all') {
-            $studentQuery->where('enrollment_status', $request->status);
+            // We'll apply the status filter after getting the results to avoid complex SQL
+            // The status will be determined by the calculated is_active field
         }
         
         $students = $studentQuery->orderBy('created_at', 'desc')->paginate(10);
@@ -183,6 +184,21 @@ class DashboardController extends Controller
             }
             return $enrollment;
         });
+        
+        // Apply status filter after calculating is_active
+        if ($request->filled('status') && $request->status !== 'all') {
+            $filteredCollection = $students->getCollection()->filter(function ($enrollment) use ($request) {
+                if ($request->status === 'active') {
+                    return $enrollment->is_active === true;
+                } elseif ($request->status === 'inactive') {
+                    return $enrollment->is_active === false;
+                }
+                return true;
+            });
+            
+            // Update the collection
+            $students->setCollection($filteredCollection);
+        }
         
         return view('backend.mentor.dashboard.index', compact(
             'totalCourses',

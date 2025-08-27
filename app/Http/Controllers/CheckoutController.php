@@ -174,6 +174,13 @@ class CheckoutController extends Controller
                     'enrolled_at' => now(),
                 ]);
 
+                // Create notification for mentor
+                if ($type === 'session') {
+                    \App\Services\NotificationService::createSessionBookingNotification(Auth::user(), $item);
+                } else {
+                    \App\Services\NotificationService::createCourseEnrollmentNotification(Auth::user(), $item);
+                }
+
                 // Create payment transaction (completed for localhost testing)
                 $transaction = PaymentTransaction::create([
                     'transaction_id' => 'TXN_' . uniqid(),

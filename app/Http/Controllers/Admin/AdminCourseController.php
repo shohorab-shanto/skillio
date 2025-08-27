@@ -79,6 +79,9 @@ class AdminCourseController extends Controller
     {
         $course->approve();
         
+        // Create notification for mentor
+        \App\Services\NotificationService::createCourseApprovalNotification($course, 'course_approved');
+        
         return response()->json([
             'success' => true,
             'message' => 'Course approved successfully',
@@ -93,6 +96,9 @@ class AdminCourseController extends Controller
         ]);
 
         $course->reject($request->rejection_reason);
+        
+        // Create notification for mentor
+        \App\Services\NotificationService::createCourseApprovalNotification($course, 'course_rejected');
         
         return response()->json([
             'success' => true,
@@ -112,6 +118,9 @@ class AdminCourseController extends Controller
             $course->approve();
             $status = 'approved';
             $message = 'Course approved successfully';
+            
+            // Create notification for mentor
+            \App\Services\NotificationService::createCourseApprovalNotification($course, 'course_approved');
         }
         
         return response()->json([

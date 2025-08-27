@@ -155,52 +155,9 @@
                                     <h3 class="font-semibold text-gray-900">Notifications</h3>
                                 </div>
                                 <div class="max-h-96 overflow-y-auto">
-                                    <!-- Sample Notifications -->
+                                    <!-- Dynamic Notifications -->
                                     <div id="notification-list">
-                                        <div class="p-4 border-b border-gray-50 hover:bg-gray-50 transition-colors">
-                                            <div class="flex items-start space-x-3">
-                                                <div class="flex-shrink-0">
-                                                    <div class="w-8 h-8 bg-blue-100 rounded-full flex items-center justify-center">
-                                                        <i class="fa-solid fa-user text-blue-600 text-sm"></i>
-                                                    </div>
-                                                </div>
-                                                <div class="flex-1 min-w-0">
-                                                    <p class="text-sm text-gray-900">New mentor application received</p>
-                                                    <p class="text-xs text-gray-500 mt-1">2 hours ago</p>
-                                                </div>
-                                                <div class="flex-shrink-0">
-                                                    <span class="w-2 h-2 bg-blue-600 rounded-full"></span>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        
-                                        <div class="p-4 border-b border-gray-50 hover:bg-gray-50 transition-colors">
-                                            <div class="flex items-start space-x-3">
-                                                <div class="flex-shrink-0">
-                                                    <div class="w-8 h-8 bg-green-100 rounded-full flex items-center justify-center">
-                                                        <i class="fa-solid fa-check text-green-600 text-sm"></i>
-                                                    </div>
-                                                </div>
-                                                <div class="flex-1 min-w-0">
-                                                    <p class="text-sm text-gray-900">Profile updated successfully</p>
-                                                    <p class="text-xs text-gray-500 mt-1">1 day ago</p>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        
-                                        <div class="p-4 border-b border-gray-50 hover:bg-gray-50 transition-colors">
-                                            <div class="flex items-start space-x-3">
-                                                <div class="flex-shrink-0">
-                                                    <div class="w-8 h-8 bg-yellow-100 rounded-full flex items-center justify-center">
-                                                        <i class="fa-solid fa-star text-yellow-600 text-sm"></i>
-                                                    </div>
-                                                </div>
-                                                <div class="flex-1 min-w-0">
-                                                    <p class="text-sm text-gray-900">You received a new review</p>
-                                                    <p class="text-xs text-gray-500 mt-1">3 days ago</p>
-                                                </div>
-                                            </div>
-                                        </div>
+                                        <!-- Notifications will be loaded here -->
                                     </div>
                                     
                                     <!-- Empty State -->
@@ -209,6 +166,14 @@
                                             <i class="fa-solid fa-bell-slash text-gray-400 text-xl"></i>
                                         </div>
                                         <p class="text-gray-500 text-sm">No notifications yet</p>
+                                    </div>
+                                    
+                                    <!-- Loading State -->
+                                    <div id="notification-loading" class="p-8 text-center">
+                                        <div class="w-16 h-16 bg-gray-100 rounded-full flex items-center justify-center mx-auto mb-4">
+                                            <i class="fa-solid fa-spinner fa-spin text-gray-400 text-xl"></i>
+                                        </div>
+                                        <p class="text-gray-500 text-sm">Loading notifications...</p>
                                     </div>
                                 </div>
                                 
@@ -249,52 +214,9 @@
                                         <h3 class="font-semibold text-gray-900">Notifications</h3>
                                     </div>
                                     <div class="max-h-96 overflow-y-auto">
-                                        <!-- Sample Notifications -->
+                                        <!-- Dynamic Notifications -->
                                         <div id="notification-list-desktop">
-                                            <div class="p-4 border-b border-gray-50 hover:bg-gray-50 transition-colors">
-                                                <div class="flex items-start space-x-3">
-                                                    <div class="flex-shrink-0">
-                                                        <div class="w-8 h-8 bg-blue-100 rounded-full flex items-center justify-center">
-                                                            <i class="fa-solid fa-user text-blue-600 text-sm"></i>
-                                                        </div>
-                                                    </div>
-                                                    <div class="flex-1 min-w-0">
-                                                        <p class="text-sm text-gray-900">New mentor application received</p>
-                                                        <p class="text-xs text-gray-500 mt-1">2 hours ago</p>
-                                                    </div>
-                                                    <div class="flex-shrink-0">
-                                                        <span class="w-2 h-2 bg-blue-600 rounded-full"></span>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            
-                                            <div class="p-4 border-b border-gray-50 hover:bg-gray-50 transition-colors">
-                                                <div class="flex items-start space-x-3">
-                                                    <div class="flex-shrink-0">
-                                                        <div class="w-8 h-8 bg-green-100 rounded-full flex items-center justify-center">
-                                                            <i class="fa-solid fa-check text-green-600 text-sm"></i>
-                                                        </div>
-                                                    </div>
-                                                    <div class="flex-1 min-w-0">
-                                                        <p class="text-sm text-gray-900">Profile updated successfully</p>
-                                                        <p class="text-xs text-gray-500 mt-1">1 day ago</p>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            
-                                            <div class="p-4 border-b border-gray-50 hover:bg-gray-50 transition-colors">
-                                                <div class="flex items-start space-x-3">
-                                                    <div class="flex-shrink-0">
-                                                        <div class="w-8 h-8 bg-yellow-100 rounded-full flex items-center justify-center">
-                                                            <i class="fa-solid fa-star text-yellow-600 text-sm"></i>
-                                                        </div>
-                                                    </div>
-                                                    <div class="flex-1 min-w-0">
-                                                        <p class="text-sm text-gray-900">You received a new review</p>
-                                                        <p class="text-xs text-gray-500 mt-1">3 days ago</p>
-                                                    </div>
-                                                </div>
-                                            </div>
+                                            <!-- Notifications will be loaded here -->
                                         </div>
                                         
                                         <!-- Empty State -->
@@ -303,6 +225,14 @@
                                                 <i class="fa-solid fa-bell-slash text-gray-400 text-xl"></i>
                                             </div>
                                             <p class="text-gray-500 text-sm">No notifications yet</p>
+                                        </div>
+                                        
+                                        <!-- Loading State -->
+                                        <div id="notification-loading-desktop" class="p-8 text-center">
+                                            <div class="w-16 h-16 bg-gray-100 rounded-full flex items-center justify-center mx-auto mb-4">
+                                                <i class="fa-solid fa-spinner fa-spin text-gray-400 text-xl"></i>
+                                            </div>
+                                            <p class="text-gray-500 text-sm">Loading notifications...</p>
                                         </div>
                                     </div>
                                     
@@ -329,6 +259,300 @@
 
     <!-- Enhanced JavaScript for Sidebar and Mobile Menu -->
     <script src="{{ asset('assets/js/admin.js') }}"></script>
+    
+    <!-- Notification System JavaScript -->
+    <script>
+        // Global notification variables
+        let notificationsLoaded = false;
+        let unreadCount = 0;
+
+        // Initialize notification system
+        document.addEventListener('DOMContentLoaded', function() {
+            initializeNotifications();
+            setupRealtimeNotifications();
+        });
+
+        // Initialize notifications
+        function initializeNotifications() {
+            loadNotifications();
+            updateNotificationBadge();
+        }
+
+        // Load notifications from API
+        async function loadNotifications() {
+            try {
+                const response = await fetch('/notifications/recent', {
+                    headers: {
+                        'X-Requested-With': 'XMLHttpRequest',
+                        'Accept': 'application/json'
+                    }
+                });
+
+                if (response.ok) {
+                    const data = await response.json();
+                    displayNotifications(data.notifications);
+                    unreadCount = data.unread_count;
+                    updateNotificationBadge();
+                    notificationsLoaded = true;
+                }
+            } catch (error) {
+                console.error('Error loading notifications:', error);
+            }
+        }
+
+        // Display notifications in dropdown
+        function displayNotifications(notifications) {
+            const mobileList = document.getElementById('notification-list');
+            const desktopList = document.getElementById('notification-list-desktop');
+            const mobileLoading = document.getElementById('notification-loading');
+            const desktopLoading = document.getElementById('notification-loading-desktop');
+            const mobileEmpty = document.getElementById('no-notifications');
+            const desktopEmpty = document.getElementById('no-notifications-desktop');
+
+            // Hide loading states
+            mobileLoading.classList.add('hidden');
+            desktopLoading.classList.add('hidden');
+
+            if (notifications.length === 0) {
+                // Show empty state
+                mobileEmpty.classList.remove('hidden');
+                desktopEmpty.classList.remove('hidden');
+                mobileList.innerHTML = '';
+                desktopList.innerHTML = '';
+                return;
+            }
+
+            // Hide empty states
+            mobileEmpty.classList.add('hidden');
+            desktopEmpty.classList.add('hidden');
+
+            // Generate notification HTML
+            const notificationHtml = notifications.map(notification => createNotificationHtml(notification)).join('');
+            
+            mobileList.innerHTML = notificationHtml;
+            desktopList.innerHTML = notificationHtml;
+        }
+
+        // Create notification HTML
+        function createNotificationHtml(notification) {
+            const unreadIndicator = notification.is_read ? '' : '<span class="w-2 h-2 bg-blue-600 rounded-full"></span>';
+            
+            return `
+                <div class="p-4 border-b border-gray-50 hover:bg-gray-50 transition-colors cursor-pointer" 
+                     onclick="handleNotificationClick('${notification.id}', '${notification.redirect_url}')">
+                    <div class="flex items-start space-x-3">
+                        <div class="flex-shrink-0">
+                            <div class="w-8 h-8 ${notification.icon_color_class} rounded-full flex items-center justify-center">
+                                <i class="${notification.icon_class} text-sm"></i>
+                            </div>
+                        </div>
+                        <div class="flex-1 min-w-0">
+                            <p class="text-sm text-gray-900 font-medium">${notification.title}</p>
+                            <p class="text-xs text-gray-600 mt-1">${notification.message}</p>
+                            <p class="text-xs text-gray-500 mt-1">${notification.time_ago}</p>
+                        </div>
+                        <div class="flex-shrink-0">
+                            ${unreadIndicator}
+                        </div>
+                    </div>
+                </div>
+            `;
+        }
+
+        // Handle notification click
+        async function handleNotificationClick(notificationId, redirectUrl) {
+            // Mark as read
+            await markNotificationAsRead(notificationId);
+            
+            // Redirect if URL exists
+            if (redirectUrl) {
+                window.location.href = redirectUrl;
+            }
+            
+            // Close dropdown
+            toggleNotifications();
+        }
+
+        // Mark notification as read
+        async function markNotificationAsRead(notificationId) {
+            try {
+                const response = await fetch(`/notifications/${notificationId}/read`, {
+                    method: 'PATCH',
+                    headers: {
+                        'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content'),
+                        'X-Requested-With': 'XMLHttpRequest',
+                        'Accept': 'application/json'
+                    }
+                });
+
+                if (response.ok) {
+                    const data = await response.json();
+                    unreadCount = data.unread_count;
+                    updateNotificationBadge();
+                }
+            } catch (error) {
+                console.error('Error marking notification as read:', error);
+            }
+        }
+
+        // Mark all notifications as read
+        async function markAllAsRead() {
+            try {
+                const response = await fetch('/notifications/mark-all-read', {
+                    method: 'PATCH',
+                    headers: {
+                        'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content'),
+                        'X-Requested-With': 'XMLHttpRequest',
+                        'Accept': 'application/json'
+                    }
+                });
+
+                if (response.ok) {
+                    const data = await response.json();
+                    unreadCount = 0;
+                    updateNotificationBadge();
+                    
+                    // Reload notifications to update read status
+                    loadNotifications();
+                    
+                    // Show success message
+                    showNotification(data.message, 'success');
+                }
+            } catch (error) {
+                console.error('Error marking all notifications as read:', error);
+            }
+        }
+
+        // Update notification badge
+        function updateNotificationBadge() {
+            const mobileBadge = document.getElementById('notification-badge');
+            const desktopBadge = document.getElementById('notification-badge-desktop');
+
+            if (unreadCount > 0) {
+                mobileBadge.textContent = unreadCount > 99 ? '99+' : unreadCount;
+                desktopBadge.textContent = unreadCount > 99 ? '99+' : unreadCount;
+                mobileBadge.classList.remove('hidden');
+                desktopBadge.classList.remove('hidden');
+            } else {
+                mobileBadge.classList.add('hidden');
+                desktopBadge.classList.add('hidden');
+            }
+        }
+
+        // Setup real-time notifications
+        function setupRealtimeNotifications() {
+            if (typeof window.Echo !== 'undefined') {
+                const userId = {{ Auth::id() }};
+                const channel = window.Echo.private(`user.${userId}`);
+                
+                channel.listen('.notification.sent', (e) => {
+                    console.log('New notification received:', e);
+                    
+                    // Add new notification to the top
+                    const newNotification = e.notification;
+                    addNewNotification(newNotification);
+                    
+                    // Update unread count
+                    unreadCount++;
+                    updateNotificationBadge();
+                    
+                    // Show toast notification
+                    showNotification(newNotification.message, 'info');
+                });
+            }
+        }
+
+        // Add new notification to the list
+        function addNewNotification(notification) {
+            const mobileList = document.getElementById('notification-list');
+            const desktopList = document.getElementById('notification-list-desktop');
+            
+            const notificationHtml = createNotificationHtml(notification);
+            
+            // Add to top of both lists
+            mobileList.insertAdjacentHTML('afterbegin', notificationHtml);
+            desktopList.insertAdjacentHTML('afterbegin', notificationHtml);
+            
+            // Hide empty states if they were showing
+            document.getElementById('no-notifications').classList.add('hidden');
+            document.getElementById('no-notifications-desktop').classList.add('hidden');
+        }
+
+        // Show notification toast
+        function showNotification(message, type = 'info') {
+            // Create toast element
+            const toast = document.createElement('div');
+            toast.className = `fixed top-4 right-4 z-50 p-4 rounded-lg shadow-lg transition-all duration-300 transform translate-x-full`;
+            
+            // Set background color based on type
+            const bgColor = type === 'success' ? 'bg-green-500' : 
+                           type === 'error' ? 'bg-red-500' : 
+                           type === 'warning' ? 'bg-yellow-500' : 'bg-blue-500';
+            
+            toast.className += ` ${bgColor} text-white`;
+            
+            toast.innerHTML = `
+                <div class="flex items-center space-x-2">
+                    <i class="fa-solid fa-${type === 'success' ? 'check' : type === 'error' ? 'times' : type === 'warning' ? 'exclamation-triangle' : 'info-circle'}"></i>
+                    <span>${message}</span>
+                </div>
+            `;
+            
+            document.body.appendChild(toast);
+            
+            // Animate in
+            setTimeout(() => {
+                toast.classList.remove('translate-x-full');
+            }, 100);
+            
+            // Remove after 5 seconds
+            setTimeout(() => {
+                toast.classList.add('translate-x-full');
+                setTimeout(() => {
+                    document.body.removeChild(toast);
+                }, 300);
+            }, 5000);
+        }
+
+        // Toggle notifications dropdown
+        function toggleNotifications() {
+            const mobileDropdown = document.getElementById('notification-dropdown');
+            const desktopDropdown = document.getElementById('notification-dropdown-desktop');
+            
+            // Toggle mobile dropdown
+            if (mobileDropdown.classList.contains('hidden')) {
+                mobileDropdown.classList.remove('hidden');
+                if (!notificationsLoaded) {
+                    loadNotifications();
+                }
+            } else {
+                mobileDropdown.classList.add('hidden');
+            }
+            
+            // Toggle desktop dropdown
+            if (desktopDropdown.classList.contains('hidden')) {
+                desktopDropdown.classList.remove('hidden');
+                if (!notificationsLoaded) {
+                    loadNotifications();
+                }
+            } else {
+                desktopDropdown.classList.add('hidden');
+            }
+        }
+
+        // Close notifications when clicking outside
+        document.addEventListener('click', function(event) {
+            const mobileDropdown = document.getElementById('notification-dropdown');
+            const desktopDropdown = document.getElementById('notification-dropdown-desktop');
+            const mobileButton = event.target.closest('#notification-dropdown') ? null : event.target.closest('button[onclick="toggleNotifications()"]');
+            const desktopButton = event.target.closest('#notification-dropdown-desktop') ? null : event.target.closest('button[onclick="toggleNotifications()"]');
+            
+            if (!mobileButton && !desktopButton && !event.target.closest('#notification-dropdown') && !event.target.closest('#notification-dropdown-desktop')) {
+                mobileDropdown.classList.add('hidden');
+                desktopDropdown.classList.add('hidden');
+            }
+        });
+    </script>
     
     <!-- Custom Scripts Stack -->
     @stack('scripts')

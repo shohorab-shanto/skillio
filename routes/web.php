@@ -26,6 +26,15 @@ Route::get('/privacy-policy', function () {
 Route::get('/search', [App\Http\Controllers\SearchController::class, 'search'])->name('search');
 Route::get('/search/suggestions', [App\Http\Controllers\SearchController::class, 'suggestions'])->name('search.suggestions');
 
+// Notification Routes
+Route::middleware(['auth'])->group(function () {
+    Route::get('/notifications', [App\Http\Controllers\NotificationController::class, 'index'])->name('notifications.index');
+    Route::get('/notifications/recent', [App\Http\Controllers\NotificationController::class, 'getRecent'])->name('notifications.recent');
+    Route::get('/notifications/count', [App\Http\Controllers\NotificationController::class, 'getUnreadCount'])->name('notifications.count');
+    Route::patch('/notifications/{notification}/read', [App\Http\Controllers\NotificationController::class, 'markAsRead'])->name('notifications.markAsRead');
+    Route::patch('/notifications/mark-all-read', [App\Http\Controllers\NotificationController::class, 'markAllAsRead'])->name('notifications.markAllAsRead');
+});
+
 // Checkout Routes - Generic for both sessions and courses
 Route::middleware(['user_auth'])->group(function () {
     Route::get('/checkout/session/{sessionBooking}', [App\Http\Controllers\CheckoutController::class, 'sessionCheckout'])->name('checkout.session');

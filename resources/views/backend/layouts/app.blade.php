@@ -441,25 +441,64 @@
 
         // Setup real-time notifications
         function setupRealtimeNotifications() {
-            if (typeof window.Echo !== 'undefined') {
-                const userId = {{ Auth::id() }};
-                const channel = window.Echo.private(`user.${userId}`);
-                
-                channel.listen('.notification.sent', (e) => {
-                    console.log('New notification received:', e);
+            console.log('Setting up real-time notifications...');
+            
+            // Wait for Echo to be available
+            const checkEcho = () => {
+                if (typeof window.Echo !== 'undefined') {
+                    console.log('Echo is available, setting up notification listeners...');
                     
-                    // Add new notification to the top
-                    const newNotification = e.notification;
-                    addNewNotification(newNotification);
+                    const userId = {{ Auth::id() }};
+                    const channelName = `user.${userId}`;
+                    console.log('Subscribing to notification channel:', channelName);
                     
-                    // Update unread count
-                    unreadCount++;
-                    updateNotificationBadge();
+                    const channel = window.Echo.private(channelName);
                     
-                    // Show toast notification
-                    showNotification(newNotification.message, 'info');
-                });
-            }
+                    // Test channel subscription
+                    channel.subscribed(() => {
+                        console.log('Successfully subscribed to notification channel:', channelName);
+                    });
+                    
+                    channel.error((error) => {
+                        console.error('Notification channel subscription error:', error);
+                    });
+                    
+                    channel.listen('.notification.sent', (e) => {
+                        console.log('New notification received:', e);
+                        
+                        // Add new notification to the top
+                        const newNotification = e.notification;
+                        addNewNotification(newNotification);
+                        
+                        // Update unread count
+                        unreadCount++;
+                        updateNotificationBadge();
+                        
+                        // Show toast notification
+                        showNotification(newNotification.message, 'info');
+                    });
+                    
+                    // Test if Echo connection is working
+                    window.Echo.connector.pusher.connection.bind('connected', function() {
+                        console.log('Pusher connected successfully for notifications');
+                    });
+                    
+                    window.Echo.connector.pusher.connection.bind('disconnected', function() {
+                        console.log('Pusher disconnected for notifications');
+                    });
+                    
+                    window.Echo.connector.pusher.connection.bind('error', function(error) {
+                        console.error('Pusher connection error for notifications:', error);
+                    });
+                    
+                } else {
+                    console.log('Echo not available yet, retrying in 500ms...');
+                    setTimeout(checkEcho, 500);
+                }
+            };
+            
+            // Start checking for Echo
+            checkEcho();
         }
 
         // Add new notification to the list

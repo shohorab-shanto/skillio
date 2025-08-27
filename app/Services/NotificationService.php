@@ -231,9 +231,7 @@ class NotificationService
     public static function broadcastNotification(Notification $notification): void
     {
         // Broadcast to the specific user's private channel
-        $channelName = 'user.' . $notification->notifiable_id;
-        
-        broadcast(new \App\Events\NotificationSent($notification))->toOthers();
+        broadcast(new \App\Events\NotificationSent($notification));
     }
 
     /**

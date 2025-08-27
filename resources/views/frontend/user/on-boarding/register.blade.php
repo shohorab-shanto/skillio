@@ -8,7 +8,7 @@
     <div class="grid grid-cols-1 md:grid-cols-2 min-h-screen bg-gradient-to-b from-pink-50 to-white">
 
         <!-- Left Panel -->
-        <div class="grid content-between px-8 py-12 md:px-24 bg-gradient-to-b from-pink-50 to-white">
+        <div class="flex flex-col justify-between px-8 py-12 md:px-24 bg-gradient-to-b from-pink-50 to-white">
             <!-- Logo header -->
             <a href="/"><img src="{{ asset('assets/images/logo.png') }}" alt=""></a>
             {{-- center --}}
@@ -123,16 +123,12 @@
                 </div>
             </div>
             <!-- bottom Footer -->
-            <div class="mt-28 flex justify-around text-xs text-gray-400 text-center">
-                <h2>© 2025 Skillio Course</h2>
-                <h2>🌐 ENG <span><img src="{{ asset('assets/down-arrow-svgrepo-com.svg') }}" alt="Dropdown arrow"
-                            class="w-2 h-2 inline-block" /></span></h2>
-            </div>
+            @include('frontend.layouts.footer-onboard')
         </div>
 
         <!-- Right Panel -->
-        <div class="hidden md:flex w-full max-h-screen p-2">
-            <img src="{{ asset('assets/images/login-image-cloud.png') }}" alt="" class="" />
+        <div class="hidden md:flex w-full h-full items-center justify-center p-2">
+            <img src="{{ asset('assets/images/login-image-cloud.png') }}" alt="Registration background" class="max-w-full max-h-full object-contain" />
         </div>
     </div>
 @endsection

@@ -88,6 +88,7 @@ Route::middleware(['auth'])->group(function () {
 });
 
 Route::post('/lang/switch', [LanguageController::class, 'switch'])->name('lang.switch');
+Route::get('/lang/{lang}', [LanguageController::class, 'switchLanguage'])->name('language.switch');
 // Google
 Route::get('/login/google', [SocialAuthController::class, 'redirectToGoogle'])->name('login.google');
 Route::get('/login/google/callback', [SocialAuthController::class, 'handleGoogleCallback'])->name('login.google.callback');

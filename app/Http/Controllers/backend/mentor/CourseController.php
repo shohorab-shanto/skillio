@@ -29,13 +29,13 @@ class CourseController extends Controller
         // Get courses with pagination and filtering
         $courses = Course::where('mentor_id', $mentor->id)
             ->with(['category', 'subCategories', 'reviews'])
-            ->when($request->status, function ($query, $status) {
-                return $query->where('status', $status);
+            ->when($request->filled('status'), function ($query) use ($request) {
+                return $query->where('status', $request->status);
             })
-            ->when($request->search, function ($query, $search) {
-                return $query->where(function ($q) use ($search) {
-                    $q->where('title', 'like', "%{$search}%")
-                      ->orWhere('description', 'like', "%{$search}%");
+            ->when($request->filled('search'), function ($query) use ($request) {
+                return $query->where(function ($q) use ($request) {
+                    $q->where('title', 'like', "%{$request->search}%")
+                      ->orWhere('description', 'like', "%{$request->search}%");
                 });
             })
             ->orderBy('created_at', 'desc')
@@ -43,12 +43,12 @@ class CourseController extends Controller
 
         // Get course statistics
         $stats = [
-            'total_courses' => Course::where('mentor_id', $user->id)->count(),
-            'approved_courses' => Course::where('mentor_id', $user->id)->where('status', 'approved')->count(),
-            'pending_courses' => Course::where('mentor_id', $user->id)->where('status', 'pending')->count(),
-            'rejected_courses' => Course::where('mentor_id', $user->id)->where('status', 'rejected')->count(),
+            'total_courses' => Course::where('mentor_id', $mentor->id)->count(),
+            'approved_courses' => Course::where('mentor_id', $mentor->id)->where('status', 'approved')->count(),
+            'pending_courses' => Course::where('mentor_id', $mentor->id)->where('status', 'pending')->count(),
+            'rejected_courses' => Course::where('mentor_id', $mentor->id)->where('status', 'rejected')->count(),
             'total_enrolled_students' => 0, // Will be calculated when enrollment system is implemented
-            'total_revenue' => 0, // Will calculate based on enrollments later
+            'total_revenue' => 0, // Will calculate based on enrollment system later
         ];
 
         return view('backend.mentor.courses.index', compact('courses', 'stats', 'request'));
@@ -71,6 +71,11 @@ class CourseController extends Controller
     public function store(Request $request)
     {
         $user = Auth::user();
+        $mentor = $user->mentor;
+
+        if (!$mentor) {
+            return redirect()->route('mentor.dashboard')->with('error', 'Mentor profile not found.');
+        }
 
         $validated = $request->validate([
             'title' => 'required|string|max:255',
@@ -117,7 +122,7 @@ class CourseController extends Controller
 
         // Create the course
         $course = Course::create([
-            'mentor_id' => $user->id,
+            'mentor_id' => $mentor->id,
             'category_id' => $validated['category_id'],
             'title' => $validated['title'],
             'description' => $validated['description'],
@@ -285,6 +290,7 @@ class CourseController extends Controller
             'end_date' => $validated['end_date'],
             'duration_days' => $durationDays,
             'needs_reapproval' => $needsReapproval,
+            'status' => 'pending',
         ];
 
         if (isset($validated['thumbnail'])) {

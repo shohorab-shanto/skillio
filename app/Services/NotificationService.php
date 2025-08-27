@@ -228,7 +228,7 @@ class NotificationService
     /**
      * Broadcast notification via WebSocket.
      */
-    private static function broadcastNotification(Notification $notification): void
+    public static function broadcastNotification(Notification $notification): void
     {
         // Broadcast to the specific user's private channel
         $channelName = 'user.' . $notification->notifiable_id;

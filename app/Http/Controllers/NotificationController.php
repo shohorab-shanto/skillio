@@ -107,6 +107,14 @@ class NotificationController extends Controller
             ->limit(10)
             ->get();
 
+        // Debug logging for notifications found
+        \Log::info('Notifications query result', [
+            'notifiable_type' => get_class($user),
+            'notifiable_id' => $user->id,
+            'notifications_found' => $notifications->count(),
+            'notification_ids' => $notifications->pluck('id')->toArray()
+        ]);
+
         $formattedNotifications = $notifications->map(function ($notification) {
             return [
                 'id' => $notification->id,

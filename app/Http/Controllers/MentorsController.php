@@ -116,6 +116,7 @@ class MentorsController extends Controller
                 'user_id' => $mentor->user_id,
                 'name' => $mentor->user->name ?? 'Unknown',
                 'photo' => $mentor->photo ?? null,
+                'work_experience' => $mentor->work_experience ?? '',
                 'top_category' => $topCategory,
                 'top_category_sub_categories' => $topCategorySubCategories,
                 'bio' => $mentor->bio ?? '',
@@ -123,6 +124,7 @@ class MentorsController extends Controller
                 'average_rating' => $averageRating,
                 'formatted_rating' => number_format($averageRating, 1),
                 'star_rating' => $this->getStarRating($averageRating),
+                'lowest_session_rate' => $this->getLowestSessionRate($mentor),
                 'is_preferred' => $preferredMentors->contains('id', $mentor->id), // Add flag for preferred mentors
             ];
         })
@@ -165,6 +167,18 @@ class MentorsController extends Controller
             'rating' => $rating,
             'formatted_rating' => number_format($rating, 1),
         ];
+    }
+
+    /**
+     * Get the lowest session rate for a mentor.
+     */
+    private function getLowestSessionRate($mentor)
+    {
+        $lowestRate = $mentor->sessionBookings
+            ->where('fee', '>', 0)
+            ->min('fee');
+        
+        return $lowestRate ? number_format($lowestRate, 2) : 'N/A';
     }
 
     /**

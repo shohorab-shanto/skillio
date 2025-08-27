@@ -69,15 +69,105 @@
             <!-- Mentors Grid -->
             <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
                 @forelse($mentors as $mentor)
-                    @include('shared.mentor-card', ['mentor' => $mentor])
+                    <div class="bg-white rounded-xl shadow-md p-6 w-full max-w-sm">
+                        <div class="flex items-center space-x-4">
+                            @if($mentor['photo'])
+                                <img class="w-14 h-14 rounded-full object-cover" 
+                                     src="{{ asset('storage/' . $mentor['photo']) }}" 
+                                     alt="{{ $mentor['name'] }}" />
+                            @else
+                                <div class="w-14 h-14 rounded-full bg-gradient-to-br from-purple-400 to-pink-400 flex items-center justify-center text-white font-bold text-lg">
+                                    {{ strtoupper(substr($mentor['name'], 0, 1)) }}
+                                </div>
+                            @endif
+                            <div>
+                                <h2 class="text-lg font-bold text-gray-900">{{ $mentor['name'] }}</h2>
+                                <p class="text-sm text-gray-500">
+                                    {{ $mentor['work_experience'] ? Str::limit($mentor['work_experience'], 30) : 'Professional Mentor' }}
+                                </p>
+                            </div>
+                        </div>
+
+                        <div class="mt-3 flex items-center space-x-2">
+                            <!-- Star Rating Display -->
+                            <div class="flex items-center">
+                                @php
+                                    $rating = $mentor['average_rating'] ?? 0;
+                                    $fullStars = floor($rating);
+                                    $hasHalfStar = ($rating - $fullStars) >= 0.5;
+                                    $emptyStars = 5 - $fullStars - ($hasHalfStar ? 1 : 0);
+                                @endphp
+                                
+                                <!-- Full Stars -->
+                                @for($i = 0; $i < $fullStars; $i++)
+                                    <svg class="w-4 h-4 text-yellow-400 fill-current" viewBox="0 0 20 20">
+                                        <path d="M10 15l-5.878 3.09 1.123-6.545L.489 6.91l6.572-.955L10 0l2.939 5.955 6.572.955-4.756 4.635 1.123 6.545z"/>
+                                    </svg>
+                                @endfor
+                                
+                                <!-- Half Star -->
+                                @if($hasHalfStar)
+                                    <svg class="w-4 h-4 text-yellow-400 fill-current" viewBox="0 0 20 20">
+                                        <defs>
+                                            <linearGradient id="half-star-{{ $mentor['id'] }}">
+                                                <stop offset="50%" stop-color="#fbbf24"/>
+                                                <stop offset="50%" stop-color="#e5e7eb"/>
+                                            </linearGradient>
+                                        </defs>
+                                        <path d="M10 15l-5.878 3.09 1.123-6.545L.489 6.91l6.572-.955L10 0l2.939 5.955 6.572.955-4.756 4.635 1.123 6.545z" fill="url(#half-star-{{ $mentor['id'] }})"/>
+                                    </svg>
+                                @endif
+                                
+                                <!-- Empty Stars -->
+                                @for($i = 0; $i < $emptyStars; $i++)
+                                    <svg class="w-4 h-4 text-gray-300 fill-current" viewBox="0 0 20 20">
+                                        <path d="M10 15l-5.878 3.09 1.123-6.545L.489 6.91l6.572-.955L10 0l2.939 5.955 6.572.955-4.756 4.635 1.123 6.545z"/>
+                                    </svg>
+                                @endfor
+                            </div>
+                            
+                            <!-- Rating Number and Reviews Count -->
+                            <div class="flex items-center space-x-2">
+                                <span class="font-bold text-gray-900 text-sm">{{ number_format($rating, 1) }}</span>
+                                <span class="text-gray-500 text-xs">({{ $mentor['total_reviews'] ?? 0 }} reviews)</span>
+                            </div>
+                        </div>
+
+                        <p class="mt-4 text-gray-700 text-sm">
+                            {{ $mentor['bio'] ? Str::limit($mentor['bio'], 100) : 'Experienced mentor with expertise in various fields.' }}
+                        </p>
+
+                        <div class="flex flex-wrap gap-2 mt-4">
+                            @if($mentor['top_category'])
+                                <span class="bg-gray-100 text-gray-800 px-3 py-1 rounded-full text-sm">{{ $mentor['top_category'] }}</span>
+                            @endif
+                            @if($mentor['top_category_sub_categories'])
+                                @foreach(array_slice($mentor['top_category_sub_categories'], 0, 3) as $subCategory)
+                                    <span class="bg-gray-100 text-gray-800 px-3 py-1 rounded-full text-sm">{{ $subCategory }}</span>
+                                @endforeach
+                            @endif
+                            @if(!$mentor['top_category'] && !$mentor['top_category_sub_categories'])
+                                <span class="bg-gray-100 text-gray-800 px-3 py-1 rounded-full text-sm">Professional</span>
+                                <span class="bg-gray-100 text-gray-800 px-3 py-1 rounded-full text-sm">Expert</span>
+                            @endif
+                        </div>
+
+                        <div class="mt-5 flex justify-between items-center">
+                            <div class="text-xl font-bold text-gray-900">
+                                ${{ $mentor['lowest_session_rate'] ?? 'N/A' }}<span class="text-sm font-normal text-gray-500">/hour</span>
+                            </div>
+                            <a href="{{ route('mentor.sessions', $mentor['id']) }}" 
+                               class="bg-violet-600 hover:bg-violet-700 text-white px-5 py-2 rounded-lg text-sm font-semibold">
+                                Book session
+                            </a>
+                        </div>
+                    </div>
                 @empty
                     <div class="col-span-full text-center py-12">
                         <div class="text-gray-500">
-                            <svg class="mx-auto h-12 w-12 text-gray-400 mb-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z"></path>
-                            </svg>
-                            <h3 class="text-lg font-medium text-gray-900 mb-2">No mentors found</h3>
-                            <p class="text-gray-600">We're working on adding more verified mentors to our platform.</p>
+                            <i class="fa-solid fa-user-tie text-4xl mb-4"></i>
+                            <p class="text-lg font-medium">No mentors available at the moment</p>
+                            <p class="text-sm">Please check back later for available mentors</p>
                         </div>
                     </div>
                 @endforelse

@@ -14,7 +14,7 @@
 @endsection
 
 @section('content')
-    <div class="min-h-screen bg-gray-50 pt-20">
+    <div x-data="{ activeTab: 'timeslots' }" class="min-h-screen bg-gray-50 pt-20">
         <div class="max-w-[1400px] mx-auto px-6">
             <section class="max-w-[1400px] mx-auto rounded-2xl p-6 bg-white">
                 <div class="max-w-[1400px] mx-auto rounded-2xl p-6 md:p-10 grid md:grid-cols-3 gap-6 items-center">
@@ -110,7 +110,7 @@
                             @endif
                         </div>
                         <div class="ml-auto">
-                            <button onclick="showTab('review')" class="block px-4 py-2 bg-purple-700 text-white rounded hover:bg-purple-800 transition-colors duration-300 text-center whitespace-nowrap">
+                            <button @click="activeTab = 'review'" class="block px-4 py-2 bg-purple-700 text-white rounded hover:bg-purple-800 transition-colors duration-300 text-center whitespace-nowrap">
                                 Review
                             </button>
                         </div>
@@ -123,24 +123,26 @@
                     <!-- Tab Navigation -->
                     <div class="border-b border-gray-200 mb-6">
                         <nav class="-mb-px flex space-x-8">
-                            <button onclick="showTab('timeslots')" id="timeslots-tab"
-                                class="tab-button text-purple-600 border-purple-600 py-4 px-1 border-b-2 text-sm font-medium">Time Slots</button>
-                            <button onclick="showTab('review')" id="review-tab"
-                                class="tab-button text-gray-500 hover:text-gray-700 py-4 px-1 border-b-2 border-transparent text-sm font-medium">Reviews</button>
+                            <button @click="activeTab = 'timeslots'" 
+                                :class="activeTab === 'timeslots' ? 'text-purple-600 border-purple-600' : 'text-gray-500 border-transparent'"
+                                class="mentor-profile-tab-button py-4 px-1 border-b-2 text-sm font-medium hover:text-gray-700 transition-colors">Time Slots</button>
+                            <button @click="activeTab = 'review'" 
+                                :class="activeTab === 'review' ? 'text-purple-600 border-purple-600' : 'text-gray-500 border-transparent'"
+                                class="mentor-profile-tab-button py-4 px-1 border-b-2 text-sm font-medium hover:text-gray-700 transition-colors">Reviews</button>
                         </nav>
                     </div>
 
                     <!-- Tab Content -->
-                    <div id="tab-content">
+                    <div>
                         
                         <!-- Time Slots Tab -->
-                        <div id="timeslots-content" class="tab-content">
+                        <div x-show="activeTab === 'timeslots'" class="mentor-profile-tab-content">
                             <div class="flex justify-between items-center mb-6">
                                 <!-- Left: Title -->
                                 <h2 class="font-semibold text-gray-900">All Time Slots</h2>
                                 
-                                <!-- Right: Date Selection Dropdown -->
-                                <div class="relative" x-data="{ open: false, selectedPeriod: 'Monthly' }">
+                                                <!-- Right: Date Selection Dropdown -->
+                <div class="relative" x-data="{ open: false, selectedPeriod: '{{ request("start_date") && request("end_date") ? request("start_date") . " - " . request("end_date") : now()->format("F Y") }}' }">
                                     <button 
                                         @click="open = !open"
                                         class="flex items-center gap-2 px-4 py-2 bg-white border border-gray-300 rounded-lg hover:bg-gray-50 transition-colors duration-200"
@@ -252,7 +254,7 @@
                         </div>
 
                         <!-- Review Tab -->
-                        <div id="review-content" class="tab-content hidden">
+                        <div x-show="activeTab === 'review'" class="mentor-profile-tab-content">
                             <h3 class="text-lg font-semibold mb-6">Mentor Reviews</h3>
                             
                             @php
@@ -390,58 +392,4 @@
     </div>
 @endsection
 
-<script>
-    // Tab functionality
-    function showTab(tabName) {
-        // Hide all tab contents
-        const tabContents = document.querySelectorAll('.tab-content');
-        tabContents.forEach(content => {
-            content.classList.add('hidden');
-        });
-        
-        // Remove active styles from all tabs
-        const tabButtons = document.querySelectorAll('.tab-button');
-        tabButtons.forEach(button => {
-            button.classList.remove('text-purple-600', 'border-purple-600');
-            button.classList.add('text-gray-500', 'border-transparent');
-        });
-        
-        // Show selected tab content
-        document.getElementById(tabName + '-content').classList.remove('hidden');
-        
-        // Add active styles to selected tab
-        const activeTab = document.getElementById(tabName + '-tab');
-        activeTab.classList.remove('text-gray-500', 'border-transparent');
-        activeTab.classList.add('text-purple-600', 'border-purple-600');
-    }
-
-    // Initialize with current month or selected date range
-    document.addEventListener('DOMContentLoaded', function() {
-        // Initialize default tab
-        showTab('timeslots');
-        
-        const startDate = '{{ request("start_date") }}';
-        const endDate = '{{ request("end_date") }}';
-        
-        if (startDate && endDate) {
-            // Format dates for display
-            const formatDate = (date) => new Date(date).toLocaleDateString('en-US', { 
-                month: 'short', 
-                day: 'numeric'
-            });
-            
-            const selectedPeriod = `${formatDate(startDate)} - ${formatDate(endDate)}`;
-            const alpineComponent = document.querySelector('[x-data]');
-            if (alpineComponent && alpineComponent.__x) {
-                alpineComponent.__x.$data.selectedPeriod = selectedPeriod;
-            }
-        } else {
-            const today = new Date();
-            const currentMonth = today.toLocaleDateString('en-US', { month: 'long', year: 'numeric' });
-            const alpineComponent = document.querySelector('[x-data]');
-            if (alpineComponent && alpineComponent.__x) {
-                alpineComponent.__x.$data.selectedPeriod = currentMonth;
-            }
-        }
-    });
-</script>
+{{-- Script removed - functionality implemented with Alpine.js and Blade --}}

@@ -1,7 +1,7 @@
 <div id="why-we-are-different" class="bg-gray-50 py-16">
     <section class="px-6">
-        <x-section-header title="What Makes Skillio Different?"
-            subtitle="We believe our quality course can change a life and our thousands of learner already have." />
+        <x-section-header title="{{ __('trans.what_makes_skillio_different_title') }}"
+            subtitle="{{ __('trans.what_makes_skillio_different_subtitle') }}" />
         
         <section class="max-w-[1400px] w-full mx-auto grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 pt-8">
             
@@ -10,7 +10,7 @@
                 <!-- Header -->
                 <div class="mb-6">
                     <h2 class="text-4xl lg:text-5xl font-bold text-blue-900 mb-2">12,000+</h2>
-                    <p class="text-lg text-gray-700 font-medium">Top class courses</p>
+                    <p class="text-lg text-gray-700 font-medium">{{ __('trans.top_class_courses') }}</p>
                 </div>
                 
                 <!-- Content Container -->
@@ -18,13 +18,13 @@
                     <!-- Badges -->
                     <div class="absolute top-4 left-0 flex flex-col gap-3 z-10">
                         <span class="inline-block bg-white text-gray-800 px-3 py-1.5 rounded-full text-sm font-medium shadow-md">
-                            1 on 1 Mentorship
+                            {{ __('trans.one_on_one_mentorship') }}
                         </span>
                         <span class="inline-block bg-white text-gray-800 px-3 py-1.5 rounded-full text-sm font-medium shadow-md">
-                            Online Courses
+                            {{ __('trans.online_courses_badge') }}
                         </span>
                         <span class="inline-block bg-white text-gray-800 px-3 py-1.5 rounded-full text-sm font-medium shadow-md">
-                            24/7 Support
+                            {{ __('trans.support_24_7') }}
                         </span>
                     </div>
 
@@ -42,7 +42,7 @@
                 <!-- Header -->
                 <div class="mb-6">
                     <h2 class="text-4xl lg:text-5xl font-bold text-purple-900 mb-2">5,000+</h2>
-                    <p class="text-lg text-gray-700 font-medium">Expert mentors</p>
+                    <p class="text-lg text-gray-700 font-medium">{{ __('trans.expert_mentors_count') }}</p>
                 </div>
                 
                 <!-- Content Container -->
@@ -50,13 +50,13 @@
                     <!-- Badges -->
                     <div class="absolute top-4 left-0 flex flex-col gap-3 z-10">
                         <span class="inline-block bg-white text-gray-800 px-3 py-1.5 rounded-full text-sm font-medium shadow-md">
-                            Verified Experts
+                            {{ __('trans.verified_experts') }}
                         </span>
                         <span class="inline-block bg-white text-gray-800 px-3 py-1.5 rounded-full text-sm font-medium shadow-md">
-                            Industry Leaders
+                            {{ __('trans.industry_leaders') }}
                         </span>
                         <span class="inline-block bg-white text-gray-800 px-3 py-1.5 rounded-full text-sm font-medium shadow-md">
-                            Success Stories
+                            {{ __('trans.success_stories') }}
                         </span>
                     </div>
 
@@ -74,7 +74,7 @@
                 <!-- Header -->
                 <div class="mb-6">
                     <h2 class="text-4xl lg:text-5xl font-bold text-green-900 mb-2">98%</h2>
-                    <p class="text-lg text-gray-700 font-medium">Success rate</p>
+                    <p class="text-lg text-gray-700 font-medium">{{ __('trans.success_rate') }}</p>
                 </div>
                 
                 <!-- Content Container -->
@@ -82,13 +82,13 @@
                     <!-- Badges -->
                     <div class="absolute top-4 left-0 flex flex-col gap-3 z-10">
                         <span class="inline-block bg-white text-gray-800 px-3 py-1.5 rounded-full text-sm font-medium shadow-md">
-                            Career Growth
+                            {{ __('trans.career_growth') }}
                         </span>
                         <span class="inline-block bg-white text-gray-800 px-3 py-1.5 rounded-full text-sm font-medium shadow-md">
-                            Skill Development
+                            {{ __('trans.skill_development') }}
                         </span>
                         <span class="inline-block bg-white text-gray-800 px-3 py-1.5 rounded-full text-sm font-medium shadow-md">
-                            Job Placement
+                            {{ __('trans.job_placement') }}
                         </span>
                     </div>
 

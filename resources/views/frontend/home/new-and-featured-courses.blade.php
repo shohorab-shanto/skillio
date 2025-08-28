@@ -5,24 +5,24 @@
         <div class="text-center mb-12">
             <div class="flex justify-center mb-6">
                 <div class="bg-white rounded-lg p-1 shadow-sm border">
-                    <button id="new-courses-tab" 
+                                            <button id="new-courses-tab" 
                             class="tab-button px-6 py-3 rounded-md font-semibold transition-all duration-200 active"
                             data-tab="new-courses">
-                        New Courses
+                        {{ __('trans.new_courses_tab') }}
                     </button>
                     <button id="featured-courses-tab" 
                             class="tab-button px-6 py-3 rounded-md font-semibold transition-all duration-200"
                             data-tab="featured-courses">
-                        Featured Courses
+                        {{ __('trans.featured_courses_tab') }}
                     </button>
                 </div>
             </div>
             
             <h2 id="section-title" class="text-3xl md:text-4xl font-bold text-gray-900 mb-4">
-                Explore New Courses
+                {{ __('trans.explore_new_courses_title') }}
             </h2>
             <p id="section-description" class="text-lg text-gray-600 max-w-2xl mx-auto">
-                Here are the most popular courses and mentorships available on Skillio.
+                {{ __('trans.explore_new_courses_description') }}
             </p>
         </div>
 
@@ -38,7 +38,7 @@
                 <div class="flex justify-center mt-12">
                     <a href="{{ route('courses') }}" 
                        class="inline-flex items-center px-6 py-3 border-2 border-violet-600 text-violet-600 rounded-lg font-semibold hover:bg-violet-600 hover:text-white transition-all duration-300">
-                        View All Courses
+                        {{ __('trans.view_all_courses_button') }}
                         <svg class="ml-2 w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></svg>
                         </svg>
@@ -49,12 +49,12 @@
                     <div class="w-24 h-24 mx-auto mb-6 bg-blue-100 rounded-full flex items-center justify-center">
                         <i class="fa-solid fa-book text-3xl text-blue-600"></i>
                     </div>
-                    <h3 class="text-xl font-semibold text-gray-900 mb-2">No New Courses Yet</h3>
-                    <p class="text-gray-600 mb-6">We're working on adding new courses for you. Check back soon!</p>
+                    <h3 class="text-xl font-semibold text-gray-900 mb-2">{{ __('trans.no_new_courses_yet_title') }}</h3>
+                    <p class="text-gray-600 mb-6">{{ __('trans.no_new_courses_yet_description') }}</p>
                     <a href="{{ route('courses') }}" 
                        class="inline-flex items-center px-6 py-3 bg-blue-600 text-white font-semibold rounded-lg hover:bg-blue-700 transition-colors duration-200">
                         <i class="fa-solid fa-book mr-2"></i>
-                        Browse All Courses
+                        {{ __('trans.browse_all_courses_button') }}
                     </a>
                 </div>
             @endif
@@ -72,7 +72,7 @@
                 <div class="flex justify-center mt-12">
                     <a href="{{ route('courses') }}" 
                        class="inline-flex items-center px-6 py-3 border-2 border-violet-600 text-violet-600 rounded-lg font-semibold hover:bg-violet-600 hover:text-white transition-all duration-300">
-                        View All Courses
+                        {{ __('trans.view_all_courses_button') }}
                         <svg class="ml-2 w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></svg>
                         </svg>
@@ -83,12 +83,12 @@
                     <div class="w-24 h-24 mx-auto mb-6 bg-purple-100 rounded-full flex items-center justify-center">
                         <i class="fa-solid fa-star text-3xl text-purple-600"></i>
                     </div>
-                    <h3 class="text-xl font-semibold text-gray-900 mb-2">No Featured Courses Yet</h3>
-                    <p class="text-gray-600 mb-6">We're working on featuring the best courses for you. Check back soon!</p>
+                    <h3 class="text-xl font-semibold text-gray-900 mb-2">{{ __('trans.no_featured_courses_yet_title') }}</h3>
+                    <p class="text-gray-600 mb-6">{{ __('trans.no_featured_courses_yet_description') }}</p>
                     <a href="{{ route('courses') }}" 
                        class="inline-flex items-center px-6 py-3 bg-purple-600 text-white font-semibold rounded-lg hover:bg-purple-700 transition-colors duration-200">
                         <i class="fa-solid fa-book mr-2"></i>
-                        Browse All Courses
+                        {{ __('trans.browse_all_courses_button') }}
                     </a>
                 </div>
             @endif
@@ -127,12 +127,12 @@ document.addEventListener('DOMContentLoaded', function() {
     // Tab content data
     const tabData = {
         'new-courses': {
-            title: 'Explore New Courses',
-            description: 'Here are the most popular courses and mentorships available on Skillio.'
+            title: '{{ __("trans.explore_new_courses_title") }}',
+            description: '{{ __("trans.explore_new_courses_description") }}'
         },
         'featured-courses': {
-            title: 'Explore Featured Courses',
-            description: 'Discover our handpicked featured courses that stand out for their quality, content, and student satisfaction.'
+            title: '{{ __("trans.explore_featured_courses_title") }}',
+            description: '{{ __("trans.explore_featured_courses_description") }}'
         }
     };
 

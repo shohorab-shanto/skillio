@@ -14,23 +14,23 @@
             <!-- Right Side - Previous Content -->
             <div class="lg:w-1/2 flex-1 flex flex-col items-start justify-center pt-12 lg:pt-0 space-y-8">
                 <x-section-header 
-                    title="Unleash Your Potential with our educational platform"
-                    subtitle="Start earning money online with quality mentoring on the Skillio platform."
+                    title="{{ __('trans.unleash_potential_title') }}"
+                    subtitle="{{ __('trans.unleash_potential_subtitle') }}"
                 />
                 
                 <div class="flex flex-col items-start gap-3">
                     <img src="{{ asset('assets/images/statistic.png') }}" alt="Statistics icon" class="w-12 h-12">
-                    <h3 class="font-semibold text-3xl">Build Your Career</h3>
+                    <h3 class="font-semibold text-3xl">{{ __('trans.build_your_career') }}</h3>
                     <p class="text-gray-500 text-base">
-                        With quality mentoring, your business career will be twice as fast.
+                        {{ __('trans.build_career_description') }}
                     </p>
                 </div>
 
                 <div class="flex flex-col items-start gap-3">
                     <img src="{{ asset('assets/images/circle.png') }}" alt="Circle icon" class="w-12 h-12">
-                    <h3 class="font-semibold text-3xl">Develop Your Skills</h3>
+                    <h3 class="font-semibold text-3xl">{{ __('trans.develop_your_skills') }}</h3>
                     <p class="text-gray-500 text-base">
-                        On the platform you have access to all the modern skills for making money online.
+                        {{ __('trans.develop_skills_description') }}
                     </p>
                 </div>
             </div>

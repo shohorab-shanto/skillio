@@ -1,6 +1,6 @@
 <section id="testimonials">
-<x-section-header title="What's Our Members Says"
-    subtitle="Attached is just a small portion of the success of our members through our mentorships and courses." />
+<x-section-header title="{{ __('trans.what_our_members_say_title') }}"
+    subtitle="{{ __('trans.what_our_members_say_subtitle') }}" />
 
 <section class="pb-16 mb-4 bg-gray-50">
     <div class="max-w-[1400px] mx-auto px-6">
@@ -43,9 +43,9 @@
                                         </div>
                                         <span class="text-sm font-medium text-gray-700">
                                             {{ number_format($review->rating, 1) }}
-                                            @if($loop->index >= 2)
-                                                ({{ $topReviews->count() }} Reviews)
-                                            @endif
+                                                                                    @if($loop->index >= 2)
+                                            ({{ $topReviews->count() }} {{ __('trans.reviews_count_with_number') }})
+                                        @endif
                                         </span>
                                     </div>
                                 
@@ -70,7 +70,7 @@
                                         @endif
                                         <div>
                                             <h4 class="font-semibold text-gray-900">{{ $review->user->name ?? 'David Kim' }}</h4>
-                                            <p class="text-sm text-gray-500">Digital Marketing Director</p>
+                                            <p class="text-sm text-gray-500">{{ __('trans.digital_marketing_director') }}</p>
                                         </div>
                                     </div>
                                 </div>
@@ -112,7 +112,7 @@
                                 
                                 <!-- Review Text -->
                                 <p class="text-gray-700 mb-6 leading-relaxed">
-                                    "It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout."
+                                    "{{ __('trans.fallback_testimonial_text') }}"
                                 </p>
                                 
                                 <!-- Reviewer Info -->
@@ -122,7 +122,7 @@
                                          class="w-12 h-12 rounded-full object-cover">
                                     <div>
                                         <h4 class="font-semibold text-gray-900">David Kim</h4>
-                                        <p class="text-sm text-gray-500">Digital Marketing Director</p>
+                                        <p class="text-sm text-gray-500">{{ __('trans.digital_marketing_director') }}</p>
                                     </div>
                                 </div>
                             </div>
@@ -148,7 +148,7 @@
                                             <path d="M10 15l-5.878 3.09 1.123-6.545L.489 6.91l6.572-.955L10 0l2.939 5.955 6.572.955-4.756 4.635 1.123 6.545z"/>
                                         </svg>
                                     </div>
-                                    <span class="text-sm font-medium text-gray-700">4.8 (120 Reviews)</span>
+                                    <span class="text-sm font-medium text-gray-700">4.8 (120 {{ __('trans.reviews_count_with_number') }})</span>
                                 </div>
                                 
                                 <!-- Quote Icon -->
@@ -160,7 +160,7 @@
                                 
                                 <!-- Review Text -->
                                 <p class="text-gray-700 mb-6 leading-relaxed">
-                                    "It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout."
+                                    "{{ __('trans.fallback_testimonial_text') }}"
                                 </p>
                                 
                                 <!-- Reviewer Info -->
@@ -170,7 +170,7 @@
                                          class="w-12 h-12 rounded-full object-cover">
                                     <div>
                                         <h4 class="font-semibold text-gray-900">David Kim</h4>
-                                        <p class="text-sm text-gray-500">Digital Marketing Director</p>
+                                        <p class="text-sm text-gray-500">{{ __('trans.digital_marketing_director') }}</p>
                                     </div>
                                 </div>
                             </div>
@@ -208,7 +208,7 @@
                                 
                                 <!-- Review Text -->
                                 <p class="text-gray-700 mb-6 leading-relaxed">
-                                    "It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout."
+                                    "{{ __('trans.fallback_testimonial_text') }}"
                                 </p>
                                 
                                 <!-- Reviewer Info -->
@@ -218,7 +218,7 @@
                                          class="w-12 h-12 rounded-full object-cover">
                                     <div>
                                         <h4 class="font-semibold text-gray-900">David Kim</h4>
-                                        <p class="text-sm text-gray-500">Digital Marketing Director</p>
+                                        <p class="text-sm text-gray-500">{{ __('trans.digital_marketing_director') }}</p>
                                     </div>
                                 </div>
                             </div>
@@ -256,7 +256,7 @@
                                 
                                 <!-- Review Text -->
                                 <p class="text-gray-700 mb-6 leading-relaxed">
-                                    "It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout."
+                                    "{{ __('trans.fallback_testimonial_text') }}"
                                 </p>
                                 
                                 <!-- Reviewer Info -->
@@ -266,7 +266,7 @@
                                          class="w-12 h-12 rounded-full object-cover">
                                     <div>
                                         <h4 class="font-semibold text-gray-900">David Kim</h4>
-                                        <p class="text-sm text-gray-500">Digital Marketing Director</p>
+                                        <p class="text-sm text-gray-500">{{ __('trans.digital_marketing_director') }}</p>
                                     </div>
                                 </div>
                             </div>

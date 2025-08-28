@@ -649,4 +649,44 @@ return [
     'mentor_register_subheading' => 'Share your expertise and start earning by helping others learn',
     'confirm_password' => 'Confirm Password',
     'confirm_password_placeholder' => 'Confirm your password',
+
+    // User Onboarding - Category Service Selection
+    'select_category' => 'Select Category - Skillio',
+    'select_category_description' => 'Choose your preferred skill category to personalize your learning experience on Skillio.',
+    'select_category_keywords' => 'select category, skill category, learning preferences, skillio',
+    'category_service_heading' => 'What would you like to learn?',
+    'choose_your_skill' => 'Choose your skill category',
+    'back' => 'Back',
+    'continue' => 'Continue',
+
+    // User Onboarding - Online Education Options
+    'online_education_title' => 'Education Options - Skillio',
+    'online_education_meta_description' => 'Choose your preferred learning method: courses, mentoring, or both on Skillio.',
+    'online_education_meta_keywords' => 'education options, learning methods, courses, mentoring, skillio',
+    'online_education_options' => 'How would you like to learn?',
+    'course_from_mentor' => 'Course from a mentor',
+    'learn_through_mentor' => 'Learn through structured courses',
+    'one_on_one_mentoring' => 'One-on-one mentoring',
+    'get_direct_support' => 'Get direct support and guidance',
+    'both_combined' => 'Both combined',
+    'access_course_and_mentoring' => 'Access both courses and mentoring',
+
+    // User Onboarding - In Person or Online
+    'in_person_or_online_title' => 'Learning Format - Skillio',
+    'in_person_or_online_description' => 'Choose your preferred learning format: in-person or online on Skillio.',
+    'in_person_or_online_keywords' => 'learning format, in-person, online, skillio',
+    'in_person_or_online_heading' => 'How would you like to attend?',
+    'in_person_education' => 'In-person education',
+    'attend_classes_physically' => 'Attend classes physically',
+    'online_education' => 'Online education',
+    'learn_remotely' => 'Learn remotely from anywhere',
+
+    // Footer Onboarding
+    'copyright_skillio' => '© 2025 Skillio Course',
+    'language_selector' => 'Language',
+    'english_short' => 'ENG',
+    'croatian_short' => 'HR',
+    'serbian_short' => 'SR',
+    'slovenian_short' => 'SL',
+    'macedonian_short' => 'MK',
 ];

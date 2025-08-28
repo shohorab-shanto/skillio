@@ -649,4 +649,44 @@ return [
     'mentor_register_subheading' => 'Споделете ја вашата експертиза и започнете да заработувате помагајќи им на другите да учат',
     'confirm_password' => 'Потврдете ја лозинката',
     'confirm_password_placeholder' => 'Потврдете ја вашата лозинка',
+
+    // User Onboarding - Category Service Selection
+    'select_category' => 'Изберете категорија - Skillio',
+    'select_category_description' => 'Изберете ја вашата преферирана категорија на вештини за персонализација на вашето искуство за учење на Skillio.',
+    'select_category_keywords' => 'изберете категорија, категорија на вештини, преференции за учење, skillio',
+    'category_service_heading' => 'Што би сакале да научите?',
+    'choose_your_skill' => 'Изберете ја вашата категорија на вештини',
+    'back' => 'Назад',
+    'continue' => 'Продолжи',
+
+    // User Onboarding - Online Education Options
+    'online_education_title' => 'Опции за образование - Skillio',
+    'online_education_meta_description' => 'Изберете ја вашата преферирана метода за учење: курсеви, менторство или двете на Skillio.',
+    'online_education_meta_keywords' => 'опции за образование, методи за учење, курсеви, менторство, skillio',
+    'online_education_options' => 'Како би сакале да учите?',
+    'course_from_mentor' => 'Курс од ментор',
+    'learn_through_mentor' => 'Учете преку структурирани курсеви',
+    'one_on_one_mentoring' => 'Менторство еден на еден',
+    'get_direct_support' => 'Добијте директен подршка и водење',
+    'both_combined' => 'Двете комбинирано',
+    'access_course_and_mentoring' => 'Пристап и до курсеви и до менторство',
+
+    // User Onboarding - In Person or Online
+    'in_person_or_online_title' => 'Формат за учење - Skillio',
+    'in_person_or_online_description' => 'Изберете го вашиот префериран формат за учење: лично или онлајн на Skillio.',
+    'in_person_or_online_keywords' => 'формат за учење, лично, онлајн, skillio',
+    'in_person_or_online_heading' => 'Како би сакале да присуствувате?',
+    'in_person_education' => 'Образование лично',
+    'attend_classes_physically' => 'Присуствувајте на наставата физички',
+    'online_education' => 'Онлајн образование',
+    'learn_remotely' => 'Учете на далечина од било каде',
+
+    // Footer Onboarding
+    'copyright_skillio' => '© 2025 Skillio Course',
+    'language_selector' => 'Јазик',
+    'english_short' => 'ENG',
+    'croatian_short' => 'HR',
+    'serbian_short' => 'SR',
+    'slovenian_short' => 'SL',
+    'macedonian_short' => 'MK',
 ];

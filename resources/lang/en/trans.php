@@ -601,4 +601,52 @@ return [
     'browse_all_courses_button' => 'Browse All Courses',
     'no_featured_courses_yet_title' => 'No Featured Courses Yet',
     'no_featured_courses_yet_description' => 'We are working on featuring the best courses for you. Check back soon!',
+
+    // Login Page
+    'login_title' => 'Login - Skillio',
+    'login_meta_description' => 'Login to your Skillio account to access your courses, mentors, and learning dashboard.',
+    'login_meta_keywords' => 'login, sign in, skillio, online learning, courses, mentors',
+    'login_heading' => 'Welcome Back',
+    'login_subheading' => 'Sign in to continue your learning journey',
+    'or' => 'or',
+    'email_address' => 'Email Address',
+    'email_placeholder' => 'Enter your email address',
+    'password' => 'Password',
+    'keep_me_logged_in' => 'Keep me logged in',
+    'forgot_password' => 'Forgot Password?',
+    'login_button' => 'Sign In',
+    'dont_have_account' => "Don't have an account?",
+    'register' => 'Register',
+
+    // Register Page
+    'register_title' => 'Register - Skillio',
+    'register_meta_description' => 'Create your Skillio account to start your learning journey with expert mentors and quality courses.',
+    'register_meta_keywords' => 'register, sign up, create account, skillio, online learning, courses, mentors',
+    'register_heading' => 'Create Account',
+    'register_subheading' => 'Join thousands of learners and start your journey today',
+    'full_name' => 'Full Name',
+    'full_name_placeholder' => 'Enter your full name',
+    'password_hint' => 'Password must contain at least 1 uppercase letter, 1 number, and be at least 8 characters long',
+    'gdpr_consent' => 'I agree to the Terms & Conditions and Privacy Policy',
+    'register_button' => 'Create Account',
+    'already_have_account' => 'Already have an account?',
+
+    // Mentor Login Page
+    'mentor_login_title' => 'Mentor Login - Skillio',
+    'mentor_login_meta_description' => 'Login to your Skillio mentor account to access your dashboard, manage courses, and connect with students.',
+    'mentor_login_meta_keywords' => 'mentor login, sign in, skillio, mentor dashboard, course management, student connections',
+    'mentor_login_heading' => 'Welcome Back, Mentor',
+    'mentor_login_subheading' => 'Sign in to access your mentor dashboard',
+    'password_placeholder' => 'Enter your password',
+    'remember_me' => 'Remember me',
+    'register_as_mentor' => 'Register as Mentor',
+
+    // Mentor Register Page
+    'mentor_register_title' => 'Mentor Registration - Skillio',
+    'mentor_register_meta_description' => 'Join Skillio as a mentor to share your expertise, create courses, and earn money by helping students achieve their goals.',
+    'mentor_register_meta_keywords' => 'mentor registration, become mentor, skillio, create courses, teach online, earn money teaching',
+    'mentor_register_heading' => 'Become a Mentor',
+    'mentor_register_subheading' => 'Share your expertise and start earning by helping others learn',
+    'confirm_password' => 'Confirm Password',
+    'confirm_password_placeholder' => 'Confirm your password',
 ];

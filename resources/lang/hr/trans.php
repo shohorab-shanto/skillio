@@ -601,4 +601,52 @@ return [
     'browse_all_courses_button' => 'Pregledaj sve tečajeve',
     'no_featured_courses_yet_title' => 'Još nema istaknutih tečajeva',
     'no_featured_courses_yet_description' => 'Radimo na istaknuću najboljih tečajeva za vas. Provjerite uskoro!',
+
+    // Login Page
+    'login_title' => 'Prijava - Skillio',
+    'login_meta_description' => 'Prijavite se na svoj Skillio račun za pristup tečajevima, mentorima i nadzornoj ploči za učenje.',
+    'login_meta_keywords' => 'prijava, prijavi se, skillio, online učenje, tečajevi, mentori',
+    'login_heading' => 'Dobrodošli natrag',
+    'login_subheading' => 'Prijavite se da nastavite svoje putovanje učenja',
+    'or' => 'ili',
+    'email_address' => 'Email adresa',
+    'email_placeholder' => 'Unesite svoju email adresu',
+    'password' => 'Lozinka',
+    'keep_me_logged_in' => 'Zapamti me',
+    'forgot_password' => 'Zaboravili ste lozinku?',
+    'login_button' => 'Prijavi se',
+    'dont_have_account' => 'Nemate račun?',
+    'register' => 'Registrirajte se',
+
+    // Register Page
+    'register_title' => 'Registracija - Skillio',
+    'register_meta_description' => 'Kreirajte svoj Skillio račun za početak putovanja učenja sa stručnim mentorima i kvalitetnim tečajevima.',
+    'register_meta_keywords' => 'registracija, prijavi se, kreiraj račun, skillio, online učenje, tečajevi, mentori',
+    'register_heading' => 'Kreiraj račun',
+    'register_subheading' => 'Pridružite se tisućama učenika i započnite svoje putovanje danas',
+    'full_name' => 'Puno ime',
+    'full_name_placeholder' => 'Unesite svoje puno ime',
+    'password_hint' => 'Lozinka mora sadržavati najmanje 1 veliko slovo, 1 broj i biti najmanje 8 znakova duga',
+    'gdpr_consent' => 'Slažem se s Uvjetima korištenja i Politikom privatnosti',
+    'register_button' => 'Kreiraj račun',
+    'already_have_account' => 'Već imate račun?',
+
+    // Mentor Login Page
+    'mentor_login_title' => 'Prijava mentora - Skillio',
+    'mentor_login_meta_description' => 'Prijavite se na svoj Skillio račun mentora za pristup nadzornoj ploči, upravljanje tečajevima i povezivanje sa studentima.',
+    'mentor_login_meta_keywords' => 'prijava mentora, prijavi se, skillio, nadzorna ploča mentora, upravljanje tečajevima, povezivanje sa studentima',
+    'mentor_login_heading' => 'Dobrodošli natrag, mentore',
+    'mentor_login_subheading' => 'Prijavite se za pristup nadzornoj ploči mentora',
+    'password_placeholder' => 'Unesite svoju lozinku',
+    'remember_me' => 'Zapamti me',
+    'register_as_mentor' => 'Registrirajte se kao mentor',
+
+    // Mentor Register Page
+    'mentor_register_title' => 'Registracija mentora - Skillio',
+    'mentor_register_meta_description' => 'Pridružite se Skillio kao mentor da podijelite svoju ekspertizu, kreirajte tečajeve i zaradite novac pomažući studentima da postignu svoje ciljeve.',
+    'mentor_register_meta_keywords' => 'registracija mentora, postani mentor, skillio, kreiraj tečajeve, predaj online, zaradi novac predavanjem',
+    'mentor_register_heading' => 'Postani mentor',
+    'mentor_register_subheading' => 'Podijeli svoju ekspertizu i počni zarađivati pomažući drugima da uče',
+    'confirm_password' => 'Potvrdi lozinku',
+    'confirm_password_placeholder' => 'Potvrdi svoju lozinku',
 ];

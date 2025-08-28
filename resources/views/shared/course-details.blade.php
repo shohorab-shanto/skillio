@@ -29,14 +29,14 @@
                         <svg class="w-4 h-4 mr-2 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a2 2 0 00-9-5.197m13.5-9a2 2 0 11-4.5 0 2.25 2.25 0 014.5 0z"></path>
                         </svg>
-                        <span>{{ $course->enrolledStudentsCount() }} Student{{ $course->enrolledStudentsCount() > 1 ? 's' : '' }}</span>
+                        <span>{{ $course->enrolledStudentsCount() }} {{ $course->enrolledStudentsCount() > 1 ? __('trans.students') : __('trans.student') }}</span>
                     </div>
                     @if($course->duration_days)
                     <div class="flex items-center">
                         <svg class="w-4 h-4 mr-2 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path>
                         </svg>
-                        <span>{{ $course->duration_days }} Days</span>
+                        <span>{{ $course->duration_days }} {{ __('trans.days') }}</span>
                     </div>
                     @endif
                 </div>
@@ -52,7 +52,7 @@
                             <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/>
                         </svg>
                         <span class="font-semibold text-gray-900">{{ number_format($averageRating, 1) }}</span>
-                        <span class="text-gray-500 ml-1">({{ $totalReviews }} Reviews)</span>
+                        <span class="text-gray-500 ml-1">({{ $totalReviews }} {{ __('trans.reviews') }})</span>
                     </div>
                     @endif
                 </div>
@@ -62,13 +62,13 @@
                 <div class="flex flex-col sm:flex-row sm:items-center space-y-2 sm:space-y-0 sm:space-x-8 flex-1">
                     @if($course->start_date)
                         <div class="text-sm text-gray-600">
-                            <span class="font-medium text-gray-900">Start Date:</span>
+                            <span class="font-medium text-gray-900">{{ __('trans.start_date_label') }}</span>
                             <span>{{ $course->start_date->format('M d, Y') }}</span>
                         </div>
                     @endif
                     @if($course->end_date)
                         <div class="text-sm text-gray-600">
-                            <span class="font-medium text-gray-900">End Date:</span>
+                            <span class="font-medium text-gray-900">{{ __('trans.end_date_label') }}</span>
                             <span>{{ $course->end_date->format('M d, Y') }}</span>
                         </div>
                     @endif
@@ -85,7 +85,7 @@
                                 </span>
                             </div>
                             <span class="inline-flex items-center px-2 py-1 rounded-full text-xs font-semibold bg-red-100 text-red-800 mt-1">
-                                {{ $course->discount }}% OFF
+                                {{ $course->discount }}% {{ __('trans.off') }}
                             </span>
                         </div>
                     @else
@@ -125,12 +125,12 @@
             <div class="mb-6">
                 @if(isset($isEnrolled) && $isEnrolled)
                     <div class="bg-green-100 text-green-800 px-8 py-3 rounded-lg text-lg font-medium inline-block border border-green-300">
-                        ✓ Already Enrolled
+                        ✓ {{ __('trans.already_enrolled') }}
                     </div>
                 @else
                     <a href="{{ route('checkout.course', $course) }}" 
                        class="bg-purple-600 hover:bg-purple-700 text-white px-8 py-3 rounded-lg text-lg font-medium transition-colors inline-block">
-                        Enroll Now ${{ number_format($course->discount > 0 ? $course->discounted_price : $course->price, 2) }}
+                        {{ __('trans.enroll_now_price') }} ${{ number_format($course->discount > 0 ? $course->discounted_price : $course->price, 2) }}
                     </a>
                 @endif
             </div>
@@ -140,12 +140,12 @@
             <div class="border-b border-gray-200 mb-6">
                 <nav class="-mb-px flex space-x-8">
                     <button onclick="showTab('about')" id="about-tab"
-                        class="tab-button text-purple-600 border-purple-600 py-4 px-1 border-b-2 text-sm font-medium">About</button>
+                        class="tab-button text-purple-600 border-purple-600 py-4 px-1 border-b-2 text-sm font-medium">{{ __('trans.about') }}</button>
                     <button onclick="showTab('review')" id="review-tab"
-                        class="tab-button text-gray-500 hover:text-gray-700 py-4 px-1 border-b-2 border-transparent text-sm font-medium">Reviews</button>
+                        class="tab-button text-gray-500 hover:text-gray-700 py-4 px-1 border-b-2 border-transparent text-sm font-medium">{{ __('trans.reviews_tab') }}</button>
                     @if($showEarningTab)
                     <button onclick="showTab('earning')" id="earning-tab"
-                        class="tab-button text-gray-500 hover:text-gray-700 py-4 px-1 border-b-2 border-transparent text-sm font-medium">Earning History</button>
+                        class="tab-button text-gray-500 hover:text-gray-700 py-4 px-1 border-b-2 border-transparent text-sm font-medium">{{ __('trans.earning_history') }}</button>
                     @endif
                 </nav>
             </div>
@@ -156,11 +156,11 @@
                 <!-- About Tab -->
                 <div id="about-content" class="tab-content">
                     <div class="max-w-none">
-                        <h3 class="text-lg font-semibold mb-4">Description</h3>
+                        <h3 class="text-lg font-semibold mb-4">{{ __('trans.description') }}</h3>
                         <div class="text-gray-700 leading-relaxed whitespace-pre-line">{{ $course->description }}</div>
                         
                         @if($course->subCategories->count() > 0)
-                        <h3 class="text-lg font-semibold mt-6 mb-4">What You'll Learn</h3>
+                        <h3 class="text-lg font-semibold mt-6 mb-4">{{ __('trans.what_youll_learn') }}</h3>
                         <ul class="space-y-2">
                             @foreach($course->subCategories as $subCategory)
                                 <li class="flex items-center">
@@ -177,12 +177,12 @@
 
                 <!-- Review Tab -->
                 <div id="review-content" class="tab-content hidden">
-                    <h3 class="text-lg font-semibold mb-6">Student Reviews</h3>
+                    <h3 class="text-lg font-semibold mb-6">{{ __('trans.student_reviews') }}</h3>
                     
                     @if($course->reviews->count() > 0)
                         <!-- Review Statistics -->
                         <div class="bg-gray-50 rounded-xl p-6 mb-6">
-                            <h4 class="text-md font-semibold mb-4">Review Statistics</h4>
+                            <h4 class="text-md font-semibold mb-4">{{ __('trans.review_statistics') }}</h4>
                             <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
                                 <!-- Overall Rating -->
                                 <div class="text-center">
@@ -194,7 +194,7 @@
                                             </svg>
                                         @endfor
                                     </div>
-                                    <p class="text-gray-600">Based on {{ $course->reviews->count() }} reviews</p>
+                                    <p class="text-gray-600">{{ __('trans.based_on_reviews') }} {{ $course->reviews->count() }} {{ __('trans.reviews_count') }}</p>
                                 </div>
                                 
                                 <!-- Rating Breakdown -->
@@ -217,7 +217,7 @@
                         </div>
 
                         <!-- Individual Reviews -->
-                        <h4 class="text-md font-semibold mb-4">Recent Reviews</h4>
+                        <h4 class="text-md font-semibold mb-4">{{ __('trans.recent_reviews') }}</h4>
                         <div class="space-y-4">
                             @foreach($course->reviews->take(5) as $review)
                                 <div class="border-b border-gray-200 pb-4">
@@ -229,7 +229,7 @@
                                                 </svg>
                                             </div>
                                             <div>
-                                                <p class="font-medium text-gray-900">{{ $review->user->name ?? 'Anonymous Student' }}</p>
+                                                <p class="font-medium text-gray-900">{{ $review->user->name ?? __('trans.anonymous_student') }}</p>
                                                 <div class="flex items-center">
                                                     @for($i = 1; $i <= 5; $i++)
                                                         <svg class="w-3 h-3 {{ $i <= $review->rating ? 'text-yellow-400' : 'text-gray-300' }}" fill="currentColor" viewBox="0 0 20 20">
@@ -250,7 +250,7 @@
                             <svg class="w-16 h-16 text-gray-300 mx-auto mb-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11.049 2.927c.3-.921 1.603-.921 1.902 0l1.519 4.674a1 1 0 00.95.69h4.915c.969 0 1.371 1.24.588 1.81l-3.976 2.888a1 1 0 00-.363 1.118l1.518 4.674c.3.922-.755 1.688-1.538 1.118l-3.976-2.888a1 1 0 00-1.176 0l-3.976 2.888c-.783.57-1.838-.197-1.538-1.118l1.518-4.674a1 1 0 00-.363-1.118l-3.976-2.888c-.784-.57-.38-1.81.588-1.81h4.914a1 1 0 00.951-.69l1.519-4.674z"></path>
                             </svg>
-                            <p class="text-gray-500">No reviews yet. Be the first to share your experience!</p>
+                            <p class="text-gray-500">{{ __('trans.no_reviews_yet') }}</p>
                         </div>
                     @endif
 
@@ -279,7 +279,7 @@
                                         <path d="M10.394 2.08a1 1 0 00-.788 0l-7 3a1 1 0 000 1.84L5.25 8.051a.999.999 0 01.356-.257l4-1.714a1 1 0 11.788 1.838l-2.727 1.17 1.94.831a1 1 0 00.787 0l7-3a1 1 0 000-1.838l-7-3zM3.31 9.397L5 10.12v4.102a8.969 8.969 0 00-1.05-.174 1 1 0 01-.89-.89 11.115 11.115 0 01.25-3.762zM9.3 16.573A9.026 9.026 0 007 14.935v-3.882l1.818.78a3 3 0 002.482 2.88z"/>
                                     </svg>
                                 </div>
-                                <span class="text-xl text-gray-500">Currently Enrolled</span>
+                                <span class="text-xl text-gray-500">{{ __('trans.currently_enrolled') }}</span>
                             </div>
                             <p class="text-2xl font-extrabold mt-3 text-black">{{ $course->currentlyEnrolledCount() }}</p>
                         </div>
@@ -291,7 +291,7 @@
                                         <path d="M13 6a3 3 0 11-6 0 3 3 0 016 0zM18 8a2 2 0 11-4 0 2 2 0 014 0zM14 15a4 4 0 00-8 0v3h8v-3zM6 8a2 2 0 11-4 0 2 2 0 014 0zM16 18v-3a5.972 5.972 0 00-.75-2.906A3.005 3.005 0 0119 15v3h-3zM4.75 12.094A5.973 5.973 0 004 15v3H1v-3a3 3 0 013.75-2.906z"/>
                                     </svg>
                                 </div>
-                                <span class="text-xl text-gray-500">Total Enrolled Students</span>
+                                <span class="text-xl text-gray-500">{{ __('trans.total_enrolled_students') }}</span>
                             </div>
                             <p class="text-2xl font-extrabold mt-3 text-black">{{ $course->enrolledStudentsCount() }}</p>
                         </div>
@@ -304,7 +304,7 @@
                                         <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm1-13a1 1 0 10-2 0v.092a4.535 4.535 0 00-1.676.662C6.602 6.234 6 7.009 6 8c0 .99.602 1.765 1.324 2.246.48.32 1.054.545 1.676.662v1.941c-.391-.127-.68-.317-.843-.504a1 1 0 10-1.51 1.31c.562.649 1.413 1.076 2.353 1.253V15a1 1 0 102 0v-.092a4.535 4.535 0 001.676-.662C13.398 13.766 14 12.991 14 12c0-.99-.602-1.765-1.324-2.246A4.535 4.535 0 0011 9.092V7.151c.391.127.68.317.843.504a1 1 0 101.511-1.31c-.563-.649-1.413-1.076-2.354-1.253V5z" clip-rule="evenodd"/>
                                     </svg>
                                 </div>
-                                <span class="text-xl text-gray-500">Total Income</span>
+                                <span class="text-xl text-gray-500">{{ __('trans.total_income') }}</span>
                             </div>
                             <p class="text-2xl font-extrabold mt-3 text-black">${{ number_format($course->totalIncome(), 2) }}</p>
                         </div>
@@ -315,7 +315,7 @@
                         <div class="bg-white rounded-xl shadow-sm border border-gray-100 p-6">
                             <div class="flex items-center justify-between mb-6">
                                 <div class="flex items-center space-x-3">
-                                    <h3 class="text-xl font-bold text-gray-900">Student List</h3>
+                                    <h3 class="text-xl font-bold text-gray-900">{{ __('trans.student_list') }}</h3>
                                     <span class="bg-purple-100 text-purple-800 text-sm font-medium px-3 py-1 rounded-full">
                                         ({{ $course->enrolledStudentsCount() }})
                                     </span>
@@ -327,21 +327,21 @@
                                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path>
                                             </svg>
                                         </div>
-                                        <input type="text" id="studentSearch" placeholder="Search..." 
+                                        <input type="text" id="studentSearch" placeholder="{{ __('trans.search') }}" 
                                                class="pl-10 pr-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent text-sm w-64">
                                     </div>
                                     <div class="relative">
                                         <button id="filterBtn" class="flex items-center space-x-2 bg-white border border-gray-300 rounded-lg px-4 py-2 text-sm font-medium text-gray-700 hover:bg-gray-50 focus:ring-2 focus:ring-purple-500 focus:border-transparent">
-                                            <span>Filter</span>
+                                            <span>{{ __('trans.filter') }}</span>
                                             <svg class="w-4 h-4 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
                                             </svg>
                                         </button>
                                         <div id="filterDropdown" class="absolute right-0 mt-2 w-48 bg-white border border-gray-200 rounded-lg shadow-lg z-10 hidden">
                                             <div class="py-1">
-                                                <button class="w-full text-left px-4 py-2 text-sm text-gray-700 hover:bg-gray-100" data-filter="all">All</button>
-                                                <button class="w-full text-left px-4 py-2 text-sm text-gray-700 hover:bg-gray-100" data-filter="active">Active</button>
-                                                <button class="w-full text-left px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 bg-purple-100 text-purple-700" data-filter="inactive">Inactive</button>
+                                                <button class="w-full text-left px-4 py-2 text-sm text-gray-700 hover:bg-gray-100" data-filter="all">{{ __('trans.all') }}</button>
+                                                <button class="w-full text-left px-4 py-2 text-sm text-gray-700 hover:bg-gray-100" data-filter="active">{{ __('trans.active') }}</button>
+                                                <button class="w-full text-left px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 bg-purple-100 text-purple-700" data-filter="inactive">{{ __('trans.inactive') }}</button>
                                             </div>
                                         </div>
                                     </div>
@@ -353,10 +353,10 @@
                                 <div class="min-w-full">
                                     <!-- Table Headers -->
                                     <div class="grid grid-cols-5 gap-4 pb-3 border-b border-gray-200 mb-4">
-                                        <div class="text-sm font-medium text-gray-700">Student Name</div>
-                                        <div class="text-sm font-medium text-gray-700">Date</div>
-                                        <div class="text-sm font-medium text-gray-700">Duration Left -days</div>
-                                        <div class="text-sm font-medium text-gray-700">Status</div>
+                                        <div class="text-sm font-medium text-gray-700">{{ __('trans.student_name') }}</div>
+                                        <div class="text-sm font-medium text-gray-700">{{ __('trans.date') }}</div>
+                                        <div class="text-sm font-medium text-gray-700">{{ __('trans.duration_left_days') }}</div>
+                                        <div class="text-sm font-medium text-gray-700">{{ __('trans.status') }}</div>
                                         <div class="text-sm font-medium text-gray-700"></div>
                                     </div>
 
@@ -378,7 +378,7 @@
                                                     </div>
                                                     <div>
                                                         <div class="font-medium text-gray-900">{{ $enrollment->user->name }}</div>
-                                                        <div class="text-sm text-gray-500">Student-ID-{{ $enrollment->user->id }}</div>
+                                                        <div class="text-sm text-gray-500">{{ __('trans.student_id') }}-{{ $enrollment->user->id }}</div>
                                                     </div>
                                                 </div>
                                                 
@@ -390,16 +390,16 @@
                                                 <!-- Duration Left -->
                                                 <div class="flex items-center">
                                                     <span class="bg-purple-100 text-purple-800 text-sm font-medium px-3 py-1 rounded-full">
-                                                        {{ $course->end_date ? max(0, $course->end_date->diffInDays(now())) : 'N/A' }}
+                                                        {{ $course->end_date ? max(0, $course->end_date->diffInDays(now())) : __('trans.na') }}
                                                     </span>
                                                 </div>
                                                 
                                                 <!-- Status -->
                                                 <div class="flex items-center">
                                                     @if($enrollment->enrollment_status === 'active')
-                                                        <span class="bg-green-100 text-green-800 text-sm font-medium px-3 py-1 rounded-full">Active</span>
+                                                        <span class="bg-green-100 text-green-800 text-sm font-medium px-3 py-1 rounded-full">{{ __('trans.active') }}</span>
                                                     @else
-                                                        <span class="bg-gray-100 text-gray-800 text-sm font-medium px-3 py-1 rounded-full">Inactive</span>
+                                                                                                                  <span class="bg-gray-100 text-gray-800 text-sm font-medium px-3 py-1 rounded-full">{{ __('trans.inactive') }}</span>
                                                     @endif
                                                 </div>
                                                 
@@ -415,14 +415,14 @@
                                                             <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z"></path>
                                                             </svg>
-                                                            <span>Chat</span>
+                                                            <span>{{ __('trans.chat') }}</span>
                                                         </a>
                                                     @else
                                                         <a href="{{ route('chat.index', ['user_id' => $enrollment->user_id, 'mentor_id' => $course->mentor_id]) }}" class="bg-green-600 hover:bg-green-700 text-white text-sm font-medium px-4 py-2 rounded-lg transition-colors flex items-center space-x-2">
                                                             <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"></path>
                                                             </svg>
-                                                            <span>Start Chat</span>
+                                                            <span>{{ __('trans.start_chat') }}</span>
                                                         </a>
                                                     @endif
                                                 </div>
@@ -432,7 +432,7 @@
                                                 <svg class="w-16 h-16 text-gray-300 mx-auto mb-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z"></path>
                                                 </svg>
-                                                <p class="text-gray-500">No students enrolled yet.</p>
+                                                <p class="text-gray-500">{{ __('trans.no_students_enrolled_yet') }}</p>
                                             </div>
                                         @endforelse
                                     </div>
@@ -444,9 +444,9 @@
                                 <div class="mt-6 flex items-center justify-center">
                                     <div class="flex items-center space-x-2">
                                         @if($enrolledStudents->onFirstPage())
-                                            <span class="px-3 py-2 text-sm font-medium text-gray-400 bg-gray-100 border border-gray-300 rounded-lg cursor-default">Previous</span>
+                                            <span class="px-3 py-2 text-sm font-medium text-gray-400 bg-gray-100 border border-gray-300 rounded-lg cursor-default">{{ __('trans.previous') }}</span>
                                         @else
-                                            <a href="{{ $enrolledStudents->appends(request()->query())->previousPageUrl() }}" class="px-3 py-2 text-sm font-medium text-gray-700 bg-white border border-gray-300 rounded-lg hover:bg-gray-50">Previous</a>
+                                            <a href="{{ $enrolledStudents->appends(request()->query())->previousPageUrl() }}" class="px-3 py-2 text-sm font-medium text-gray-700 bg-white border border-gray-300 rounded-lg hover:bg-gray-50">{{ __('trans.previous') }}</a>
                                         @endif
                                         
                                         @foreach($enrolledStudents->getUrlRange(1, $enrolledStudents->lastPage()) as $page => $url)
@@ -456,9 +456,9 @@
                                         @endforeach
                                         
                                         @if($enrolledStudents->hasMorePages())
-                                            <a href="{{ $enrolledStudents->appends(request()->query())->nextPageUrl() }}" class="px-3 py-2 text-sm font-medium text-gray-700 bg-white border border-gray-300 rounded-lg hover:bg-gray-50">Next</a>
+                                            <a href="{{ $enrolledStudents->appends(request()->query())->nextPageUrl() }}" class="px-3 py-2 text-sm font-medium text-gray-700 bg-white border border-gray-300 rounded-lg hover:bg-gray-50">{{ __('trans.next') }}</a>
                                         @else
-                                            <span class="px-3 py-2 text-sm font-medium text-gray-400 bg-gray-100 border border-gray-300 rounded-lg cursor-default">Next</span>
+                                            <span class="px-3 py-2 text-sm font-medium text-gray-400 bg-gray-100 border border-gray-300 rounded-lg cursor-default">{{ __('trans.next') }}</span>
                                         @endif
                                     </div>
                                 </div>

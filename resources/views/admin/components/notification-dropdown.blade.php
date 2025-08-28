@@ -11,9 +11,9 @@
     <div id="admin-notification-dropdown" class="absolute right-0 mt-2 w-80 bg-white rounded-xl shadow-2xl border border-gray-100 hidden z-50">
         <div class="p-4 border-b border-gray-100">
             <div class="flex items-center justify-between">
-                <h3 class="text-lg font-semibold text-gray-900">Notifications</h3>
+                <h3 class="text-lg font-semibold text-gray-900">{{ __('trans.notifications') }}</h3>
                 <button onclick="markAllAdminNotificationsAsRead()" class="text-sm text-purple-600 hover:text-purple-700 font-medium">
-                    Mark all as read
+                    {{ __('trans.mark_all_as_read') }}
                 </button>
             </div>
         </div>
@@ -29,7 +29,7 @@
                 <div class="w-16 h-16 bg-gray-100 rounded-full flex items-center justify-center mx-auto mb-4">
                     <i class="fa-solid fa-bell-slash text-gray-400 text-xl"></i>
                 </div>
-                <p class="text-gray-500 text-sm">No notifications yet</p>
+                <p class="text-gray-500 text-sm">{{ __('trans.no_notifications_yet') }}</p>
             </div>
             
             <!-- Loading State -->
@@ -37,7 +37,7 @@
                 <div class="w-16 h-16 bg-gray-100 rounded-full flex items-center justify-center mx-auto mb-4">
                     <i class="fa-solid fa-spinner fa-spin text-gray-400 text-xl"></i>
                 </div>
-                <p class="text-gray-500 text-sm">Loading notifications...</p>
+                <p class="text-gray-500 text-sm">{{ __('trans.loading_notifications') }}</p>
             </div>
         </div>
         

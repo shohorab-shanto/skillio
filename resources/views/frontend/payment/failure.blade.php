@@ -1,6 +1,6 @@
 @extends('frontend.layouts.app')
 
-@section('title', 'Payment Failed')
+@section('title', __('trans.payment_failed_title'))
 
 @section('content')
 <div class="min-h-screen bg-gray-50 pt-32">
@@ -12,14 +12,14 @@
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
                 </svg>
             </div>
-            <h1 class="text-3xl md:text-4xl font-bold text-gray-900 mb-4">Payment Failed</h1>
-            <p class="text-lg text-gray-600">We're sorry, but there was an issue processing your payment.</p>
+            <h1 class="text-3xl md:text-4xl font-bold text-gray-900 mb-4">{{ __('trans.payment_failed_heading') }}</h1>
+            <p class="text-lg text-gray-600">{{ __('trans.payment_failed_message') }}</p>
         </div>
 
         <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
             <!-- Error Details -->
             <div class="bg-white rounded-2xl shadow-lg p-6">
-                <h2 class="text-xl font-bold text-gray-900 mb-4">What Happened?</h2>
+                <h2 class="text-xl font-bold text-gray-900 mb-4">{{ __('trans.what_happened') }}</h2>
                 
                 <div class="bg-red-50 border-l-4 border-red-400 p-4 mb-6">
                     <div class="flex">
@@ -30,7 +30,7 @@
                         </div>
                         <div class="ml-3">
                             <p class="text-sm text-red-700">
-                                {{ $error ?? 'Payment processing failed. Please try again.' }}
+                                {{ $error ?? __('trans.payment_processing_failed') }}
                             </p>
                         </div>
                     </div>
@@ -39,23 +39,23 @@
                 @if($transaction)
                     <div class="space-y-4">
                         <div class="flex justify-between">
-                            <span class="text-gray-600">Transaction ID:</span>
+                            <span class="text-gray-600">{{ __('trans.transaction_id') }}</span>
                             <span class="font-semibold text-gray-900">{{ $transaction->transaction_id }}</span>
                         </div>
                         <div class="flex justify-between">
-                            <span class="text-gray-600">Status:</span>
+                            <span class="text-gray-600">{{ __('trans.status') }}</span>
                             <span class="inline-flex items-center px-3 py-1 rounded-full text-sm font-medium bg-red-100 text-red-800">
                                 {{ ucfirst($transaction->transaction_status) }}
                             </span>
                         </div>
                         @if($transaction->error_message)
                             <div class="flex justify-between">
-                                <span class="text-gray-600">Error:</span>
+                                <span class="text-gray-600">{{ __('trans.error') }}:</span>
                                 <span class="font-semibold text-red-600 text-sm">{{ $transaction->error_message }}</span>
                             </div>
                         @endif
                         <div class="flex justify-between">
-                            <span class="text-gray-600">Attempted At:</span>
+                            <span class="text-gray-600">{{ __('trans.attempted_at') }}:</span>
                             <span class="font-semibold text-gray-900">{{ $transaction->created_at->format('M d, Y - H:i A') }}</span>
                         </div>
                     </div>
@@ -64,7 +64,7 @@
 
             <!-- Common Issues & Solutions -->
             <div class="bg-white rounded-2xl shadow-lg p-6">
-                <h2 class="text-xl font-bold text-gray-900 mb-4">Common Issues & Solutions</h2>
+                <h2 class="text-xl font-bold text-gray-900 mb-4">{{ __('trans.common_issues_solutions') }}</h2>
                 
                 <div class="space-y-4">
                     <div class="flex items-start space-x-3">
@@ -72,8 +72,8 @@
                             <div class="h-2 w-2 bg-orange-500 rounded-full"></div>
                         </div>
                         <div>
-                            <h3 class="font-medium text-gray-900">Insufficient Funds</h3>
-                            <p class="text-sm text-gray-600">Make sure your card has sufficient balance for this transaction.</p>
+                            <h3 class="font-medium text-gray-900">{{ __('trans.insufficient_funds') }}</h3>
+                            <p class="text-sm text-gray-600">{{ __('trans.insufficient_funds_description') }}</p>
                         </div>
                     </div>
                     
@@ -82,8 +82,8 @@
                             <div class="h-2 w-2 bg-orange-500 rounded-full"></div>
                         </div>
                         <div>
-                            <h3 class="font-medium text-gray-900">Card Information</h3>
-                            <p class="text-sm text-gray-600">Double-check your card number, expiry date, and CVC code.</p>
+                            <h3 class="font-medium text-gray-900">{{ __('trans.card_information') }}</h3>
+                            <p class="text-sm text-gray-600">{{ __('trans.card_information_description') }}</p>
                         </div>
                     </div>
                     
@@ -92,8 +92,8 @@
                             <div class="h-2 w-2 bg-orange-500 rounded-full"></div>
                         </div>
                         <div>
-                            <h3 class="font-medium text-gray-900">Bank Restrictions</h3>
-                            <p class="text-sm text-gray-600">Your bank might have declined the transaction. Contact your bank for assistance.</p>
+                            <h3 class="font-medium text-gray-900">{{ __('trans.bank_restrictions') }}</h3>
+                            <p class="text-sm text-gray-600">{{ __('trans.bank_restrictions_description') }}</p>
                         </div>
                     </div>
                     
@@ -102,8 +102,8 @@
                             <div class="h-2 w-2 bg-orange-500 rounded-full"></div>
                         </div>
                         <div>
-                            <h3 class="font-medium text-gray-900">Network Issues</h3>
-                            <p class="text-sm text-gray-600">Poor internet connection might have interrupted the payment process.</p>
+                            <h3 class="font-medium text-gray-900">{{ __('trans.network_issues') }}</h3>
+                            <p class="text-sm text-gray-600">{{ __('trans.network_issues_description') }}</p>
                         </div>
                     </div>
                 </div>
@@ -112,7 +112,7 @@
 
         <!-- Next Steps -->
         <div class="bg-white rounded-2xl shadow-lg p-6 mt-8">
-            <h2 class="text-xl font-bold text-gray-900 mb-4">What Can You Do?</h2>
+            <h2 class="text-xl font-bold text-gray-900 mb-4">{{ __('trans.what_can_you_do') }}</h2>
             <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
                 <div class="text-center">
                     <div class="mx-auto flex items-center justify-center h-12 w-12 rounded-lg bg-blue-100 mb-4">
@@ -120,8 +120,8 @@
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"></path>
                         </svg>
                     </div>
-                    <h3 class="text-lg font-medium text-gray-900 mb-2">Try Again</h3>
-                    <p class="text-gray-600 text-sm">Retry the payment with the same or different card.</p>
+                    <h3 class="text-lg font-medium text-gray-900 mb-2">{{ __('trans.try_again') }}</h3>
+                    <p class="text-gray-600 text-sm">{{ __('trans.try_again_description') }}</p>
                 </div>
                 
                 <div class="text-center">
@@ -130,8 +130,8 @@
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z"></path>
                         </svg>
                     </div>
-                    <h3 class="text-lg font-medium text-gray-900 mb-2">Contact Support</h3>
-                    <p class="text-gray-600 text-sm">Reach out to our support team for assistance.</p>
+                    <h3 class="text-lg font-medium text-gray-900 mb-2">{{ __('trans.contact_support_failure') }}</h3>
+                    <p class="text-gray-600 text-sm">{{ __('trans.contact_support_failure_description') }}</p>
                 </div>
                 
                 <div class="text-center">
@@ -140,8 +140,8 @@
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 9V7a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2m2 4h10a2 2 0 002-2v-6a2 2 0 00-2-2H9a2 2 0 00-2 2v6a2 2 0 002 2zm7-5a2 2 0 11-4 0 2 2 0 014 0z"></path>
                         </svg>
                     </div>
-                    <h3 class="text-lg font-medium text-gray-900 mb-2">Different Method</h3>
-                    <p class="text-gray-600 text-sm">Try using a different payment method or card.</p>
+                    <h3 class="text-lg font-medium text-gray-900 mb-2">{{ __('trans.different_method') }}</h3>
+                    <p class="text-gray-600 text-sm">{{ __('trans.different_method_description') }}</p>
                 </div>
             </div>
         </div>
@@ -154,7 +154,7 @@
                     <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"></path>
                     </svg>
-                    Try Payment Again
+                    {{ __('trans.try_payment_again') }}
                 </a>
             @endif
             
@@ -163,7 +163,7 @@
                 <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"></path>
                 </svg>
-                Back to Mentors
+                {{ __('trans.back_to_mentors') }}
             </a>
             
             <a href="{{ Auth::user()->isMentor() ? route('mentor.dashboard') : route('user.dashboard') }}" 
@@ -171,16 +171,16 @@
                 <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 7v10a2 2 0 002 2h14a2 2 0 002-2V9a2 2 0 00-2-2H5a2 2 0 00-2-2z"></path>
                 </svg>
-                Go to Dashboard
+                {{ __('trans.go_to_dashboard') }}
             </a>
         </div>
 
         <!-- Support Contact -->
         <div class="text-center mt-8">
             <p class="text-gray-600">
-                Need help? Contact our support team at 
+                {{ __('trans.need_help') }} 
                 <a href="mailto:support@skillio.com" class="text-purple-600 hover:text-purple-700 font-medium">support@skillio.com</a>
-                or call us at 
+                {{ __('trans.or_call_us_at') }} 
                 <a href="tel:+1234567890" class="text-purple-600 hover:text-purple-700 font-medium">+1 (234) 567-8900</a>
             </p>
         </div>

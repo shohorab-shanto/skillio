@@ -30,7 +30,7 @@
                                 type="text"
                                 name="search"
                                 value="{{ request('search') }}"
-                                placeholder="Search for courses"
+                                placeholder="{{ __('trans.search_for_courses') }}"
                                 class="w-full pl-12 pr-4 py-4 text-lg border border-gray-300 rounded-2xl focus:ring-2 focus:ring-purple-500 focus:border-transparent outline-none transition-all duration-300 shadow-sm hover:shadow-md"
                             />
                             <button type="submit" class="absolute inset-y-0 right-0 pr-4 flex items-center">
@@ -43,10 +43,10 @@
                         @if(request('search'))
                             <div class="mt-4 text-center">
                                 <p class="text-gray-600 mb-2">
-                                    Search results for: <span class="font-semibold text-purple-600">"{{ request('search') }}"</span>
+                                    {{ __('trans.search_results_for') }} <span class="font-semibold text-purple-600">"{{ request('search') }}"</span>
                                 </p>
                                 <a href="{{ route('courses') }}" class="text-purple-600 hover:text-purple-700 text-sm font-medium">
-                                    Clear search
+                                    {{ __('trans.clear_search') }}
                                 </a>
                             </div>
                         @endif
@@ -59,7 +59,7 @@
                                 <!-- All Categories Button -->
                                 <a href="{{ route('courses', ['search' => request('search')]) }}" 
                                    class="px-6 py-2 rounded-full text-sm font-medium transition-colors duration-200 shadow-sm {{ !request('category') ? 'bg-purple-600 text-white' : 'bg-white text-gray-700 hover:bg-gray-50' }}">
-                                    All
+                                    {{ __('trans.all') }}
                                 </a>
                                 
                                 <!-- Individual Category Buttons -->
@@ -89,8 +89,8 @@
                             <svg class="mx-auto h-12 w-12 text-gray-400 mb-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z"></path>
                             </svg>
-                            <h3 class="text-lg font-medium text-gray-900 mb-2">No courses found</h3>
-                            <p class="text-gray-600">We're working on adding more courses to our platform.</p>
+                            <h3 class="text-lg font-medium text-gray-900 mb-2">{{ __('trans.no_courses_found') }}</h3>
+                            <p class="text-gray-600">{{ __('trans.working_on_adding_courses') }}</p>
                         </div>
                     </div>
                 @endforelse

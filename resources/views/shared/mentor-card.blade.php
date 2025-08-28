@@ -42,12 +42,12 @@
             @endfor
         </div>
         <span class="font-semibold text-gray-900">{{ $mentor['formatted_rating'] }}</span>
-        <span class="ml-1 text-gray-500">({{ $mentor['total_reviews'] }} reviews)</span>
+        <span class="ml-1 text-gray-500">({{ $mentor['total_reviews'] }} {{ __('trans.reviews') }})</span>
     </div>
 
     <!-- Bio -->
     <p class="text-gray-700 text-sm mb-4 leading-relaxed">
-        {{ $mentor['bio'] ?: 'Experienced professional ready to guide you on your learning journey.' }}
+        {{ $mentor['bio'] ?: __('trans.experienced_professional_bio') }}
     </p>
 
     <!-- Sub-categories of the top category -->
@@ -62,7 +62,7 @@
     <!-- Book Session Button -->
     <div class="mt-4">
         <a href="{{ route('mentor.sessions', $mentor['id']) }}" class="block w-full bg-violet-600 hover:bg-violet-700 text-white px-5 py-3 rounded-lg text-sm font-semibold transition-colors duration-200 text-center transition-colors duration-200">
-            Book Session
+            {{ __('trans.book_session') }}
         </a>
     </div>
 </div>

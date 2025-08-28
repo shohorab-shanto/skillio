@@ -1,8 +1,8 @@
 <section id="mentors" class="py-16 bg-gray-50">
     <div class="max-w-[1400px] mx-auto px-6">
         <x-section-header 
-            title="Find Your Perfect Mentor"
-            subtitle="Connecting with mentors who have many years of knowledge and experience in their fields."
+            title="{{ __('trans.find_perfect_mentor_title') }}"
+            subtitle="{{ __('trans.find_perfect_mentor_subtitle') }}"
             class="mb-8"
         />
 
@@ -23,7 +23,7 @@
                 <div>
                     <h2 class="text-lg font-bold text-gray-900">{{ $mentor->user->name }}</h2>
                     <p class="text-sm text-gray-500">
-                        {{ $mentor->work_experience ? Str::limit($mentor->work_experience, 30) : 'Professional Mentor' }}
+                        {{ $mentor->work_experience ? Str::limit($mentor->work_experience, 30) : __('trans.professional_mentor') }}
                     </p>
                 </div>
             </div>
@@ -69,12 +69,12 @@
                 <!-- Rating Number and Reviews Count -->
                 <div class="flex items-center space-x-2">
                     <span class="font-bold text-gray-900 text-sm">{{ number_format($rating, 1) }}</span>
-                    <span class="text-gray-500 text-xs">({{ $mentor->total_reviews ?? 0 }} reviews)</span>
+                    <span class="text-gray-500 text-xs">({{ $mentor->total_reviews ?? 0 }} {{ __('trans.reviews') }})</span>
                 </div>
             </div>
 
             <p class="mt-4 text-gray-700 text-sm">
-                {{ $mentor->bio ? Str::limit($mentor->bio, 100) : 'Experienced mentor with expertise in various fields.' }}
+                {{ $mentor->bio ? Str::limit($mentor->bio, 100) : __('trans.experienced_mentor_bio') }}
             </p>
 
             <div class="flex flex-wrap gap-2 mt-4">
@@ -91,18 +91,18 @@
                         @endif
                     @endforeach
                 @else
-                    <span class="bg-gray-100 text-gray-800 px-3 py-1 rounded-full text-sm">Professional</span>
-                    <span class="bg-gray-100 text-gray-800 px-3 py-1 rounded-full text-sm">Expert</span>
+                    <span class="bg-gray-100 text-gray-800 px-3 py-1 rounded-full text-sm">{{ __('trans.professional') }}</span>
+                    <span class="bg-gray-100 text-gray-800 px-3 py-1 rounded-full text-sm">{{ __('trans.expert') }}</span>
                 @endif
             </div>
 
             <div class="mt-5 flex justify-between items-center">
                 <div class="text-xl font-bold text-gray-900">
-                    ${{ $mentor->lowest_session_rate ?? 'N/A' }}<span class="text-sm font-normal text-gray-500">/hour</span>
+                    ${{ $mentor->lowest_session_rate ?? 'N/A' }}<span class="text-sm font-normal text-gray-500">{{ __('trans.per_hour') }}</span>
                 </div>
                 <a href="{{ route('mentor.sessions', $mentor->id) }}" 
                    class="bg-violet-600 hover:bg-violet-700 text-white px-5 py-2 rounded-lg text-sm font-semibold">
-                    Book session
+                    {{ __('trans.book_session') }}
                 </a>
             </div>
         </div>
@@ -110,8 +110,8 @@
         <div class="col-span-full text-center py-12">
             <div class="text-gray-500">
                 <i class="fa-solid fa-user-tie text-4xl mb-4"></i>
-                <p class="text-lg font-medium">No mentors available at the moment</p>
-                <p class="text-sm">Please check back later for available mentors</p>
+                <p class="text-lg font-medium">{{ __('trans.no_mentors_available') }}</p>
+                <p class="text-sm">{{ __('trans.check_back_later') }}</p>
             </div>
         </div>
         @endforelse
@@ -121,7 +121,7 @@
         <div class="flex justify-center mt-12">
             <a href="{{ route('mentors') }}" 
                class="inline-flex items-center px-6 py-3 border-2 border-violet-600 text-violet-600 rounded-lg font-semibold hover:bg-violet-600 hover:text-white transition-all duration-300">
-                View All Mentors
+                {{ __('trans.view_all_mentors') }}
                 <svg class="ml-2 w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
                 </svg>

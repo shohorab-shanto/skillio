@@ -19,11 +19,10 @@
         <div class="max-w-[1400px] mx-auto px-6">
             <div class="text-center mb-12">
                 <h1 class="text-3xl md:text-4xl font-bold text-gray-900 mb-6 leading-tight">
-                    Find Your Perfect Mentor
+                    {{ __('trans.find_perfect_mentor_page') }}
                 </h1>
                 <p class="text-xl text-gray-600 max-w-3xl mx-auto leading-relaxed">
-                    Skillio connects learners with expert mentors and interactive courses
-                    both online and offline. Transform your learning journey today.
+                    {{ __('trans.mentors_page_description') }}
                 </p>
             </div>
             
@@ -39,7 +38,7 @@
                                 type="text"
                                 name="search"
                                 value="{{ request('search') }}"
-                                placeholder="Search for mentors, skills, or topics"
+                                placeholder="{{ __('trans.search_for_mentors') }}"
                                 class="w-full pl-12 pr-4 py-4 text-lg border border-gray-300 rounded-2xl focus:ring-2 focus:ring-purple-500 focus:border-transparent outline-none transition-all duration-300 shadow-sm hover:shadow-md"
                             />
                             <button type="submit" class="absolute inset-y-0 right-0 pr-4 flex items-center">
@@ -52,10 +51,10 @@
                         @if(request('search'))
                             <div class="mt-4 text-center">
                                 <p class="text-gray-600 mb-2">
-                                    Search results for: <span class="font-semibold text-purple-600">"{{ request('search') }}"</span>
+                                    {{ __('trans.search_results_for_mentors') }} <span class="font-semibold text-purple-600">"{{ request('search') }}"</span>
                                 </p>
                                 <a href="{{ route('mentors') }}" class="text-purple-600 hover:text-purple-700 text-sm font-medium">
-                                    Clear search
+                                    {{ __('trans.clear_search_mentors') }}
                                 </a>
                             </div>
                         @endif
@@ -83,7 +82,7 @@
                             <div>
                                 <h2 class="text-lg font-bold text-gray-900">{{ $mentor['name'] }}</h2>
                                 <p class="text-sm text-gray-500">
-                                    {{ $mentor['work_experience'] ? Str::limit($mentor['work_experience'], 30) : 'Professional Mentor' }}
+                                    {{ $mentor['work_experience'] ? Str::limit($mentor['work_experience'], 30) : __('trans.professional_mentor_alt') }}
                                 </p>
                             </div>
                         </div>
@@ -129,12 +128,12 @@
                             <!-- Rating Number and Reviews Count -->
                             <div class="flex items-center space-x-2">
                                 <span class="font-bold text-gray-900 text-sm">{{ number_format($rating, 1) }}</span>
-                                <span class="text-gray-500 text-xs">({{ $mentor['total_reviews'] ?? 0 }} reviews)</span>
+                                                                    <span class="text-gray-500 text-xs">({{ $mentor['total_reviews'] ?? 0 }} {{ __('trans.reviews') }})</span>
                             </div>
                         </div>
 
                         <p class="mt-4 text-gray-700 text-sm">
-                            {{ $mentor['bio'] ? Str::limit($mentor['bio'], 100) : 'Experienced mentor with expertise in various fields.' }}
+                            {{ $mentor['bio'] ? Str::limit($mentor['bio'], 100) : __('trans.experienced_mentor_bio_alt') }}
                         </p>
 
                         <div class="flex flex-wrap gap-2 mt-4">
@@ -147,18 +146,18 @@
                                 @endforeach
                             @endif
                             @if(!$mentor['top_category'] && !$mentor['top_category_sub_categories'])
-                                <span class="bg-gray-100 text-gray-800 px-3 py-1 rounded-full text-sm">Professional</span>
-                                <span class="bg-gray-100 text-gray-800 px-3 py-1 rounded-full text-sm">Expert</span>
+                                <span class="bg-gray-100 text-gray-800 px-3 py-1 rounded-full text-sm">{{ __('trans.professional_alt') }}</span>
+                                <span class="bg-gray-100 text-gray-800 px-3 py-1 rounded-full text-sm">{{ __('trans.expert_alt') }}</span>
                             @endif
                         </div>
 
                         <div class="mt-5 flex justify-between items-center">
                             <div class="text-xl font-bold text-gray-900">
-                                ${{ $mentor['lowest_session_rate'] ?? 'N/A' }}<span class="text-sm font-normal text-gray-500">/hour</span>
+                                ${{ $mentor['lowest_session_rate'] ?? 'N/A' }}<span class="text-sm font-normal text-gray-500">{{ __('trans.per_hour_alt') }}</span>
                             </div>
                             <a href="{{ route('mentor.sessions', $mentor['id']) }}" 
                                class="bg-violet-600 hover:bg-violet-700 text-white px-5 py-2 rounded-lg text-sm font-semibold">
-                                Book session
+                                {{ __('trans.book_session_alt') }}
                             </a>
                         </div>
                     </div>
@@ -166,8 +165,8 @@
                     <div class="col-span-full text-center py-12">
                         <div class="text-gray-500">
                             <i class="fa-solid fa-user-tie text-4xl mb-4"></i>
-                            <p class="text-lg font-medium">No mentors available at the moment</p>
-                            <p class="text-sm">Please check back later for available mentors</p>
+                            <p class="text-lg font-medium">{{ __('trans.no_mentors_available_page') }}</p>
+                            <p class="text-sm">{{ __('trans.check_back_later_page') }}</p>
                         </div>
                     </div>
                 @endforelse

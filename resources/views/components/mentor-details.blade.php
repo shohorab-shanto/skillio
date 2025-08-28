@@ -13,17 +13,17 @@
                 <div class="flex items-center justify-center md:justify-start gap-1 text-sm text-gray-600">
                     <span class="text-yellow-500">★</span>
                     <span>4.5</span>
-                    <span class="text-gray-400">(500 Reviews)</span>
+                    <span class="text-gray-400">(500 {{ __('trans.reviews_count') }})</span>
                 </div>
                 <div>
-                    <p class="text-sm text-gray-500">Role</p>
+                    <p class="text-sm text-gray-500">{{ __('trans.role') }}</p>
                     <p class="font-semibold">Designer</p>
                 </div>
             </div>
         </div>
         <!-- Bio/Experience (center of right side) -->
         <div class="flex flex-col  justify-center h-full text-center mt-10 md:mt-0">
-            <p class="text-sm text-gray-500">Bio/Work Experience</p>
+            <p class="text-sm text-gray-500">{{ __('trans.bio_work_experience') }}</p>
             <p class="font-semibold">8 Years of Experience</p>
         </div>
         <!-- Right: Online + Bio centered properly -->
@@ -31,7 +31,7 @@
             <!-- Online badge (top-right) -->
             <div class="absolute top-0 right-36 flex items-center gap-2 bg-gray-100 md:px-3 py-1 rounded-full text-sm">
                 <span class="w-2.5 h-2.5 bg-green-500 rounded-full"></span>
-                <span class="text-gray-700">Online</span>
+                <span class="text-gray-700">{{ __('trans.online') }}</span>
             </div>
 
 
@@ -49,11 +49,11 @@
         <div class="flex gap-3">
             <button onclick="startConversationWithMentor({{ $mentor->user_id ?? 1 }})" 
                     class="px-4 py-2 border border-purple-700 text-purple-700 hover:bg-purple-700 hover:text-white rounded transition-colors duration-300 text-center whitespace-nowrap">
-                <i class="fa-solid fa-message mr-2"></i>Message
+                <i class="fa-solid fa-message mr-2"></i>{{ __('trans.message') }}
             </button>
             <a href="#"
                 class="block px-4 py-2 border hover:border-purple-700 hover:bg-base-100 hover:text-purple-700 rounded bg-purple-700 text-white transition-colors duration-300 text-center whitespace-nowrap">
-                Review
+                {{ __('trans.review') }}
             </a>
         </div>
     </div>

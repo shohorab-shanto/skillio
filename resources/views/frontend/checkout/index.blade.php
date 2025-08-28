@@ -1,6 +1,6 @@
 @extends('frontend.layouts.app')
 
-@section('title', 'Checkout & Payment - ' . $title)
+@section('title', __('trans.checkout_payment_title') . ' - ' . $title)
 
 @section('content')
 <div class="min-h-screen bg-gray-50 pt-32">
@@ -9,16 +9,16 @@
         <div class="text-center mb-8">
             <h1 class="text-3xl md:text-4xl font-bold text-gray-900 mb-4">
                 @if($type === 'session')
-                    Complete Your Session Booking
+                    {{ __('trans.complete_session_booking') }}
                 @else
-                    Complete Your Course Enrollment
+                    {{ __('trans.complete_course_enrollment') }}
                 @endif
             </h1>
             <p class="text-lg text-gray-600">
                 @if($type === 'session')
-                    Secure payment processing for your session with {{ $item->mentor->user->name }}
+                    {{ __('trans.session_payment_description') }} {{ $item->mentor->user->name }}
                 @else
-                    Secure payment processing for {{ $item->title }}
+                    {{ __('trans.course_payment_description') }} {{ $item->title }}
                 @endif
             </p>
         </div>
@@ -28,9 +28,9 @@
             <div class="bg-white rounded-2xl shadow-lg p-6">
                 <h2 class="text-xl font-bold text-gray-900 mb-4">
                     @if($type === 'session')
-                        Session Details
+                        {{ __('trans.session_details') }}
                     @else
-                        Course Details
+                        {{ __('trans.course_details') }}
                     @endif
                 </h2>
                 
@@ -57,18 +57,18 @@
                         <!-- Session Info -->
                         <div class="space-y-3">
                             <div class="flex justify-between items-center">
-                                <span class="text-gray-600">Date:</span>
+                                <span class="text-gray-600">{{ __('trans.date') }}</span>
                                 <span class="font-semibold">{{ \Carbon\Carbon::parse($item->date)->format('l, F j, Y') }}</span>
                             </div>
                             <div class="flex justify-between items-center">
-                                <span class="text-gray-600">Time:</span>
+                                <span class="text-gray-600">{{ __('trans.time') }}</span>
                                 <span class="font-semibold">
                                     {{ \Carbon\Carbon::parse($item->start_time)->format('g:i A') }} - 
                                     {{ \Carbon\Carbon::parse($item->end_time)->format('g:i A') }}
                                 </span>
                             </div>
                             <div class="flex justify-between items-center">
-                                <span class="text-gray-600">Duration:</span>
+                                <span class="text-gray-600">{{ __('trans.duration') }}</span>
                                 <span class="font-semibold">
                                     @php
                                         $startTime = \Carbon\Carbon::parse($item->start_time);
@@ -80,21 +80,21 @@
                                     @if($hours > 0 && $minutes > 0)
                                         {{ $hours }}h {{ $minutes }}m
                                     @elseif($hours > 0)
-                                        {{ $hours }} hour{{ $hours > 1 ? 's' : '' }}
+                                        {{ $hours }} {{ __('trans.hour') }}{{ $hours > 1 ? __('trans.hours') : '' }}
                                     @else
-                                        {{ $minutes }} minute{{ $minutes > 1 ? 's' : '' }}
+                                        {{ $minutes }} {{ __('trans.minute') }}{{ $minutes > 1 ? __('trans.minutes') : '' }}
                                     @endif
                                 </span>
                             </div>
                             <div class="flex justify-between items-center">
-                                <span class="text-gray-600">Type:</span>
-                                <span class="font-semibold capitalize">{{ $item->type ?? 'online' }}</span>
+                                <span class="text-gray-600">{{ __('trans.type') }}</span>
+                                <span class="font-semibold capitalize">{{ $item->type ?? __('trans.online') }}</span>
                             </div>
                         </div>
                     @else
                         <!-- Course Title -->
                         <div class="p-3 bg-purple-50 rounded-lg border border-purple-200">
-                            <h3 class="text-lg font-bold text-gray-900">{{ $item->title }}</h3>
+                            <h3 class="text-lg font-bold text-gray-900">{{ __('trans.course_title') }}: {{ $item->title }}</h3>
                             @if($item->description)
                                 <p class="text-sm text-gray-600 mt-1 line-clamp-2">{{ Str::limit($item->description, 150) }}</p>
                             @endif
@@ -104,32 +104,32 @@
                         <div class="space-y-3">
                             @if($item->duration_days)
                             <div class="flex justify-between items-center">
-                                <span class="text-gray-600">Duration:</span>
+                                <span class="text-gray-600">{{ __('trans.duration') }}</span>
                                 <span class="font-semibold">{{ $item->duration_days }} days</span>
                             </div>
                             @endif
                             
                             @if($item->start_date)
                             <div class="flex justify-between items-center">
-                                <span class="text-gray-600">Start Date:</span>
+                                <span class="text-gray-600">{{ __('trans.start_date') }}</span>
                                 <span class="font-semibold">{{ $item->start_date->format('M d, Y') }}</span>
                             </div>
                             @endif
                             
                             @if($item->end_date)
                             <div class="flex justify-between items-center">
-                                <span class="text-gray-600">End Date:</span>
+                                <span class="text-gray-600">{{ __('trans.end_date') }}</span>
                                 <span class="font-semibold">{{ $item->end_date->format('M d, Y') }}</span>
                             </div>
                             @endif
                             
                             @if($item->discount > 0)
                                 <div class="flex justify-between items-center">
-                                    <span class="text-gray-600">Original Price:</span>
+                                    <span class="text-gray-600">{{ __('trans.original_price') }}</span>
                                     <span class="font-semibold line-through text-gray-400">${{ number_format($item->price, 2) }}</span>
                                 </div>
                                 <div class="flex justify-between items-center">
-                                    <span class="text-gray-600">Discount:</span>
+                                    <span class="text-gray-600">{{ __('trans.discount') }}</span>
                                     <span class="font-semibold text-green-600">{{ $item->discount }}% OFF</span>
                                 </div>
                             @endif
@@ -139,7 +139,7 @@
                     <!-- Sub Categories -->
                     @if($item->subCategories && count($item->subCategories) > 0)
                         <div>
-                            <span class="text-gray-600 text-sm">Topics:</span>
+                            <span class="text-gray-600 text-sm">{{ __('trans.topics') }}</span>
                             <div class="flex flex-wrap gap-2 mt-2">
                                 @foreach($item->subCategories as $subCategory)
                                     <span class="px-3 py-1 bg-purple-100 text-purple-800 rounded-full text-xs">
@@ -154,12 +154,12 @@
 
             <!-- Payment Form -->
             <div class="bg-white rounded-2xl shadow-lg p-6">
-                <h2 class="text-xl font-bold text-gray-900 mb-4">Payment Information</h2>
+                <h2 class="text-xl font-bold text-gray-900 mb-4">{{ __('trans.payment_information') }}</h2>
                 
                 <!-- Total Amount -->
                 <div class="bg-purple-50 rounded-lg p-4 mb-6">
                     <div class="flex justify-between items-center">
-                        <span class="text-lg font-semibold text-gray-900">Total Amount:</span>
+                        <span class="text-lg font-semibold text-gray-900">{{ __('trans.total_amount') }}</span>
                         <span class="text-2xl font-bold text-purple-600">${{ number_format($amount, 2) }}</span>
                     </div>
                 </div>
@@ -171,13 +171,13 @@
                     <!-- Cardholder Name -->
                     <div class="mb-6">
                         <label for="cardholder-name" class="block text-sm font-medium text-gray-700 mb-2">
-                            Cardholder Name
+                            {{ __('trans.cardholder_name_label') }}
                         </label>
                         <input type="text" 
                                id="cardholder-name" 
                                name="cardholder_name"
                                value="{{ Auth::user()->name }}"
-                               placeholder="Enter cardholder name"
+                               placeholder="{{ __('trans.cardholder_name_placeholder') }}"
                                required
                                class="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent">
                     </div>
@@ -185,7 +185,7 @@
                     <!-- Card Element Container -->
                     <div class="mb-6">
                         <label class="block text-sm font-medium text-gray-700 mb-2">
-                            Credit or Debit Card
+                            {{ __('trans.credit_debit_card_label') }}
                         </label>
                         <div id="card-element" class="p-3 border border-gray-300 rounded-lg focus-within:ring-2 focus-within:ring-purple-500 focus-within:border-transparent">
                             <!-- Stripe Card Element will be inserted here -->
@@ -197,13 +197,13 @@
                     <button type="submit" 
                             id="submit-button"
                             class="w-full bg-purple-600 text-white py-3 px-6 rounded-lg font-semibold hover:bg-purple-700 transition-colors duration-200 disabled:opacity-50 disabled:cursor-not-allowed">
-                        <span id="button-text">Pay ${{ number_format($amount, 2) }}</span>
+                        <span id="button-text">{{ __('trans.pay_amount') }} ${{ number_format($amount, 2) }}</span>
                         <span id="spinner" class="hidden">
                             <svg class="animate-spin -ml-1 mr-3 h-5 w-5 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
                                 <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
                                 <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
                             </svg>
-                            Processing...
+                            {{ __('trans.processing') }}
                         </span>
                     </button>
                 </form>
@@ -214,7 +214,7 @@
                         <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
                             <path fill-rule="evenodd" d="M5 9V7a5 5 0 0110 0v2a2 2 0 012 2v5a2 2 0 01-2 2H5a2 2 0 01-2-2v-5a2 2 0 012-2zm8-2v2H7V7a3 3 0 016 0z" clip-rule="evenodd"/>
                         </svg>
-                        <span>Secure payment powered by Stripe</span>
+                        <span>{{ __('trans.secure_payment_stripe') }}</span>
                     </div>
                 </div>
             </div>
@@ -297,7 +297,7 @@
         } catch (error) {
             console.error('Error:', error);
             const errorElement = document.getElementById('card-errors');
-            errorElement.textContent = 'An unexpected error occurred.';
+            errorElement.textContent = '{{ __('trans.an_unexpected_error_occurred') }}';
             submitButton.disabled = false;
             buttonText.classList.remove('hidden');
             spinner.classList.add('hidden');

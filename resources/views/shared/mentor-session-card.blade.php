@@ -12,19 +12,19 @@
             @if($session->status === 'booked')
                 <span class="inline-flex items-center px-2.5 py-1 rounded-full text-xs font-medium bg-purple-500 text-white">
                     <i class="fa-solid fa-user mr-1"></i>
-                    Booked
+                    {{ __('trans.booked') }}
                 </span>
             @elseif($session->status === 'available')
                 <span class="inline-flex items-center px-2.5 py-1 rounded-full text-xs font-medium bg-green-500 text-white">
-                    Available
+                    {{ __('trans.available') }}
                 </span>
             @elseif($session->status === 'completed')
                 <span class="inline-flex items-center px-2.5 py-1 rounded-full text-xs font-medium bg-blue-500 text-white">
-                    Completed
+                    {{ __('trans.completed') }}
                 </span>
             @elseif($session->status === 'cancelled')
                 <span class="inline-flex items-center px-2.5 py-1 rounded-full text-xs font-medium bg-red-500 text-white">
-                    Cancelled
+                    {{ __('trans.cancelled') }}
                 </span>
             @endif
         </div>
@@ -74,9 +74,9 @@
                 @if($hours > 0 && $minutes > 0)
                     {{ $hours }}h {{ $minutes }}m session
                 @elseif($hours > 0)
-                    {{ $hours }} hour session
+                    {{ $hours }} {{ __('trans.hour_session') }}
                 @else
-                    {{ $minutes }} minute session
+                    {{ $minutes }} {{ __('trans.minute_session') }}
                 @endif
             </span>
         </div>
@@ -120,10 +120,10 @@
                 <svg class="w-4 h-4 inline mr-2" fill="currentColor" viewBox="0 0 20 20" style="display: none;">
                     <path fill-rule="evenodd" d="M6 2a1 1 0 00-1 1v1H4a2 2 0 00-2 2v10a2 2 0 002 2h12a2 2 0 002-2V6a2 2 0 00-2-2h-1V3a1 1 0 10-2 0v1H7V3a1 1 0 00-1-1zm0 5a1 1 0 000 2h8a1 1 0 100-2H6z" clip-rule="evenodd"/>
                 </svg>
-                Book Now
+                {{ __('trans.book_now') }}
             </a>
         @else
-            <span class="text-sm text-gray-400 font-medium">Not Available</span>
+            <span class="text-sm text-gray-400 font-medium">{{ __('trans.not_available') }}</span>
         @endif
     </div>
 </div>

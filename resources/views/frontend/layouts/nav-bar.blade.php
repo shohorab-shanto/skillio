@@ -1,4 +1,13 @@
-<nav id="navbar" class="fixed top-0 left-0 right-0 z-50 bg-white shadow-sm transition-all duration-300">
+<nav id="navbar" class="fixed top-0 left-0 right-0 z-50 bg-white shadow-sm transition-all duration-300" 
+     data-translations="{{ json_encode([
+         'no_results_found' => __('trans.no_results_found'),
+         'course' => __('trans.course'),
+         'mentor' => __('trans.mentor'),
+         'untitled_course' => __('trans.untitled_course'),
+         'unknown_mentor' => __('trans.unknown_mentor'),
+         'by' => __('trans.by'),
+         'reviews' => __('trans.reviews')
+     ]) }}">
     <div class="max-w-[1400px] mx-auto px-6 py-4">
         <div class="flex justify-between items-center">
             <!-- Logo -->
@@ -15,7 +24,7 @@
                 <!-- About Us Dropdown -->
                 <div class="relative group">
                     <button class="nav-item flex items-center gap-1 text-gray-700 hover:text-purple-700 transition-colors duration-300 font-medium drop-shadow-sm focus:outline-none">
-                        <span>About Us</span>
+                        <span>{{ __('trans.about_us') }}</span>
                         <svg class="w-3 h-3 transition-transform duration-300 group-hover:rotate-180" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 20 20" aria-hidden="true">
                             <path d="M6 8l4 4 4-4" stroke-linecap="round" stroke-linejoin="round"/>
                         </svg>
@@ -24,18 +33,18 @@
                     <!-- Dropdown Menu -->
                     <div class="absolute top-full left-0 mt-2 w-52 bg-white rounded-box shadow-md border border-gray-100 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-300 transform origin-top scale-95 group-hover:scale-100 z-10">
                         <div class="p-2">
-                            <a href="/#how-it-works" class="block px-4 py-2 text-gray-700 hover:bg-gray-100 hover:text-purple-700 transition-colors duration-200 rounded">How It Works</a>
-                            <a href="/#what-we-offer" class="block px-4 py-2 text-gray-700 hover:bg-gray-100 hover:text-purple-700 transition-colors duration-200 rounded">What We Offer</a>
-                            <a href="/#why-we-are-different" class="block px-4 py-2 text-gray-700 hover:bg-gray-100 hover:text-purple-700 transition-colors duration-200 rounded">Why We are Different</a>
-                            <a href="/#unleash-your-potential" class="block px-4 py-2 text-gray-700 hover:bg-gray-100 hover:text-purple-700 transition-colors duration-200 rounded">Unleash Your Potential</a>
+                            <a href="/#how-it-works" class="block px-4 py-2 text-gray-700 hover:bg-gray-100 hover:text-purple-700 transition-colors duration-200 rounded">{{ __('trans.how_it_works_nav') }}</a>
+                            <a href="/#what-we-offer" class="block px-4 py-2 text-gray-700 hover:bg-gray-100 hover:text-purple-700 transition-colors duration-200 rounded">{{ __('trans.what_we_offer_nav') }}</a>
+                            <a href="/#why-we-are-different" class="block px-4 py-2 text-gray-700 hover:bg-gray-100 hover:text-purple-700 transition-colors duration-200 rounded">{{ __('trans.why_we_are_different_nav') }}</a>
+                            <a href="/#unleash-your-potential" class="block px-4 py-2 text-gray-700 hover:bg-gray-100 hover:text-purple-700 transition-colors duration-200 rounded">{{ __('trans.unleash_your_potential_nav') }}</a>
                         </div>
                     </div>
                 </div>
 
-                <a href="{{ route('mentors') }}" class="nav-item text-gray-700 hover:text-purple-700 transition-colors duration-300 drop-shadow-sm">Mentors</a>
-                <a href="/courses" class="nav-item text-gray-700 hover:text-purple-700 transition-colors duration-300 drop-shadow-sm">Courses</a>
-                <a href="/#testimonials" class="nav-item text-gray-700 hover:text-purple-700 transition-colors duration-300 drop-shadow-sm">Testimonials</a>
-                <a href="/#faq" class="nav-item text-gray-700 hover:text-purple-700 transition-colors duration-300 drop-shadow-sm">FAQ</a>
+                <a href="{{ route('mentors') }}" class="nav-item text-gray-700 hover:text-purple-700 transition-colors duration-300 drop-shadow-sm">{{ __('trans.mentors_nav') }}</a>
+                <a href="/courses" class="nav-item text-gray-700 hover:text-purple-700 transition-colors duration-300 drop-shadow-sm">{{ __('trans.courses_nav') }}</a>
+                <a href="/#testimonials" class="nav-item text-gray-700 hover:text-purple-700 transition-colors duration-300 drop-shadow-sm">{{ __('trans.testimonials_nav') }}</a>
+                <a href="/#faq" class="nav-item text-gray-700 hover:text-purple-700 transition-colors duration-300 drop-shadow-sm">{{ __('trans.faq_nav') }}</a>
             </div>
 
             <!-- Search Bar + Language Switcher + Login/Profile Button (Only Large Screens) -->
@@ -46,7 +55,7 @@
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path>
                         </svg>
                     </div>
-                    <input type="search" id="desktop-search" placeholder="Search courses, mentors..." class="navbar-search h-10 w-48 pl-8 pr-3 text-sm border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent outline-none transition-all duration-300">
+                    <input type="search" id="desktop-search" placeholder="{{ __('trans.search_placeholder') }}" class="navbar-search h-10 w-48 pl-8 pr-3 text-sm border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent outline-none transition-all duration-300">
                     
                     <!-- Search Results Dropdown -->
                     <div id="desktop-search-results" class="absolute top-full left-0 mt-2 bg-white border border-gray-200 rounded-lg shadow-lg z-50 hidden max-h-96 overflow-y-auto w-96">
@@ -75,7 +84,7 @@
                                         <svg class="w-4 h-4" viewBox="0 0 24 24" fill="currentColor">
                                             <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-1 17.93c-3.94-.49-7-3.85-7-7.93 0-.62.08-1.21.21-1.79L9 15v1c0 1.1.9 2 2 2v1.93zm6.9-2.54c-.26-.81-1-1.39-1.9-1.39h-1v-3c0-.55-.45-1-1-1H8v-2h2c.55 0 1-.45 1-1V7h2c1.1 0 2-.9 2-2v-.41c2.93 1.19 5 4.06 5 7.41 0 2.08-.8 3.97-2.1 5.39z"/>
                                         </svg>
-                                        <span>English</span>
+                                        <span>{{ __('trans.english') }}</span>
                                         @if(app()->getLocale() === 'en')
                                             <svg class="w-4 h-4 text-purple-600" fill="currentColor" viewBox="0 0 20 20">
                                                 <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/>
@@ -88,7 +97,7 @@
                                         <svg class="w-4 h-4" viewBox="0 0 24 24" fill="currentColor">
                                             <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-1 17.93c-3.94-.49-7-3.85-7-7.93 0-.62.08-1.21.21-1.79L9 15v1c0 1.1.9 2 2 2v1.93zm6.9-2.54c-.26-.81-1-1.39-1.9-1.39h-1v-3c0-.55-.45-1-1-1H8v-2h2c.55 0 1-.45 1-1V7h2c1.1 0 2-.9 2-2v-.41c2.93 1.19 5 4.06 5 7.41 0 2.08-.8 3.97-2.1 5.39z"/>
                                         </svg>
-                                        <span>Hrvatski</span>
+                                        <span>{{ __('trans.hrvatski') }}</span>
                                         @if(app()->getLocale() === 'hr')
                                             <svg class="w-4 h-4 text-purple-600" fill="currentColor" viewBox="0 0 20 20">
                                                 <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/>
@@ -101,7 +110,7 @@
                                         <svg class="w-4 h-4" viewBox="0 0 24 24" fill="currentColor">
                                             <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-1 17.93c-3.94-.49-7-3.85-7-7.93 0-.62.08-1.21.21-1.79L9 15v1c0 1.1.9 2 2 2v1.93zm6.9-2.54c-.26-.81-1-1.39-1.9-1.39h-1v-3c0-.55-.45-1-1-1H8v-2h2c.55 0 1-.45 1-1V7h2c1.1 0 2-.9 2-2v-.41c2.93 1.19 5 4.06 5 7.41 0 2.08-.8 3.97-2.1 5.39z"/>
                                         </svg>
-                                        <span>Српски</span>
+                                        <span>{{ __('trans.srpski') }}</span>
                                         @if(app()->getLocale() === 'sr')
                                             <svg class="w-4 h-4 text-purple-600" fill="currentColor" viewBox="0 0 20 20">
                                                 <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/>
@@ -114,7 +123,7 @@
                                         <svg class="w-4 h-4" viewBox="0 0 24 24" fill="currentColor">
                                             <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-1 17.93c-3.94-.49-7-3.85-7-7.93 0-.62.08-1.21.21-1.79L9 15v1c0 1.1.9 2 2 2v1.93zm6.9-2.54c-.26-.81-1-1.39-1.9-1.39h-1v-3c0-.55-.45-1-1-1H8v-2h2c.55 0 1-.45 1-1V7h2c1.1 0 2-.9 2-2v-.41c2.93 1.19 5 4.06 5 7.41 0 2.08-.8 3.97-2.1 5.39z"/>
                                         </svg>
-                                        <span>Slovenščina</span>
+                                        <span>{{ __('trans.slovenscina') }}</span>
                                         @if(app()->getLocale() === 'sl')
                                             <svg class="w-4 h-4 text-purple-600" fill="currentColor" viewBox="0 0 20 20">
                                                 <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/>
@@ -127,7 +136,7 @@
                                         <svg class="w-4 h-4" viewBox="0 0 24 24" fill="currentColor">
                                             <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-1 17.93c-3.94-.49-7-3.85-7-7.93 0-.62.08-1.21.21-1.79L9 15v1c0 1.1.9 2 2 2v1.93zm6.9-2.54c-.26-.81-1-1.39-1.9-1.39h-1v-3c0-.55-.45-1-1-1H8v-2h2c.55 0 1-.45 1-1V7h2c1.1 0 2-.9 2-2v-.41c2.93 1.19 5 4.06 5 7.41 0 2.08-.8 3.97-2.1 5.39z"/>
                                         </svg>
-                                        <span>Македонски</span>
+                                        <span>{{ __('trans.makedonski') }}</span>
                                         @if(app()->getLocale() === 'mk')
                                             <svg class="w-4 h-4 text-purple-600" fill="currentColor" viewBox="0 0 20 20">
                                                 <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/>
@@ -171,7 +180,7 @@
                                 <!-- User Info -->
                                 <div class="px-4 py-3 border-b border-gray-100">
                                     <p class="text-sm font-medium text-gray-900">{{ auth()->user()->name }}</p>
-                                    <p class="text-xs text-gray-500">{{ auth()->user()->isMentor() ? 'Mentor' : 'Student' }}</p>
+                                    <p class="text-xs text-gray-500">{{ auth()->user()->isMentor() ? __('trans.mentor') : __('trans.student') }}</p>
                                 </div>
                                 
                                 <!-- Dashboard Link -->
@@ -183,7 +192,7 @@
                                         <rect x="14" y="14" width="7" height="7" rx="1.5" />
                                         <rect x="3" y="14" width="7" height="7" rx="1.5" />
                                     </svg>
-                                    Dashboard
+                                    {{ __('trans.dashboard_nav') }}
                                 </a>
                                 
                                 <!-- Logout Button -->
@@ -192,14 +201,14 @@
                                     <svg class="mr-2 w-4 h-4 inline-block text-red-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a2 2 0 01-2 2H7a2 2 0 01-2-2V7a2 2 0 012-2h4a2 2 0 012 2v1" />
                                     </svg>
-                                    Logout
+                                    {{ __('trans.logout') }}
                                 </button>
                             </div>
                         </div>
                     </div>
                 @else
                     <a href="{{ route('user.onboarding.login') }}" class="px-6 py-2 border bg-[#6E3FF3] text-white rounded hover:bg-white hover:text-[#6E3FF3] transition-colors duration-300">
-                        Login
+                        {{ __('trans.login') }}
                     </a>
                 @endauth
             </div>
@@ -225,7 +234,7 @@
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path>
                             </svg>
                         </div>
-                        <input type="search" id="mobile-search" placeholder="Search courses, mentors..." class="w-full pl-10 pr-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent outline-none">
+                        <input type="search" id="mobile-search" placeholder="{{ __('trans.search_placeholder') }}" class="w-full pl-10 pr-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent outline-none">
                         
                         <!-- Mobile Search Results -->
                         <div id="mobile-search-results" class="absolute top-full left-0 right-0 mt-2 bg-white border border-gray-200 rounded-lg shadow-lg z-50 hidden max-h-96 overflow-y-auto w-full">
@@ -257,7 +266,7 @@
                                             <svg class="w-4 h-4" viewBox="0 0 24 24" fill="currentColor">
                                                 <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-1 17.93c-3.94-.49-7-3.85-7-7.93 0-.62.08-1.21.21-1.79L9 15v1c0 1.1.9 2 2 2v1.93zm6.9-2.54c-.26-.81-1-1.39-1.9-1.39h-1v-3c0-.55-.45-1-1-1H8v-2h2c.55 0 1-.45 1-1V7h2c1.1 0 2-.9 2-2v-.41c2.93 1.19 5 4.06 5 7.41 0 2.08-.8 3.97-2.1 5.39z"/>
                                             </svg>
-                                            <span>English</span>
+                                            <span>{{ __('trans.english') }}</span>
                                             @if(app()->getLocale() === 'en')
                                                 <svg class="w-4 h-4 text-purple-600" fill="currentColor" viewBox="0 0 20 20">
                                                     <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/>
@@ -326,23 +335,23 @@
                 <!-- Mobile About Us Dropdown -->
                 <div class="">
                     <button id="mobile-about-toggle" class="flex flex-row items-center justify-start w-full text-left text-gray-700 hover:text-purple-700 transition-colors duration-300 font-semibold">
-                        <span>About Us</span>
+                        <span>{{ __('trans.about_us') }}</span>
                         <svg id="mobile-about-arrow" class="ml-2 w-3 h-3 transition-transform duration-300 inline-block" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 20 20" aria-hidden="true">
                             <path d="M6 8l4 4 4-4" stroke-linecap="round" stroke-linejoin="round"/>
                         </svg>
                     </button>
                     <div id="mobile-about-menu" class="hidden mt-2 ml-4 flex flex-col items-start space-y-1">
-                        <a href="/#how-it-works" class="block text-sm text-gray-700 hover:text-purple-700 transition-colors duration-200 pl-0 text-left w-full">How It Works</a>
-                        <a href="/#what-we-offer" class="block text-sm text-gray-700 hover:text-purple-700 transition-colors duration-200 pl-0 text-left w-full">What We Offer</a>
-                        <a href="/#why-we-are-different" class="block text-gray-700 hover:text-purple-700 transition-colors duration-200 pl-0 text-left w-full">Why We are Different</a>
-                        <a href="/#unleash-your-potential" class="block text-sm text-gray-700 hover:text-purple-700 transition-colors duration-200 pl-0 text-left w-full">Unleash Your Potential</a>
+                        <a href="/#how-it-works" class="block text-sm text-gray-700 hover:text-purple-700 transition-colors duration-200 pl-0 text-left w-full">{{ __('trans.how_it_works_nav') }}</a>
+                        <a href="/#what-we-offer" class="block text-sm text-gray-700 hover:text-purple-700 transition-colors duration-200 pl-0 text-left w-full">{{ __('trans.what_we_offer_nav') }}</a>
+                        <a href="/#why-we-are-different" class="block text-gray-700 hover:text-purple-700 transition-colors duration-200 pl-0 text-left w-full">{{ __('trans.why_we_are_different_nav') }}</a>
+                        <a href="/#unleash-your-potential" class="block text-sm text-gray-700 hover:text-purple-700 transition-colors duration-200 pl-0 text-left w-full">{{ __('trans.unleash_your_potential_nav') }}</a>
                     </div>
                 </div>
 
-                <a href="{{ route('mentors') }}" class="block text-gray-700 hover:text-purple-700 transition-colors duration-200">Mentors</a>
-                <a href="/courses" class="block text-gray-700 hover:text-purple-700 transition-colors duration-200">Courses</a>
-                <a href="/#testimonials" class="block text-gray-700 hover:text-purple-700 transition-colors duration-200">Testimonials</a>
-                <a href="/#faq" class="block text-gray-700 hover:text-purple-700 transition-colors duration-200">FAQ</a>
+                <a href="{{ route('mentors') }}" class="block text-gray-700 hover:text-purple-700 transition-colors duration-200">{{ __('trans.mentors_nav') }}</a>
+                <a href="/courses" class="block text-gray-700 hover:text-purple-700 transition-colors duration-200">{{ __('trans.courses_nav') }}</a>
+                <a href="/#testimonials" class="block text-gray-700 hover:text-purple-700 transition-colors duration-200">{{ __('trans.testimonials_nav') }}</a>
+                <a href="/#faq" class="block text-gray-700 hover:text-purple-700 transition-colors duration-200">{{ __('trans.faq_nav') }}</a>
                 
                 <!-- Mobile Login/Dashboard Button -->
                 <div class="px-3 py-2">
@@ -385,7 +394,7 @@
                                             <rect x="14" y="14" width="7" height="7" rx="1.5" />
                                             <rect x="3" y="14" width="7" height="7" rx="1.5" />
                                         </svg>
-                                        Dashboard
+                                        {{ __('trans.dashboard_nav') }}
                                     </a>
                                     
                                     <!-- Logout Button -->
@@ -394,7 +403,7 @@
                                         <svg class="mr-2 w-4 h-4 inline-block text-red-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a2 2 0 01-2 2H7a2 2 0 01-2-2V7a2 2 0 012-2h4a2 2 0 012 2v1" />
                                         </svg>
-                                        Logout
+                                        {{ __('trans.logout') }}
                                     </button>
                                 </div>
                             </div>
@@ -656,7 +665,7 @@ function displaySearchResults(results, container) {
                 <svg class="mx-auto h-8 w-8 text-gray-400 mb-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path>
                 </svg>
-                <p>No results found</p>
+                <p>{{ __('trans.no_results_found') }}</p>
             </div>
         `;
         return;
@@ -690,12 +699,12 @@ function displaySearchResults(results, container) {
                         <div class="flex-1 min-w-0">
                             <div class="flex items-center space-x-2 mb-2">
                                 <span class="inline-flex items-center px-2 py-1 rounded-full text-xs font-medium bg-blue-100 text-blue-800">
-                                    Course
+                                    ${t('course', 'Course')}
                                 </span>
-                                <h3 class="text-sm font-semibold text-gray-900 leading-tight">${truncateText(safeGet(result, 'title', 'Untitled Course'), 60)}</h3>
+                                <h3 class="text-sm font-semibold text-gray-900 leading-tight">${truncateText(safeGet(result, 'title', t('untitled_course', 'Untitled Course')), 60)}</h3>
                             </div>
                             <p class="text-xs text-gray-600 mb-2 leading-relaxed">${truncateText(safeGet(result, 'category', 'N/A') + (safeGet(result, 'sub_categories') ? ' • ' + safeGet(result, 'sub_categories') : ''), 80)}</p>
-                            <p class="text-xs text-gray-500 mb-2">by ${truncateText(safeGet(result, 'mentor', 'Unknown Mentor'), 40)}</p>
+                            <p class="text-xs text-gray-500 mb-2">${t('by', 'by')} ${truncateText(safeGet(result, 'mentor', t('unknown_mentor', 'Unknown Mentor')), 40)}</p>
                             <div class="flex items-center justify-between">
                                 <div class="flex items-center space-x-3">
                                     <div class="flex items-center space-x-1">
@@ -704,7 +713,7 @@ function displaySearchResults(results, container) {
                                         </svg>
                                         <span class="text-xs text-gray-600 font-medium">${safeGet(result, 'rating') ? Number(safeGet(result, 'rating')).toFixed(1) : 'N/A'}</span>
                                     </div>
-                                    <span class="text-xs text-gray-500">(${safeGet(result, 'reviews_count', 0)} reviews)</span>
+                                    <span class="text-xs text-gray-500">(${safeGet(result, 'reviews_count', 0)} ${t('reviews', 'reviews')})</span>
                                 </div>
                                 <span class="text-sm font-semibold text-gray-900">$${safeGet(result, 'price', '0')}</span>
                             </div>
@@ -724,9 +733,9 @@ function displaySearchResults(results, container) {
                         <div class="flex-1 min-w-0">
                             <div class="flex items-center space-x-2 mb-2">
                                 <span class="inline-flex items-center px-2 py-1 rounded-full text-xs font-medium bg-purple-100 text-purple-800">
-                                    Mentor
+                                    ${t('mentor', 'Mentor')}
                                 </span>
-                                <h3 class="text-sm font-semibold text-gray-900 leading-tight">${truncateText(safeGet(result, 'title', 'Unknown Mentor'), 60)}</h3>
+                                <h3 class="text-sm font-semibold text-gray-900 leading-tight">${truncateText(safeGet(result, 'title', t('unknown_mentor', 'Unknown Mentor')), 60)}</h3>
                             </div>
                             <p class="text-xs text-gray-600 mb-2 leading-relaxed">${truncateText(safeGet(result, 'category', 'N/A') + (safeGet(result, 'sub_categories') ? ' • ' + safeGet(result, 'sub_categories') : ''), 80)}</p>
                             <p class="text-xs text-gray-500 mb-2">${safeGet(result, 'experience', 'N/A')}</p>
@@ -737,7 +746,7 @@ function displaySearchResults(results, container) {
                                     </svg>
                                     <span class="text-xs text-gray-600 font-medium">${safeGet(result, 'rating') ? Number(safeGet(result, 'rating')).toFixed(1) : 'N/A'}</span>
                                 </div>
-                                <span class="text-xs text-gray-500">(${safeGet(result, 'reviews_count', 0)} reviews)</span>
+                                <span class="text-xs text-gray-500">(${safeGet(result, 'reviews_count', 0)} ${t('reviews', 'reviews')})</span>
                             </div>
                         </div>
                     </div>

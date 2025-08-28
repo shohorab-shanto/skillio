@@ -3,17 +3,15 @@
         <!-- Text Content -->
         <div class="banner-text md:w-1/2">
             <h1 class="text-4xl md:text-6xl font-bold mb-6 md:mb-12 leading-tight">
-                Make Money <br />
-                Online With the <br />
-                Right Skills
+                {{ __('trans.hero_title_line1') }} <br />
+                {{ __('trans.hero_title_line2') }} <br />
+                {{ __('trans.hero_title_line3') }}
             </h1>
             <p class="max-w-md text-base md:text-xl tracking-wide text-gray-500">
-                Discover a world of knowledge with our top-notch 
-                online course and mentorships. Empower yourself for 
-                success in your business career.
+                {{ __('trans.hero_subtitle') }}
             </p>
             <a href="{{ route('mentor.dashboard') }}" class="mt-5 inline-block bg-gradient-to-r from-[#8a45ec] to-[#5b19f9] text-white px-6 py-3 rounded-xl text-sm md:text-base text-center">
-                Make Money Today
+                {{ __('trans.hero_cta_button') }}
             </a>
 
             <!-- Logos -->
@@ -64,8 +62,8 @@
                 </div>
             </div>
             <span class="text-sm md:text-base">
-                More than 5000+ students <br />
-                enrolled around the world
+                {{ __('trans.hero_students_count') }} <br />
+                {{ __('trans.hero_students_location') }}
             </span>
         </div>
     </section>

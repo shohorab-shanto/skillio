@@ -1,11 +1,11 @@
 @extends('backend.layouts.app')
 
-@section('title', 'Chat')
+@section('title', __('trans.chat'))
 
 @section('header')
     <div class="flex items-center justify-between">
         <div>
-            <h1 class="text-2xl font-bold text-gray-900">Chat</h1>
+            <h1 class="text-2xl font-bold text-gray-900">{{ __('trans.chat') }}</h1>
         </div>
     </div>
 @endsection
@@ -36,17 +36,17 @@
         <!-- Sidebar Header -->
         <div class="p-4 border-b border-gray-200">
             <div class="flex items-center justify-between mb-4">
-                <h2 class="text-lg font-semibold text-gray-900">Messages</h2>
-                <button onclick="openNewConversationModal()" class="p-2 text-purple-600 hover:text-purple-700 hover:bg-purple-50 rounded-lg transition-colors" title="Start New Conversation">
+                <h2 class="text-lg font-semibold text-gray-900">{{ __('trans.messages') }}</h2>
+                <button onclick="openNewConversationModal()" class="p-2 text-purple-600 hover:text-purple-700 hover:bg-purple-50 rounded-lg transition-colors" title="{{ __('trans.start_new_conversation') }}">
                     <i class="fa-solid fa-plus"></i>
                 </button>
             </div>
             <div class="flex space-x-2 mb-4">
                 <button id="active-tab" class="px-3 py-1 text-sm font-medium text-white bg-purple-600 rounded-lg transition-colors">
-                    Active
+                    {{ __('trans.active') }}
                 </button>
                 <button id="archive-tab" class="px-3 py-1 text-sm font-medium text-gray-600 hover:text-gray-900 transition-colors">
-                    Archive
+                    {{ __('trans.archive') }}
                 </button>
             </div>
             
@@ -55,7 +55,7 @@
                 <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
                     <i class="fa-solid fa-search text-gray-400"></i>
                 </div>
-                <input type="text" id="search-conversations" placeholder="Search..." 
+                <input type="text" id="search-conversations" placeholder="{{ __('trans.search') }}" 
                        class="w-full pl-10 pr-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent text-sm">
             </div>
         </div>
@@ -72,11 +72,11 @@
                         if ($list_conversation->user_id == $currentUser->id) {
                             // Current user is the student, so other user is the mentor
                             $otherUser = $list_conversation->mentor->user;
-                            $otherUserRole = 'Mentor';
+                            $otherUserRole = __('trans.mentor');
                         } else {
                             // Current user is the mentor, so other user is the student
                             $otherUser = $list_conversation->user;
-                            $otherUserRole = 'Student';
+                            $otherUserRole = __('trans.student');
                         }
                         
                         $unreadCount = $list_conversation->unreadMessagesCount(auth()->id());

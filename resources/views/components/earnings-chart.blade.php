@@ -3,7 +3,7 @@
     <!-- Left Card - Earnings Line Chart (2/3 width) -->
     <div class="lg:col-span-2 bg-white rounded-xl shadow-lg p-6">
         <div class="flex items-center justify-between mb-2">
-            <h3 class="text-xl font-semibold text-gray-900">Earnings</h3>
+            <h3 class="text-xl font-semibold text-gray-900">{{ __('trans.earnings') }}</h3>
             <div class="flex space-x-2">
                 <button class="px-3 py-1 text-sm rounded-lg hover:bg-gray-100" data-period="1D">1D</button>
                 <button class="px-3 py-1 text-sm rounded-lg hover:bg-gray-100" data-period="7D">7D</button>
@@ -26,7 +26,7 @@
             <div class="absolute bottom-2 left-4 flex items-center space-x-2">
                 <div class="flex items-center space-x-1">
                     <div class="w-3 h-3 bg-purple-600 rounded-full"></div>
-                    <span class="text-xs text-gray-600">Earnings</span>
+                    <span class="text-xs text-gray-600">{{ __('trans.earnings') }}</span>
                 </div>
             </div>
         </div>
@@ -34,7 +34,7 @@
 
     <!-- Right Card - Monthly Earnings Bar Chart (1/3 width) -->
     <div class="lg:col-span-1 bg-white rounded-xl shadow-lg p-8">
-        <h3 class="text-xl font-semibold text-gray-900 mb-8">Monthly Earnings</h3>
+        <h3 class="text-xl font-semibold text-gray-900 mb-8">{{ __('trans.monthly_earnings') }}</h3>
         
         <!-- Improved Monthly Earnings Chart with increased height -->
         <div class="relative h-56 bg-gradient-to-b from-blue-50 to-white rounded-lg p-4">
@@ -44,7 +44,7 @@
             <div class="absolute bottom-2 left-4 flex items-center space-x-2">
                 <div class="flex items-center space-x-1">
                     <div class="w-3 h-3 bg-gradient-to-t from-purple-500 to-pink-400 rounded"></div>
-                    <span class="text-xs text-gray-600">Monthly</span>
+                    <span class="text-xs text-gray-600">{{ __('trans.monthly') }}</span>
                 </div>
             </div>
         </div>
@@ -88,7 +88,7 @@ document.addEventListener('DOMContentLoaded', function() {
             labels: @json(collect($monthlyEarnings)->pluck('month')->toArray()),
             data: @json(collect($monthlyEarnings)->pluck('earnings')->toArray()),
             total: @json(collect($monthlyEarnings)->sum('earnings')),
-            date: 'All Time'
+            date: '{{ __('trans.all_time') }}'
         }
     };
     

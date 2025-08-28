@@ -1,13 +1,13 @@
 <section  class="mb-20">
             <section class="container mx-auto mb-10">
                 <div class="skillio-work-head text-center mb-12">
-                    <x-section-header title="How Skillio Works"
-            subtitle="Skillio is structured to be simple and functional to use" />
+                    <x-section-header title="{{ __('trans.how_skillio_works') }}"
+            subtitle="{{ __('trans.skillio_structured_simple') }}" />
         
                     <button class="btn btn-active border-t-cyan-100">
-                        For Learners
+                        {{ __('trans.for_learners') }}
                     </button>
-                    <button class="btn btn-active btn-primary">For Mentors</button>
+                    <button class="btn btn-active btn-primary">{{ __('trans.for_mentors') }}</button>
                 </div>
                 <div class="w-[1200px] mx-auto grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3  gap-y-8 gap-x-6.5 justify-between  pt-5">
                     <!-- Card Items 01 -->
@@ -16,10 +16,9 @@
                             <img  src="{{ asset('assets/images/frame1.png') }}" alt="right" class="rounded-xl" />
                         </figure>
                         <div class="card-body items-center text-center">
-                            <h2 class="card-title">Register & Get Verified</h2>
+                            <h2 class="card-title">{{ __('trans.register_get_verified') }}</h2>
                             <p>
-                                Take our personalized quiz to find courses and mentors that
-                                match your goals and learning style.
+                                {{ __('trans.personalized_quiz_description') }}
                             </p>
                         </div>
                     </div>
@@ -30,12 +29,10 @@
                         </figure>
                         <div class="card-body items-center text-center">
                             <h2 class="card-title">
-                                Publish Courses / Set <br />
-                                Time Slots.
+                                {{ __('trans.publish_courses_set_timeslots') }}
                             </h2>
                             <p>
-                                Take our personalized quiz to find courses and mentors that
-                                match your goals and learning style.
+                                {{ __('trans.personalized_quiz_description') }}
                             </p>
                         </div>
                     </div>
@@ -45,10 +42,9 @@
                             <img src="{{ asset('assets/images/frame3.png') }}" alt="earn" class="rounded-xl" />
                         </figure>
                         <div class="card-body items-center text-center">
-                            <h2 class="card-title">Earn & Inspire</h2>
+                            <h2 class="card-title">{{ __('trans.earn_inspire') }}</h2>
                             <p>
-                                Take our personalized quiz to find courses and mentors that
-                                match your goals and learning style.
+                                {{ __('trans.personalized_quiz_description') }}
                             </p>
                         </div>
                     </div>
@@ -57,12 +53,10 @@
             <section>
                 <div class="skillio-different-head">
                     <h1 class="text-6xl font-bold text-center mb-8 pt-24">
-                        What Does Skillio Offer?
+                        {{ __('trans.what_does_skillio_offer') }}
                     </h1>
                     <p class="text-center mb-9">
-                        Skillio connects learners with expert mentors and interactive
-                        courses <br />
-                        both online and offline. Transform your learning journey today.
+                        {{ __('trans.skillio_connects_description') }}
                     </p>
                 </div>
                 <div class="w-[1200px] mx-auto grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3  gap-y-8 gap-x-6.5 justify-between  pt-5">
@@ -72,9 +66,9 @@
                             <img src="{{ asset('assets/images/SD-1.png') }}" alt="Shoes" class="rounded-xl" />
                         </figure>
                         <div class="card-body items-center text-center">
-                            <h2 class="card-title">Varified Mentors</h2>
+                            <h2 class="card-title">{{ __('trans.verified_mentors') }}</h2>
                             <p class="text-center mb-9">
-                                Only proven professionals with business success.
+                                {{ __('trans.only_proven_professionals') }}
                             </p>
                         </div>
                     </div>
@@ -84,9 +78,9 @@
                             <img src="{{ asset('assets/images/SD-2.png') }}" alt="Shoes" class="rounded-xl" />
                         </figure>
                         <div class="card-body items-center text-center">
-                            <h2 class="card-title">Personalized Recommendations</h2>
+                            <h2 class="card-title">{{ __('trans.personalized_recommendations') }}</h2>
                             <p class="text-center mb-9">
-                                Course and mentoring suggestions tailored to your goals
+                                {{ __('trans.course_mentoring_suggestions') }}
                             </p>
                         </div>
                     </div>
@@ -96,9 +90,9 @@
                             <img src="{{ asset('assets/images/SD-3.png') }}" alt="Shoes" class="rounded-xl" />
                         </figure>
                         <div class="card-body items-center text-center">
-                            <h2 class="card-title">Online + In-Person Options</h2>
+                            <h2 class="card-title">{{ __('trans.online_inperson_options') }}</h2>
                             <p class="text-center mb-9">
-                                Learn anywhere with flexible learning formats.
+                                {{ __('trans.learn_anywhere_flexible') }}
                             </p>
                         </div>
                     </div>
@@ -108,9 +102,9 @@
                             <img src="{{ asset('assets/images/SD-4.png') }}" alt="Shoes" class="rounded-xl" />
                         </figure>
                         <div class="card-body items-center text-center">
-                            <h2 class="card-title">Secure In-App Chat</h2>
+                            <h2 class="card-title">{{ __('trans.secure_inapp_chat') }}</h2>
                             <p class="text-center mb-9">
-                                Stay securely connected to your mentors
+                                {{ __('trans.stay_securely_connected') }}
                             </p>
                         </div>
                     </div>
@@ -120,9 +114,9 @@
                             <img src="{{ asset('assets/images/SD-5.png') }}" alt="Shoes" class="rounded-xl" />
                         </figure>
                         <div class="card-body items-center text-center">
-                            <h2 class="card-title">Quality Controlled Content</h2>
+                            <h2 class="card-title">{{ __('trans.quality_controlled_content') }}</h2>
                             <p class="text-center mb-9">
-                                Every lesson meets our quality standards.
+                                {{ __('trans.every_lesson_meets_standards') }}
                             </p>
                         </div>
                     </div>
@@ -132,8 +126,8 @@
                             <img src="{{ asset('assets/images/SD-6.png') }}" alt="Shoes" class="rounded-xl" />
                         </figure>
                         <div class="card-body items-center text-center">
-                            <h2 class="card-title">Lifetime Access</h2>
-                            <p class="text-center mb-9">Learn at your own pace, forever.</p>
+                            <h2 class="card-title">{{ __('trans.lifetime_access') }}</h2>
+                            <p class="text-center mb-9">{{ __('trans.learn_at_your_pace_forever') }}</p>
                         </div>
                     </div>
                 </div>

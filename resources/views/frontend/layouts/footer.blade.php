@@ -7,7 +7,7 @@
             <!-- Left: Contact Us -->
             <div class="flex items-center h-48">
                 <div class="flex flex-col items-center justify-center space-y-2 md:pr-20 w-full ml-[50px]">
-                    <p class="text-base text-center w-full">Contact Us</p>
+                    <p class="text-base text-center w-full">{{ __('trans.contact_us') }}</p>
                     <a href="mailto:info@skillio.pro" class="text-base cursor-pointer hover:underline text-center w-full">
                         info@skillio.pro
                     </a>
@@ -19,15 +19,15 @@
             <!-- Center: Subscribe (All Content Center Aligned) -->
             <div class="flex flex-col items-center justify-center text-center space-y-4 text-white max-w-md w-full mx-auto">
                 <h2 class="text-2xl md:text-3xl font-bold md:tracking-wide w-full text-center">
-                    Subscribe to Newsletter
+                    {{ __('trans.subscribe_to_newsletter') }}
                 </h2>
                 <p class="text-white/80 text-sm md:text-base w-full text-center">
-                    Get the latest updates about Skillio courses and mentorship programs.
+                    {{ __('trans.newsletter_description') }}
                 </p>
                 <form class="flex flex-col sm:flex-row gap-2 w-full max-w-sm mx-auto justify-center items-center" autocomplete="off">
                     <input 
                         type="email" 
-                        placeholder="Enter your email"
+                        placeholder="{{ __('trans.enter_your_email') }}"
                         class="flex-1 px-4 py-2 rounded-lg bg-white/90 text-gray-800 placeholder-gray-500 outline-none focus:ring-2 focus:ring-white/40 transition-all duration-200 text-sm text-center" 
                         required 
                         aria-label="Email address"
@@ -36,7 +36,7 @@
                         type="submit"
                         class="bg-white text-[#6E3FF3] px-6 py-2 rounded-lg font-semibold hover:bg-gray-100 transform hover:scale-105 transition-all duration-200 whitespace-nowrap text-sm border border-white/30 text-center"
                     >
-                        Subscribe
+                        {{ __('trans.subscribe') }}
                     </button>
                 </form>
             </div>
@@ -46,7 +46,7 @@
                 <div class="h-48 md:border-r border-white/30 min-h-[120px] ">
                 </div>
                 <div class="flex flex-col items-center md:items-end space-y-2 md:pl-10 mr-[50px]">
-                    <p class="text-base text-center w-full">Social Media</p>
+                    <p class="text-base text-center w-full">{{ __('trans.social_media') }}</p>
                     <div class="flex flex-wrap justify-center gap-4">
                         <!-- TikTok -->
                         <a href="#" aria-label="TikTok" class="hover:text-gray-300">
@@ -106,17 +106,17 @@
             <div class="flex flex-1 flex-col md:flex-row w-full">
                 <!-- Part 1: Center Aligned Links -->
                 <div class="flex flex-wrap justify-center items-center gap-6 text-sm font-medium flex-1">
-                    <a href="{{ url('/#why-we-are-different') }}" class="hover:underline">About Us</a>
-                    <a href="{{ url('/#how-it-works') }}" class="hover:underline">How it works</a>
-                    <a href="{{ url('/#unleash-your-potential') }}" class="hover:underline">Benefits</a>
-                    <a href="{{ route('mentors') }}" class="hover:underline">Mentors</a>
-                    <a href="{{ url('/#testimonials') }}" class="hover:underline">Testimonials</a>
-                    <a href="{{ url('/#faq') }}" class="hover:underline">FAQ</a>
+                    <a href="{{ url('/#why-we-are-different') }}" class="hover:underline">{{ __('trans.about_us_footer') }}</a>
+                    <a href="{{ url('/#how-it-works') }}" class="hover:underline">{{ __('trans.how_it_works_footer') }}</a>
+                    <a href="{{ url('/#unleash-your-potential') }}" class="hover:underline">{{ __('trans.benefits') }}</a>
+                    <a href="{{ route('mentors') }}" class="hover:underline">{{ __('trans.mentors_footer') }}</a>
+                    <a href="{{ url('/#testimonials') }}" class="hover:underline">{{ __('trans.testimonials_footer') }}</a>
+                    <a href="{{ url('/#faq') }}" class="hover:underline">{{ __('trans.faq_footer') }}</a>
                 </div>
                                  <!-- Part 2: Right Aligned Links -->
                  <div class="flex flex-wrap justify-center md:justify-end items-center gap-6 text-sm font-medium mt-4 md:mt-0 md:ml-8">
-                     <a href="{{ route('terms-and-conditions') }}" class="hover:underline">Terms & Conditions</a>
-                     <a href="{{ route('privacy-policy') }}" class="hover:underline">Privacy Policy</a>
+                     <a href="{{ route('terms-and-conditions') }}" class="hover:underline">{{ __('trans.terms_conditions') }}</a>
+                     <a href="{{ route('privacy-policy') }}" class="hover:underline">{{ __('trans.privacy_policy') }}</a>
                  </div>
             </div>
         </div>
@@ -124,7 +124,7 @@
         <!-- Bottom: Copyright & Payments -->
         <div class="border-t border-white/30 pt-6">
             <div class="flex flex-col md:flex-row justify-between items-center gap-y-4">
-                <p class="text-sm text-white/80">© 2025 Skillio, All Rights Reserved.</p>
+                <p class="text-sm text-white/80">{{ __('trans.copyright') }}</p>
                 <div class="flex flex-wrap justify-center gap-4 items-center">
                     <img src="{{ asset('assets/images/klarna.png') }}" alt="Klarna" class="h-5" />
                     <img src="{{ asset('assets/images/visa.png') }}" alt="Visa" class="h-5" />

@@ -1,6 +1,6 @@
 @extends('frontend.layouts.app')
 
-@section('title', 'Payment Successful')
+@section('title', __('trans.payment_successful_title'))
 
 @section('content')
 <div class="min-h-screen bg-gray-50 pt-32">
@@ -12,50 +12,50 @@
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
                 </svg>
             </div>
-            <h1 class="text-3xl md:text-4xl font-bold text-gray-900 mb-4">Payment Successful!</h1>
-            <p class="text-lg text-gray-600">Thank you for your payment. Your transaction has been completed successfully.</p>
+            <h1 class="text-3xl md:text-4xl font-bold text-gray-900 mb-4">{{ __('trans.payment_successful_heading') }}</h1>
+            <p class="text-lg text-gray-600">{{ __('trans.payment_successful_message') }}</p>
         </div>
 
         <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
             <!-- Payment Details -->
             <div class="bg-white rounded-2xl shadow-lg p-6">
-                <h2 class="text-xl font-bold text-gray-900 mb-4">Payment Details</h2>
+                <h2 class="text-xl font-bold text-gray-900 mb-4">{{ __('trans.payment_details') }}</h2>
                 
                 @if($transaction)
                     <div class="space-y-4">
                         <div class="flex justify-between">
-                            <span class="text-gray-600">Transaction ID:</span>
+                            <span class="text-gray-600">{{ __('trans.transaction_id') }}</span>
                             <span class="font-semibold text-gray-900">{{ $transaction->transaction_id }}</span>
                         </div>
                         <div class="flex justify-between">
-                            <span class="text-gray-600">Amount Paid:</span>
+                            <span class="text-gray-600">{{ __('trans.amount_paid') }}</span>
                             <span class="font-semibold text-green-600">${{ number_format($transaction->gross_amount, 2) }}</span>
                         </div>
                         <div class="flex justify-between">
-                            <span class="text-gray-600">Payment Method:</span>
+                            <span class="text-gray-600">{{ __('trans.payment_method') }}</span>
                             <span class="font-semibold text-gray-900">
                                 {{ ucfirst($transaction->payment_method_type ?? 'Card') }}
                                 @if($transaction->payment_method_last4)
-                                    ending in {{ $transaction->payment_method_last4 }}
+                                    {{ __('trans.ending_in') }} {{ $transaction->payment_method_last4 }}
                                 @endif
                             </span>
                         </div>
                         <div class="flex justify-between">
-                            <span class="text-gray-600">Status:</span>
+                            <span class="text-gray-600">{{ __('trans.status') }}</span>
                             <span class="inline-flex items-center px-3 py-1 rounded-full text-sm font-medium bg-green-100 text-green-800">
                                 {{ ucfirst($transaction->transaction_status) }}
                             </span>
                         </div>
                         @if($transaction->created_at)
                             <div class="flex justify-between">
-                                <span class="text-gray-600">Date:</span>
+                                <span class="text-gray-600">{{ __('trans.date') }}</span>
                                 <span class="font-semibold text-gray-900">{{ $transaction->created_at->format('M d, Y - H:i A') }}</span>
                             </div>
                         @endif
                     </div>
                 @else
                     <div class="text-center py-4">
-                        <p class="text-gray-600">Payment completed successfully!</p>
+                        <p class="text-gray-600">{{ __('trans.payment_completed_successfully') }}</p>
                     </div>
                 @endif
             </div>
@@ -65,9 +65,9 @@
                 <div class="bg-white rounded-2xl shadow-lg p-6">
                     <h2 class="text-xl font-bold text-gray-900 mb-4">
                         @if($enrollment->enrollable_type === 'App\Models\SessionBooking')
-                            Session Booking Details
+                            {{ __('trans.session_booking_details') }}
                         @else
-                            Course Enrollment Details
+                            {{ __('trans.course_enrollment_details') }}
                         @endif
                     </h2>
                     
@@ -75,18 +75,18 @@
                         @if($enrollment->enrollable_type === 'App\Models\SessionBooking')
                             <!-- Session Details -->
                             <div class="flex justify-between">
-                                <span class="text-gray-600">Mentor:</span>
+                                <span class="text-gray-600">{{ __('trans.mentor') }}</span>
                                 <span class="font-semibold text-gray-900">{{ $enrollment->enrollable->mentor->user->name }}</span>
                             </div>
                             @if($enrollment->enrollable->session_date)
                                 <div class="flex justify-between">
-                                    <span class="text-gray-600">Session Date:</span>
+                                    <span class="text-gray-600">{{ __('trans.session_date') }}</span>
                                     <span class="font-semibold text-gray-900">{{ $enrollment->enrollable->session_date->format('M d, Y') }}</span>
                                 </div>
                             @endif
                             @if($enrollment->enrollable->start_time && $enrollment->enrollable->end_time)
                                 <div class="flex justify-between">
-                                    <span class="text-gray-600">Time:</span>
+                                    <span class="text-gray-600">{{ __('trans.time') }}</span>
                                     <span class="font-semibold text-gray-900">
                                         {{ $enrollment->enrollable->start_time->format('H:i A') }} - 
                                         {{ $enrollment->enrollable->end_time->format('H:i A') }}
@@ -94,7 +94,7 @@
                                 </div>
                             @endif
                             <div class="flex justify-between">
-                                <span class="text-gray-600">Duration:</span>
+                                <span class="text-gray-600">{{ __('trans.duration') }}</span>
                                 <span class="font-semibold text-gray-900">
                                     @php
                                         $startTime = \Carbon\Carbon::parse($enrollment->enrollable->start_time);
@@ -115,24 +115,24 @@
                         @else
                             <!-- Course Details -->
                             <div class="flex justify-between">
-                                <span class="text-gray-600">Course:</span>
+                                <span class="text-gray-600">{{ __('trans.course') }}</span>
                                 <span class="font-semibold text-gray-900">{{ $enrollment->enrollable->title }}</span>
                             </div>
                             <div class="flex justify-between">
-                                <span class="text-gray-600">Instructor:</span>
+                                <span class="text-gray-600">{{ __('trans.instructor') }}</span>
                                 <span class="font-semibold text-gray-900">{{ $enrollment->enrollable->mentor->user->name }}</span>
                             </div>
                         @endif
                         
                         <div class="flex justify-between">
-                            <span class="text-gray-600">Enrollment Status:</span>
+                            <span class="text-gray-600">{{ __('trans.enrollment_status') }}</span>
                             <span class="inline-flex items-center px-3 py-1 rounded-full text-sm font-medium bg-blue-100 text-blue-800">
                                 {{ ucfirst($enrollment->enrollment_status) }}
                             </span>
                         </div>
                         @if($enrollment->enrolled_at)
                             <div class="flex justify-between">
-                                <span class="text-gray-600">Enrolled At:</span>
+                                <span class="text-gray-600">{{ __('trans.enrolled_at') }}</span>
                                 <span class="font-semibold text-gray-900">{{ $enrollment->enrolled_at->format('M d, Y - H:i A') }}</span>
                             </div>
                         @endif
@@ -143,7 +143,7 @@
 
         <!-- Next Steps -->
         <div class="bg-white rounded-2xl shadow-lg p-6 mt-8">
-            <h2 class="text-xl font-bold text-gray-900 mb-4">What's Next?</h2>
+            <h2 class="text-xl font-bold text-gray-900 mb-4">{{ __('trans.whats_next') }}</h2>
             <div class="grid md:grid-cols-2 gap-6">
                 <div class="flex items-start space-x-4">
                     <div class="flex-shrink-0">
@@ -154,8 +154,8 @@
                         </div>
                     </div>
                     <div>
-                        <h3 class="text-lg font-medium text-gray-900">Check Your Dashboard</h3>
-                        <p class="text-gray-600">View your enrolled sessions and courses in your dashboard.</p>
+                        <h3 class="text-lg font-medium text-gray-900">{{ __('trans.check_your_dashboard') }}</h3>
+                        <p class="text-gray-600">{{ __('trans.dashboard_description') }}</p>
                     </div>
                 </div>
                 
@@ -182,7 +182,7 @@
                 <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 7v10a2 2 0 002 2h14a2 2 0 002-2V9a2 2 0 00-2-2H5a2 2 0 00-2-2z"></path>
                 </svg>
-                Go to Dashboard
+                {{ __('trans.go_to_dashboard') }}
             </a>
             
             <a href="{{ route('mentors') }}" 
@@ -190,7 +190,7 @@
                 <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path>
                 </svg>
-                Browse More Mentors
+                {{ __('trans.browse_more_mentors') }}
             </a>
         </div>
     </div>

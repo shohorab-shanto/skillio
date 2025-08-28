@@ -11,7 +11,7 @@
         </div>
         <div class="card-actions justify-end avatar flex items-center space-x-2 ">
             <p class="text-sm ">23 june 2025</p>
-            <h3 class="text-sm  text-purple-700 ">Booked</h3>
+            <h3 class="text-sm  text-purple-700 ">{{ __('trans.booked') }}</h3>
         </div>
 
     </div>
@@ -29,7 +29,7 @@
         </div>
         <div class="card-actions justify-end avatar flex items-center space-x-2 ">
             <p class="text-sm ">23 june 2025</p>
-            <h3 class="text-sm  text-purple-700 ">Booked</h3>
+            <h3 class="text-sm  text-purple-700 ">{{ __('trans.booked') }}</h3>
         </div>
 
     </div>
@@ -47,7 +47,7 @@
         </div>
         <div class="card-actions justify-end avatar flex items-center space-x-2 ">
             <p class="text-sm ">23 june 2025</p>
-            <h3 class="text-sm  text-purple-700 ">Booked</h3>
+            <h3 class="text-sm  text-purple-700 ">{{ __('trans.booked') }}</h3>
         </div>
 
     </div>
@@ -65,7 +65,7 @@
         </div>
         <div class="card-actions justify-end avatar flex items-center space-x-2 ">
             <p class="text-sm ">23 june 2025</p>
-            <h3 class="text-sm  text-purple-700 ">Booked</h3>
+            <h3 class="text-sm  text-purple-700 ">{{ __('trans.booked') }}</h3>
         </div>
 
     </div>
@@ -83,7 +83,7 @@
         </div>
         <div class="card-actions justify-end avatar flex items-center space-x-2 ">
             <p class="text-sm ">23 june 2025</p>
-            <h3 class="text-sm  text-purple-700 ">Booked</h3>
+            <h3 class="text-sm  text-purple-700 ">{{ __('trans.booked') }}</h3>
         </div>
 
     </div>
@@ -101,7 +101,7 @@
         </div>
         <div class="card-actions justify-end avatar flex items-center space-x-2 ">
             <p class="text-sm ">23 june 2025</p>
-            <h3 class="text-sm  text-purple-700 ">Booked</h3>
+            <h3 class="text-sm  text-purple-700 ">{{ __('trans.booked') }}</h3>
         </div>
 
     </div>
@@ -119,7 +119,7 @@
         </div>
         <div class="card-actions justify-end avatar flex items-center space-x-2 ">
             <p class="text-sm ">23 june 2025</p>
-            <h3 class="text-sm  text-purple-700 ">Booked</h3>
+            <h3 class="text-sm  text-purple-700 ">{{ __('trans.booked') }}</h3>
         </div>
 
     </div>
@@ -137,7 +137,7 @@
         </div>
         <div class="card-actions justify-end avatar flex items-center space-x-2 ">
             <p class="text-sm ">23 june 2025</p>
-            <h3 class="text-sm  text-purple-700 ">Booked</h3>
+            <h3 class="text-sm  text-purple-700 ">{{ __('trans.booked') }}</h3>
         </div>
 
     </div>
@@ -155,7 +155,7 @@
         </div>
         <div class="card-actions justify-end avatar flex items-center space-x-2 ">
             <p class="text-sm ">23 june 2025</p>
-            <h3 class="text-sm  text-purple-700 ">Booked</h3>
+            <h3 class="text-sm  text-purple-700 ">{{ __('trans.booked') }}</h3>
         </div>
 
     </div>

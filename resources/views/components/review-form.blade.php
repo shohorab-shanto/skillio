@@ -3,10 +3,10 @@
 <div x-data="reviewForm" class="mt-8 p-6 bg-gray-50 rounded-xl border border-gray-200">
     <div class="flex items-center justify-between mb-4">
         <h3 class="text-lg font-semibold text-gray-900">
-            {{ $existingReview ? 'Edit Your Review' : 'Write a Review' }}
+            {{ $existingReview ? __('trans.edit_your_review') : __('trans.write_a_review') }}
         </h3>
         @if($existingReview)
-            <span class="text-sm text-gray-500">Last updated: {{ $existingReview->updated_at->format('M d, Y') }}</span>
+            <span class="text-sm text-gray-500">{{ __('trans.last_updated') }} {{ $existingReview->updated_at->format('M d, Y') }}</span>
         @endif
     </div>
 
@@ -14,7 +14,7 @@
         @csrf
         <!-- Rating -->
         <div>
-            <label class="block text-sm font-medium text-gray-700 mb-3">Your Rating</label>
+            <label class="block text-sm font-medium text-gray-700 mb-3">{{ __('trans.your_rating') }}</label>
             <div class="flex items-center space-x-2">
                 @for($i = 1; $i <= 5; $i++)
                     <button type="button" 
@@ -27,20 +27,20 @@
                     </button>
                 @endfor
                 <span class="ml-3 text-sm text-gray-600">
-                    <span x-text="rating === 0 ? 'Select rating' : rating + ' star' + (rating > 1 ? 's' : '')"></span>
+                    <span x-text="rating === 0 ? '{{ __('trans.select_rating') }}' : rating + ' {{ __('trans.star') }}' + (rating > 1 ? '{{ __('trans.stars') }}' : '')"></span>
                 </span>
             </div>
         </div>
 
         <!-- Comment -->
         <div>
-            <label for="comment" class="block text-sm font-medium text-gray-700 mb-2">Your Review</label>
+            <label for="comment" class="block text-sm font-medium text-gray-700 mb-2">{{ __('trans.your_review') }}</label>
             <textarea 
                 id="comment"
                 x-model="comment"
                 rows="4"
                 class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent resize-none"
-                placeholder="Share your experience with this {{ $type === 'course' ? 'course' : 'mentor' }}..."></textarea>
+                placeholder="{{ $type === 'course' ? __('trans.share_experience_course') : __('trans.share_experience_mentor') }}"></textarea>
         </div>
 
         <!-- Error Message -->
@@ -59,7 +59,7 @@
                     <svg class="w-4 h-4 inline mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"></path>
                     </svg>
-                    Delete Review
+                    {{ __('trans.delete_review') }}
                 </button>
             @endif
             
@@ -67,14 +67,14 @@
                     :disabled="submitting"
                     class="px-6 py-3 text-sm font-medium text-white bg-purple-600 border border-transparent rounded-lg hover:bg-purple-700 disabled:opacity-50 disabled:cursor-not-allowed transition-colors">
                 <span x-show="!submitting">
-                    {{ $existingReview ? 'Update Review' : 'Submit Review' }}
+                    {{ $existingReview ? __('trans.update_review') : __('trans.submit_review') }}
                 </span>
                 <span x-show="submitting">
                     <svg class="animate-spin -ml-1 mr-2 h-4 w-4 text-white inline" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
                         <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
                         <path class="opacity-75" fill="currentColor" d="M4 12a8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
                     </svg>
-                    {{ $existingReview ? 'Updating...' : 'Submitting...' }}
+                    {{ $existingReview ? __('trans.updating') : __('trans.submitting') }}
                 </span>
             </button>
         </div>
@@ -100,11 +100,11 @@
                 </div>
                 <div class="mt-3 text-center sm:ml-4 sm:mt-0 sm:text-left">
                     <h3 class="text-base font-semibold leading-6 text-gray-900">
-                        Delete Review
+                        {{ __('trans.delete_review_modal_title') }}
                     </h3>
                     <div class="mt-2">
                         <p class="text-sm text-gray-500">
-                            Are you sure you want to delete your review for this {{ $type === 'course' ? 'course' : 'mentor' }}? This action cannot be undone.
+                            {{ $type === 'course' ? __('trans.delete_review_confirmation') : __('trans.delete_review_confirmation_mentor') }}
                         </p>
                     </div>
                 </div>
@@ -118,14 +118,14 @@
                     @method('DELETE')
                     <button type="submit"
                             class="inline-flex w-full justify-center rounded-md bg-red-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-red-500 sm:ml-3 sm:w-auto">
-                        Delete Review
+                        {{ __('trans.delete_review') }}
                     </button>
                 </form>
                 
                 <button type="button"
                         onclick="closeDeleteModal()"
                         class="mt-3 inline-flex w-full justify-center rounded-md bg-white px-3 py-2 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50 sm:mt-0 sm:w-auto">
-                    Cancel
+                    {{ __('trans.cancel') }}
                 </button>
             </div>
         </div>
@@ -174,12 +174,12 @@ document.addEventListener('alpine:init', () => {
 
         async submitReview() {
             if (this.rating === 0) {
-                this.error = 'Please select a rating';
+                this.error = '{{ __('trans.please_select_rating') }}';
                 return;
             }
 
             if (!this.comment.trim()) {
-                this.error = 'Please write a review comment';
+                this.error = '{{ __('trans.please_write_review_comment') }}';
                 return;
             }
 

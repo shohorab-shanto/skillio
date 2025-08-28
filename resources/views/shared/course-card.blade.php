@@ -11,7 +11,7 @@
                         </div>
                     @endif
                     <div class="absolute top-4 left-4">
-                        <span class="bg-yellow-100 text-yellow-800 text-xs font-medium px-3 py-1 rounded-full">Online</span>
+                        <span class="bg-yellow-100 text-yellow-800 text-xs font-medium px-3 py-1 rounded-full">{{ __('trans.online') }}</span>
                     </div>
                     @if($course->category)
                     <div class="absolute top-4 right-4">
@@ -48,7 +48,7 @@
                                 @endif
                             @endfor
                         </div>
-                        <span class="text-sm text-gray-600">{{ number_format($averageRating, 1) }} ({{ $totalReviews }} Reviews)</span>
+                        <span class="text-sm text-gray-600">{{ number_format($averageRating, 1) }} ({{ $totalReviews }} {{ __('trans.reviews_count') }})</span>
                     </div>
                     @endif
                     
@@ -66,7 +66,7 @@
                             <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path>
                             </svg>
-                            {{ $course->duration_days }} days
+                            {{ $course->duration_days }} {{ __('trans.days') }}
                         </span>
                         @endif
                         @if($course->start_date)

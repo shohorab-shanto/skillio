@@ -178,4 +178,7 @@
             </div>
         </div>
     </section>
+
+    <!-- FAQ Section -->
+    @include('frontend.home.question-answer')
 @endsection

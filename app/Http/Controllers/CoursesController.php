@@ -121,7 +121,10 @@ class CoursesController extends Controller
         
         $categories = Category::all();
         
-        return view('frontend.courses.index', compact('courses', 'categories'));
+        // Get top reviews for the review section (same as home page)
+        $topReviews = $this->getTopReviews();
+        
+        return view('frontend.courses.index', compact('courses', 'categories', 'topReviews'));
     }
 
     /**
@@ -195,5 +198,18 @@ class CoursesController extends Controller
         }
 
         return $preferences;
+    }
+
+    /**
+     * Get latest 12 highest-rated reviews
+     */
+    private function getTopReviews()
+    {
+        return \App\Models\Review::with(['user', 'course.mentor.user'])
+            ->where('rating', '>=', 4) // Only reviews with rating 4 or higher
+            ->orderBy('rating', 'desc')
+            ->orderBy('created_at', 'desc')
+            ->limit(12)
+            ->get();
     }
 }

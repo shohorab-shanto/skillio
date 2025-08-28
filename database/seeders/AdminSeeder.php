@@ -16,7 +16,7 @@ class AdminSeeder extends Seeder
     {
         User::create([
             'name' => 'Super Admin',
-            'email' => 'superadmin@skillio.com',
+            'email' => 'superadmin@skillio.pro',
             'password' => Hash::make('SuperAdmin!@#$'),
             'role' => 'admin',
             'email_verified_at' => now(),
@@ -25,7 +25,7 @@ class AdminSeeder extends Seeder
         ]);
 
         $this->command->info('Super Admin user created successfully!');
-        $this->command->info('Email: superadmin@skillio.com');
+        $this->command->info('Email: superadmin@skillio.pro');
         $this->command->info('Password: SuperAdmin!@#$');
     }
 }

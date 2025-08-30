@@ -176,7 +176,7 @@
                     </div>
                     <h3 class="text-lg font-medium text-gray-900 mb-2">No Active Courses</h3>
                     <p class="text-gray-500 text-sm">Start your learning journey by enrolling in courses!</p>
-                    <a href="{{ route('courses.index') }}" class="mt-4 px-6 py-2 bg-purple-600 text-white rounded-lg hover:bg-purple-700 transition-colors inline-block">
+                    <a href="{{ route('courses') }}" class="mt-4 px-6 py-2 bg-purple-600 text-white rounded-lg hover:bg-purple-700 transition-colors inline-block">
                         Browse Courses
                     </a>
                 </div>

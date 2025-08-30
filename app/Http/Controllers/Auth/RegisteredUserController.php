@@ -29,6 +29,7 @@ class RegisteredUserController extends Controller
      */
     public function store(Request $request): RedirectResponse
     {
+        // dd($request->all()); // Debugging line to check the request data
         $request->validate([
             'name' => ['required', 'string', 'max:255'],
             'email' => ['required', 'string', 'lowercase', 'email', 'max:255', 'unique:'.User::class],
@@ -37,7 +38,7 @@ class RegisteredUserController extends Controller
             'gdpr_consent' => ['required', 'accepted'],
         ]);
 
-        // dd($request->all()); // Debugging line to check the request data
+        
 
 
         $userData = [
@@ -51,7 +52,7 @@ class RegisteredUserController extends Controller
         if ($request->role == 'user') {
             $userData['status'] = 'active';
         } elseif ($request->role == 'mentor') {
-            $userData['status'] = 'pending';
+            $userData['status'] = 'active';
         }
 
         $user = User::create($userData);
@@ -64,6 +65,10 @@ class RegisteredUserController extends Controller
         if ($user->role === 'admin') {
             return redirect()->intended(route('admin.dashboard', absolute: false));
         } elseif ($user->role === 'mentor') {
+            // Create a mentor profile associated with the newly registered user
+            \App\Models\Mentor::create([
+                'user_id' => $user->id,
+            ]);
             return redirect()->intended(route('mentor.dashboard', absolute: false));
         }else{
             return redirect()->intended(route('user.dashboard', absolute: false));

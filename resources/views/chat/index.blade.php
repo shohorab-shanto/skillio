@@ -153,7 +153,7 @@
                     </div>
                     <h3 class="text-xl font-semibold text-gray-900 mb-2">Access Denied</h3>
                     <p class="text-gray-500 mb-4">{{ $error }}</p>
-                    @if($errorType === 'no_permission')
+                    @if($errorType == 'no_permission')
                         <div class="text-sm text-gray-600">
                             <p>This conversation belongs to other users. You can only access conversations where you are either:</p>
                             <ul class="mt-2 space-y-1">
@@ -289,7 +289,7 @@ async function searchUsers(searchTerm) {
 function displaySearchResults(users) {
     const resultsContainer = document.getElementById('user-results');
     
-    if (users.length === 0) {
+    if (users.length == 0) {
         resultsContainer.innerHTML = '<p class="text-gray-500 text-sm p-3">No users found</p>';
         resultsContainer.classList.remove('hidden');
         return;
@@ -307,7 +307,7 @@ function displaySearchResults(users) {
             <div class="flex-1">
                 <p class="font-medium text-gray-900">${user.name}</p>
                 <p class="text-sm text-gray-500">${user.email}</p>
-                <p class="text-xs text-gray-400">${user.role === 'mentor' ? 'Mentor' : 'Student'}</p>
+                <p class="text-xs text-gray-400">${user.role == 'mentor' ? 'Mentor' : 'Student'}</p>
             </div>
         </div>
     `).join('');
@@ -395,7 +395,7 @@ document.getElementById('archive-tab').addEventListener('click', function() {
 
 // Close modal on outside click
 document.getElementById('new-conversation-modal').addEventListener('click', function(e) {
-    if (e.target === this) {
+    if (e.target == this) {
         closeNewConversationModal();
     }
 });

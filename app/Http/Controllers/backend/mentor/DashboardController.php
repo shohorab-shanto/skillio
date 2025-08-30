@@ -104,7 +104,7 @@ class DashboardController extends Controller
         }
         
         // Apply status filter
-        if ($request->filled('status') && $request->status !== 'all') {
+        if ($request->filled('status') && $request->status != 'all') {
             // We'll apply the status filter after getting the results to avoid complex SQL
             // The status will be determined by the calculated is_active field
         }
@@ -113,7 +113,7 @@ class DashboardController extends Controller
         
         // Calculate duration left for each enrollment
         $students->getCollection()->transform(function ($enrollment) {
-            if ($enrollment->enrollable_type === Course::class) {
+            if ($enrollment->enrollable_type == Course::class) {
                 $course = $enrollment->enrollable;
                 if ($course->end_date) {
                     $now = Carbon::now();
@@ -186,12 +186,12 @@ class DashboardController extends Controller
         });
         
         // Apply status filter after calculating is_active
-        if ($request->filled('status') && $request->status !== 'all') {
+        if ($request->filled('status') && $request->status != 'all') {
             $filteredCollection = $students->getCollection()->filter(function ($enrollment) use ($request) {
-                if ($request->status === 'active') {
-                    return $enrollment->is_active === true;
-                } elseif ($request->status === 'inactive') {
-                    return $enrollment->is_active === false;
+                if ($request->status == 'active') {
+                    return $enrollment->is_active == true;
+                } elseif ($request->status == 'inactive') {
+                    return $enrollment->is_active == false;
                 }
                 return true;
             });

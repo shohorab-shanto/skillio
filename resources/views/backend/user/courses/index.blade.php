@@ -138,12 +138,12 @@
                         
                         <!-- Status Badge -->
                         <div class="absolute top-3 right-3">
-                            @if($enrollment->enrollment_status === 'active')
+                            @if($enrollment->enrollment_status == 'active')
                                 <span class="inline-flex items-center px-2 py-1 rounded-full text-xs font-semibold bg-green-100 text-green-800">
                                     <i class="fa-solid fa-play-circle mr-1"></i>
                                     Active
                                 </span>
-                            @elseif($enrollment->enrollment_status === 'completed')
+                            @elseif($enrollment->enrollment_status == 'completed')
                                 <span class="inline-flex items-center px-2 py-1 rounded-full text-xs font-semibold bg-blue-100 text-blue-800">
                                     <i class="fa-solid fa-check-circle mr-1"></i>
                                     Completed

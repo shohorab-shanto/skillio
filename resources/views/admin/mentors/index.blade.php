@@ -25,8 +25,8 @@
                     <label class="block text-sm font-medium text-gray-700 mb-2">Verification</label>
                     <select name="verification_status" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent">
                         <option value="">All Status</option>
-                        <option value="verified" {{ request('verification_status') === 'verified' ? 'selected' : '' }}>Verified</option>
-                        <option value="unverified" {{ request('verification_status') === 'unverified' ? 'selected' : '' }}>Unverified</option>
+                        <option value="verified" {{ request('verification_status') == 'verified' ? 'selected' : '' }}>Verified</option>
+                        <option value="unverified" {{ request('verification_status') == 'unverified' ? 'selected' : '' }}>Unverified</option>
                     </select>
                 </div>
 
@@ -35,9 +35,9 @@
                     <label class="block text-sm font-medium text-gray-700 mb-2">Availability</label>
                     <select name="availability" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent">
                         <option value="">All Availability</option>
-                        <option value="available" {{ request('availability') === 'available' ? 'selected' : '' }}>Available</option>
-                        <option value="unavailable" {{ request('availability') === 'unavailable' ? 'selected' : '' }}>Unavailable</option>
-                        <option value="busy" {{ request('availability') === 'busy' ? 'selected' : '' }}>Busy</option>
+                        <option value="available" {{ request('availability') == 'available' ? 'selected' : '' }}>Available</option>
+                        <option value="unavailable" {{ request('availability') == 'unavailable' ? 'selected' : '' }}>Unavailable</option>
+                        <option value="busy" {{ request('availability') == 'busy' ? 'selected' : '' }}>Busy</option>
                     </select>
                 </div>
 

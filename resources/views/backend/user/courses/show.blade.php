@@ -16,12 +16,12 @@
         
         <!-- Status Badge -->
         <div class="flex items-center space-x-3">
-            @if($enrollment->enrollment_status === 'active')
+            @if($enrollment->enrollment_status == 'active')
                 <span class="inline-flex items-center px-3 py-1 rounded-full text-sm font-semibold bg-green-100 text-green-700 border border-green-300 shadow-sm">
                     <i class="fa-solid fa-play-circle mr-2 text-green-500"></i>
                     Active Course
                 </span>
-            @elseif($enrollment->enrollment_status === 'completed')
+            @elseif($enrollment->enrollment_status == 'completed')
                 <span class="inline-flex items-center px-3 py-1 rounded-full text-sm font-semibold bg-blue-100 text-blue-700 border border-blue-300 shadow-sm">
                     <i class="fa-solid fa-check-circle mr-2 text-blue-500"></i>
                     Completed
@@ -188,8 +188,8 @@
 
                 <!-- Status -->
                 <div class="flex items-center">
-                    <div class="w-10 h-10 {{ $enrollment->enrollment_status === 'active' ? 'bg-green-100' : 'bg-blue-100' }} rounded-lg flex items-center justify-center mr-3">
-                        <i class="fa-solid {{ $enrollment->enrollment_status === 'active' ? 'fa-play-circle text-green-600' : 'fa-check-circle text-blue-600' }}"></i>
+                    <div class="w-10 h-10 {{ $enrollment->enrollment_status == 'active' ? 'bg-green-100' : 'bg-blue-100' }} rounded-lg flex items-center justify-center mr-3">
+                        <i class="fa-solid {{ $enrollment->enrollment_status == 'active' ? 'fa-play-circle text-green-600' : 'fa-check-circle text-blue-600' }}"></i>
                     </div>
                     <div>
                         <p class="text-sm text-gray-500">Status</p>

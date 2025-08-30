@@ -64,7 +64,7 @@
             @if($enrollment)
                 <div class="bg-white rounded-2xl shadow-lg p-6">
                     <h2 class="text-xl font-bold text-gray-900 mb-4">
-                        @if($enrollment->enrollable_type === 'App\Models\SessionBooking')
+                        @if($enrollment->enrollable_type == 'App\Models\SessionBooking')
                             {{ __('trans.session_booking_details') }}
                         @else
                             {{ __('trans.course_enrollment_details') }}
@@ -72,7 +72,7 @@
                     </h2>
                     
                     <div class="space-y-4">
-                        @if($enrollment->enrollable_type === 'App\Models\SessionBooking')
+                        @if($enrollment->enrollable_type == 'App\Models\SessionBooking')
                             <!-- Session Details -->
                             <div class="flex justify-between">
                                 <span class="text-gray-600">{{ __('trans.mentor') }}</span>

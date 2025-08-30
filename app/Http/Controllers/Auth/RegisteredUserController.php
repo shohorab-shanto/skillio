@@ -62,9 +62,9 @@ class RegisteredUserController extends Controller
         Auth::login($user);
 
         // Redirect based on user role
-        if ($user->role === 'admin') {
+        if ($user->role == 'admin') {
             return redirect()->intended(route('admin.dashboard', absolute: false));
-        } elseif ($user->role === 'mentor') {
+        } elseif ($user->role == 'mentor') {
             // Create a mentor profile associated with the newly registered user
             \App\Models\Mentor::create([
                 'user_id' => $user->id,

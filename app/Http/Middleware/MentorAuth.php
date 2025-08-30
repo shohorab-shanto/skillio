@@ -18,7 +18,7 @@ class MentorAuth
     public function handle(Request $request, Closure $next): Response
     {
         // Check if user is authenticated and has 'mentor' role in the 'role' column
-        if (auth()->check() && auth()->user()->role === 'mentor') {
+        if (auth()->check() && auth()->user()->role == 'mentor') {
             return $next($request);
         }
 

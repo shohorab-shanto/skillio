@@ -68,7 +68,7 @@
                         <p class="text-gray-600"><strong>Work Experience:</strong> {{ $mentor->work_experience ?? 'N/A' }} years</p>
                         <p class="text-gray-600"><strong>Type:</strong> {{ ucfirst($mentor->type ?? 'Standard') }}</p>
                         <p class="text-gray-600"><strong>Availability:</strong> 
-                            @if($mentor->availability === 'available')
+                            @if($mentor->availability == 'available')
                                 <span class="text-green-600 font-medium">Available</span>
                             @else
                                 <span class="text-red-600 font-medium">Unavailable</span>
@@ -312,10 +312,10 @@
                         <div>
                             <label class="block text-sm font-medium text-gray-700 mb-2">Account Status</label>
                             <select name="connect_account_status" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent">
-                                <option value="pending" {{ ($mentor->connect_account_status ?? 'pending') === 'pending' ? 'selected' : '' }}>Pending</option>
-                                <option value="active" {{ ($mentor->connect_account_status ?? 'pending') === 'active' ? 'selected' : '' }}>Active</option>
-                                <option value="rejected" {{ ($mentor->connect_account_status ?? 'pending') === 'rejected' ? 'selected' : '' }}>Rejected</option>
-                                <option value="restricted" {{ ($mentor->connect_account_status ?? 'pending') === 'restricted' ? 'selected' : '' }}>Restricted</option>
+                                <option value="pending" {{ ($mentor->connect_account_status ?? 'pending') == 'pending' ? 'selected' : '' }}>Pending</option>
+                                <option value="active" {{ ($mentor->connect_account_status ?? 'pending') == 'active' ? 'selected' : '' }}>Active</option>
+                                <option value="rejected" {{ ($mentor->connect_account_status ?? 'pending') == 'rejected' ? 'selected' : '' }}>Rejected</option>
+                                <option value="restricted" {{ ($mentor->connect_account_status ?? 'pending') == 'restricted' ? 'selected' : '' }}>Restricted</option>
                             </select>
                         </div>
                     </div>
@@ -463,7 +463,7 @@ function showNotification(message, type) {
     // Create notification element
     const notification = document.createElement('div');
     notification.className = `fixed top-4 right-4 z-[200] px-6 py-3 rounded-lg shadow-lg transition-all duration-300 transform translate-x-full ${
-        type === 'success' ? 'bg-green-500 text-white' : 'bg-red-500 text-white'
+        type == 'success' ? 'bg-green-500 text-white' : 'bg-red-500 text-white'
     }`;
     notification.textContent = message;
     
@@ -485,7 +485,7 @@ function showNotification(message, type) {
 
 // Close modal when clicking outside
 document.getElementById('availability-modal').addEventListener('click', function(e) {
-    if (e.target === this) {
+    if (e.target == this) {
         cancelAvailabilityUpdate();
     }
 });
@@ -539,7 +539,7 @@ document.getElementById('account-details-form').addEventListener('submit', funct
 
 // Close account details modal when clicking outside
 document.getElementById('account-details-modal').addEventListener('click', function(e) {
-    if (e.target === this) {
+    if (e.target == this) {
         cancelAccountDetailsUpdate();
     }
 });

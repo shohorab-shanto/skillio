@@ -27,7 +27,7 @@
                     </button>
                 @endfor
                 <span class="ml-3 text-sm text-gray-600">
-                    <span x-text="rating === 0 ? '{{ __('trans.select_rating') }}' : rating + ' {{ __('trans.star') }}' + (rating > 1 ? '{{ __('trans.stars') }}' : '')"></span>
+                    <span x-text="rating == 0 ? '{{ __('trans.select_rating') }}' : rating + ' {{ __('trans.star') }}' + (rating > 1 ? '{{ __('trans.stars') }}' : '')"></span>
                 </span>
             </div>
         </div>
@@ -40,7 +40,7 @@
                 x-model="comment"
                 rows="4"
                 class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent resize-none"
-                placeholder="{{ $type === 'course' ? __('trans.share_experience_course') : __('trans.share_experience_mentor') }}"></textarea>
+                placeholder="{{ $type == 'course' ? __('trans.share_experience_course') : __('trans.share_experience_mentor') }}"></textarea>
         </div>
 
         <!-- Error Message -->
@@ -104,7 +104,7 @@
                     </h3>
                     <div class="mt-2">
                         <p class="text-sm text-gray-500">
-                            {{ $type === 'course' ? __('trans.delete_review_confirmation') : __('trans.delete_review_confirmation_mentor') }}
+                            {{ $type == 'course' ? __('trans.delete_review_confirmation') : __('trans.delete_review_confirmation_mentor') }}
                         </p>
                     </div>
                 </div>
@@ -156,7 +156,7 @@ document.addEventListener('DOMContentLoaded', function() {
     const modal = document.getElementById('deleteModal');
     if (modal) {
         modal.addEventListener('click', function(e) {
-            if (e.target === modal) {
+            if (e.target == modal) {
                 closeDeleteModal();
             }
         });
@@ -173,7 +173,7 @@ document.addEventListener('alpine:init', () => {
         success: '',
 
         async submitReview() {
-            if (this.rating === 0) {
+            if (this.rating == 0) {
                 this.error = '{{ __('trans.please_select_rating') }}';
                 return;
             }
@@ -207,7 +207,7 @@ document.addEventListener('alpine:init', () => {
                 const formData = {
                     rating: this.rating,
                     comment: this.comment,
-                    @if($type === 'course')
+                    @if($type == 'course')
                     course_id: {{ $item->id }}
                     @else
                     mentor_id: {{ $item->id }}

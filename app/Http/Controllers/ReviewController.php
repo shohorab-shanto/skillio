@@ -124,7 +124,7 @@ class ReviewController extends Controller
         $user = Auth::user();
 
         // Check if user owns this review
-        if ($review->user_id !== $user->id) {
+        if ($review->user_id != $user->id) {
             return response()->json(['message' => 'You can only edit your own reviews'], 403);
         }
 
@@ -152,7 +152,7 @@ class ReviewController extends Controller
         $user = Auth::user();
 
         // Check if user owns this review
-        if ($review->user_id !== $user->id) {
+        if ($review->user_id != $user->id) {
             return redirect()->back()->with('error', 'You can only delete your own reviews');
         }
 

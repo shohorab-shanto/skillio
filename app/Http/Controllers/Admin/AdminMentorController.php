@@ -25,11 +25,11 @@ class AdminMentorController extends Controller
 
         // Verification filter
         if ($request->filled('verification_status')) {
-            if ($request->verification_status === 'verified') {
+            if ($request->verification_status == 'verified') {
                 $query->whereHas('mentor', function($q) {
                     $q->where('verified', true);
                 });
-            } elseif ($request->verification_status === 'unverified') {
+            } elseif ($request->verification_status == 'unverified') {
                 $query->whereHas('mentor', function($q) {
                     $q->where('verified', false);
                 });
@@ -58,7 +58,7 @@ class AdminMentorController extends Controller
 
     public function show(User $user)
     {
-        if ($user->role !== 'mentor') {
+        if ($user->role != 'mentor') {
             return redirect()->back()->with('error', 'Invalid user type');
         }
 
@@ -72,7 +72,7 @@ class AdminMentorController extends Controller
 
     public function courses(User $user)
     {
-        if ($user->role !== 'mentor') {
+        if ($user->role != 'mentor') {
             return redirect()->back()->with('error', 'Invalid user type');
         }
 
@@ -86,7 +86,7 @@ class AdminMentorController extends Controller
 
     public function sessions(User $user)
     {
-        if ($user->role !== 'mentor') {
+        if ($user->role != 'mentor') {
             return redirect()->back()->with('error', 'Invalid user type');
         }
 
@@ -100,7 +100,7 @@ class AdminMentorController extends Controller
 
     public function toggleVerification(Request $request, User $user)
     {
-        if ($user->role !== 'mentor') {
+        if ($user->role != 'mentor') {
             return response()->json(['success' => false, 'message' => 'Invalid user type']);
         }
 
@@ -122,7 +122,7 @@ class AdminMentorController extends Controller
 
     public function updateAvailability(Request $request, User $user)
     {
-        if ($user->role !== 'mentor') {
+        if ($user->role != 'mentor') {
             return response()->json(['success' => false, 'message' => 'Invalid user type']);
         }
 
@@ -146,7 +146,7 @@ class AdminMentorController extends Controller
 
     public function updateAccountDetails(Request $request, User $user)
     {
-        if ($user->role !== 'mentor') {
+        if ($user->role != 'mentor') {
             return response()->json(['success' => false, 'message' => 'Invalid user type']);
         }
 

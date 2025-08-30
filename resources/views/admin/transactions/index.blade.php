@@ -80,12 +80,12 @@
                     <label class="block text-sm font-medium text-gray-700 mb-2">Status</label>
                     <select name="transaction_status" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent">
                         <option value="">All Status</option>
-                        <option value="pending" {{ request('transaction_status') === 'pending' ? 'selected' : '' }}>Pending</option>
-                        <option value="processing" {{ request('transaction_status') === 'processing' ? 'selected' : '' }}>Processing</option>
-                        <option value="completed" {{ request('transaction_status') === 'completed' ? 'selected' : '' }}>Completed</option>
-                        <option value="failed" {{ request('transaction_status') === 'failed' ? 'selected' : '' }}>Failed</option>
-                        <option value="cancelled" {{ request('transaction_status') === 'cancelled' ? 'selected' : '' }}>Cancelled</option>
-                        <option value="refunded" {{ request('transaction_status') === 'refunded' ? 'selected' : '' }}>Refunded</option>
+                        <option value="pending" {{ request('transaction_status') == 'pending' ? 'selected' : '' }}>Pending</option>
+                        <option value="processing" {{ request('transaction_status') == 'processing' ? 'selected' : '' }}>Processing</option>
+                        <option value="completed" {{ request('transaction_status') == 'completed' ? 'selected' : '' }}>Completed</option>
+                        <option value="failed" {{ request('transaction_status') == 'failed' ? 'selected' : '' }}>Failed</option>
+                        <option value="cancelled" {{ request('transaction_status') == 'cancelled' ? 'selected' : '' }}>Cancelled</option>
+                        <option value="refunded" {{ request('transaction_status') == 'refunded' ? 'selected' : '' }}>Refunded</option>
                     </select>
                 </div>
 
@@ -94,9 +94,9 @@
                     <label class="block text-sm font-medium text-gray-700 mb-2">Type</label>
                     <select name="transaction_type" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent">
                         <option value="">All Types</option>
-                        <option value="payment" {{ request('transaction_type') === 'payment' ? 'selected' : '' }}>Payment</option>
-                        <option value="refund" {{ request('transaction_type') === 'refund' ? 'selected' : '' }}>Refund</option>
-                        <option value="partial_refund" {{ request('transaction_type') === 'partial_refund' ? 'selected' : '' }}>Partial Refund</option>
+                        <option value="payment" {{ request('transaction_type') == 'payment' ? 'selected' : '' }}>Payment</option>
+                        <option value="refund" {{ request('transaction_type') == 'refund' ? 'selected' : '' }}>Refund</option>
+                        <option value="partial_refund" {{ request('transaction_type') == 'partial_refund' ? 'selected' : '' }}>Partial Refund</option>
                     </select>
                 </div>
 
@@ -105,9 +105,9 @@
                     <label class="block text-sm font-medium text-gray-700 mb-2">Currency</label>
                     <select name="currency" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent">
                         <option value="">All Currencies</option>
-                        <option value="USD" {{ request('currency') === 'USD' ? 'selected' : '' }}>USD</option>
-                        <option value="EUR" {{ request('currency') === 'EUR' ? 'selected' : '' }}>EUR</option>
-                        <option value="GBP" {{ request('currency') === 'GBP' ? 'selected' : '' }}>GBP</option>
+                        <option value="USD" {{ request('currency') == 'USD' ? 'selected' : '' }}>USD</option>
+                        <option value="EUR" {{ request('currency') == 'EUR' ? 'selected' : '' }}>EUR</option>
+                        <option value="GBP" {{ request('currency') == 'GBP' ? 'selected' : '' }}>GBP</option>
                     </select>
                 </div>
             </div>

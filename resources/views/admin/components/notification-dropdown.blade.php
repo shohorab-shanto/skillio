@@ -94,7 +94,7 @@ function displayAdminNotifications(notifications) {
     // Hide loading state
     loading.classList.add('hidden');
 
-    if (notifications.length === 0) {
+    if (notifications.length == 0) {
         // Show empty state
         empty.classList.remove('hidden');
         list.innerHTML = '';
@@ -219,7 +219,7 @@ document.addEventListener('click', function(event) {
 
 // Setup real-time admin notifications
 function setupAdminRealtimeNotifications() {
-    if (typeof window.Echo !== 'undefined') {
+    if (typeof window.Echo != 'undefined') {
         const userId = {{ auth()->id() }};
         const channel = window.Echo.private(`user.${userId}`);
         

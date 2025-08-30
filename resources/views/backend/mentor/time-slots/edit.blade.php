@@ -39,7 +39,7 @@ select.custom-dropdown:-moz-focusring {
         
         <!-- Header Actions -->
         <div class="flex items-center space-x-3">
-            @if($timeSlot->status === 'active')
+            @if($timeSlot->status == 'active')
                 <button type="button" 
                         onclick="confirmDelete()"
                         class="bg-red-600 hover:bg-red-700 text-white px-3 py-2 rounded-lg transition-colors flex items-center space-x-1"
@@ -254,14 +254,14 @@ function closeDeleteModal() {
 // Close modal when clicking outside
 document.addEventListener('click', function(event) {
     const modal = document.getElementById('deleteModal');
-    if (event.target === modal) {
+    if (event.target == modal) {
         closeDeleteModal();
     }
 });
 
 // Close modal with Escape key
 document.addEventListener('keydown', function(event) {
-    if (event.key === 'Escape') {
+    if (event.key == 'Escape') {
         closeDeleteModal();
     }
 });

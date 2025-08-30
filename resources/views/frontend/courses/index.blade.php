@@ -406,11 +406,11 @@
         
         // Update navigation button states
         function updateNavigation() {
-            prevBtn.disabled = currentGroup === 0;
-            nextBtn.disabled = currentGroup === totalGroups - 1;
+            prevBtn.disabled = currentGroup == 0;
+            nextBtn.disabled = currentGroup == totalGroups - 1;
             
-            prevBtn.style.opacity = currentGroup === 0 ? '0.5' : '1';
-            nextBtn.style.opacity = currentGroup === totalGroups - 1 ? '0.5' : '1';
+            prevBtn.style.opacity = currentGroup == 0 ? '0.5' : '1';
+            nextBtn.style.opacity = currentGroup == totalGroups - 1 ? '0.5' : '1';
         }
         
         // Navigate to specific group

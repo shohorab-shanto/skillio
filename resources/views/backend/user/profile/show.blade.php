@@ -183,7 +183,7 @@ function togglePassword(fieldId) {
     const field = document.getElementById(fieldId);
     const icon = field.nextElementSibling.querySelector('i');
     
-    if (field.type === 'password') {
+    if (field.type == 'password') {
         field.type = 'text';
         icon.classList.remove('fa-eye');
         icon.classList.add('fa-eye-slash');
@@ -250,7 +250,7 @@ document.getElementById('password-form').addEventListener('submit', function(e) 
         return false;
     }
     
-    if (password !== confirmPassword) {
+    if (password != confirmPassword) {
         e.preventDefault();
         alert('Password confirmation does not match.');
         return false;

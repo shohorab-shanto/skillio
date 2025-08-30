@@ -334,7 +334,7 @@ class ChatController extends Controller
         $message->load('sender');
 
         // Create notification for recipient if they're not active in the conversation
-        $recipientId = $user->id === $conversation->user_id ? $conversation->mentor->user_id : $conversation->user_id;
+        $recipientId = $user->id == $conversation->user_id ? $conversation->mentor->user_id : $conversation->user_id;
         $recipient = User::find($recipientId);
         
         if ($recipient) {

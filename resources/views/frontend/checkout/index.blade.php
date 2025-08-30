@@ -8,14 +8,14 @@
         <!-- Header -->
         <div class="text-center mb-8">
             <h1 class="text-3xl md:text-4xl font-bold text-gray-900 mb-4">
-                @if($type === 'session')
+                @if($type == 'session')
                     {{ __('trans.complete_session_booking') }}
                 @else
                     {{ __('trans.complete_course_enrollment') }}
                 @endif
             </h1>
             <p class="text-lg text-gray-600">
-                @if($type === 'session')
+                @if($type == 'session')
                     {{ __('trans.session_payment_description') }} {{ $item->mentor->user->name }}
                 @else
                     {{ __('trans.course_payment_description') }} {{ $item->title }}
@@ -27,7 +27,7 @@
             <!-- Item Details -->
             <div class="bg-white rounded-2xl shadow-lg p-6">
                 <h2 class="text-xl font-bold text-gray-900 mb-4">
-                    @if($type === 'session')
+                    @if($type == 'session')
                         {{ __('trans.session_details') }}
                     @else
                         {{ __('trans.course_details') }}
@@ -43,17 +43,17 @@
                                 : asset('assets/images/user-avatar.png');
                         @endphp
                         <img src="{{ $photoPath }}" 
-                             alt="{{ $type === 'session' ? $item->mentor->user->name : $item->mentor->user->name }}" 
+                             alt="{{ $type == 'session' ? $item->mentor->user->name : $item->mentor->user->name }}" 
                              class="w-12 h-12 rounded-full object-cover">
                         <div>
                             <h3 class="font-semibold text-gray-900">
-                                {{ $type === 'session' ? $item->mentor->user->name : $item->mentor->user->name }}
+                                {{ $type == 'session' ? $item->mentor->user->name : $item->mentor->user->name }}
                             </h3>
                             <p class="text-sm text-gray-600">{{ $item->category->name }}</p>
                         </div>
                     </div>
 
-                    @if($type === 'session')
+                    @if($type == 'session')
                         <!-- Session Info -->
                         <div class="space-y-3">
                             <div class="flex justify-between items-center">
@@ -165,7 +165,7 @@
                 </div>
 
                 <!-- Payment Form -->
-                <form action="{{ $type === 'session' ? route('checkout.session.process', $item->id) : route('checkout.course.process', $item->id) }}" method="POST" id="payment-form">
+                <form action="{{ $type == 'session' ? route('checkout.session.process', $item->id) : route('checkout.course.process', $item->id) }}" method="POST" id="payment-form">
                     @csrf
                     
                     <!-- Cardholder Name -->

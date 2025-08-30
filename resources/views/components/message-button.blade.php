@@ -39,7 +39,7 @@ async function startConversationWith(userId) {
         if (response.ok) {
             const result = await response.json();
             window.location.href = `/chat/${result.conversation_id}`;
-        } else if (response.status === 401) {
+        } else if (response.status == 401) {
             alert('{{ __('trans.please_login_to_start_conversation') }}');
             window.location.href = '/login';
         } else {

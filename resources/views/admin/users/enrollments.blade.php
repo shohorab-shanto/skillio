@@ -70,12 +70,12 @@
                     @forelse($enrollments as $enrollment)
                     <tr class="hover:bg-gray-50 transition-colors duration-200">
                         <td class="px-6 py-4 whitespace-nowrap">
-                            @if($enrollment->enrollable_type === 'App\Models\Course')
+                            @if($enrollment->enrollable_type == 'App\Models\Course')
                                 <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-blue-100 text-blue-800">
                                     <i class="fa-solid fa-book mr-1"></i>
                                     Course
                                 </span>
-                            @elseif($enrollment->enrollable_type === 'App\Models\SessionBooking')
+                            @elseif($enrollment->enrollable_type == 'App\Models\SessionBooking')
                                 <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-green-100 text-green-800">
                                     <i class="fa-solid fa-clock mr-1"></i>
                                     Session
@@ -88,7 +88,7 @@
                         </td>
                         <td class="px-6 py-4">
                             @if($enrollment->enrollable)
-                                @if($enrollment->enrollable_type === 'App\Models\Course')
+                                @if($enrollment->enrollable_type == 'App\Models\Course')
                                     <div class="text-sm font-medium text-gray-900">
                                         {{ $enrollment->enrollable->title ?? 'Untitled Course' }}
                                     </div>
@@ -99,7 +99,7 @@
                                             Duration: N/A
                                         @endif
                                     </div>
-                                @elseif($enrollment->enrollable_type === 'App\Models\SessionBooking')
+                                @elseif($enrollment->enrollable_type == 'App\Models\SessionBooking')
                                     <div class="text-sm font-medium text-gray-900">
                                         Session with {{ $enrollment->enrollable->mentor->user->name ?? 'Unknown Mentor' }}
                                     </div>
@@ -147,9 +147,9 @@
                                         ${{ number_format($payment->gross_amount, 2) }}
                                     </div>
                                     <div class="text-xs text-gray-500">
-                                        @if($payment->transaction_status === 'completed')
+                                        @if($payment->transaction_status == 'completed')
                                             <span class="text-green-600">Paid</span>
-                                        @elseif($payment->transaction_status === 'pending')
+                                        @elseif($payment->transaction_status == 'pending')
                                             <span class="text-yellow-600">Pending</span>
                                         @else
                                             <span class="text-red-600">{{ ucfirst($payment->transaction_status) }}</span>
@@ -163,9 +163,9 @@
                                     ${{ number_format($enrollment->amount, 2) }}
                                 </div>
                                 <div class="text-xs text-gray-500">
-                                    @if($enrollment->payment_status === 'paid')
+                                    @if($enrollment->payment_status == 'paid')
                                         <span class="text-green-600">Paid</span>
-                                    @elseif($enrollment->payment_status === 'pending')
+                                    @elseif($enrollment->payment_status == 'pending')
                                         <span class="text-yellow-600">Pending</span>
                                     @else
                                         <span class="text-red-600">{{ ucfirst($enrollment->payment_status) }}</span>

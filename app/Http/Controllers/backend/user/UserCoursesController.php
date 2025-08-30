@@ -41,9 +41,9 @@ class UserCoursesController extends Controller
         }
 
         if ($request->filled('status')) {
-            if ($request->status === 'active') {
+            if ($request->status == 'active') {
                 $query->where('enrollment_status', 'active');
-            } elseif ($request->status === 'completed') {
+            } elseif ($request->status == 'completed') {
                 $query->where('enrollment_status', 'completed');
             } else {
                 $query->where('enrollment_status', $request->status);

@@ -73,7 +73,7 @@ document.addEventListener('click', function(event) {
     });
 
     if (window.innerWidth < 1024 && isMobileMenuOpen) {
-        if (event.target === overlay || (!sidebar.contains(event.target) && !clickedOnMenuBtn)) {
+        if (event.target == overlay || (!sidebar.contains(event.target) && !clickedOnMenuBtn)) {
             toggleMobileMenu();
         }
     }
@@ -146,14 +146,14 @@ document.addEventListener('click', function(event) {
     const modal = document.getElementById('logout-modal');
     const modalContent = document.getElementById('logout-modal-content');
     
-    if (event.target === modal) {
+    if (event.target == modal) {
         cancelLogout();
     }
 });
 
 // Close modal with Escape key
 document.addEventListener('keydown', function(event) {
-    if (event.key === 'Escape') {
+    if (event.key == 'Escape') {
         const modal = document.getElementById('logout-modal');
         if (!modal.classList.contains('hidden')) {
             cancelLogout();

@@ -145,7 +145,7 @@ class Notification extends DatabaseNotification
         }
 
         // Check if the current user is the mentor of this course
-        if (auth()->check() && auth()->user()->mentor && auth()->user()->mentor->id === $course->mentor_id) {
+        if (auth()->check() && auth()->user()->mentor && auth()->user()->mentor->id == $course->mentor_id) {
             // Mentor viewing their own course
             return route('mentor.courses.show', $course->id);
         } else {

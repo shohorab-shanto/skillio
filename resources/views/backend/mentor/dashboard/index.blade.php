@@ -119,15 +119,15 @@
                         </button>
                         <div id="filterDropdown" class="hidden absolute right-0 mt-2 w-40 bg-white border border-gray-200 rounded-lg shadow-lg z-10">
                             <a href="{{ request()->fullUrlWithQuery(['status' => 'all']) }}" 
-                               class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 {{ request('status', 'all') === 'all' ? 'bg-purple-100 text-purple-700' : '' }}">
+                               class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 {{ request('status', 'all') == 'all' ? 'bg-purple-100 text-purple-700' : '' }}">
                                 <i class="fa-solid fa-list mr-2"></i>All Students
                             </a>
                             <a href="{{ request()->fullUrlWithQuery(['status' => 'active']) }}" 
-                               class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 {{ request('status') === 'active' ? 'bg-purple-100 text-purple-700' : '' }}">
+                               class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 {{ request('status') == 'active' ? 'bg-purple-100 text-purple-700' : '' }}">
                                 <i class="fa-solid fa-check-circle mr-2 text-green-600"></i>Active
                             </a>
                             <a href="{{ request()->fullUrlWithQuery(['status' => 'inactive']) }}" 
-                               class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 {{ request('status') === 'inactive' ? 'bg-purple-100 text-purple-700' : '' }}">
+                               class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 {{ request('status') == 'inactive' ? 'bg-purple-100 text-purple-700' : '' }}">
                                 <i class="fa-solid fa-times-circle mr-2 text-red-600"></i>Inactive
                             </a>
                         </div>
@@ -177,14 +177,14 @@
                                 <td class="py-4 px-4">
                                     <div class="flex flex-col">
                                         <p class="text-gray-900 font-medium">
-                                            @if($enrollment->enrollable_type === 'App\Models\Course')
+                                            @if($enrollment->enrollable_type == 'App\Models\Course')
                                                 {{ $service->title }}
                                             @else
                                                 Session
                                             @endif
                                         </p>
                                         <p class="text-xs text-gray-500">
-                                            @if($enrollment->enrollable_type === 'App\Models\Course')
+                                            @if($enrollment->enrollable_type == 'App\Models\Course')
                                                 Course
                                             @else
                                                 Session
@@ -196,7 +196,7 @@
                                     <p class="text-gray-900">{{ $enrollment->created_at->format('M d, Y') }}</p>
                                 </td>
                                 <td class="py-4 px-4">
-                                    @if($durationLeft && $durationLeft !== 'No end date' && $durationLeft !== 'No time set')
+                                    @if($durationLeft && $durationLeft != 'No end date' && $durationLeft != 'No time set')
                                         <span class="inline-block px-3 py-1 rounded-full text-sm font-medium
                                             {{ $isActive ? 'bg-green-100 text-green-800' : 'bg-gray-100 text-gray-800' }}">
                                             {{ $durationLeft }}
@@ -319,7 +319,7 @@ document.addEventListener('DOMContentLoaded', function() {
     // Handle search form submission
     const searchInput = document.querySelector('input[placeholder="Search students or services..."]');
     searchInput.addEventListener('keypress', function(e) {
-        if (e.key === 'Enter') {
+        if (e.key == 'Enter') {
             const searchValue = this.value;
             const currentUrl = new URL(window.location);
             currentUrl.searchParams.set('search', searchValue);

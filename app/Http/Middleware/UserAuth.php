@@ -15,7 +15,7 @@ class UserAuth
      */
     public function handle(Request $request, Closure $next): Response
     {
-        if (auth()->check() && auth()->user()->role === 'user') {
+        if (auth()->check() && auth()->user()->role == 'user') {
             return $next($request);
         }
         

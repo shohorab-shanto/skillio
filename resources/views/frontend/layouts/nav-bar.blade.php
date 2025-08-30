@@ -79,65 +79,65 @@
                         </button>
                         <div class="absolute top-full right-0 mt-2 w-48 bg-white border border-gray-200 rounded-lg shadow-lg z-50 hidden">
                             <div class="py-2">
-                                <button type="submit" name="lang" value="en" class="block w-full text-left px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 hover:text-purple-700 transition-colors duration-200 {{ app()->getLocale() === 'en' ? 'bg-purple-50 text-purple-700' : '' }}">
+                                <button type="submit" name="lang" value="en" class="block w-full text-left px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 hover:text-purple-700 transition-colors duration-200 {{ app()->getLocale() == 'en' ? 'bg-purple-50 text-purple-700' : '' }}">
                                     <span class="flex items-center space-x-2">
                                         <svg class="w-4 h-4" viewBox="0 0 24 24" fill="currentColor">
                                             <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-1 17.93c-3.94-.49-7-3.85-7-7.93 0-.62.08-1.21.21-1.79L9 15v1c0 1.1.9 2 2 2v1.93zm6.9-2.54c-.26-.81-1-1.39-1.9-1.39h-1v-3c0-.55-.45-1-1-1H8v-2h2c.55 0 1-.45 1-1V7h2c1.1 0 2-.9 2-2v-.41c2.93 1.19 5 4.06 5 7.41 0 2.08-.8 3.97-2.1 5.39z"/>
                                         </svg>
                                         <span>{{ __('trans.english') }}</span>
-                                        @if(app()->getLocale() === 'en')
+                                        @if(app()->getLocale() == 'en')
                                             <svg class="w-4 h-4 text-purple-600" fill="currentColor" viewBox="0 0 20 20">
                                                 <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/>
                                             </svg>
                                         @endif
                                     </span>
                                 </button>
-                                <button type="submit" name="lang" value="hr" class="block w-full text-left px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 hover:text-purple-700 transition-colors duration-200 {{ app()->getLocale() === 'hr' ? 'bg-purple-50 text-purple-700' : '' }}">
+                                <button type="submit" name="lang" value="hr" class="block w-full text-left px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 hover:text-purple-700 transition-colors duration-200 {{ app()->getLocale() == 'hr' ? 'bg-purple-50 text-purple-700' : '' }}">
                                     <span class="flex items-center space-x-2">
                                         <svg class="w-4 h-4" viewBox="0 0 24 24" fill="currentColor">
                                             <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-1 17.93c-3.94-.49-7-3.85-7-7.93 0-.62.08-1.21.21-1.79L9 15v1c0 1.1.9 2 2 2v1.93zm6.9-2.54c-.26-.81-1-1.39-1.9-1.39h-1v-3c0-.55-.45-1-1-1H8v-2h2c.55 0 1-.45 1-1V7h2c1.1 0 2-.9 2-2v-.41c2.93 1.19 5 4.06 5 7.41 0 2.08-.8 3.97-2.1 5.39z"/>
                                         </svg>
                                         <span>{{ __('trans.hrvatski') }}</span>
-                                        @if(app()->getLocale() === 'hr')
+                                        @if(app()->getLocale() == 'hr')
                                             <svg class="w-4 h-4 text-purple-600" fill="currentColor" viewBox="0 0 20 20">
                                                 <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/>
                                             </svg>
                                         @endif
                                     </span>
                                 </button>
-                                <button type="submit" name="lang" value="sr" class="block w-full text-left px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 hover:text-purple-700 transition-colors duration-200 {{ app()->getLocale() === 'sr' ? 'bg-purple-50 text-purple-700' : '' }}">
+                                <button type="submit" name="lang" value="sr" class="block w-full text-left px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 hover:text-purple-700 transition-colors duration-200 {{ app()->getLocale() == 'sr' ? 'bg-purple-50 text-purple-700' : '' }}">
                                     <span class="flex items-center space-x-2">
                                         <svg class="w-4 h-4" viewBox="0 0 24 24" fill="currentColor">
                                             <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-1 17.93c-3.94-.49-7-3.85-7-7.93 0-.62.08-1.21.21-1.79L9 15v1c0 1.1.9 2 2 2v1.93zm6.9-2.54c-.26-.81-1-1.39-1.9-1.39h-1v-3c0-.55-.45-1-1-1H8v-2h2c.55 0 1-.45 1-1V7h2c1.1 0 2-.9 2-2v-.41c2.93 1.19 5 4.06 5 7.41 0 2.08-.8 3.97-2.1 5.39z"/>
                                         </svg>
                                         <span>{{ __('trans.srpski') }}</span>
-                                        @if(app()->getLocale() === 'sr')
+                                        @if(app()->getLocale() == 'sr')
                                             <svg class="w-4 h-4 text-purple-600" fill="currentColor" viewBox="0 0 20 20">
                                                 <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/>
                                             </svg>
                                         @endif
                                     </span>
                                 </button>
-                                <button type="submit" name="lang" value="sl" class="block w-full text-left px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 hover:text-purple-700 transition-colors duration-200 {{ app()->getLocale() === 'sl' ? 'bg-purple-50 text-purple-700' : '' }}">
+                                <button type="submit" name="lang" value="sl" class="block w-full text-left px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 hover:text-purple-700 transition-colors duration-200 {{ app()->getLocale() == 'sl' ? 'bg-purple-50 text-purple-700' : '' }}">
                                     <span class="flex items-center space-x-2">
                                         <svg class="w-4 h-4" viewBox="0 0 24 24" fill="currentColor">
                                             <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-1 17.93c-3.94-.49-7-3.85-7-7.93 0-.62.08-1.21.21-1.79L9 15v1c0 1.1.9 2 2 2v1.93zm6.9-2.54c-.26-.81-1-1.39-1.9-1.39h-1v-3c0-.55-.45-1-1-1H8v-2h2c.55 0 1-.45 1-1V7h2c1.1 0 2-.9 2-2v-.41c2.93 1.19 5 4.06 5 7.41 0 2.08-.8 3.97-2.1 5.39z"/>
                                         </svg>
                                         <span>{{ __('trans.slovenscina') }}</span>
-                                        @if(app()->getLocale() === 'sl')
+                                        @if(app()->getLocale() == 'sl')
                                             <svg class="w-4 h-4 text-purple-600" fill="currentColor" viewBox="0 0 20 20">
                                                 <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/>
                                             </svg>
                                         @endif
                                     </span>
                                 </button>
-                                <button type="submit" name="lang" value="mk" class="block w-full text-left px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 hover:text-purple-700 transition-colors duration-200 {{ app()->getLocale() === 'mk' ? 'bg-purple-50 text-purple-700' : '' }}">
+                                <button type="submit" name="lang" value="mk" class="block w-full text-left px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 hover:text-purple-700 transition-colors duration-200 {{ app()->getLocale() == 'mk' ? 'bg-purple-50 text-purple-700' : '' }}">
                                     <span class="flex items-center space-x-2">
                                         <svg class="w-4 h-4" viewBox="0 0 24 24" fill="currentColor">
                                             <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-1 17.93c-3.94-.49-7-3.85-7-7.93 0-.62.08-1.21.21-1.79L9 15v1c0 1.1.9 2 2 2v1.93zm6.9-2.54c-.26-.81-1-1.39-1.9-1.39h-1v-3c0-.55-.45-1-1-1H8v-2h2c.55 0 1-.45 1-1V7h2c1.1 0 2-.9 2-2v-.41c2.93 1.19 5 4.06 5 7.41 0 2.08-.8 3.97-2.1 5.39z"/>
                                         </svg>
                                         <span>{{ __('trans.makedonski') }}</span>
-                                        @if(app()->getLocale() === 'mk')
+                                        @if(app()->getLocale() == 'mk')
                                             <svg class="w-4 h-4 text-purple-600" fill="currentColor" viewBox="0 0 20 20">
                                                 <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/>
                                             </svg>
@@ -261,65 +261,65 @@
                             <!-- Mobile Language Menu -->
                             <div id="mobile-language-menu" class="hidden mt-2 border border-gray-200 rounded-lg bg-white shadow-sm">
                                 <div class="py-2">
-                                    <button type="submit" name="lang" value="en" class="block w-full text-left px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 transition-colors duration-200 {{ app()->getLocale() === 'en' ? 'bg-purple-50 text-purple-700' : '' }}">
+                                    <button type="submit" name="lang" value="en" class="block w-full text-left px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 transition-colors duration-200 {{ app()->getLocale() == 'en' ? 'bg-purple-50 text-purple-700' : '' }}">
                                         <span class="flex items-center space-x-2">
                                             <svg class="w-4 h-4" viewBox="0 0 24 24" fill="currentColor">
                                                 <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-1 17.93c-3.94-.49-7-3.85-7-7.93 0-.62.08-1.21.21-1.79L9 15v1c0 1.1.9 2 2 2v1.93zm6.9-2.54c-.26-.81-1-1.39-1.9-1.39h-1v-3c0-.55-.45-1-1-1H8v-2h2c.55 0 1-.45 1-1V7h2c1.1 0 2-.9 2-2v-.41c2.93 1.19 5 4.06 5 7.41 0 2.08-.8 3.97-2.1 5.39z"/>
                                             </svg>
                                             <span>{{ __('trans.english') }}</span>
-                                            @if(app()->getLocale() === 'en')
+                                            @if(app()->getLocale() == 'en')
                                                 <svg class="w-4 h-4 text-purple-600" fill="currentColor" viewBox="0 0 20 20">
                                                     <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/>
                                                 </svg>
                                             @endif
                                         </span>
                                     </button>
-                                    <button type="submit" name="lang" value="hr" class="block w-full text-left px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 transition-colors duration-200 {{ app()->getLocale() === 'hr' ? 'bg-purple-50 text-purple-700' : '' }}">
+                                    <button type="submit" name="lang" value="hr" class="block w-full text-left px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 transition-colors duration-200 {{ app()->getLocale() == 'hr' ? 'bg-purple-50 text-purple-700' : '' }}">
                                         <span class="flex items-center space-x-2">
                                             <svg class="w-4 h-4" viewBox="0 0 24 24" fill="currentColor">
                                                 <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-1 17.93c-3.94-.49-7-3.85-7-7.93 0-.62.08-1.21.21-1.79L9 15v1c0 1.1.9 2 2 2v1.93zm6.9-2.54c-.26-.81-1-1.39-1.9-1.39h-1v-3c0-.55-.45-1-1-1H8v-2h2c.55 0 1-.45 1-1V7h2c1.1 0 2-.9 2-2v-.41c2.93 1.19 5 4.06 5 7.41 0 2.08-.8 3.97-2.1 5.39z"/>
                                             </svg>
                                             <span>Hrvatski</span>
-                                            @if(app()->getLocale() === 'hr')
+                                            @if(app()->getLocale() == 'hr')
                                                 <svg class="w-4 h-4 text-purple-600" fill="currentColor" viewBox="0 0 20 20">
                                                     <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/>
                                                 </svg>
                                             @endif
                                         </span>
                                     </button>
-                                    <button type="submit" name="lang" value="sr" class="block w-full text-left px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 transition-colors duration-200 {{ app()->getLocale() === 'sr' ? 'bg-purple-50 text-purple-700' : '' }}">
+                                    <button type="submit" name="lang" value="sr" class="block w-full text-left px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 transition-colors duration-200 {{ app()->getLocale() == 'sr' ? 'bg-purple-50 text-purple-700' : '' }}">
                                         <span class="flex items-center space-x-2">
                                             <svg class="w-4 h-4" viewBox="0 0 24 24" fill="currentColor">
                                                 <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-1 17.93c-3.94-.49-7-3.85-7-7.93 0-.62.08-1.21.21-1.79L9 15v1c0 1.1.9 2 2 2v1.93zm6.9-2.54c-.26-.81-1-1.39-1.9-1.39h-1v-3c0-.55-.45-1-1-1H8v-2h2c.55 0 1-.45 1-1V7h2c1.1 0 2-.9 2-2v-.41c2.93 1.19 5 4.06 5 7.41 0 2.08-.8 3.97-2.1 5.39z"/>
                                             </svg>
                                             <span>Српски</span>
-                                            @if(app()->getLocale() === 'sr')
+                                            @if(app()->getLocale() == 'sr')
                                                 <svg class="w-4 h-4 text-purple-600" fill="currentColor" viewBox="0 0 20 20">
                                                     <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/>
                                                 </svg>
                                             @endif
                                         </span>
                                     </button>
-                                    <button type="submit" name="lang" value="sl" class="block w-full text-left px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 transition-colors duration-200 {{ app()->getLocale() === 'sl' ? 'bg-purple-50 text-purple-700' : '' }}">
+                                    <button type="submit" name="lang" value="sl" class="block w-full text-left px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 transition-colors duration-200 {{ app()->getLocale() == 'sl' ? 'bg-purple-50 text-purple-700' : '' }}">
                                         <span class="flex items-center space-x-2">
                                             <svg class="w-4 h-4" viewBox="0 0 24 24" fill="currentColor">
                                                 <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-1 17.93c-3.94-.49-7-3.85-7-7.93 0-.62.08-1.21.21-1.79L9 15v1c0 1.1.9 2 2 2v1.93zm6.9-2.54c-.26-.81-1-1.39-1.9-1.39h-1v-3c0-.55-.45-1-1-1H8v-2h2c.55 0 1-.45 1-1V7h2c1.1 0 2-.9 2-2v-.41c2.93 1.19 5 4.06 5 7.41 0 2.08-.8 3.97-2.1 5.39z"/>
                                             </svg>
                                             <span>Slovenščina</span>
-                                            @if(app()->getLocale() === 'sl')
+                                            @if(app()->getLocale() == 'sl')
                                                 <svg class="w-4 h-4 text-purple-600" fill="currentColor" viewBox="0 0 20 20">
                                                     <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/>
                                                 </svg>
                                             @endif
                                         </span>
                                     </button>
-                                    <button type="submit" name="lang" value="mk" class="block w-full text-left px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 transition-colors duration-200 {{ app()->getLocale() === 'mk' ? 'bg-purple-50 text-purple-700' : '' }}">
+                                    <button type="submit" name="lang" value="mk" class="block w-full text-left px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 transition-colors duration-200 {{ app()->getLocale() == 'mk' ? 'bg-purple-50 text-purple-700' : '' }}">
                                         <span class="flex items-center space-x-2">
                                             <svg class="w-4 h-4" viewBox="0 0 24 24" fill="currentColor">
                                                 <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.93zm6.9-2.54c-.26-.81-1-1.39-1.9-1.39h-1v-3c0-.55-.45-1-1-1H8v-2h2c.55 0 1-.45 1-1V7h2c1.1 0 2-.9 2-2v-.41c2.93 1.19 5 4.06 5 7.41 0 2.08-.8 3.97-2.1 5.39z"/>
                                             </svg>
                                             <span>Македонски</span>
-                                            @if(app()->getLocale() === 'mk')
+                                            @if(app()->getLocale() == 'mk')
                                                 <svg class="w-4 h-4 text-purple-600" fill="currentColor" viewBox="0 0 20 20">
                                                     <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/>
                                                 </svg>
@@ -582,14 +582,14 @@ document.addEventListener('click', function(event) {
     const modal = document.getElementById('logout-modal');
     const modalContent = document.getElementById('logout-modal-content');
     
-    if (event.target === modal) {
+    if (event.target == modal) {
         cancelLogout();
     }
 });
 
 // Close logout modal with Escape key
 document.addEventListener('keydown', function(event) {
-    if (event.key === 'Escape') {
+    if (event.key == 'Escape') {
         const modal = document.getElementById('logout-modal');
         if (!modal.classList.contains('hidden')) {
             cancelLogout();
@@ -659,7 +659,7 @@ function performSearch(query, resultsContainer) {
 
 // Display search results
 function displaySearchResults(results, container) {
-    if (!results || results.length === 0) {
+    if (!results || results.length == 0) {
         container.innerHTML = `
             <div class="p-4 text-center text-gray-500">
                 <svg class="mx-auto h-8 w-8 text-gray-400 mb-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -687,7 +687,7 @@ function displaySearchResults(results, container) {
     }
     
     const resultsHTML = results.map((result, index) => {
-        if (result.type === 'course') {
+        if (result.type == 'course') {
             return `
                 <a href="${safeGet(result, 'url', '#')}" class="block p-4 hover:bg-gray-50 border-b border-gray-100 last:border-b-0 transition-colors duration-200">
                     <div class="flex items-start space-x-4">
@@ -721,7 +721,7 @@ function displaySearchResults(results, container) {
                     </div>
                 </a>
             `;
-        } else if (result.type === 'mentor') {
+        } else if (result.type == 'mentor') {
             return `
                 <a href="${safeGet(result, 'url', '#')}" class="block p-4 hover:bg-gray-50 border-b border-gray-100 last:border-b-0 transition-colors duration-200">
                     <div class="flex items-start space-x-4">

@@ -222,7 +222,7 @@
                                 @endif
                             </span>
                             
-                            @if($enrollment->enrollment_status === 'active')
+                            @if($enrollment->enrollment_status == 'active')
                                 @if($enrollment->enrollable->date && $enrollment->enrollable->date->isFuture())
                                     <span class="inline-flex items-center px-2.5 py-1 rounded-full text-xs font-medium bg-green-500 text-white">
                                         <i class="fa-solid fa-clock mr-1"></i>
@@ -234,12 +234,12 @@
                                         Active
                                     </span>
                                 @endif
-                            @elseif($enrollment->enrollment_status === 'completed')
+                            @elseif($enrollment->enrollment_status == 'completed')
                                 <span class="inline-flex items-center px-2.5 py-1 rounded-full text-xs font-medium bg-blue-500 text-white">
                                     <i class="fa-solid fa-check-circle mr-1"></i>
                                     Completed
                                 </span>
-                            @elseif($enrollment->enrollment_status === 'cancelled')
+                            @elseif($enrollment->enrollment_status == 'cancelled')
                                 <span class="inline-flex items-center px-2.5 py-1 rounded-full text-xs font-medium bg-red-500 text-white">
                                     <i class="fa-solid fa-times mr-1"></i>
                                     Cancelled
@@ -252,7 +252,7 @@
                         <!-- Action Buttons -->
                         <div class="mt-4 pt-4 border-t border-gray-100">
                             <div class="flex items-center justify-center mb-3">
-                                @if($enrollment->enrollment_status === 'active' && $enrollment->enrollable->date && $enrollment->enrollable->date->isFuture())
+                                @if($enrollment->enrollment_status == 'active' && $enrollment->enrollable->date && $enrollment->enrollable->date->isFuture())
                                     <span class="text-green-600 hover:text-green-700 text-sm font-medium">
                                         <i class="fa-solid fa-video mr-1"></i>
                                         Join Session

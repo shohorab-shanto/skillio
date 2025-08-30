@@ -103,14 +103,14 @@
                                 </h3>
                             </div>
                             <div class="flex items-center space-x-2">
-                                @if($timeSlot->status === 'booked' && $timeSlot->user_id)
+                                @if($timeSlot->status == 'booked' && $timeSlot->user_id)
                                     <button onclick="showUserDetails({{ $timeSlot->user_id }}, '{{ $timeSlot->user->name }}', '{{ $timeSlot->user->email }}', '{{ $timeSlot->user->phone ?? 'N/A' }}', '{{ $timeSlot->user->address ?? 'N/A' }}', '{{ $timeSlot->user->created_at->format('M d, Y') }}')"
                                             class="text-blue-500 hover:text-blue-700 transition-colors"
                                             title="View Student Details">
                                         <i class="fa-solid fa-user text-sm"></i>
                                     </button>
                                 @endif
-                                @if($timeSlot->status === 'active')
+                                @if($timeSlot->status == 'active')
                                     <a href="{{ route('mentor.time-slots.edit', $timeSlot) }}" 
                                        class="text-gray-400 hover:text-purple-600 transition-colors"
                                        title="Edit Time Slot">
@@ -149,22 +149,22 @@
                         <div class="flex items-center justify-between text-sm text-gray-500 mb-4">
                             <span>{{ \Carbon\Carbon::parse($timeSlot->date)->format('j F Y') }}</span>
                             
-                            @if($timeSlot->status === 'booked')
+                            @if($timeSlot->status == 'booked')
                                 <div class="flex items-center space-x-2">
                                     <span class="inline-flex items-center px-2.5 py-1 rounded-full text-xs font-medium bg-purple-500 text-white">
                                         <i class="fa-solid fa-user mr-1"></i>
                                         Booked
                                     </span>
                                 </div>
-                            @elseif($timeSlot->status === 'active')
+                            @elseif($timeSlot->status == 'active')
                                 <span class="inline-flex items-center px-2.5 py-1 rounded-full text-xs font-medium bg-green-500 text-white">
                                     Available
                                 </span>
-                            @elseif($timeSlot->status === 'completed')
+                            @elseif($timeSlot->status == 'completed')
                                 <span class="inline-flex items-center px-2.5 py-1 rounded-full text-xs font-medium bg-blue-500 text-white">
                                     Completed
                                 </span>
-                            @elseif($timeSlot->status === 'cancelled')
+                            @elseif($timeSlot->status == 'cancelled')
                                 <span class="inline-flex items-center px-2.5 py-1 rounded-full text-xs font-medium bg-red-500 text-white">
                                     Cancelled
                                 </span>
@@ -178,7 +178,7 @@
                                 {{ number_format($timeSlot->fee, 2) }}
                             </div>
                             <div class="text-sm text-gray-600">
-                                <i class="fa-solid fa-{{ $timeSlot->mentor->type === 'online' ? 'video' : 'location-dot' }} mr-1"></i>
+                                <i class="fa-solid fa-{{ $timeSlot->mentor->type == 'online' ? 'video' : 'location-dot' }} mr-1"></i>
                                 {{ ucfirst($timeSlot->mentor->type) }}
                             </div>
                         </div>
@@ -362,14 +362,14 @@ function chatWithUser() {
 // Close modal when clicking outside
 document.addEventListener('click', function(event) {
     const modal = document.getElementById('userDetailsModal');
-    if (event.target === modal) {
+    if (event.target == modal) {
         closeUserDetailsModal();
     }
 });
 
 // Close modal with Escape key
 document.addEventListener('keydown', function(event) {
-    if (event.key === 'Escape') {
+    if (event.key == 'Escape') {
         closeUserDetailsModal();
     }
 });

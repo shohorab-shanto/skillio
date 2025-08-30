@@ -28,7 +28,7 @@
                 messagesDiv.appendChild(messageEl);
             }
             
-            if (typeof window.Echo !== 'undefined') {
+            if (typeof window.Echo != 'undefined') {
                 statusDiv.textContent = 'Echo loaded successfully!';
                 addMessage('Echo initialized');
                 

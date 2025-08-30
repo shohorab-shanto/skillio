@@ -119,12 +119,12 @@
         
         <!-- Course Status -->
         <div class="flex items-center space-x-3">
-            @if($course->status === 'approved')
+            @if($course->status == 'approved')
                 <span class="inline-flex items-center px-3 py-1 rounded-full text-sm font-medium bg-green-100 text-green-800">
                     <i class="fa-solid fa-check mr-1"></i>
                     Approved
                 </span>
-            @elseif($course->status === 'pending')
+            @elseif($course->status == 'pending')
                 <span class="inline-flex items-center px-3 py-1 rounded-full text-sm font-medium bg-yellow-100 text-yellow-800">
                     <i class="fa-solid fa-clock mr-1"></i>
                     Pending Approval
@@ -155,7 +155,7 @@
 
 @section('content')
 <div class="w-full">
-    @if($course->status === 'approved')
+    @if($course->status == 'approved')
         <div class="bg-blue-50 border border-blue-200 rounded-lg p-4 mb-6">
             <div class="flex">
                 <div class="flex-shrink-0">
@@ -534,7 +534,7 @@ function updateSubCategories() {
                 optionDiv.dataset.name = subCat.name;
                 
                 // Check if this sub-category is already selected
-                const isSelected = selectedSubCategories.find(item => item.id === subCat.id);
+                const isSelected = selectedSubCategories.find(item => item.id == subCat.id);
                 if (isSelected) {
                     optionDiv.classList.add('bg-purple-50');
                 }
@@ -566,7 +566,7 @@ function updateSubCategories() {
 }
 
 function toggleSubCategory(id, name, element) {
-    const index = selectedSubCategories.findIndex(item => item.id === id);
+    const index = selectedSubCategories.findIndex(item => item.id == id);
     const checkIcon = element.querySelector('.selected-check');
     
     if (index > -1) {
@@ -591,7 +591,7 @@ function updateSelectedDisplay() {
     
     container.innerHTML = '';
     
-    if (selectedSubCategories.length === 0) {
+    if (selectedSubCategories.length == 0) {
         container.appendChild(placeholder);
     } else {
         // Create selected tags
@@ -624,7 +624,7 @@ function updateSelectedDisplay() {
 function removeSubCategory(event, id) {
     event.stopPropagation(); // Prevent dropdown from opening when removing tag
     
-    const index = selectedSubCategories.findIndex(item => item.id === id);
+    const index = selectedSubCategories.findIndex(item => item.id == id);
     if (index > -1) {
         selectedSubCategories.splice(index, 1);
         
@@ -666,7 +666,7 @@ function initializeSelectedSubCategories() {
             const selectedCategory = categoriesData.find(cat => cat.id == selectedCategoryId);
             if (selectedCategory && selectedCategory.sub_categories) {
                 existingSubCategories.forEach(subCatId => {
-                    const subCategory = selectedCategory.sub_categories.find(sc => sc.id === subCatId);
+                    const subCategory = selectedCategory.sub_categories.find(sc => sc.id == subCatId);
                     if (subCategory) {
                         selectedSubCategories.push({ id: subCategory.id, name: subCategory.name });
                     }
@@ -713,7 +713,7 @@ function calculateDuration() {
         const daysDifference = Math.ceil(timeDifference / (1000 * 3600 * 24));
         
         if (daysDifference > 0 && daysDifference <= 365) {
-            const durationText = daysDifference === 1 ? '1 day' : `${daysDifference} days`;
+            const durationText = daysDifference == 1 ? '1 day' : `${daysDifference} days`;
             durationDisplay.textContent = durationText;
             durationDisplay.className = 'text-gray-700 font-medium';
         } else if (daysDifference <= 0) {
@@ -785,14 +785,14 @@ function confirmDelete() {
 // Close modal when clicking outside of it
 document.addEventListener('click', function(event) {
     const modal = document.getElementById('deleteModal');
-    if (event.target === modal) {
+    if (event.target == modal) {
         hideDeleteModal();
     }
 });
 
 // Close modal with Escape key
 document.addEventListener('keydown', function(event) {
-    if (event.key === 'Escape') {
+    if (event.key == 'Escape') {
         hideDeleteModal();
     }
 });

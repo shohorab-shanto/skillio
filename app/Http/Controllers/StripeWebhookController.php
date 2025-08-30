@@ -26,7 +26,7 @@ class StripeWebhookController extends Controller
             $event = Webhook::constructEvent($payload, $sigHeader, $webhookSecret);
         } catch (SignatureVerificationException $e) {
             // For localhost testing, allow test webhook secret
-            if ($webhookSecret === 'whsec_test_localhost') {
+            if ($webhookSecret == 'whsec_test_localhost') {
                 $event = json_decode($payload);
                 Log::info('Using test webhook secret for localhost development');
             } else {
@@ -99,7 +99,7 @@ class StripeWebhookController extends Controller
                 ]);
 
                 // If this is a session booking, update the session status
-                if ($enrollment->enrollable_type === 'App\Models\SessionBooking') {
+                if ($enrollment->enrollable_type == 'App\Models\SessionBooking') {
                     $session = $enrollment->enrollable;
                     if ($session) {
                         $session->update([

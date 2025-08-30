@@ -272,7 +272,7 @@ function showNotification(message, type) {
     // Create notification element
     const notification = document.createElement('div');
     notification.className = `fixed top-4 right-4 z-[200] px-6 py-3 rounded-lg shadow-lg transition-all duration-300 transform translate-x-full ${
-        type === 'success' ? 'bg-green-500 text-white' : 'bg-red-500 text-white'
+        type == 'success' ? 'bg-green-500 text-white' : 'bg-red-500 text-white'
     }`;
     notification.textContent = message;
     
@@ -294,7 +294,7 @@ function showNotification(message, type) {
 
 // Close modal when clicking outside
 document.getElementById('delete-modal').addEventListener('click', function(e) {
-    if (e.target === this) {
+    if (e.target == this) {
         cancelDelete();
     }
 });

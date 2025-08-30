@@ -396,7 +396,7 @@
                                                 
                                                 <!-- Status -->
                                                 <div class="flex items-center">
-                                                    @if($enrollment->enrollment_status === 'active')
+                                                    @if($enrollment->enrollment_status == 'active')
                                                         <span class="bg-green-100 text-green-800 text-sm font-medium px-3 py-1 rounded-full">{{ __('trans.active') }}</span>
                                                     @else
                                                                                                                   <span class="bg-gray-100 text-gray-800 text-sm font-medium px-3 py-1 rounded-full">{{ __('trans.inactive') }}</span>
@@ -546,7 +546,7 @@ function initializeStudentList() {
                 const studentRows = document.querySelectorAll('.student-row');
                 studentRows.forEach(row => {
                     const status = row.dataset.status;
-                    if (filter === 'all' || status === filter) {
+                    if (filter == 'all' || status == filter) {
                         row.style.display = 'grid';
                     } else {
                         row.style.display = 'none';
@@ -569,7 +569,7 @@ function initializeStudentList() {
                 const status = row.dataset.status;
                 
                 const matchesSearch = studentName.includes(searchTerm) || studentId.includes(searchTerm);
-                const matchesFilter = currentFilter === 'all' || status === currentFilter;
+                const matchesFilter = currentFilter == 'all' || status == currentFilter;
                 
                 if (matchesSearch && matchesFilter) {
                     row.style.display = 'grid';

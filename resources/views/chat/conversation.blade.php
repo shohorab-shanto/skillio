@@ -81,9 +81,9 @@
         <!-- Chat End Time Info -->
         @if(isset($chatStatus) && $chatStatus['can_chat'])
             <div class="text-right">
-                @if($chatStatus['type'] === 'session')
+                @if($chatStatus['type'] == 'session')
                     <p class="text-sm text-gray-600">Session ends at {{ \Carbon\Carbon::parse($chatStatus['session_end_time'])->format('H:i') }}</p>
-                @elseif($chatStatus['type'] === 'course')
+                @elseif($chatStatus['type'] == 'course')
                     <p class="text-sm text-gray-600">Course ends {{ \Carbon\Carbon::parse($chatStatus['course_end_date'])->format('M d, Y') }}</p>
                 @endif
             </div>
@@ -287,7 +287,7 @@ document.getElementById('message-input').addEventListener('input', function() {
 
 // Handle Enter key
 document.getElementById('message-input').addEventListener('keydown', function(e) {
-    if (e.key === 'Enter' && !e.shiftKey) {
+    if (e.key == 'Enter' && !e.shiftKey) {
         e.preventDefault();
         document.getElementById('message-form').dispatchEvent(new Event('submit'));
     }
@@ -375,7 +375,7 @@ document.getElementById('message-form').addEventListener('submit', async functio
         console.log('Response status:', response.status);
         console.log('Response headers:', response.headers);
         
-        if (response.status === 302) {
+        if (response.status == 302) {
             console.error('Received 302 redirect - likely authentication issue');
             alert('Session expired. Please refresh the page and try again.');
             window.location.reload();
@@ -450,7 +450,7 @@ document.addEventListener('DOMContentLoaded', function() {
 function setupRealtimeMessaging() {
     console.log('Setting up real-time messaging...');
     
-    if (typeof window.Echo !== 'undefined') {
+    if (typeof window.Echo != 'undefined') {
         console.log('Echo is available, setting up listeners...');
         
         const channelName = 'conversation.{{ $conversation->unique_code }}';
@@ -471,7 +471,7 @@ function setupRealtimeMessaging() {
         // Listen for the message event (use ONLY one listener)
         channel.listen('.message.sent', (e) => {
             console.log('New message received via Echo:', e);
-            if (e.message && e.message.sender.id !== {{ auth()->id() }}) {
+            if (e.message && e.message.sender.id != {{ auth()->id() }}) {
                 // Only add message if it's NOT from current user (avoid optimistic duplicate)
                 addMessageToChat(e.message);
                 scrollToBottom();
@@ -495,7 +495,7 @@ function setupRealtimeMessaging() {
         
         // Log relevant pusher events for debugging
         window.Echo.connector.pusher.bind_global(function(eventName, data) {
-            if (eventName !== 'pusher:pong' && eventName !== 'pusher:ping') {
+            if (eventName != 'pusher:pong' && eventName != 'pusher:ping') {
                 console.log('Pusher event received:', eventName, data);
             }
         });
@@ -510,7 +510,7 @@ function setupRealtimeMessaging() {
 function addMessageToChat(messageData) {
     const messagesContainer = document.getElementById('messages-container');
     const currentUserId = {{ auth()->id() }};
-    const isMyMessage = messageData.sender.id === currentUserId;
+    const isMyMessage = messageData.sender.id == currentUserId;
     
     // Check if message already exists (prevent duplicates)
     const existingMessage = messagesContainer.querySelector(`[data-message-id="${messageData.id}"]`);
@@ -567,7 +567,7 @@ function createMessageHtml(messageData, isMyMessage) {
     
     let messageContentHtml = '';
     
-    if (messageData.type === 'image') {
+    if (messageData.type == 'image') {
         messageContentHtml = `
             <div class="mb-2">
                 <img src="${messageData.file_url}" alt="Shared image" 
@@ -576,7 +576,7 @@ function createMessageHtml(messageData, isMyMessage) {
             </div>
             ${messageData.content ? `<p class="text-sm">${messageData.content}</p>` : ''}
         `;
-    } else if (messageData.type === 'file') {
+    } else if (messageData.type == 'file') {
         messageContentHtml = `
             <div class="flex items-center space-x-2 p-2 ${isMyMessage ? 'bg-purple-700' : 'bg-gray-100'} rounded-lg">
                 <i class="fa-solid fa-file text-lg"></i>

@@ -30,9 +30,9 @@ class TimeSlotController extends Controller
 
         // Status filtering
         if ($request->filled('status')) {
-            if ($request->status === 'available') {
+            if ($request->status == 'available') {
                 $query->whereNull('user_id');
-            } elseif ($request->status === 'booked') {
+            } elseif ($request->status == 'booked') {
                 $query->whereNotNull('user_id');
             }
         }
@@ -77,7 +77,7 @@ class TimeSlotController extends Controller
     {
         $mentor = Mentor::where('user_id', Auth::id())->firstOrFail();
         
-        if ($timeSlot->mentor_id !== $mentor->id) {
+        if ($timeSlot->mentor_id != $mentor->id) {
             abort(403);
         }
 
@@ -90,7 +90,7 @@ class TimeSlotController extends Controller
     {
         $mentor = Mentor::where('user_id', Auth::id())->firstOrFail();
         
-        if ($timeSlot->mentor_id !== $mentor->id) {
+        if ($timeSlot->mentor_id != $mentor->id) {
             abort(403);
         }
 
@@ -103,7 +103,7 @@ class TimeSlotController extends Controller
     {
         $mentor = Mentor::where('user_id', Auth::id())->firstOrFail();
         
-        if ($timeSlot->mentor_id !== $mentor->id) {
+        if ($timeSlot->mentor_id != $mentor->id) {
             abort(403);
         }
 
@@ -129,7 +129,7 @@ class TimeSlotController extends Controller
     {
         $mentor = Mentor::where('user_id', Auth::id())->firstOrFail();
         
-        if ($timeSlot->mentor_id !== $mentor->id) {
+        if ($timeSlot->mentor_id != $mentor->id) {
             abort(403);
         }
 

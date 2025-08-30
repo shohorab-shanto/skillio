@@ -124,10 +124,10 @@
                     <div class="border-b border-gray-200 mb-6">
                         <nav class="-mb-px flex space-x-8">
                             <button @click="activeTab = 'timeslots'" 
-                                :class="activeTab === 'timeslots' ? 'text-purple-600 border-purple-600' : 'text-gray-500 border-transparent'"
+                                :class="activeTab == 'timeslots' ? 'text-purple-600 border-purple-600' : 'text-gray-500 border-transparent'"
                                 class="mentor-profile-tab-button py-4 px-1 border-b-2 text-sm font-medium hover:text-gray-700 transition-colors">Time Slots</button>
                             <button @click="activeTab = 'review'" 
-                                :class="activeTab === 'review' ? 'text-purple-600 border-purple-600' : 'text-gray-500 border-transparent'"
+                                :class="activeTab == 'review' ? 'text-purple-600 border-purple-600' : 'text-gray-500 border-transparent'"
                                 class="mentor-profile-tab-button py-4 px-1 border-b-2 text-sm font-medium hover:text-gray-700 transition-colors">Reviews</button>
                         </nav>
                     </div>
@@ -136,7 +136,7 @@
                     <div>
                         
                         <!-- Time Slots Tab -->
-                        <div x-show="activeTab === 'timeslots'" class="mentor-profile-tab-content">
+                        <div x-show="activeTab == 'timeslots'" class="mentor-profile-tab-content">
                             <div class="flex justify-between items-center mb-6">
                                 <!-- Left: Title -->
                                 <h2 class="font-semibold text-gray-900">All Time Slots</h2>
@@ -254,7 +254,7 @@
                         </div>
 
                         <!-- Review Tab -->
-                        <div x-show="activeTab === 'review'" class="mentor-profile-tab-content">
+                        <div x-show="activeTab == 'review'" class="mentor-profile-tab-content">
                             <h3 class="text-lg font-semibold mb-6">Mentor Reviews</h3>
                             
                             @php

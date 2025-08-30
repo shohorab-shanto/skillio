@@ -33,9 +33,9 @@ class AuthenticatedSessionController extends Controller
             // dd($user->role, route('mentor.dashboard'));
             
             // Redirect based on user role
-            if ($user->role === 'admin') {
+            if ($user->role == 'admin') {
                 return redirect()->route('admin.dashboard');
-            } elseif ($user->role === 'mentor') {
+            } elseif ($user->role == 'mentor') {
                 return redirect()->route('mentor.dashboard');
             } else {
                 // For users, redirect to intended URL (like checkout page) or dashboard as fallback

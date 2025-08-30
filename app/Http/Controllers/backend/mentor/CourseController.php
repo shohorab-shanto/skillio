@@ -155,7 +155,7 @@ class CourseController extends Controller
         $mentor = $user->mentor;
 
         // Check if the course belongs to the current mentor
-        if ($course->mentor_id !== $mentor->id) {
+        if ($course->mentor_id != $mentor->id) {
             return redirect()->route('mentor.courses.index')->with('error', 'Unauthorized access to course.');
         }
 
@@ -174,7 +174,7 @@ class CourseController extends Controller
         $mentor = $user->mentor;
 
         // Check if the course belongs to the current mentor
-        if ($course->mentor_id !== $mentor->id) {
+        if ($course->mentor_id != $mentor->id) {
             return redirect()->route('mentor.courses.index')->with('error', 'Unauthorized access to course.');
         }
 
@@ -194,7 +194,7 @@ class CourseController extends Controller
         $mentor = $user->mentor;
 
         // Check if the course belongs to the current mentor
-        if ($course->mentor_id !== $mentor->id) {
+        if ($course->mentor_id != $mentor->id) {
             return redirect()->route('mentor.courses.index')->with('error', 'Unauthorized access to course.');
         }
 
@@ -251,7 +251,7 @@ class CourseController extends Controller
 
         // Determine if course needs reapproval
         $needsReapproval = false;
-        if ($course->status === 'approved') {
+        if ($course->status == 'approved') {
             // Check if any significant changes were made
             $significantFields = ['title', 'description', 'price', 'start_date', 'end_date'];
             foreach ($significantFields as $field) {
@@ -269,7 +269,7 @@ class CourseController extends Controller
             // Check if sub-categories changed
             $currentSubCategories = $course->subCategories->pluck('id')->sort()->values()->toArray();
             $newSubCategories = collect($validated['sub_category_ids'])->sort()->values()->toArray();
-            if ($currentSubCategories !== $newSubCategories) {
+            if ($currentSubCategories != $newSubCategories) {
                 $needsReapproval = true;
             }
             
@@ -325,7 +325,7 @@ class CourseController extends Controller
         $mentor = $user->mentor;
 
         // Check if the course belongs to the current mentor
-        if ($course->mentor_id !== $mentor->id) {
+        if ($course->mentor_id != $mentor->id) {
             return redirect()->route('mentor.courses.index')->with('error', 'Unauthorized access to course.');
         }
 

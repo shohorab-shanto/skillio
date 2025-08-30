@@ -85,7 +85,7 @@ class NotificationService
         $conversation = $message->conversation;
         
         // Determine if recipient is mentor or user
-        $isRecipientMentor = $conversation->mentor->user_id === $recipient->id;
+        $isRecipientMentor = $conversation->mentor->user_id == $recipient->id;
         $otherPartyName = $isRecipientMentor ? $conversation->user->name : $conversation->mentor->user->name;
 
         $notification = Notification::create([

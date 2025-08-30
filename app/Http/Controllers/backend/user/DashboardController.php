@@ -29,9 +29,9 @@ class DashboardController extends Controller
         // Filter enrollments by search
         if ($search) {
             $enrollments = $enrollments->filter(function($enrollment) use ($search) {
-                if ($enrollment->enrollable_type === Course::class) {
-                    return stripos($enrollment->enrollable->title, $search) !== false ||
-                           stripos($enrollment->enrollable->mentor->user->name, $search) !== false;
+                if ($enrollment->enrollable_type == Course::class) {
+                    return stripos($enrollment->enrollable->title, $search) != false ||
+                           stripos($enrollment->enrollable->mentor->user->name, $search) != false;
                 }
                 return false;
             });

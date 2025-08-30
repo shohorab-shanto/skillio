@@ -38,7 +38,7 @@ class MentorSessionController extends Controller
         if ($topCategory) {
             $topCategorySubCategories = $mentorData->sessionBookings
                 ->filter(function ($session) use ($topCategory) {
-                    return $session->category->name === $topCategory;
+                    return $session->category->name == $topCategory;
                 })
                 ->flatMap(function ($session) {
                     return $session->subCategories;

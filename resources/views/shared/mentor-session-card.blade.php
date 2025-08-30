@@ -9,20 +9,20 @@
         </div>
         <div class="flex items-center space-x-2">
             <!-- Session Status -->
-            @if($session->status === 'booked')
+            @if($session->status == 'booked')
                 <span class="inline-flex items-center px-2.5 py-1 rounded-full text-xs font-medium bg-purple-500 text-white">
                     <i class="fa-solid fa-user mr-1"></i>
                     {{ __('trans.booked') }}
                 </span>
-            @elseif($session->status === 'available')
+            @elseif($session->status == 'available')
                 <span class="inline-flex items-center px-2.5 py-1 rounded-full text-xs font-medium bg-green-500 text-white">
                     {{ __('trans.available') }}
                 </span>
-            @elseif($session->status === 'completed')
+            @elseif($session->status == 'completed')
                 <span class="inline-flex items-center px-2.5 py-1 rounded-full text-xs font-medium bg-blue-500 text-white">
                     {{ __('trans.completed') }}
                 </span>
-            @elseif($session->status === 'cancelled')
+            @elseif($session->status == 'cancelled')
                 <span class="inline-flex items-center px-2.5 py-1 rounded-full text-xs font-medium bg-red-500 text-white">
                     {{ __('trans.cancelled') }}
                 </span>
@@ -89,7 +89,7 @@
             {{ number_format($session->fee ?? 0, 2) }}
         </div>
         <div class="text-sm text-gray-600">
-            @if(($session->type ?? 'online') === 'online')
+            @if(($session->type ?? 'online') == 'online')
                 <!-- FontAwesome Video Icon -->
                 <i class="fas fa-video mr-1" style="display: inline-block !important;"></i>
                 <!-- Fallback SVG Video Icon -->
@@ -111,7 +111,7 @@
     <!-- Action Buttons -->
     <div class="flex items-center justify-end">
         <!-- Book Now Button - Bottom Right Corner -->
-        @if($session->status === 'active')
+        @if($session->status == 'active')
             <a href="{{ route('checkout.session', $session->id) }}" 
                class="inline-flex items-center px-4 py-2 bg-purple-600 text-white text-sm font-medium rounded-lg hover:bg-purple-700 transition-colors duration-200 shadow-md hover:shadow-lg transform hover:scale-105">
                 <!-- FontAwesome Calendar Icon -->
@@ -132,7 +132,7 @@
 // Check if FontAwesome is loaded and show fallback SVG if needed
 document.addEventListener('DOMContentLoaded', function() {
     // Check if FontAwesome is available
-    if (typeof FontAwesome === 'undefined' || !document.querySelector('.fas')) {
+    if (typeof FontAwesome == 'undefined' || !document.querySelector('.fas')) {
         // Show SVG fallbacks
         document.querySelectorAll('svg[style*="display: none"]').forEach(svg => {
             svg.style.display = 'inline';
@@ -146,7 +146,7 @@ document.addEventListener('DOMContentLoaded', function() {
     // Additional check for calendar icon specifically
     setTimeout(function() {
         const calendarIcon = document.querySelector('.fa-calendar-plus');
-        if (calendarIcon && calendarIcon.offsetWidth === 0) {
+        if (calendarIcon && calendarIcon.offsetWidth == 0) {
             // Calendar icon is not visible, show SVG fallback
             const calendarSvg = calendarIcon.parentElement.querySelector('svg');
             if (calendarSvg) {

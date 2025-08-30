@@ -111,7 +111,7 @@ class SessionBooking extends Model
     // Accessors & Mutators
     public function getIsAvailableAttribute(): bool
     {
-        return is_null($this->user_id) && $this->status === 'active';
+        return is_null($this->user_id) && $this->status == 'active';
     }
 
     public function getIsBookedAttribute(): bool

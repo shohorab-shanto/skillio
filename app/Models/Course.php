@@ -113,22 +113,22 @@ class Course extends Model
 
     public function isApproved(): bool
     {
-        return $this->status === 'approved';
+        return $this->status == 'approved';
     }
 
     public function isPending(): bool
     {
-        return $this->status === 'pending';
+        return $this->status == 'pending';
     }
 
     public function isRejected(): bool
     {
-        return $this->status === 'rejected';
+        return $this->status == 'rejected';
     }
 
     public function isFeatured(): bool
     {
-        return $this->featured === true;
+        return $this->featured == true;
     }
 
     public function getDiscountedPriceAttribute(): float

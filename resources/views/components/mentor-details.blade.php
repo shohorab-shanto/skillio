@@ -99,7 +99,7 @@ async function startConversationWithMentor(mentorUserId) {
         if (response.ok) {
             const result = await response.json();
             window.location.href = `/chat/${result.conversation_id}`;
-        } else if (response.status === 401) {
+        } else if (response.status == 401) {
             alert('Please log in to start a conversation.');
             window.location.href = '/login';
         } else {

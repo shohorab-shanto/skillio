@@ -25,9 +25,9 @@
                 <div class="flex items-center space-x-4">
                     <!-- Status Badge -->
                     <span class="inline-flex items-center px-3 py-1 rounded-full text-sm font-medium
-                        @if($enrollment->enrollment_status === 'active') bg-green-100 text-green-800
-                        @elseif($enrollment->enrollment_status === 'completed') bg-blue-100 text-blue-800
-                        @elseif($enrollment->enrollment_status === 'cancelled') bg-red-100 text-red-800
+                        @if($enrollment->enrollment_status == 'active') bg-green-100 text-green-800
+                        @elseif($enrollment->enrollment_status == 'completed') bg-blue-100 text-blue-800
+                        @elseif($enrollment->enrollment_status == 'cancelled') bg-red-100 text-red-800
                         @else bg-gray-100 text-gray-800
                         @endif">
                         {{ ucfirst($enrollment->enrollment_status) }}
@@ -225,7 +225,7 @@
                     Quick Actions
                 </h3>
                 <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                    @if($enrollment->enrollment_status === 'active' && $enrollment->enrollable->has_not_started)
+                    @if($enrollment->enrollment_status == 'active' && $enrollment->enrollable->has_not_started)
                         <button onclick="openSwitchSessionModal()" class="inline-flex items-center justify-center px-4 py-3 bg-orange-600 text-white font-medium rounded-lg hover:bg-orange-700 transition-colors duration-200 shadow-sm">
                             <i class="fas fa-clock mr-2"></i>
                             Switch Time
@@ -352,7 +352,7 @@ function displayAvailableSessions(sessions) {
 
     loading.classList.add('hidden');
 
-    if (sessions.length === 0) {
+    if (sessions.length == 0) {
         noSessions.classList.remove('hidden');
         return;
     }
@@ -423,14 +423,14 @@ async function selectNewSession(newSessionId) {
 // Close modal when clicking outside
 document.addEventListener('click', function(event) {
     const modal = document.getElementById('switchSessionModal');
-    if (event.target === modal) {
+    if (event.target == modal) {
         closeSwitchSessionModal();
     }
 });
 
 // Close modal with Escape key
 document.addEventListener('keydown', function(event) {
-    if (event.key === 'Escape') {
+    if (event.key == 'Escape') {
         closeSwitchSessionModal();
     }
 });

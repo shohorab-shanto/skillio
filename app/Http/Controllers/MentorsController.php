@@ -79,9 +79,9 @@ class MentorsController extends Controller
         if ($request->filled('search')) {
             $searchTerm = $request->search;
             $allMentors = $allMentors->filter(function ($mentor) use ($searchTerm) {
-                return stripos($mentor->user->name ?? '', $searchTerm) !== false ||
-                       stripos($mentor->top_category ?? '', $searchTerm) !== false ||
-                       stripos(implode(' ', $mentor->top_category_sub_categories ?? []), $searchTerm) !== false;
+                return stripos($mentor->user->name ?? '', $searchTerm) != false ||
+                       stripos($mentor->top_category ?? '', $searchTerm) != false ||
+                       stripos(implode(' ', $mentor->top_category_sub_categories ?? []), $searchTerm) != false;
             });
         }
         
@@ -101,7 +101,7 @@ class MentorsController extends Controller
             if ($topCategory) {
                 $topCategorySubCategories = $mentor->sessionBookings
                     ->filter(function ($session) use ($topCategory) {
-                        return $session->category->name === $topCategory;
+                        return $session->category->name == $topCategory;
                     })
                     ->flatMap(function ($session) {
                         return $session->subCategories;

@@ -110,7 +110,7 @@ class AdminCourseController extends Controller
 
     public function toggleStatus(Request $request, Course $course)
     {
-        if ($course->status === 'approved') {
+        if ($course->status == 'approved') {
             $course->update(['status' => 'pending']);
             $status = 'pending';
             $message = 'Course status changed to pending';

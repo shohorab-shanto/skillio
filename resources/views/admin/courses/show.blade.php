@@ -22,7 +22,7 @@
             </a>
             
             <!-- Course Action Buttons -->
-            @if($course->status === 'pending')
+            @if($course->status == 'pending')
                 <button onclick="approveCourse({{ $course->id }})" 
                         class="px-4 py-2 bg-green-600 text-white rounded-lg hover:bg-green-700 transition-colors duration-200">
                     <i class="fa-solid fa-check mr-2"></i>
@@ -34,13 +34,13 @@
                     <i class="fa-solid fa-times mr-2"></i>
                     Reject Course
                 </button>
-            @elseif($course->status === 'approved')
+            @elseif($course->status == 'approved')
                 <button onclick="toggleCourseStatus({{ $course->id }})" 
                         class="px-4 py-2 bg-yellow-600 text-white rounded-lg hover:bg-yellow-700 transition-colors duration-200">
                     <i class="fa-solid fa-pause mr-2"></i>
                     Pause Course
                 </button>
-            @elseif($course->status === 'rejected')
+            @elseif($course->status == 'rejected')
                 <button onclick="approveCourse({{ $course->id }})" 
                         class="px-4 py-2 bg-green-600 text-white rounded-lg hover:bg-green-700 transition-colors duration-200">
                     <i class="fa-solid fa-check mr-2"></i>
@@ -49,7 +49,7 @@
             @endif
 
             <!-- Featured Course Toggle Button -->
-            @if($course->status === 'approved')
+            @if($course->status == 'approved')
                 <button onclick="toggleFeatured({{ $course->id }})" 
                         class="px-4 py-2 {{ $course->isFeatured() ? 'bg-yellow-600 hover:bg-yellow-700' : 'bg-purple-600 hover:bg-purple-700' }} text-white rounded-lg transition-colors duration-200">
                     <i class="fa-solid {{ $course->isFeatured() ? 'fa-star' : 'fa-star-half-stroke' }} mr-2"></i>
@@ -496,7 +496,7 @@ function showNotification(message, type) {
     // Create notification element
     const notification = document.createElement('div');
     notification.className = `fixed top-4 right-4 z-[200] px-6 py-3 rounded-lg shadow-lg transition-all duration-300 transform translate-x-full ${
-        type === 'success' ? 'bg-green-500 text-white' : 'bg-red-500 text-white'
+        type == 'success' ? 'bg-green-500 text-white' : 'bg-red-500 text-white'
     }`;
     notification.textContent = message;
     
@@ -518,7 +518,7 @@ function showNotification(message, type) {
 
 // Close modal when clicking outside
 document.getElementById('reject-modal').addEventListener('click', function(e) {
-    if (e.target === this) {
+    if (e.target == this) {
         cancelReject();
     }
 });

@@ -51,7 +51,7 @@ class UserSessionsController extends Controller
         }
 
         if ($request->filled('status')) {
-            if ($request->status === 'upcoming') {
+            if ($request->status == 'upcoming') {
                 $query->where('enrollment_status', 'active')
                       ->whereExists(function($q) {
                           $q->select(\DB::raw(1))
@@ -59,9 +59,9 @@ class UserSessionsController extends Controller
                             ->whereColumn('session_bookings.id', 'user_enrollments.enrollable_id')
                             ->where('session_bookings.date', '>', now());
                       });
-            } elseif ($request->status === 'completed') {
+            } elseif ($request->status == 'completed') {
                 $query->where('enrollment_status', 'completed');
-            } elseif ($request->status === 'past') {
+            } elseif ($request->status == 'past') {
                 $query->whereExists(function($q) {
                     $q->select(\DB::raw(1))
                       ->from('session_bookings')

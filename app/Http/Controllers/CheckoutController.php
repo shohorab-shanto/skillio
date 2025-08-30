@@ -24,7 +24,7 @@ class CheckoutController extends Controller
     public function sessionCheckout(SessionBooking $sessionBooking)
     {
         // Check if the session is available for booking
-        if ($sessionBooking->status !== 'active') {
+        if ($sessionBooking->status != 'active') {
             abort(404, 'Session is not available for booking.');
         }
 
@@ -55,7 +55,7 @@ class CheckoutController extends Controller
     public function courseCheckout(Course $course)
     {
         // Check if the course is available
-        if ($course->status !== 'approved') {
+        if ($course->status != 'approved') {
             abort(404, 'Course is not available for enrollment.');
         }
 
@@ -107,10 +107,10 @@ class CheckoutController extends Controller
         ]);
 
         // Check if item is still available
-        if ($type === 'session' && $item->status !== 'active') {
+        if ($type == 'session' && $item->status != 'active') {
             return back()->withErrors(['error' => 'Session is no longer available for booking.']);
         }
-        if ($type === 'course' && $item->status !== 'approved') {
+        if ($type == 'course' && $item->status != 'approved') {
             return back()->withErrors(['error' => 'Course is no longer available for enrollment.']);
         }
 
@@ -122,7 +122,7 @@ class CheckoutController extends Controller
             Stripe::setApiKey($stripeKey);
 
             // Calculate amounts for revenue sharing
-            $grossAmount = $type === 'session' ? $item->fee : $item->price;
+            $grossAmount = $type == 'session' ? $item->fee : $item->price;
             $stripeFee = $this->calculateStripeFee($grossAmount);
             $netAmount = $grossAmount - $stripeFee;
             $mentorAmount = $netAmount * 0.80; // 80% for mentor
@@ -142,7 +142,7 @@ class CheckoutController extends Controller
                     'enabled' => true,
                     'allow_redirects' => 'never'
                 ],
-                'description' => $type === 'session' 
+                'description' => $type == 'session' 
                     ? "Session booking with {$item->mentor->user->name}"
                     : "Course enrollment: {$item->title}",
                 'metadata' => [
@@ -152,7 +152,7 @@ class CheckoutController extends Controller
                 ],
             ]);
 
-            if ($paymentIntent->status === 'requires_action') {
+            if ($paymentIntent->status == 'requires_action') {
                 // Handle 3D Secure authentication
                 return response()->json([
                     'requires_action' => true,
@@ -160,7 +160,7 @@ class CheckoutController extends Controller
                 ]);
             }
 
-            if ($paymentIntent->status === 'succeeded') {
+            if ($paymentIntent->status == 'succeeded') {
                 // Create user enrollment (active for localhost testing)
                 $enrollment = UserEnrollment::create([
                     'user_id' => Auth::id(),
@@ -175,7 +175,7 @@ class CheckoutController extends Controller
                 ]);
 
                 // Create notification for mentor
-                if ($type === 'session') {
+                if ($type == 'session') {
                     \App\Services\NotificationService::createSessionBookingNotification(Auth::user(), $item);
                 } else {
                     \App\Services\NotificationService::createCourseEnrollmentNotification(Auth::user(), $item);
@@ -196,7 +196,7 @@ class CheckoutController extends Controller
                     'stripe_customer_id' => $stripeCustomerId,
                     'stripe_charge_id' => $paymentIntent->latest_charge,
                     'payment_method_type' => 'card',
-                    'description' => $type === 'session' 
+                    'description' => $type == 'session' 
                         ? "Session booking with {$item->mentor->user->name}"
                         : "Course enrollment: {$item->title}",
                 ]);
@@ -207,7 +207,7 @@ class CheckoutController extends Controller
                 ]);
 
                 // Update item status for localhost testing
-                if ($type === 'session') {
+                if ($type == 'session') {
                     $item->update([
                         'status' => 'booked',
                         'user_id' => Auth::id(),

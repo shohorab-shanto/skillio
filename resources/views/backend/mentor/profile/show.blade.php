@@ -100,11 +100,11 @@
                     <span class="text-sm text-gray-600">Online Status:</span>
                     <div class="flex items-center space-x-2">
                         <label class="relative inline-flex items-center cursor-pointer">
-                            <input type="checkbox" id="online-toggle" class="sr-only peer" {{ ($mentor->availability ?? 'available') === 'available' ? 'checked' : '' }}>
+                            <input type="checkbox" id="online-toggle" class="sr-only peer" {{ ($mentor->availability ?? 'available') == 'available' ? 'checked' : '' }}>
                             <div class="w-11 h-6 bg-gray-200 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-purple-300 rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-purple-600"></div>
                         </label>
-                        <span id="status-text" class="text-sm font-medium {{ ($mentor->availability ?? 'available') === 'available' ? 'text-green-600' : 'text-red-600' }}">
-                            {{ ($mentor->availability ?? 'available') === 'available' ? 'Online' : 'Offline' }}
+                        <span id="status-text" class="text-sm font-medium {{ ($mentor->availability ?? 'available') == 'available' ? 'text-green-600' : 'text-red-600' }}">
+                            {{ ($mentor->availability ?? 'available') == 'available' ? 'Online' : 'Offline' }}
                         </span>
                     </div>
                 </div>
@@ -221,7 +221,7 @@
                 <div>
                     <label class="block text-sm font-medium text-gray-500 mb-1">Mentor Type</label>
                     <p class="text-sm text-gray-900 flex items-center">
-                        <i class="fa-solid fa-{{ $mentor->type === 'online' ? 'video' : 'location-dot' }} mr-2 text-purple-600"></i>
+                        <i class="fa-solid fa-{{ $mentor->type == 'online' ? 'video' : 'location-dot' }} mr-2 text-purple-600"></i>
                         {{ ucfirst($mentor->type ?? 'online') }}
                     </p>
                 </div>
@@ -351,7 +351,7 @@ function togglePassword(fieldId) {
     const field = document.getElementById(fieldId);
     const icon = field.nextElementSibling.querySelector('i');
     
-    if (field.type === 'password') {
+    if (field.type == 'password') {
         field.type = 'text';
         icon.classList.remove('fa-eye');
         icon.classList.add('fa-eye-slash');
@@ -418,7 +418,7 @@ document.getElementById('password-form').addEventListener('submit', function(e) 
         return false;
     }
     
-    if (password !== confirmPassword) {
+    if (password != confirmPassword) {
         e.preventDefault();
         alert('Password confirmation does not match.');
         return false;

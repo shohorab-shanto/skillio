@@ -71,7 +71,7 @@ class PaymentTransaction extends Model
      */
     public function isTransferCompleted(): bool
     {
-        return $this->transfer_status === 'completed';
+        return $this->transfer_status == 'completed';
     }
 
     /**
@@ -79,7 +79,7 @@ class PaymentTransaction extends Model
      */
     public function isTransferFailed(): bool
     {
-        return $this->transfer_status === 'failed';
+        return $this->transfer_status == 'failed';
     }
 
     /**
@@ -87,7 +87,7 @@ class PaymentTransaction extends Model
      */
     public function isTransferPending(): bool
     {
-        return $this->transfer_status === 'pending';
+        return $this->transfer_status == 'pending';
     }
 
     /**

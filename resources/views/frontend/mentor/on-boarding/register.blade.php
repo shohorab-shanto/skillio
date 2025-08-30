@@ -150,7 +150,7 @@
         const eyeOpen = document.getElementById('eyeOpen');
         const eyeClosed = document.getElementById('eyeClosed');
 
-        if (passwordInput.type === 'password') {
+        if (passwordInput.type == 'password') {
             passwordInput.type = 'text';
             eyeOpen.classList.add('hidden');
             eyeClosed.classList.remove('hidden');
@@ -166,7 +166,7 @@
         const confirmEyeOpen = document.getElementById('confirmEyeOpen');
         const confirmEyeClosed = document.getElementById('confirmEyeClosed');
 
-        if (confirmPasswordInput.type === 'password') {
+        if (confirmPasswordInput.type == 'password') {
             confirmPasswordInput.type = 'text';
             confirmEyeOpen.classList.add('hidden');
             confirmEyeClosed.classList.remove('hidden');

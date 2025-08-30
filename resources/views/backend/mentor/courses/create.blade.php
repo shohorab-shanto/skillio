@@ -459,7 +459,7 @@ function updateSubCategories() {
 }
 
 function toggleSubCategory(id, name, element) {
-    const index = selectedSubCategories.findIndex(item => item.id === id);
+    const index = selectedSubCategories.findIndex(item => item.id == id);
     const checkIcon = element.querySelector('.selected-check');
     
     if (index > -1) {
@@ -484,7 +484,7 @@ function updateSelectedDisplay() {
     
     container.innerHTML = '';
     
-    if (selectedSubCategories.length === 0) {
+    if (selectedSubCategories.length == 0) {
         container.appendChild(placeholder);
     } else {
         // Create selected tags
@@ -517,7 +517,7 @@ function updateSelectedDisplay() {
 function removeSubCategory(event, id) {
     event.stopPropagation(); // Prevent dropdown from opening when removing tag
     
-    const index = selectedSubCategories.findIndex(item => item.id === id);
+    const index = selectedSubCategories.findIndex(item => item.id == id);
     if (index > -1) {
         selectedSubCategories.splice(index, 1);
         
@@ -583,7 +583,7 @@ function calculateDuration() {
         const daysDifference = Math.ceil(timeDifference / (1000 * 3600 * 24));
         
         if (daysDifference > 0 && daysDifference <= 365) {
-            const durationText = daysDifference === 1 ? '1 day' : `${daysDifference} days`;
+            const durationText = daysDifference == 1 ? '1 day' : `${daysDifference} days`;
             durationDisplay.textContent = durationText;
             durationDisplay.className = 'text-gray-700 font-medium';
         } else if (daysDifference <= 0) {

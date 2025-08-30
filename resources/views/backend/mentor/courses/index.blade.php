@@ -160,11 +160,11 @@
                                 
                                 <!-- Status Badges -->
                                 <div class="absolute top-4 left-4 flex flex-col space-y-2">
-                                    @if($course->status === 'approved')
+                                    @if($course->status == 'approved')
                                         <span class="inline-flex items-center px-2.5 py-1 rounded-full text-xs font-medium bg-green-500 text-white shadow-sm">
                                             Online
                                         </span>
-                                    @elseif($course->status === 'pending')
+                                    @elseif($course->status == 'pending')
                                         <span class="inline-flex items-center px-2.5 py-1 rounded-full text-xs font-medium bg-yellow-500 text-white shadow-sm">
                                             Pending
                                         </span>

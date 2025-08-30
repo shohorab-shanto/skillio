@@ -37,7 +37,7 @@ class CustomerAccount extends Model
      */
     public function isActive(): bool
     {
-        return $this->status === 'active';
+        return $this->status == 'active';
     }
 
     /**

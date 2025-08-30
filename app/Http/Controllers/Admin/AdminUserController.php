@@ -41,7 +41,7 @@ class AdminUserController extends Controller
 
     public function enrollments(User $user)
     {
-        if ($user->role !== 'user') {
+        if ($user->role != 'user') {
             return redirect()->back()->with('error', 'Invalid user type');
         }
 
@@ -56,7 +56,7 @@ class AdminUserController extends Controller
 
     public function destroy(User $user)
     {
-        if ($user->role !== 'user') {
+        if ($user->role != 'user') {
             return redirect()->back()->with('error', 'Invalid user type');
         }
 

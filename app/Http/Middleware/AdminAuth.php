@@ -19,7 +19,7 @@ class AdminAuth
             return redirect()->route('admin.login');
         }
 
-        if (auth()->user()->role !== 'admin') {
+        if (auth()->user()->role != 'admin') {
             auth()->logout();
             return redirect()->route('admin.login')->with('error', 'Access denied. Admin privileges required.');
         }

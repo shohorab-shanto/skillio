@@ -72,7 +72,7 @@ class Mentor extends Model
      */
     public function isAvailable(): bool
     {
-        return $this->availability === 'available';
+        return $this->availability == 'available';
     }
 
     /**
@@ -275,7 +275,7 @@ class Mentor extends Model
      */
     public function hasActiveStripeConnectAccount(): bool
     {
-        return $this->hasStripeConnectAccount() && $this->connect_account_status === 'active';
+        return $this->hasStripeConnectAccount() && $this->connect_account_status == 'active';
     }
 
     /**

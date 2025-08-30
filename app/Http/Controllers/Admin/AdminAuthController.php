@@ -14,7 +14,7 @@ class AdminAuthController extends Controller
      */
     public function showLoginForm()
     {
-        if (Auth::check() && Auth::user()->role === 'admin') {
+        if (Auth::check() && Auth::user()->role == 'admin') {
             return redirect()->route('admin.dashboard');
         }
         
@@ -36,7 +36,7 @@ class AdminAuthController extends Controller
         if (Auth::attempt($credentials)) {
             $user = Auth::user();
             
-            if ($user->role !== 'admin') {
+            if ($user->role != 'admin') {
                 Auth::logout();
                 throw ValidationException::withMessages([
                     'email' => 'Access denied. Admin privileges required.',

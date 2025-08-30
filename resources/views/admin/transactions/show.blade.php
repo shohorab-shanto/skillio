@@ -175,13 +175,13 @@
                         </td>
                         <td class="px-6 py-4 whitespace-nowrap">
                             <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium 
-                                {{ $enrollment->enrollable_type === 'App\Models\Course' ? 'bg-blue-100 text-blue-800' : 'bg-green-100 text-green-800' }}">
-                                {{ $enrollment->enrollable_type === 'App\Models\Course' ? 'Course' : 'Session' }}
+                                {{ $enrollment->enrollable_type == 'App\Models\Course' ? 'bg-blue-100 text-blue-800' : 'bg-green-100 text-green-800' }}">
+                                {{ $enrollment->enrollable_type == 'App\Models\Course' ? 'Course' : 'Session' }}
                             </span>
                         </td>
                         <td class="px-6 py-4 whitespace-nowrap">
                             <div class="text-sm text-gray-900">
-                                @if($enrollment->enrollable_type === 'App\Models\Course')
+                                @if($enrollment->enrollable_type == 'App\Models\Course')
                                     {{ $enrollment->enrollable->title ?? 'N/A' }}
                                 @else
                                     {{ $enrollment->enrollable->title ?? 'N/A' }}

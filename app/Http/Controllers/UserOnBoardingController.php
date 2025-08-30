@@ -98,7 +98,7 @@ class UserOnBoardingController extends Controller
         }
 
         // Redirect to the next onboarding step
-        if ($validated['education_type'] === 'in-person') {
+        if ($validated['education_type'] == 'in-person') {
             return redirect()->route('user.onboarding.in_person_education_location');
         } else {
             return redirect()->route('user.onboarding.online_education');
@@ -173,8 +173,8 @@ class UserOnBoardingController extends Controller
         ]);
 
         $option = $request->input('education_option');
-        $wantsCourses = $option === 'courses' || $option === 'both';
-        $wantsMentoring = $option === 'mentoring' || $option === 'both';
+        $wantsCourses = $option == 'courses' || $option == 'both';
+        $wantsMentoring = $option == 'mentoring' || $option == 'both';
 
         $user = Auth::user();
         if ($user) {

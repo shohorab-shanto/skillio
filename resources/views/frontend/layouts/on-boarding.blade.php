@@ -5,6 +5,9 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>@yield('title') | {{ config('app.name') }}</title>
+
+    <!-- Favicon -->
+    <link rel="icon" type="image/x-icon" href="{{ asset('assets/images/favicon.ico') }}">
     <meta name="title" content="@yield('title') | {{ config('app.name') }}">
     <meta name="description" content="@yield('meta_description', 'Welcome to ' . config('app.name'))">
     <meta name="keywords" content="@yield('meta_keywords', 'skills, learning, education, ' . config('app.name'))">

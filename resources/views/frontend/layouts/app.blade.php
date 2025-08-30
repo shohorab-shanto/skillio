@@ -7,6 +7,12 @@
     <meta name="csrf-token" content="{{ csrf_token() }}">
     <title>@yield('title', 'Skillio') | Skillio</title>
 
+    <!-- Favicon -->
+    <link rel="icon" type="image/x-icon" href="{{ asset('assets/images/favicon.ico') }}">
+
+    <!-- Favicon -->
+    <link rel="icon" type="image/x-icon" href="{{ asset('favicon.ico') }}">
+
     <!-- Font Awesome CDN -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"
         crossorigin="anonymous" referrerpolicy="no-referrer" />

@@ -9,7 +9,7 @@
     <div class="flex-1 flex flex-col items-center justify-center">
         <!-- Logo -->
         <a href="/" class="mt-8 mb-2">
-            <img src="{{ asset('assets/images/logo.png') }}" alt="" class="mx-auto mt-20">
+            <img style="height:36px; width"112px;" src="{{ asset('assets/images/logo.png') }}" alt="" class="mx-auto mt-20">
         </a>
         <h2 class="text-2xl md:text-3xl font-semibold text-center mb-4 mt-2">{{ __('trans.category_service_heading') }}</h2>
         <p class="text-center mb-6 text-[#605C6D]">

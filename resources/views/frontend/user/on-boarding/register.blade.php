@@ -10,7 +10,7 @@
         <!-- Left Panel -->
         <div class="flex flex-col justify-between px-8 py-12 md:px-24 bg-gradient-to-b from-pink-50 to-white">
             <!-- Logo header -->
-            <a href="/"><img src="{{ asset('assets/images/logo.png') }}" alt=""></a>
+            <a href="/"><img style="height:36px; width"112px;" src="{{ asset('assets/images/logo.png') }}" alt=""></a>
             {{-- center --}}
             <div>
                 <div class="max-w-md w-full mx-auto space-y-6">

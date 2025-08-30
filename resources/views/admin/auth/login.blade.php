@@ -19,7 +19,7 @@
         <!-- Logo -->
         <div class="mb-8">
             <a href="{{ route('home') }}" class="flex items-center">
-                <img src="{{ asset('assets/images/logo.png') }}" alt="Skillio" class="h-16 w-auto">
+                <img style="height:36px; width"112px;" src="{{ asset('assets/images/logo.png') }}" alt="Skillio" class="h-16 w-auto">
             </a>
         </div>
 

@@ -112,8 +112,8 @@ class UserCoursesController extends Controller
         $user = Auth::user();
         
         // Ensure this enrollment belongs to the current user and is a course
-        if ($enrollment->user_id !== $user->id || $enrollment->enrollable_type !== Course::class) {
-            abort(404);
+        if ($enrollment->user_id != $user->id || $enrollment->enrollable_type != Course::class) {
+            abort(403, 'Unauthorized access to course.');
         }
 
         // Load relationships

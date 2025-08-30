@@ -90,7 +90,7 @@
                                 <input type="checkbox" name="remember" class="accent-purple-500" />
                                 {{ __('trans.keep_me_logged_in') }}
                             </label>
-                            <a href="{{ route('password.request') }}" class="text-purple-500 hover:underline">{{ __('trans.forgot_password') }}</a>
+                            <a href="#" class="text-purple-500 hover:underline">{{ __('trans.forgot_password') }}</a>
                         </div>
 
                         <!-- Login Button -->

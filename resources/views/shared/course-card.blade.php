@@ -1,8 +1,8 @@
             <div class="bg-white rounded-2xl shadow-lg hover:shadow-xl transition-shadow duration-300 overflow-hidden">
-                <div class="relative p-2">
+                <a href="{{ route('courses.show', $course) }}" class="block relative p-2 group focus:outline-none focus:ring-2 focus:ring-purple-500">
                     @if($course->thumbnail)
                         <img src="{{ asset('storage/' . $course->thumbnail) }}" alt="{{ $course->title }}" 
-                             class="w-full h-48 object-cover rounded-lg">
+                             class="w-full h-48 object-cover rounded-lg group-hover:opacity-90 transition-opacity duration-200">
                     @else
                         <div class="w-full h-48 flex items-center justify-center bg-purple-50 rounded-lg">
                             <svg class="w-16 h-16 text-purple-300" fill="currentColor" viewBox="0 0 24 24">
@@ -18,7 +18,7 @@
                         <span class="bg-red-100 text-red-800 text-xs font-medium px-3 py-1 rounded-full">{{ $course->category->name }}</span>
                     </div>
                     @endif
-                </div>
+                </a>
                 
                 <div class="p-6">
                     <!-- Rating -->
@@ -28,8 +28,7 @@
                         $fullStars = floor($averageRating);
                         $hasHalfStar = ($averageRating - $fullStars) >= 0.5;
                     @endphp
-                    
-                    @if($totalReviews > 0)
+
                     <div class="flex items-center gap-2 mb-3">
                         <div class="flex text-orange-400">
                             @for($i = 1; $i <= 5; $i++)
@@ -50,7 +49,6 @@
                         </div>
                         <span class="text-sm text-gray-600">{{ number_format($averageRating, 1) }} ({{ $totalReviews }} {{ __('trans.reviews_count') }})</span>
                     </div>
-                    @endif
                     
                     <!-- Title -->
                     <h3 class="font-bold text-lg text-gray-900 mb-3">

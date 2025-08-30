@@ -6,10 +6,10 @@
             class="mb-8"
         />
 
-        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 items-stretch">
         
         @forelse($topMentors as $mentor)
-        <div class="bg-white rounded-xl shadow-md p-6 w-full max-w-sm">
+        <div class="bg-white rounded-xl shadow-md p-6 w-full max-w-sm flex flex-col h-full">
             <div class="flex items-center space-x-4">
                 @if($mentor->photo)
                     <img class="w-14 h-14 rounded-full object-cover" 
@@ -96,7 +96,10 @@
                 @endif
             </div>
 
-            <div class="mt-5 flex justify-between items-center">
+            <!-- Spacer to push button to bottom -->
+            <div class="flex-1"></div>
+
+            <div class="mt-auto pt-4 flex justify-between items-center">
                 <div class="text-xl font-bold text-gray-900">
                     ${{ $mentor->lowest_session_rate ?? 'N/A' }}<span class="text-sm font-normal text-gray-500">{{ __('trans.per_hour') }}</span>
                 </div>

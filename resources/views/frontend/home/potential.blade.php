@@ -12,8 +12,8 @@
             </div>
 
             <!-- Right Side - Previous Content -->
-            <div class="lg:w-1/2 flex-1 flex flex-col items-start justify-center pt-12 lg:pt-0 space-y-8">
-                <x-section-header 
+            <div class="lg:w-1/2 flex-1 flex flex-col items-start justify-center pt-0 lg:pt-0 space-y-5 mb-20">
+                <x-uplash-section-header 
                     title="{{ __('trans.unleash_potential_title') }}"
                     subtitle="{{ __('trans.unleash_potential_subtitle') }}"
                 />

@@ -25,6 +25,7 @@
                         {{ __('trans.build_career_description') }}
                     </p>
                 </div>
+                <hr class="w-full border-t border-gray-200 my-6">
 
                 <div class="flex flex-col items-start gap-3">
                     <img src="{{ asset('assets/images/circle.png') }}" alt="Circle icon" class="w-12 h-12">
@@ -33,6 +34,7 @@
                         {{ __('trans.develop_skills_description') }}
                     </p>
                 </div>
+                <hr class="w-full border-t border-gray-200 my-6">
             </div>
         </div>
     </div>

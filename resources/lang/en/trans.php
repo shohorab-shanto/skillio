@@ -691,4 +691,25 @@ return [
     'serbian_short' => 'SR',
     'slovenian_short' => 'SL',
     'macedonian_short' => 'MK',
+    
+    // Auth Pages - Additional Keys
+    'name' => 'Name',
+    'confirm_password_area' => 'This is a secure area of the application. Please confirm your password before continuing.',
+    'confirm' => 'Confirm',
+    'already_registered' => 'Already registered?',
+    'thanks_signing_up' => 'Thanks for signing up! Before getting started, could you verify your email address by clicking on the link we just emailed to you? If you didn\'t receive the email, we will gladly send you another.',
+    'verification_link_sent' => 'A new verification link has been sent to the email address you provided during registration.',
+    'resend_verification_email' => 'Resend Verification Email',
+    'log_out' => 'Log Out',
+    
+    // Reset Password Additional Keys
+    'reset_password' => 'Reset Password',
+    'reset_password_description' => 'Create a strong password to secure your account',
+    'enter_new_password_placeholder' => 'Enter your new password',
+    'confirm_new_password_placeholder' => 'Confirm your new password',
+    'back_to_login' => '← Back to Login',
+    
+    // Forgot Password Additional Keys
+    'forgot_password_description' => 'Enter your email to receive a password reset link.',
+    'email_password_reset_link' => 'Email Password Reset Link',
 ];

@@ -7,7 +7,7 @@
     <!-- Header Section -->
     <div class="text-center mb-6">
         <h2 class="text-xl font-semibold text-center">{{ __('trans.reset_password') }}</h2>
-        <p class="text-sm text-gray-500 text-center">Create a strong password to secure your account</p>
+        <p class="text-sm text-gray-500 text-center">{{ __('trans.reset_password_description') }}</p>
     </div>
 
     <form method="POST" action="{{ route('password.store') }}" class="space-y-4">
@@ -26,7 +26,7 @@
         <!-- Password -->
         <div class="space-y-1">
             <x-input-label for="password" :value="__('trans.password')" />
-            <x-text-input id="password" type="password" name="password" required autocomplete="new-password" placeholder="Enter your new password" />
+            <x-text-input id="password" type="password" name="password" required autocomplete="new-password" placeholder="{{ __('trans.enter_new_password_placeholder') }}" />
             <p class="text-gray-500 text-sm flex items-center justify-center gap-1">
                 <span class="w-3 h-3 rounded-full bg-gray-200 text-black flex items-center justify-center text-sm">!</span>
                 {{ __('trans.password_hint') }}
@@ -37,7 +37,7 @@
         <!-- Confirm Password -->
         <div class="space-y-1">
             <x-input-label for="password_confirmation" :value="__('trans.confirm_password')" />
-            <x-text-input id="password_confirmation" type="password" name="password_confirmation" required autocomplete="new-password" placeholder="Confirm your new password" />
+            <x-text-input id="password_confirmation" type="password" name="password_confirmation" required autocomplete="new-password" placeholder="{{ __('trans.confirm_new_password_placeholder') }}" />
             <x-input-error :messages="$errors->get('password_confirmation')" />
         </div>
 
@@ -52,7 +52,7 @@
     <!-- Back to Login -->
     <div class="mt-6 text-center">
         <a href="{{ route('login') }}" class="text-sm text-purple-600 hover:text-purple-700 transition-colors duration-200">
-            ← Back to Login
+            {{ __('trans.back_to_login') }}
         </a>
     </div>
 </x-guest-layout>

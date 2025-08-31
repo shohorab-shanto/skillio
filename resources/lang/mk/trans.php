@@ -654,6 +654,8 @@ return [
     'select_category' => 'Изберете категорија - Skillio',
     'select_category_description' => 'Изберете ја вашата преферирана категорија на вештини за персонализација на вашето искуство за учење на Skillio.',
     'select_category_keywords' => 'изберете категорија, категорија на вештини, преференции за учење, skillio',
+    'enter_category_name' => 'Внесете име на категорија',
+    'category_name_required' => 'Името на категоријата е задолжително',
     'category_service_heading' => 'Што би сакале да научите?',
     'choose_your_skill' => 'Изберете ја вашата категорија на вештини',
     'back' => 'Назад',

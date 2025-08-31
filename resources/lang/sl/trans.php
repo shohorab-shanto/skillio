@@ -651,9 +651,11 @@ return [
        'confirm_password_placeholder' => 'Potrdi svoje geslo',
 
        // User Onboarding - Category Service Selection
-       'select_category' => 'Izberi kategorijo - Skillio',
-       'select_category_description' => 'Izberite svojo priljubljeno kategorijo veščin za personalizacijo vašega učnega izkušnje na Skillio.',
-       'select_category_keywords' => 'izberi kategorijo, kategorija veščin, učne preference, skillio',
+           'select_category' => 'Izberi kategorijo - Skillio',
+    'select_category_description' => 'Izberite svojo priljubljeno kategorijo veščin za personalizacijo vašega učnega izkušnje na Skillio.',
+    'select_category_keywords' => 'izberi kategorijo, kategorija veščin, učne preference, skillio',
+    'enter_category_name' => 'Vnesite ime kategorije',
+    'category_name_required' => 'Ime kategorije je obvezno',
        'category_service_heading' => 'Kaj bi radi izvedeli?',
        'choose_your_skill' => 'Izberite svojo kategorijo veščin',
        'back' => 'Nazaj',

@@ -654,6 +654,8 @@ return [
     'select_category' => 'Select Category - Skillio',
     'select_category_description' => 'Choose your preferred skill category to personalize your learning experience on Skillio.',
     'select_category_keywords' => 'select category, skill category, learning preferences, skillio',
+    'enter_category_name' => 'Enter category name',
+    'category_name_required' => 'Category name is required',
     'category_service_heading' => 'What would you like to learn?',
     'choose_your_skill' => 'Choose your skill category',
     'back' => 'Back',

@@ -33,16 +33,28 @@ class UserOnBoardingController extends Controller
     {
         $categories = Category::with('subCategories')->get();
         $selectedCategoryId = null;
+        $selectedSubCategoryId = null;
+        $customSubCategoryName = null;
+        
         //send previously selected value if exists
         $user = Auth::user();
         if ($user) {
             $userPreference = UserPreference::where('user_id', $user->id)->latest()->first();
             if ($userPreference) {
                 $selectedCategoryId = $userPreference->category_id;
+                $selectedSubCategoryId = $userPreference->sub_category_id;
+                
+                // If "Others" category is selected and has a custom subcategory, get the name
+                if ($selectedCategoryId && strtolower(Category::find($selectedCategoryId)->name) == 'others' && $selectedSubCategoryId) {
+                    $customSubCategory = \App\Models\SubCategory::find($selectedSubCategoryId);
+                    if ($customSubCategory) {
+                        $customSubCategoryName = $customSubCategory->name;
+                    }
+                }
             }
         }
 
-        return view('frontend.user.on-boarding.category_service', compact('categories', 'selectedCategoryId'));
+        return view('frontend.user.on-boarding.category_service', compact('categories', 'selectedCategoryId', 'selectedSubCategoryId', 'customSubCategoryName'));
     }
 
 
@@ -51,16 +63,78 @@ class UserOnBoardingController extends Controller
      */
     public function categoryServiceSubmit(Request $request)
     {
-        $validated = $request->validate([
-            'category_id' => 'required|exists:categories,id',
-        ]);
+        
+        try {
+            $validated = $request->validate([
+                'category_id' => 'required|exists:categories,id',
+                'custom_category_name' => 'nullable|string|max:50',
+            ]);
+        } catch (\Illuminate\Validation\ValidationException $e) {
+            throw $e;
+        }
 
         $user = Auth::user();
+        $categoryId = $validated['category_id'];
+        $subCategoryId = null;
+
+        
+
+        // Check if "Others" category is selected and custom name is provided
+        $selectedCategory = Category::find($categoryId);
+        
+        if (strtolower($selectedCategory->name) == 'others' && !empty($validated['custom_category_name'])) {
+            $customName = trim($validated['custom_category_name']);
+            
+            // Check if user already has a custom subcategory under "Others"
+            $existingSubCategory = null;
+            if ($user) {
+                $existingPreference = UserPreference::where('user_id', $user->id)
+                    ->where('category_id', $categoryId)
+                    ->whereNotNull('sub_category_id')
+                    ->first();
+                
+                if ($existingPreference && $existingPreference->sub_category_id) {
+                    $existingSubCategory = \App\Models\SubCategory::find($existingPreference->sub_category_id);
+                    // Verify it's actually under "Others" category
+                    if ($existingSubCategory && $existingSubCategory->category_id == $categoryId) {
+                        // Found existing custom subcategory
+                    } else {
+                        $existingSubCategory = null;
+                    }
+                }
+            }
+            
+            if ($existingSubCategory) {
+                // Update existing subcategory
+                $existingSubCategory->update([
+                    'name' => $customName,
+                    'description' => 'Custom subcategory (updated)',
+                ]);
+                
+                $subCategoryId = $existingSubCategory->id;
+            } else {
+                // Create new subcategory under "Others" category
+                $customSubCategory = \App\Models\SubCategory::create([
+                    'category_id' => $categoryId, // "Others" category ID
+                    'name' => $customName,
+                    'description' => 'Custom subcategory',
+                    'image' => null,
+                ]);
+
+                // Use the new subcategory ID
+                $subCategoryId = $customSubCategory->id;
+            }
+        }
+
         if ($user) {
-            // Store or update user preference for category, keeping only one row per user
+            // Store or update user preference for category and subcategory
             $preference = UserPreference::firstOrNew(['user_id' => $user->id]);
-            $preference->category_id = $validated['category_id'];
+            $preference->category_id = $categoryId;
+            if ($subCategoryId) {
+                $preference->sub_category_id = $subCategoryId;
+            }
             $preference->save();
+            
         }
 
         return redirect()->route('user.onboarding.in_person_or_online');

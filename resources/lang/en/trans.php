@@ -105,7 +105,7 @@ return [
     'faq_footer' => 'FAQ',
     'terms_conditions' => 'Terms & Conditions',
     'privacy_policy' => 'Privacy Policy',
-    'copyright' => '© 2025 Skillio, All Rights Reserved.',
+    'copyright' => '© Skillio LLC, All Rights Reserved',
 
     // Courses Page
     'search_for_courses' => 'Search for courses',

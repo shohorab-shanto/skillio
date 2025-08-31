@@ -33,7 +33,15 @@ class NewPasswordController extends Controller
         $request->validate([
             'token' => ['required'],
             'email' => ['required', 'email'],
-            'password' => ['required', 'confirmed', Rules\Password::defaults()],
+            'password' => [
+                'required', 
+                'confirmed', 
+                'min:8',
+                'regex:/^(?=.*[A-Z])(?=.*\d).+$/'
+            ],
+        ], [
+            'password.min' => 'Password must be at least 8 characters long.',
+            'password.regex' => 'Password must contain at least 1 uppercase letter and 1 number.',
         ]);
 
         // Here we will attempt to reset the user's password. If it is successful we
@@ -51,12 +59,26 @@ class NewPasswordController extends Controller
             }
         );
 
-        // If the password was successfully reset, we will redirect the user back to
-        // the application's home authenticated view. If there is an error we can
-        // redirect them back to where they came from with their error message.
-        return $status == Password::PASSWORD_RESET
-                    ? redirect()->route('login')->with('status', __($status))
-                    : back()->withInput($request->only('email'))
-                        ->withErrors(['email' => __($status)]);
+        // If the password was successfully reset, redirect based on user role
+        if ($status == Password::PASSWORD_RESET) {
+            // Get the user to determine their role
+            $user = User::where('email', $request->email)->first();
+            
+            if ($user) {
+                if ($user->role == 'mentor') {
+                    return redirect()->route('mentor.onboarding.login')->with('status', __($status));
+                } else {
+                    // For regular users, redirect to main login
+                    return redirect()->route('login')->with('status', __($status));
+                }
+            }
+            
+            // Fallback to main login
+            return redirect()->route('login')->with('status', __($status));
+        }
+
+        // If there was an error, redirect back with error message
+        return back()->withInput($request->only('email'))
+            ->withErrors(['email' => __($status)]);
     }
 }

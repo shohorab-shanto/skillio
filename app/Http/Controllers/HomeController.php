@@ -67,12 +67,14 @@ class HomeController extends Controller
                             if (!empty($userPreferences['categories'])) {
                                 $subQ->whereIn('category_id', $userPreferences['categories']);
                             }
-                            
-                            // Match sub-category preferences
-                            if (!empty($userPreferences['sub_categories'])) {
-                                $subQ->whereIn('sub_category_id', $userPreferences['sub_categories']);
-                            }
                         });
+                        
+                        // Match sub-category preferences through the pivot table
+                        if (!empty($userPreferences['sub_categories'])) {
+                            $q->whereHas('subCategories', function($subCatQ) use ($userPreferences) {
+                                $subCatQ->whereIn('sub_categories.id', $userPreferences['sub_categories']);
+                            });
+                        }
                     });
                 }
                 
@@ -201,7 +203,7 @@ class HomeController extends Controller
                 // Apply sub-category filter
                 if (!empty($userPreferences['sub_categories'])) {
                     $preferenceQuery->whereHas('subCategories', function($q) use ($userPreferences) {
-                        $q->whereIn('id', $userPreferences['sub_categories']);
+                        $q->whereIn('sub_categories.id', $userPreferences['sub_categories']);
                     });
                 }
                 
@@ -267,7 +269,7 @@ class HomeController extends Controller
                 // Apply sub-category filter
                 if (!empty($userPreferences['sub_categories'])) {
                     $preferenceQuery->whereHas('subCategories', function($q) use ($userPreferences) {
-                        $q->whereIn('id', $userPreferences['sub_categories']);
+                        $q->whereIn('sub_categories.id', $userPreferences['sub_categories']);
                     });
                 }
                 

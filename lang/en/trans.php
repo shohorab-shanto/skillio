@@ -129,4 +129,14 @@ return [
     'book_session_alt' => 'Book session',
     'no_mentors_available_page' => 'No mentors available at the moment',
     'check_back_later_page' => 'Please check back later for available mentors',
+
+    // Password Reset
+    'forgot_password' => 'Forgot Password?',
+    'forgot_password_description' => 'Forgot your password? No problem. Just let us know your email address and we will email you a password reset link that will allow you to choose a new one.',
+    'email_password_reset_link' => 'Email Password Reset Link',
+    'reset_password' => 'Reset Password',
+    'confirm_password' => 'Confirm Password',
+    'admin_password_reset_disabled' => 'Password reset is not available for admin accounts. Please contact system administrator.',
+    'password' => 'Password',
+    'email_placeholder' => 'Enter your email address',
 ];

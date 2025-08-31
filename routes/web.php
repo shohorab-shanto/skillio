@@ -2,6 +2,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use Illuminate\Support\Facades\Mail;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\LanguageController;
 use App\Http\Controllers\SocialAuthController;
@@ -77,6 +78,20 @@ Route::middleware(['set_locale'])->group(function () {
             'session_id' => session()->getId(),
         ]);
     })->name('debug.auth');
+
+    // Test mail route for development (remove in production)
+    Route::get('/test-mail', function () {
+        try {
+            Mail::raw('Test email from Skillio', function ($message) {
+                $message->to('test@example.com')
+                        ->subject('Test Email')
+                        ->from(env('MAIL_FROM_ADDRESS'), env('MAIL_FROM_NAME'));
+            });
+            return 'Test email sent successfully!';
+        } catch (\Exception $e) {
+            return 'Error sending email: ' . $e->getMessage();
+        }
+    })->name('test.mail');
 });
 
 require base_path('/routes/user/on-boarding.php');

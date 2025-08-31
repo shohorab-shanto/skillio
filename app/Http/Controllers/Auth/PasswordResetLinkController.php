@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
+use App\Models\User;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Password;
@@ -28,6 +29,20 @@ class PasswordResetLinkController extends Controller
         $request->validate([
             'email' => ['required', 'email'],
         ]);
+
+        // Check if user exists and is not an admin
+        $user = User::where('email', $request->email)->first();
+        
+        if (!$user) {
+            return back()->withInput($request->only('email'))
+                ->withErrors(['email' => __('passwords.user')]);
+        }
+
+        // Prevent password reset for admin accounts
+        if ($user->role == 'admin') {
+            return back()->withInput($request->only('email'))
+                ->withErrors(['email' => 'Password reset is not available for admin accounts. Please contact system administrator.']);
+        }
 
         // We will send the password reset link to this user. Once we have attempted
         // to send the link, we will examine the response then see the message we

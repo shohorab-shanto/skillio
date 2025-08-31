@@ -72,7 +72,7 @@
                                 <input type="checkbox" name="remember" id="remember" class="accent-purple-500" />
                                 <label for="remember" class="text-sm">{{ __('trans.remember_me') }}</label>
                             </div>
-                            <a href="#" class="text-sm text-purple-600 hover:underline">
+                            <a href="{{ route('password.request') }}" class="text-sm text-purple-600 hover:underline">
                                 {{ __('trans.forgot_password') }}
                             </a>
                         </div>

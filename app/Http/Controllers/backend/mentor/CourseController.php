@@ -85,20 +85,9 @@ class CourseController extends Controller
             'sub_category_ids.*' => 'exists:sub_categories,id',
             'price' => 'required|numeric|min:0',
             'discount' => 'nullable|numeric|min:0|max:100',
-            'start_date' => 'required|date|after_or_equal:today',
-            'end_date' => 'required|date|after:start_date',
+            'duration_days' => 'required|integer|min:1|max:365',
             'course_image' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
         ]);
-
-        // Calculate duration in days
-        $startDate = new \DateTime($validated['start_date']);
-        $endDate = new \DateTime($validated['end_date']);
-        $durationDays = $endDate->diff($startDate)->days;
-
-        // Validate duration is within acceptable range
-        if ($durationDays < 1 || $durationDays > 365) {
-            return back()->withErrors(['end_date' => 'Course duration must be between 1 and 365 days.'])->withInput();
-        }
 
         // Handle image upload and thumbnail creation
         $thumbnailPath = null;
@@ -130,9 +119,9 @@ class CourseController extends Controller
             'cover_photo' => $coverPhotoPath,
             'price' => $validated['price'],
             'discount' => $validated['discount'] ?? 0,
-            'start_date' => $validated['start_date'],
-            'end_date' => $validated['end_date'],
-            'duration_days' => $durationDays,
+            'start_date' => null,
+            'end_date' => null,
+            'duration_days' => $validated['duration_days'],
             'status' => 'pending',
             'needs_reapproval' => false,
         ]);
@@ -206,20 +195,9 @@ class CourseController extends Controller
             'sub_category_ids.*' => 'exists:sub_categories,id',
             'price' => 'required|numeric|min:0',
             'discount' => 'nullable|numeric|min:0|max:100',
-            'start_date' => 'required|date',
-            'end_date' => 'required|date|after:start_date',
+            'duration_days' => 'required|integer|min:1|max:365',
             'course_image' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
         ]);
-
-        // Calculate duration in days
-        $startDate = new \DateTime($validated['start_date']);
-        $endDate = new \DateTime($validated['end_date']);
-        $durationDays = $endDate->diff($startDate)->days;
-
-        // Validate duration is within acceptable range
-        if ($durationDays < 1 || $durationDays > 365) {
-            return back()->withErrors(['end_date' => 'Course duration must be between 1 and 365 days.'])->withInput();
-        }
 
         // Handle image upload and thumbnail creation
         if ($request->hasFile('course_image')) {
@@ -253,17 +231,12 @@ class CourseController extends Controller
         $needsReapproval = false;
         if ($course->status == 'approved') {
             // Check if any significant changes were made
-            $significantFields = ['title', 'description', 'price', 'start_date', 'end_date'];
+            $significantFields = ['title', 'description', 'price', 'duration_days'];
             foreach ($significantFields as $field) {
                 if ($course->{$field} != $validated[$field]) {
                     $needsReapproval = true;
                     break;
                 }
-            }
-            
-            // Check if duration changed (compare calculated duration)
-            if ($course->duration_days != $durationDays) {
-                $needsReapproval = true;
             }
             
             // Check if sub-categories changed
@@ -286,9 +259,9 @@ class CourseController extends Controller
             'description' => $validated['description'],
             'price' => $validated['price'],
             'discount' => $validated['discount'] ?? 0,
-            'start_date' => $validated['start_date'],
-            'end_date' => $validated['end_date'],
-            'duration_days' => $durationDays,
+            'start_date' => null,
+            'end_date' => null,
+            'duration_days' => $validated['duration_days'],
             'needs_reapproval' => $needsReapproval,
             'status' => 'pending',
         ];

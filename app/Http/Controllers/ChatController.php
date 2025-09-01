@@ -45,21 +45,21 @@ class ChatController extends Controller
         foreach ($activeCourses as $enrollment) {
             $course = $enrollment->enrollable;
             
-            // Skip courses without proper date information
-            if (!$course->start_date || !$course->end_date) {
+            // Skip courses without duration information
+            if (!$course->duration_days) {
                 continue;
             }
             
-            // Ensure dates are Carbon instances
-            $startDate = $course->start_date instanceof Carbon ? $course->start_date : Carbon::parse($course->start_date);
-            $endDate = $course->end_date instanceof Carbon ? $course->end_date : Carbon::parse($course->end_date);
+            // Calculate enrollment date and course end date based on duration
+            $enrollmentDate = $enrollment->enrolled_at ?: $enrollment->created_at;
+            $courseEndDate = $enrollmentDate->copy()->addDays($course->duration_days);
             
-            if ($now->between($startDate, $endDate)) {
+            // Check if course is currently active (within duration period)
+            if ($now->between($enrollmentDate, $courseEndDate)) {
                 $canChat = true;
                 $chatReason = 'Course is currently active';
                 $chatType = 'course';
-                $chatDetails = "You can chat during your course period (until " . $endDate->format('M d, Y') . ")";
-                $courseEndDate = $endDate;
+                $chatDetails = "You can chat during your course period (until " . $courseEndDate->format('M d, Y') . ")";
                 break; // Found active course, no need to check further
             }
         }
@@ -116,28 +116,28 @@ class ChatController extends Controller
             foreach ($activeCourses as $enrollment) {
                 $course = $enrollment->enrollable;
                 
-                // Skip courses without proper date information
-                if (!$course->start_date || !$course->end_date) {
+                // Skip courses without duration information
+                if (!$course->duration_days) {
                     continue;
                 }
                 
-                // Ensure dates are Carbon instances
-                $startDate = $course->start_date instanceof Carbon ? $course->start_date : Carbon::parse($course->start_date);
-                $endDate = $course->end_date instanceof Carbon ? $course->end_date : Carbon::parse($course->end_date);
+                // Calculate enrollment date and course end date based on duration
+                $enrollmentDate = $enrollment->enrolled_at ?: $enrollment->created_at;
+                $courseEndDate = $enrollmentDate->copy()->addDays($course->duration_days);
                 
-                if ($now < $startDate) {
-                    $timeUntil = $startDate->diffForHumans();
+                if ($now < $enrollmentDate) {
+                    $timeUntil = $enrollmentDate->diffForHumans();
                     $chatReason = 'Course not started yet';
                     $chatType = 'course';
-                    $chatDetails = "Your course starts {$timeUntil} (on " . $startDate->format('M d, Y') . ")";
+                    $chatDetails = "Your course starts {$timeUntil} (on " . $enrollmentDate->format('M d, Y') . ")";
                     break;
                 }
                 
-                if ($now > $endDate) {
-                    $timeAgo = $endDate->diffForHumans();
+                if ($now > $courseEndDate) {
+                    $timeAgo = $courseEndDate->diffForHumans();
                     $chatReason = 'Course has ended';
                     $chatType = 'course';
-                    $chatDetails = "Your course ended {$timeAgo} (on " . $endDate->format('M d, Y') . ")";
+                    $chatDetails = "Your course ended {$timeAgo} (on " . $courseEndDate->format('M d, Y') . ")";
                     break;
                 }
             }

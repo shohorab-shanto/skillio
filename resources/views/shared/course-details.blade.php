@@ -60,18 +60,10 @@
             
             <div class="flex items-center">
                 <div class="flex flex-col sm:flex-row sm:items-center space-y-2 sm:space-y-0 sm:space-x-8 flex-1">
-                    @if($course->start_date)
-                        <div class="text-sm text-gray-600">
-                            <span class="font-medium text-gray-900">{{ __('trans.start_date_label') }}</span>
-                            <span>{{ $course->start_date->format('M d, Y') }}</span>
-                        </div>
-                    @endif
-                    @if($course->end_date)
-                        <div class="text-sm text-gray-600">
-                            <span class="font-medium text-gray-900">{{ __('trans.end_date_label') }}</span>
-                            <span>{{ $course->end_date->format('M d, Y') }}</span>
-                        </div>
-                    @endif
+                    <div class="text-sm text-gray-600">
+                        <span class="font-medium text-gray-900">{{ __('trans.created_at') }}</span>
+                        <span>{{ $course->created_at->diffForHumans() }}</span>
+                    </div>
                 </div>
                 <div class="text-right ml-auto">
                     @if($course->discount > 0)
@@ -339,9 +331,9 @@
                                         </button>
                                         <div id="filterDropdown" class="absolute right-0 mt-2 w-48 bg-white border border-gray-200 rounded-lg shadow-lg z-10 hidden">
                                             <div class="py-1">
-                                                <button class="w-full text-left px-4 py-2 text-sm text-gray-700 hover:bg-gray-100" data-filter="all">{{ __('trans.all') }}</button>
+                                                <button class="w-full text-left px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 bg-purple-100 text-purple-700" data-filter="all">{{ __('trans.all') }}</button>
                                                 <button class="w-full text-left px-4 py-2 text-sm text-gray-700 hover:bg-gray-100" data-filter="active">{{ __('trans.active') }}</button>
-                                                <button class="w-full text-left px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 bg-purple-100 text-purple-700" data-filter="inactive">{{ __('trans.inactive') }}</button>
+                                                <button class="w-full text-left px-4 py-2 text-sm text-gray-700 hover:bg-gray-100" data-filter="inactive">{{ __('trans.inactive') }}</button>
                                             </div>
                                         </div>
                                     </div>
@@ -354,8 +346,8 @@
                                     <!-- Table Headers -->
                                     <div class="grid grid-cols-5 gap-4 pb-3 border-b border-gray-200 mb-4">
                                         <div class="text-sm font-medium text-gray-700">{{ __('trans.student_name') }}</div>
-                                        <div class="text-sm font-medium text-gray-700">{{ __('trans.date') }}</div>
-                                        <div class="text-sm font-medium text-gray-700">{{ __('trans.duration_left_days') }}</div>
+                                        <div class="text-sm font-medium text-gray-700">{{ __('trans.enrolled_at') }}</div>
+                                        <div class="text-sm font-medium text-gray-700">{{ __('trans.duration_left') }}</div>
                                         <div class="text-sm font-medium text-gray-700">{{ __('trans.status') }}</div>
                                         <div class="text-sm font-medium text-gray-700"></div>
                                     </div>
@@ -384,13 +376,34 @@
                                                 
                                                 <!-- Date -->
                                                 <div class="text-sm text-gray-600">
-                                                    {{ $enrollment->created_at->format('F d, Y') }}
+                                                    {{ $enrollment->enrolled_at ? $enrollment->enrolled_at->format('F d, Y g:i A') : $enrollment->created_at->format('F d, Y g:i A') }}
                                                 </div>
                                                 
                                                 <!-- Duration Left -->
                                                 <div class="flex items-center">
+                                                    @php
+                                                        $enrollmentDate = $enrollment->enrolled_at ?: $enrollment->created_at;
+                                                        $courseDuration = $course->duration_days * 24 * 60; // Convert to minutes
+                                                        $elapsedMinutes = $enrollmentDate->diffInMinutes(now());
+                                                        $remainingMinutes = max(0, $courseDuration - $elapsedMinutes);
+                                                        
+                                                        if ($remainingMinutes > 0) {
+                                                            $days = floor($remainingMinutes / (24 * 60));
+                                                            $hours = floor(($remainingMinutes % (24 * 60)) / 60);
+                                                            $minutes = $remainingMinutes % 60;
+                                                            
+                                                            $durationParts = [];
+                                                            if ($days > 0) $durationParts[] = $days . 'd';
+                                                            if ($hours > 0) $durationParts[] = $hours . 'h';
+                                                            if ($minutes > 0) $durationParts[] = $minutes . 'm';
+                                                            
+                                                            $durationText = implode(' ', $durationParts);
+                                                        } else {
+                                                            $durationText = __('trans.expired');
+                                                        }
+                                                    @endphp
                                                     <span class="bg-purple-100 text-purple-800 text-sm font-medium px-3 py-1 rounded-full">
-                                                        {{ $course->end_date ? max(0, $course->end_date->diffInDays(now())) : __('trans.na') }}
+                                                        {{ $durationText }}
                                                     </span>
                                                 </div>
                                                 

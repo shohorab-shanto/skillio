@@ -150,13 +150,15 @@
                         <div class="bg-white rounded-2xl shadow-sm border border-gray-100 overflow-hidden hover:shadow-lg transition-all duration-300 group">
                             <!-- Course Image -->
                             <div class="aspect-video bg-white relative overflow-hidden p-2">
-                                @if($course->thumbnail)
-                                    <img src="{{ asset('storage/' . $course->thumbnail) }}" alt="{{ $course->title }}" class="w-full h-full object-cover rounded-lg group-hover:scale-105 transition-transform duration-300">
-                                @else
-                                    <div class="w-full h-full flex items-center justify-center bg-purple-50 rounded-lg">
-                                        <i class="fa-solid fa-book text-4xl text-purple-300"></i>
-                                    </div>
-                                @endif
+                                <button onclick="viewCourseDetails('{{ $course->id }}')" class="w-full h-full cursor-pointer">
+                                    @if($course->thumbnail)
+                                        <img src="{{ asset('storage/' . $course->thumbnail) }}" alt="{{ $course->title }}" class="w-full h-full object-cover rounded-lg group-hover:scale-105 transition-transform duration-300">
+                                    @else
+                                        <div class="w-full h-full flex items-center justify-center bg-purple-50 rounded-lg">
+                                            <i class="fa-solid fa-book text-4xl text-purple-300"></i>
+                                        </div>
+                                    @endif
+                                </button>
                                 
                                 <!-- Status Badges -->
                                 <div class="absolute top-4 left-4 flex flex-col space-y-2">
@@ -184,10 +186,10 @@
                                     <div class="flex items-center text-yellow-400">
                                         <i class="fa-solid fa-star text-sm"></i>
                                         <span class="ml-1 text-sm font-semibold text-gray-900">
-                                            {{ number_format($course->reviews->avg('rating') ?? 4.8, 1) }}
+                                            {{ $course->reviews->count() > 0 ? number_format($course->reviews->avg('rating'), 1) : '0.0' }}
                                         </span>
                                         <span class="ml-1 text-sm text-gray-500">
-                                            ({{ $course->reviews->count() > 0 ? $course->reviews->count() : '120' }} Reviews)
+                                            ({{ $course->reviews->count() }} Reviews)
                                         </span>
                                     </div>
                                     

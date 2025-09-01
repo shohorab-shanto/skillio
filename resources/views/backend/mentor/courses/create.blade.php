@@ -130,42 +130,17 @@
                     @enderror
                 </div>
 
-                <!-- Course Schedule -->
-                <div class="md:col-span-2">
-                    <label class="block text-sm font-medium text-gray-700 mb-4">Course Schedule *</label>
-                    
-                    <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
-                        <!-- Start Date -->
-                        <div>
-                            <label for="start_date" class="block text-sm font-medium text-gray-700 mb-2">Start Date *</label>
-                            <input type="date" id="start_date" name="start_date" value="{{ old('start_date') }}" 
-                                   class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent" 
-                                   required onchange="calculateDuration()">
-                            @error('start_date')
-                                <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
-                            @enderror
-                        </div>
-
-                        <!-- End Date -->
-                        <div>
-                            <label for="end_date" class="block text-sm font-medium text-gray-700 mb-2">End Date *</label>
-                            <input type="date" id="end_date" name="end_date" value="{{ old('end_date') }}" 
-                                   class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent" 
-                                   required onchange="calculateDuration()">
-                            @error('end_date')
-                                <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
-                            @enderror
-                        </div>
-
-                        <!-- Duration (Auto-calculated) -->
-                        <div>
-                            <label class="block text-sm font-medium text-gray-700 mb-2">Duration</label>
-                            <div class="w-full px-3 py-2 border border-gray-200 rounded-lg bg-gray-50 text-gray-600">
-                                <span id="duration-display">Select start and end dates</span>
-                            </div>
-                            <p class="text-xs text-gray-500 mt-1">Auto-calculated from dates</p>
-                        </div>
-                    </div>
+                <!-- Course Duration -->
+                <div>
+                    <label for="duration_days" class="block text-sm font-medium text-gray-700 mb-2">Course Duration (Days) *</label>
+                    <input type="number" id="duration_days" name="duration_days" value="{{ old('duration_days') }}" 
+                           min="1" max="365"
+                           class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent" 
+                           placeholder="e.g., 30" required>
+                    <p class="text-xs text-gray-500 mt-1">Enter the number of days for the course (1-365 days)</p>
+                    @error('duration_days')
+                        <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
+                    @enderror
                 </div>
 
                 <!-- Description -->
@@ -566,45 +541,7 @@ function previewImage(input, previewId) {
     }
 }
 
-function calculateDuration() {
-    const startDateInput = document.getElementById('start_date');
-    const endDateInput = document.getElementById('end_date');
-    const durationDisplay = document.getElementById('duration-display');
-    
-    const startDate = startDateInput.value;
-    const endDate = endDateInput.value;
-    
-    if (startDate && endDate) {
-        const start = new Date(startDate);
-        const end = new Date(endDate);
-        
-        // Calculate the difference in days
-        const timeDifference = end.getTime() - start.getTime();
-        const daysDifference = Math.ceil(timeDifference / (1000 * 3600 * 24));
-        
-        if (daysDifference > 0 && daysDifference <= 365) {
-            const durationText = daysDifference == 1 ? '1 day' : `${daysDifference} days`;
-            durationDisplay.textContent = durationText;
-            durationDisplay.className = 'text-gray-700 font-medium';
-        } else if (daysDifference <= 0) {
-            durationDisplay.textContent = 'Invalid date range';
-            durationDisplay.className = 'text-red-500';
-            // Show error if end date is before start date
-            if (endDate) {
-                alert('End date must be after start date');
-                endDateInput.value = '';
-            }
-        } else {
-            durationDisplay.textContent = 'Duration too long (max 365 days)';
-            durationDisplay.className = 'text-red-500';
-            alert('Course duration cannot exceed 365 days');
-            endDateInput.value = '';
-        }
-    } else {
-        durationDisplay.textContent = 'Select start and end dates';
-        durationDisplay.className = 'text-gray-500';
-    }
-}
+
 
 function updateCharacterCount(inputId, countId, maxLength) {
     const input = document.getElementById(inputId);
@@ -643,8 +580,7 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     }
     
-    // Calculate duration on page load if dates are already filled
-    calculateDuration();
+
     
     // Initialize character counts
     updateCharacterCount('title', 'title-count', 255);

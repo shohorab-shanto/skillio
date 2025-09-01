@@ -663,7 +663,7 @@ return [
     'select_category_keywords' => 'select category, skill category, learning preferences, skillio',
     'enter_category_name' => 'Enter category name',
     'category_name_required' => 'Category name is required',
-    'category_service_heading' => 'What would you like to learn?',
+    'category_service_heading' => 'What type of category/service are you looking for?',
     'choose_your_skill' => 'Choose your skill category',
     'back' => 'Back',
     'continue' => 'Continue',

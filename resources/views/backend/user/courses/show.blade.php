@@ -89,31 +89,6 @@
                     </div>
                     @endif
 
-                    <!-- Start Date -->
-                    @if($course->start_date)
-                    <div class="flex items-center">
-                        <div class="w-10 h-10 bg-green-100 rounded-lg flex items-center justify-center mr-3">
-                            <i class="fa-solid fa-calendar-start text-green-600"></i>
-                        </div>
-                        <div>
-                            <p class="text-sm text-gray-500">Start Date</p>
-                            <p class="font-semibold text-gray-900">{{ $course->start_date->format('M d, Y') }}</p>
-                        </div>
-                    </div>
-                    @endif
-
-                    <!-- End Date -->
-                    @if($course->end_date)
-                    <div class="flex items-center">
-                        <div class="w-10 h-10 bg-red-100 rounded-lg flex items-center justify-center mr-3">
-                            <i class="fa-solid fa-calendar-check text-red-600"></i>
-                        </div>
-                        <div>
-                            <p class="text-sm text-gray-500">End Date</p>
-                            <p class="font-semibold text-gray-900">{{ $course->end_date->format('M d, Y') }}</p>
-                        </div>
-                    </div>
-                    @endif
                 </div>
 
                 <!-- Instructor Information -->
@@ -161,7 +136,7 @@
         <div class="bg-white rounded-xl shadow-sm border border-gray-100 p-6">
             <h3 class="text-lg font-semibold text-gray-900 mb-4">Enrollment Information</h3>
             
-            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
                 <!-- Enrollment Date -->
                 <div class="flex items-center">
                     <div class="w-10 h-10 bg-purple-100 rounded-lg flex items-center justify-center mr-3">
@@ -173,18 +148,62 @@
                     </div>
                 </div>
 
+                @php
+                    $enrolledAt = $enrollment->enrolled_at ?? $enrollment->created_at;
+                    $durationDays = $course->duration_days ?? 0;
+                    $endDate = $enrolledAt ? \Carbon\Carbon::parse($enrolledAt)->addDays($durationDays) : null;
+                    $now = \Carbon\Carbon::now();
+                    $timeLeft = null;
+                    if ($endDate && $now->lt($endDate)) {
+                        $diff = $now->diff($endDate);
+                        $days = $diff->d + ($diff->m * 30) + ($diff->y * 365); // handle months/years if any
+                        $hours = $diff->h;
+                        $minutes = $diff->i;
+                        $timeLeftArr = [];
+                        if ($days > 0) {
+                            $timeLeftArr[] = $days . ' ' . Str::plural('day', $days);
+                        }
+                        if ($hours > 0) {
+                            $timeLeftArr[] = $hours . ' ' . Str::plural('hour', $hours);
+                        }
+                        if ($minutes > 0 || empty($timeLeftArr)) {
+                            $timeLeftArr[] = $minutes . ' ' . Str::plural('minute', $minutes);
+                        }
+                        $timeLeft = implode(', ', $timeLeftArr);
+                    }
+                @endphp
+                <div class="flex items-center">
+                    <div class="w-10 h-10 bg-yellow-100 rounded-lg flex items-center justify-center mr-3">
+                        <i class="fa-solid fa-hourglass-half text-yellow-600"></i>
+                    </div>
+                    <div>
+                        <p class="text-sm text-gray-500">Time Left</p>
+                        <p class="font-semibold text-gray-900">
+                            @if($timeLeft)
+                                {{ $timeLeft }}
+                            @else
+                                0 minutes
+                            @endif
+                        </p>
+                    </div>
+                </div>
+
                 <!-- Payment Amount -->
-                @if($enrollment->paymentTransaction)
                 <div class="flex items-center">
                     <div class="w-10 h-10 bg-green-100 rounded-lg flex items-center justify-center mr-3">
                         <i class="fa-solid fa-dollar-sign text-green-600"></i>
                     </div>
                     <div>
                         <p class="text-sm text-gray-500">Amount Paid</p>
-                        <p class="font-semibold text-gray-900">${{ number_format($enrollment->paymentTransaction->gross_amount, 2) }}</p>
+                        <p class="font-semibold text-gray-900">
+                            @if($enrollment->paymentTransaction)
+                                ${{ number_format($enrollment->paymentTransaction->gross_amount, 2) }}
+                            @else
+                                N/A
+                            @endif
+                        </p>
                     </div>
                 </div>
-                @endif
 
                 <!-- Status -->
                 <div class="flex items-center">

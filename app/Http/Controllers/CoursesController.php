@@ -43,7 +43,7 @@ class CoursesController extends Controller
                 // Apply sub-category filter from preferences
                 if (!empty($userPreferences['sub_categories'])) {
                     $preferenceQuery->whereHas('subCategories', function($q) use ($userPreferences) {
-                        $q->whereIn('id', $userPreferences['sub_categories']);
+                        $q->whereIn('sub_categories.id', $userPreferences['sub_categories']);
                     });
                 }
                 

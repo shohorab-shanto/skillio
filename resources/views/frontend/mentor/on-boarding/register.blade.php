@@ -113,7 +113,13 @@
                         <!-- GDPR Consent -->
                         <div class="flex items-center gap-2">
                             <input type="checkbox" name="gdpr_consent" id="gdpr_consent" class="accent-purple-500" required />
-                            <label for="gdpr_consent" class="text-sm">{{ __('trans.gdpr_consent') }}</label>
+                            <label for="gdpr_consent" class="text-sm">
+                                {!! __('trans.gdpr_consent_1') !!}
+                                <a href="{{ route('terms-and-conditions') }}" target="_blank" class="text-purple-600 hover:underline">{{ __('trans.terms_conditions') }}</a>
+                                {!! __('trans.gdpr_consent_2') !!}
+                                <a href="{{ route('privacy-policy') }}" target="_blank" class="text-purple-600 hover:underline">{{ __('trans.privacy_policy') }}</a>
+                                {!! __('trans.gdpr_consent_3') !!}
+                            </label>
                         </div>
                         @error('gdpr_consent')
                             <span class="text-red-500 text-xs">{{ $message }}</span>

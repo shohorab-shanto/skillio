@@ -631,7 +631,10 @@ return [
        'full_name' => 'Polno ime',
        'full_name_placeholder' => 'Vnesite svoje polno ime',
        'password_hint' => 'Geslo mora vsebovati vsaj 1 veliko črko, 1 številko in biti dolgo vsaj 8 znakov',
-       'gdpr_consent' => 'Strinjam se s pogoji uporabe in politiko zasebnosti',
+       // GDPR Consent fragments
+       'gdpr_consent_1' => 'Strinjam se s ',
+       'gdpr_consent_2' => ' in ',
+       'gdpr_consent_3' => '.',
        'register_button' => 'Ustvari račun',
        'already_have_account' => 'Imate že račun?',
 

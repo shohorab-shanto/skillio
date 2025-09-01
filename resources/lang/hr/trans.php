@@ -631,7 +631,10 @@ return [
     'full_name' => 'Puno ime',
     'full_name_placeholder' => 'Unesite svoje puno ime',
     'password_hint' => 'Lozinka mora sadržavati najmanje 1 veliko slovo, 1 broj i biti najmanje 8 znakova duga',
-    'gdpr_consent' => 'Slažem se s Uvjetima korištenja i Politikom privatnosti',
+    // GDPR Consent fragments
+    'gdpr_consent_1' => 'Slažem se s ',
+    'gdpr_consent_2' => ' i ',
+    'gdpr_consent_3' => '.',
     'register_button' => 'Kreiraj račun',
     'already_have_account' => 'Već imate račun?',
 

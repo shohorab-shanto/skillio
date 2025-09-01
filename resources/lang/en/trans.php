@@ -631,7 +631,10 @@ return [
     'full_name' => 'Full Name',
     'full_name_placeholder' => 'Enter your full name',
     'password_hint' => 'Password must contain at least 1 uppercase letter, 1 number, and be at least 8 characters long',
-    'gdpr_consent' => 'I agree to the Terms & Conditions and Privacy Policy',
+    // GDPR Consent fragments
+    'gdpr_consent_1' => 'I agree to the ',
+    'gdpr_consent_2' => ' and ',
+    'gdpr_consent_3' => '.',
     'register_button' => 'Create Account',
     'already_have_account' => 'Already have an account?',
 

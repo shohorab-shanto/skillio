@@ -631,7 +631,10 @@ return [
     'full_name' => 'Целосно име',
     'full_name_placeholder' => 'Внесете го вашето целосно име',
     'password_hint' => 'Лозинката мора да содржи најмалку 1 голема буква, 1 број и да биде најмалку 8 карактери долга',
-    'gdpr_consent' => 'Се согласувам со Условите за користење и Политиката за приватност',
+    // GDPR Consent fragments
+    'gdpr_consent_1' => 'Се согласувам со ',
+    'gdpr_consent_2' => ' и ',
+    'gdpr_consent_3' => '.',
     'register_button' => 'Креирај сметка',
     'already_have_account' => 'Веќе имате сметка?',
 

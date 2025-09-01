@@ -5,6 +5,11 @@ return [
     'enrolled_at' => 'ভর্তি হয়েছে',
     'expired' => 'মেয়াদোত্তীর্ণ',
     
+    // GDPR Consent fragments
+    'gdpr_consent_1' => 'আমি সম্মত ',
+    'gdpr_consent_2' => ' এবং ',
+    'gdpr_consent_3' => '।',
+    
     // Mentor Time Slots - Student Details Modal
     'student_details' => 'শিক্ষার্থীর বিবরণ',
     'booked_student_information' => 'বুক করা শিক্ষার্থীর তথ্য',

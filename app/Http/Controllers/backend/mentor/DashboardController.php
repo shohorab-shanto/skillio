@@ -97,8 +97,14 @@ class DashboardController extends Controller
             $studentQuery->where(function($q) use ($search) {
                 $q->whereHas('user', function($userQuery) use ($search) {
                     $userQuery->where('name', 'like', "%{$search}%");
-                })->orWhereHas('enrollable', function($enrollableQuery) use ($search) {
-                    $enrollableQuery->where('title', 'like', "%{$search}%");
+                })->orWhere(function($subQuery) use ($search) {
+                    // For courses, search in title
+                    $subQuery->where('enrollable_type', Course::class)
+                            ->whereRaw('enrollable_id IN (SELECT id FROM courses WHERE title LIKE ?)', ["%{$search}%"]);
+                })->orWhere(function($subQuery) use ($search) {
+                    // For session bookings, search in category name
+                    $subQuery->where('enrollable_type', SessionBooking::class)
+                            ->whereRaw('enrollable_id IN (SELECT sb.id FROM session_bookings sb INNER JOIN categories c ON sb.category_id = c.id WHERE c.name LIKE ?)', ["%{$search}%"]);
                 });
             });
         }

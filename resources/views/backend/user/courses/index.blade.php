@@ -1,11 +1,11 @@
 @extends('backend.layouts.app')
 
-@section('title', 'My Courses')
+@section('title', __('trans.my_courses'))
 
 @section('header')
     <div class="flex items-center justify-between">
         <div>
-            <h1 class="text-2xl font-bold text-gray-900">My Courses</h1>
+            <h1 class="text-2xl font-bold text-gray-900">{{ __('trans.my_courses') }}</h1>
         </div>
     </div>
 @endsection
@@ -20,7 +20,7 @@
                     <i class="fa-solid fa-graduation-cap text-purple-600"></i>
                 </div>
                 <div class="ml-4">
-                    <p class="text-sm font-medium text-gray-500">Total Courses</p>
+                    <p class="text-sm font-medium text-gray-500">{{ __('trans.total_courses') }}</p>
                     <p class="text-2xl font-bold text-gray-900">{{ $stats['total_courses'] }}</p>
                 </div>
             </div>
@@ -33,7 +33,7 @@
                     <i class="fa-solid fa-play-circle text-green-600"></i>
                 </div>
                 <div class="ml-4">
-                    <p class="text-sm font-medium text-gray-500">Active Courses</p>
+                    <p class="text-sm font-medium text-gray-500">{{ __('trans.active_courses') }}</p>
                     <p class="text-2xl font-bold text-gray-900">{{ $stats['active_courses'] }}</p>
                 </div>
             </div>
@@ -46,7 +46,7 @@
                     <i class="fa-solid fa-check-circle text-blue-600"></i>
                 </div>
                 <div class="ml-4">
-                    <p class="text-sm font-medium text-gray-500">Completed</p>
+                    <p class="text-sm font-medium text-gray-500">{{ __('trans.completed') }}</p>
                     <p class="text-2xl font-bold text-gray-900">{{ $stats['completed_courses'] }}</p>
                 </div>
             </div>
@@ -58,22 +58,22 @@
         <form method="GET" action="{{ route('user.courses') }}" class="space-y-4 md:space-y-0 md:flex md:items-end md:space-x-4">
             <!-- Search -->
             <div class="flex-1">
-                <label for="search" class="block text-sm font-medium text-gray-700 mb-2">Search Courses</label>
+                <label for="search" class="block text-sm font-medium text-gray-700 mb-2">{{ __('trans.search_courses') }}</label>
                 <input type="text" 
                        id="search" 
                        name="search" 
                        value="{{ request('search') }}"
-                       placeholder="Search by course title or description..."
+                       placeholder="{{ __('trans.search_by_course_title') }}"
                        class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-purple-500">
             </div>
 
             <!-- Category Filter -->
             <div class="w-full md:w-48">
-                <label for="category" class="block text-sm font-medium text-gray-700 mb-2">Category</label>
+                <label for="category" class="block text-sm font-medium text-gray-700 mb-2">{{ __('trans.category') }}</label>
                 <select id="category" 
                         name="category" 
                         class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-purple-500">
-                    <option value="">All Categories</option>
+                    <option value="">{{ __('trans.all_categories') }}</option>
                     @foreach($categories as $category)
                         <option value="{{ $category->id }}" {{ request('category') == $category->id ? 'selected' : '' }}>
                             {{ $category->name }}
@@ -84,13 +84,13 @@
 
             <!-- Status Filter -->
             <div class="w-full md:w-40">
-                <label for="status" class="block text-sm font-medium text-gray-700 mb-2">Status</label>
+                <label for="status" class="block text-sm font-medium text-gray-700 mb-2">{{ __('trans.status') }}</label>
                 <select id="status" 
                         name="status" 
                         class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-purple-500">
-                    <option value="">All Status</option>
-                    <option value="active" {{ request('status') == 'active' ? 'selected' : '' }}>Active</option>
-                    <option value="completed" {{ request('status') == 'completed' ? 'selected' : '' }}>Completed</option>
+                    <option value="">{{ __('trans.all_status') }}</option>
+                    <option value="active" {{ request('status') == 'active' ? 'selected' : '' }}>{{ __('trans.active') }}</option>
+                    <option value="completed" {{ request('status') == 'completed' ? 'selected' : '' }}>{{ __('trans.completed') }}</option>
                 </select>
             </div>
 
@@ -99,7 +99,7 @@
                 <button type="submit" 
                         class="w-full md:w-auto bg-purple-600 hover:bg-purple-700 text-white px-6 py-2 rounded-lg font-medium transition-colors">
                     <i class="fa-solid fa-filter mr-2"></i>
-                    Filter
+                    {{ __('trans.filter') }}
                 </button>
             </div>
 
@@ -109,7 +109,7 @@
                     <a href="{{ route('user.courses') }}" 
                        class="w-full md:w-auto inline-flex items-center justify-center bg-gray-100 hover:bg-gray-200 text-gray-700 px-6 py-2 rounded-lg font-medium transition-colors">
                         <i class="fa-solid fa-times mr-2"></i>
-                        Clear
+                        {{ __('trans.clear') }}
                     </a>
                 </div>
             @endif
@@ -141,12 +141,12 @@
                             @if($enrollment->enrollment_status == 'active')
                                 <span class="inline-flex items-center px-2 py-1 rounded-full text-xs font-semibold bg-green-100 text-green-800">
                                     <i class="fa-solid fa-play-circle mr-1"></i>
-                                    Active
+                                    {{ __('trans.active') }}
                                 </span>
                             @elseif($enrollment->enrollment_status == 'completed')
                                 <span class="inline-flex items-center px-2 py-1 rounded-full text-xs font-semibold bg-blue-100 text-blue-800">
                                     <i class="fa-solid fa-check-circle mr-1"></i>
-                                    Completed
+                                    {{ __('trans.completed') }}
                                 </span>
                             @endif
                         </div>
@@ -166,7 +166,7 @@
                             @if($course->duration_days)
                                 <span class="flex items-center">
                                     <i class="fa-solid fa-clock mr-1"></i>
-                                    {{ $course->duration_days }} days
+                                    {{ $course->duration_days }} {{ __('trans.days') }}
                                 </span>
                             @endif
                         </div>
@@ -185,14 +185,14 @@
                                  class="w-8 h-8 rounded-full object-cover mr-3">
                             <div>
                                 <p class="text-sm font-medium text-gray-900">{{ $course->mentor->user->name }}</p>
-                                <p class="text-xs text-gray-500">Instructor</p>
+                                <p class="text-xs text-gray-500">{{ __('trans.instructor') }}</p>
                             </div>
                         </div>
 
                         <!-- Enrollment Date -->
                         <div class="text-sm text-gray-500 mb-4">
                             <i class="fa-solid fa-calendar mr-1"></i>
-                            Enrolled: {{ $enrollment->created_at->format('M d, Y') }}
+                            {{ __('trans.enrolled') }}: {{ $enrollment->created_at->format('M d, Y') }}
                         </div>
 
                         <!-- Action Buttons -->
@@ -200,12 +200,12 @@
                             <a href="{{ $enrollment->conversation ? route('chat.show', $enrollment->conversation->unique_code) : route('chat.index') }}" 
                                class="flex-1 bg-blue-600 hover:bg-blue-700 text-white px-3 py-2 rounded-lg text-sm font-medium text-center transition-colors">
                                 <i class="fa-solid fa-comment mr-2"></i>
-                                Chat
+                                {{ __('trans.chat') }}
                             </a>
                             <a href="{{ route('user.courses.show', $enrollment) }}" 
                                class="flex-1 bg-purple-600 hover:bg-purple-700 text-white px-3 py-2 rounded-lg text-sm font-medium text-center transition-colors">
                                 <i class="fa-solid fa-eye mr-2"></i>
-                                Details
+                                {{ __('trans.details') }}
                             </a>
                         </div>
                     </div>
@@ -223,12 +223,12 @@
             <div class="w-24 h-24 bg-gray-100 rounded-full flex items-center justify-center mx-auto mb-6">
                 <i class="fa-solid fa-graduation-cap text-3xl text-gray-400"></i>
             </div>
-            <h3 class="text-xl font-semibold text-gray-900 mb-2">No Courses Found</h3>
+            <h3 class="text-xl font-semibold text-gray-900 mb-2">{{ __('trans.no_courses_found_title') }}</h3>
             <p class="text-gray-500 mb-6">
                 @if(request()->hasAny(['search', 'category', 'status']))
-                    No courses match your current filters. Try adjusting your search criteria.
+                    {{ __('trans.no_courses_match_filters') }}
                 @else
-                    You haven't enrolled in any courses yet. Start learning today!
+                    {{ __('trans.no_courses_enrolled_yet') }}
                 @endif
             </p>
             <div class="flex justify-center space-x-4">
@@ -236,13 +236,13 @@
                     <a href="{{ route('user.courses') }}" 
                        class="bg-purple-600 hover:bg-purple-700 text-white px-6 py-2 rounded-lg font-medium transition-colors">
                         <i class="fa-solid fa-times mr-2"></i>
-                        Clear Filters
+                        {{ __('trans.clear_filters') }}
                     </a>
                 @endif
                 <a href="{{ route('courses') }}" 
                    class="bg-gray-100 hover:bg-gray-200 text-gray-700 px-6 py-2 rounded-lg font-medium transition-colors">
                     <i class="fa-solid fa-search mr-2"></i>
-                    Browse Courses
+                    {{ __('trans.browse_all_courses') }}
                 </a>
             </div>
         </div>

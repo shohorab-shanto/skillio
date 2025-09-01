@@ -1,6 +1,6 @@
 @extends('backend.layouts.app')
 
-@section('title', 'Course Details')
+@section('title', __('trans.course_details'))
 
 @section('header')
     <div class="flex items-center justify-between">
@@ -9,8 +9,8 @@
                 <i class="fa-solid fa-arrow-left"></i>
             </a>
             <div>
-                <h1 class="text-2xl font-bold text-gray-900">Course Details</h1>
-                <p class="text-sm text-gray-500 mt-1">View your enrolled course information</p>
+                <h1 class="text-2xl font-bold text-gray-900">{{ __('trans.course_details') }}</h1>
+                <p class="text-sm text-gray-500 mt-1">{{ __('trans.view_enrolled_course') }}</p>
             </div>
         </div>
         
@@ -19,12 +19,12 @@
             @if($enrollment->enrollment_status == 'active')
                 <span class="inline-flex items-center px-3 py-1 rounded-full text-sm font-semibold bg-green-100 text-green-700 border border-green-300 shadow-sm">
                     <i class="fa-solid fa-play-circle mr-2 text-green-500"></i>
-                    Active Course
+                    {{ __('trans.active_course_badge') }}
                 </span>
             @elseif($enrollment->enrollment_status == 'completed')
                 <span class="inline-flex items-center px-3 py-1 rounded-full text-sm font-semibold bg-blue-100 text-blue-700 border border-blue-300 shadow-sm">
                     <i class="fa-solid fa-check-circle mr-2 text-blue-500"></i>
-                    Completed
+                    {{ __('trans.completed_badge') }}
                 </span>
             @endif
         </div>
@@ -71,7 +71,7 @@
                             <i class="fa-solid fa-tag text-purple-600"></i>
                         </div>
                         <div>
-                            <p class="text-sm text-gray-500">Category</p>
+                            <p class="text-sm text-gray-500">{{ __('trans.category') }}</p>
                             <p class="font-semibold text-gray-900">{{ $course->category->name }}</p>
                         </div>
                     </div>
@@ -83,8 +83,8 @@
                             <i class="fa-solid fa-clock text-blue-600"></i>
                         </div>
                         <div>
-                            <p class="text-sm text-gray-500">Duration</p>
-                            <p class="font-semibold text-gray-900">{{ $course->duration_days }} days</p>
+                            <p class="text-sm text-gray-500">{{ __('trans.duration') }}</p>
+                            <p class="font-semibold text-gray-900">{{ $course->duration_days }} {{ __('trans.days') }}</p>
                         </div>
                     </div>
                     @endif
@@ -93,7 +93,7 @@
 
                 <!-- Instructor Information -->
                 <div class="bg-gray-50 rounded-lg p-4 mb-6">
-                    <h3 class="text-lg font-semibold text-gray-900 mb-3">Instructor</h3>
+                    <h3 class="text-lg font-semibold text-gray-900 mb-3">{{ __('trans.instructor_info') }}</h3>
                     <div class="flex items-center">
                         @php
                             $mentorPhotoPath = $course->mentor->photo
@@ -107,7 +107,7 @@
                              class="w-16 h-16 rounded-full object-cover mr-4">
                         <div>
                             <h4 class="text-lg font-semibold text-gray-900">{{ $course->mentor->user->name }}</h4>
-                            <p class="text-sm text-gray-600">Course Instructor</p>
+                            <p class="text-sm text-gray-600">{{ __('trans.course_instructor') }}</p>
                             @if($course->mentor->bio)
                                 <p class="text-sm text-gray-600 mt-1 line-clamp-2">{{ Str::limit($course->mentor->bio, 150) }}</p>
                             @endif
@@ -120,13 +120,13 @@
                     <a href="{{ route('courses.show', $course) }}" 
                        class="bg-purple-600 hover:bg-purple-700 text-white px-6 py-2 rounded-lg font-medium transition-colors">
                         <i class="fa-solid fa-external-link-alt mr-2"></i>
-                        Go to Course Page
+                        {{ __('trans.go_to_course_page') }}
                     </a>
                     
                     <a href="{{ $conversation ? route('chat.show', $conversation->unique_code) : route('chat.index') }}" 
                        class="bg-blue-600 hover:bg-blue-700 text-white px-6 py-2 rounded-lg font-medium transition-colors">
                         <i class="fa-solid fa-comment mr-2"></i>
-                        Message Instructor
+                        {{ __('trans.message_instructor') }}
                     </a>
                 </div>
             </div>
@@ -134,7 +134,7 @@
 
         <!-- Enrollment Information Card -->
         <div class="bg-white rounded-xl shadow-sm border border-gray-100 p-6">
-            <h3 class="text-lg font-semibold text-gray-900 mb-4">Enrollment Information</h3>
+            <h3 class="text-lg font-semibold text-gray-900 mb-4">{{ __('trans.enrollment_information') }}</h3>
             
             <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
                 <!-- Enrollment Date -->
@@ -143,7 +143,7 @@
                         <i class="fa-solid fa-calendar-plus text-purple-600"></i>
                     </div>
                     <div>
-                        <p class="text-sm text-gray-500">Enrolled On</p>
+                        <p class="text-sm text-gray-500">{{ __('trans.enrolled_on') }}</p>
                         <p class="font-semibold text-gray-900">{{ $enrollment->created_at->format('M d, Y') }}</p>
                     </div>
                 </div>
@@ -177,12 +177,12 @@
                         <i class="fa-solid fa-hourglass-half text-yellow-600"></i>
                     </div>
                     <div>
-                        <p class="text-sm text-gray-500">Time Left</p>
+                        <p class="text-sm text-gray-500">{{ __('trans.time_left') }}</p>
                         <p class="font-semibold text-gray-900">
                             @if($timeLeft)
                                 {{ $timeLeft }}
                             @else
-                                0 minutes
+                                0 {{ __('trans.minutes') }}
                             @endif
                         </p>
                     </div>
@@ -194,7 +194,7 @@
                         <i class="fa-solid fa-dollar-sign text-green-600"></i>
                     </div>
                     <div>
-                        <p class="text-sm text-gray-500">Amount Paid</p>
+                        <p class="text-sm text-gray-500">{{ __('trans.amount_paid') }}</p>
                         <p class="font-semibold text-gray-900">
                             @if($enrollment->paymentTransaction)
                                 ${{ number_format($enrollment->paymentTransaction->gross_amount, 2) }}
@@ -211,7 +211,7 @@
                         <i class="fa-solid {{ $enrollment->enrollment_status == 'active' ? 'fa-play-circle text-green-600' : 'fa-check-circle text-blue-600' }}"></i>
                     </div>
                     <div>
-                        <p class="text-sm text-gray-500">Status</p>
+                        <p class="text-sm text-gray-500">{{ __('trans.status') }}</p>
                         <p class="font-semibold text-gray-900 capitalize">{{ $enrollment->enrollment_status }}</p>
                     </div>
                 </div>
@@ -221,7 +221,7 @@
         <!-- Course Content/Modules (if available) -->
         @if($course->subCategories->count() > 0)
         <div class="bg-white rounded-xl shadow-sm border border-gray-100 p-6">
-            <h3 class="text-lg font-semibold text-gray-900 mb-4">Course Topics</h3>
+            <h3 class="text-lg font-semibold text-gray-900 mb-4">{{ __('trans.course_topics') }}</h3>
             
             <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
                 @foreach($course->subCategories as $subCategory)
@@ -239,7 +239,7 @@
         <!-- Reviews Section -->
         @if($course->reviews->count() > 0)
         <div class="bg-white rounded-xl shadow-sm border border-gray-100 p-6">
-            <h3 class="text-lg font-semibold text-gray-900 mb-4">Student Reviews</h3>
+            <h3 class="text-lg font-semibold text-gray-900 mb-4">{{ __('trans.student_reviews') }}</h3>
             
             <!-- Average Rating -->
             <div class="flex items-center mb-6">
@@ -257,7 +257,7 @@
                         @endfor
                     </div>
                 </div>
-                <span class="text-sm text-gray-500">({{ $totalReviews }} {{ Str::plural('review', $totalReviews) }})</span>
+                <span class="text-sm text-gray-500">({{ $totalReviews }} {{ Str::plural(__('trans.reviews'), $totalReviews) }})</span>
             </div>
 
             <!-- Recent Reviews -->
@@ -270,7 +270,7 @@
                                     <i class="fa-solid fa-user text-purple-600 text-sm"></i>
                                 </div>
                                 <div>
-                                    <p class="font-medium text-gray-900">{{ $review->user->name ?? 'Anonymous Student' }}</p>
+                                    <p class="font-medium text-gray-900">{{ $review->user->name ?? __('trans.anonymous_student') }}</p>
                                     <div class="flex items-center">
                                         @for($i = 1; $i <= 5; $i++)
                                             <svg class="w-3 h-3 {{ $i <= $review->rating ? 'text-yellow-400' : 'text-gray-300' }} fill-current" viewBox="0 0 20 20">

@@ -1,17 +1,17 @@
 @extends('backend.layouts.app')
 
-@section('title', 'My Sessions')
+@section('title', __('trans.my_sessions'))
 
 @section('header')
     <div class="flex items-center justify-between">
         <div>
-            <h1 class="text-2xl font-bold text-gray-900">My Sessions</h1>
+            <h1 class="text-2xl font-bold text-gray-900">{{ __('trans.my_sessions') }}</h1>
         </div>
         
         <div class="flex items-center space-x-3">
             <a href="{{ route('mentors') }}" class="bg-purple-600 hover:bg-purple-700 text-white px-4 py-2 rounded-lg text-sm font-medium transition-colors">
                 <i class="fa-solid fa-plus mr-2"></i>
-                Book New Session
+                {{ __('trans.book_new_session') }}
             </a>
         </div>
     </div>
@@ -30,7 +30,7 @@
                     </div>
                 </div>
                 <div class="ml-4">
-                    <p class="text-sm font-medium text-gray-500">Total Sessions</p>
+                    <p class="text-sm font-medium text-gray-500">{{ __('trans.total_sessions') }}</p>
                     <p class="text-2xl font-bold text-gray-900">{{ $stats['total_sessions'] }}</p>
                 </div>
             </div>
@@ -44,7 +44,7 @@
                     </div>
                 </div>
                 <div class="ml-4">
-                    <p class="text-sm font-medium text-gray-500">Upcoming</p>
+                    <p class="text-sm font-medium text-gray-500">{{ __('trans.upcoming') }}</p>
                     <p class="text-2xl font-bold text-gray-900">{{ $stats['upcoming_sessions'] }}</p>
                 </div>
             </div>
@@ -58,7 +58,7 @@
                     </div>
                 </div>
                 <div class="ml-4">
-                    <p class="text-sm font-medium text-gray-500">Completed</p>
+                    <p class="text-sm font-medium text-gray-500">{{ __('trans.completed_sessions') }}</p>
                     <p class="text-2xl font-bold text-gray-900">{{ $stats['completed_sessions'] }}</p>
                 </div>
             </div>
@@ -71,33 +71,33 @@
             
             <!-- Date From -->
             <div>
-                <label class="block text-sm font-medium text-gray-700 mb-1">From Date</label>
+                <label class="block text-sm font-medium text-gray-700 mb-1">{{ __('trans.from_date') }}</label>
                 <input type="date" name="date_from" value="{{ $request->date_from }}" 
                        class="border border-gray-300 rounded-lg px-3 py-2 text-sm focus:ring-2 focus:ring-purple-500 focus:border-transparent">
             </div>
 
             <!-- Date To -->
             <div>
-                <label class="block text-sm font-medium text-gray-700 mb-1">To Date</label>
+                <label class="block text-sm font-medium text-gray-700 mb-1">{{ __('trans.to_date') }}</label>
                 <input type="date" name="date_to" value="{{ $request->date_to }}" 
                        class="border border-gray-300 rounded-lg px-3 py-2 text-sm focus:ring-2 focus:ring-purple-500 focus:border-transparent">
             </div>
 
             <!-- Status Filter -->
             <div>
-                <label class="block text-sm font-medium text-gray-700 mb-1">Status</label>
+                <label class="block text-sm font-medium text-gray-700 mb-1">{{ __('trans.status') }}</label>
                 <select name="status" class="border border-gray-300 rounded-lg px-3 py-2 text-sm focus:ring-2 focus:ring-purple-500 focus:border-transparent bg-white text-gray-900 cursor-pointer hover:border-gray-400 transition-colors appearance-none w-40">
-                    <option value="">All Sessions</option>
-                    <option value="upcoming" {{ $request->status == 'upcoming' ? 'selected' : '' }}>Upcoming</option>
-                    <option value="completed" {{ $request->status == 'completed' ? 'selected' : '' }}>Completed</option>
-                    <option value="past" {{ $request->status == 'past' ? 'selected' : '' }}>Past</option>
+                    <option value="">{{ __('trans.all_sessions') }}</option>
+                    <option value="upcoming" {{ $request->status == 'upcoming' ? 'selected' : '' }}>{{ __('trans.upcoming') }}</option>
+                    <option value="completed" {{ $request->status == 'completed' ? 'selected' : '' }}>{{ __('trans.completed') }}</option>
+                    <option value="past" {{ $request->status == 'past' ? 'selected' : '' }}>{{ __('trans.past') }}</option>
                 </select>
             </div>
 
             <!-- Mentor Search -->
             <div>
-                <label class="block text-sm font-medium text-gray-700 mb-1">Mentor Name</label>
-                <input type="text" name="mentor" value="{{ $request->mentor }}" placeholder="Search mentor..."
+                <label class="block text-sm font-medium text-gray-700 mb-1">{{ __('trans.mentor_name') }}</label>
+                <input type="text" name="mentor" value="{{ $request->mentor }}" placeholder="{{ __('trans.search_mentor') }}"
                        class="border border-gray-300 rounded-lg px-3 py-2 text-sm focus:ring-2 focus:ring-purple-500 focus:border-transparent">
             </div>
 
@@ -107,12 +107,12 @@
                 <div class="flex items-center space-x-2">
                     <button type="submit" class="bg-purple-600 hover:bg-purple-700 text-white px-4 py-2 rounded-lg text-sm font-medium transition-colors">
                         <i class="fa-solid fa-filter mr-2"></i>
-                        Filter
+                        {{ __('trans.filter') }}
                     </button>
                     
                     <a href="{{ route('user.sessions') }}" class="bg-gray-100 hover:bg-gray-200 text-gray-700 px-4 py-2 rounded-lg text-sm font-medium transition-colors">
                         <i class="fa-solid fa-refresh mr-2"></i>
-                        Clear
+                        {{ __('trans.refresh') }}
                     </a>
                 </div>
             </div>
@@ -125,9 +125,9 @@
             <div class="p-6 border-b border-gray-200">
                 <div class="flex items-center justify-between">
                     <h2 class="text-lg font-semibold text-gray-900">
-                        Your Sessions
+                        {{ __('trans.your_sessions') }}
                         @if($request->status)
-                            <span class="text-sm font-normal text-gray-500">({{ ucfirst($request->status) }} sessions)</span>
+                            <span class="text-sm font-normal text-gray-500">({{ ucfirst($request->status) }} {{ __('trans.sessions') }})</span>
                         @endif
                         @if($request->date_from || $request->date_to)
                             <span class="text-sm font-normal text-gray-500">
@@ -136,7 +136,7 @@
                         @endif
                     </h2>
                     <div class="text-sm text-gray-500">
-                        Showing {{ $enrollments->firstItem() ?? 0 }}-{{ $enrollments->lastItem() ?? 0 }} of {{ $enrollments->total() }} sessions
+                        {{ __('trans.showing') }} {{ $enrollments->firstItem() ?? 0 }}-{{ $enrollments->lastItem() ?? 0 }} {{ __('trans.of') }} {{ $enrollments->total() }} {{ __('trans.sessions') }}
                     </div>
                 </div>
             </div>
@@ -153,7 +153,7 @@
                                     @if($enrollment->enrollable->date)
                                         {{ $enrollment->enrollable->date->format('l, j F Y') }}
                                     @else
-                                        Session
+                                        {{ __('trans.session') }}
                                     @endif
                                 </h3>
                             </div>
@@ -167,7 +167,7 @@
                                     {{ $enrollment->enrollable->start_time->format('g:i A') }} - 
                                     {{ $enrollment->enrollable->end_time->format('g:i A') }}
                                 @else
-                                    Time TBD
+                                    {{ __('trans.time_tbd') }}
                                 @endif
                             </h4>
                         </div>
@@ -216,9 +216,9 @@
                         <div class="flex items-center justify-between text-sm text-gray-500 mb-4">
                             <span>
                                 @if($enrollment->enrollable->start_time && $enrollment->enrollable->end_time)
-                                    {{ $enrollment->enrollable->start_time->diffInMinutes($enrollment->enrollable->end_time) }} mins
+                                    {{ $enrollment->enrollable->start_time->diffInMinutes($enrollment->enrollable->end_time) }} {{ __('trans.mins') }}
                                 @else
-                                    Duration TBD
+                                    {{ __('trans.duration_tbd') }}
                                 @endif
                             </span>
                             
@@ -226,23 +226,23 @@
                                 @if($enrollment->enrollable->date && $enrollment->enrollable->date->isFuture())
                                     <span class="inline-flex items-center px-2.5 py-1 rounded-full text-xs font-medium bg-green-500 text-white">
                                         <i class="fa-solid fa-clock mr-1"></i>
-                                        Upcoming
+                                        {{ __('trans.upcoming_badge') }}
                                     </span>
                                 @else
                                     <span class="inline-flex items-center px-2.5 py-1 rounded-full text-xs font-medium bg-blue-500 text-white">
                                         <i class="fa-solid fa-check mr-1"></i>
-                                        Active
+                                        {{ __('trans.active_badge') }}
                                     </span>
                                 @endif
                             @elseif($enrollment->enrollment_status == 'completed')
                                 <span class="inline-flex items-center px-2.5 py-1 rounded-full text-xs font-medium bg-blue-500 text-white">
                                     <i class="fa-solid fa-check-circle mr-1"></i>
-                                    Completed
+                                    {{ __('trans.completed_badge') }}
                                 </span>
                             @elseif($enrollment->enrollment_status == 'cancelled')
                                 <span class="inline-flex items-center px-2.5 py-1 rounded-full text-xs font-medium bg-red-500 text-white">
                                     <i class="fa-solid fa-times mr-1"></i>
-                                    Cancelled
+                                    {{ __('trans.cancelled_badge') }}
                                 </span>
                             @endif
                         </div>
@@ -255,14 +255,14 @@
                                 @if($enrollment->enrollment_status == 'active' && $enrollment->enrollable->date && $enrollment->enrollable->date->isFuture())
                                     <span class="text-green-600 hover:text-green-700 text-sm font-medium">
                                         <i class="fa-solid fa-video mr-1"></i>
-                                        Join Session
+                                        {{ __('trans.join_session') }}
                                     </span>
                                    @else
                                     <span class="text-gray-400 text-sm">
                                         @if($enrollment->enrolled_at)
-                                            Booked {{ $enrollment->enrolled_at->diffForHumans() }}
+                                            {{ __('trans.booked') }} {{ $enrollment->enrolled_at->diffForHumans() }}
                                         @else
-                                            Session Enrolled
+                                            {{ __('trans.session_enrolled') }}
                                         @endif
                                     </span>
                                 @endif
@@ -272,15 +272,15 @@
                             <div class="flex items-center space-x-2">
                                 <a href="{{ $enrollment->conversation ? route('chat.show', $enrollment->conversation->unique_code) : route('chat.index') }}" 
                                    class="flex-1 inline-flex items-center justify-center px-3 py-2 bg-blue-600 text-white text-sm font-medium rounded-lg hover:bg-blue-700 transition-colors"
-                                   title="Chat with Mentor">
+                                   title="{{ __('trans.chat_with_mentor') }}">
                                     <i class="fa-solid fa-comment text-sm mr-2"></i>
-                                    Chat
+                                    {{ __('trans.chat') }}
                                 </a>
                                 <a href="{{ route('user.sessions.show', $enrollment->id) }}" 
                                    class="flex-1 inline-flex items-center justify-center px-3 py-2 bg-purple-600 text-white text-sm font-medium rounded-lg hover:bg-purple-700 transition-colors"
-                                   title="View Details">
+                                   title="{{ __('trans.view_details') }}">
                                     <i class="fa-solid fa-eye text-sm mr-2"></i>
-                                    Details
+                                    {{ __('trans.details') }}
                                 </a>
                             </div>
                         </div>
@@ -296,21 +296,21 @@
                         <div class="flex-1 flex justify-between sm:hidden">
                             @if ($enrollments->onFirstPage())
                                 <span class="relative inline-flex items-center px-4 py-2 text-sm font-medium text-gray-500 bg-white border border-gray-300 cursor-default leading-5 rounded-md">
-                                    Previous
+                                    {{ __('trans.previous') }}
                                 </span>
                             @else
                                 <a href="{{ $enrollments->appends(request()->query())->previousPageUrl() }}" class="relative inline-flex items-center px-4 py-2 text-sm font-medium text-gray-700 bg-white border border-gray-300 leading-5 rounded-md hover:text-gray-500 focus:outline-none focus:ring ring-purple-300 focus:border-purple-300 active:bg-gray-100 active:text-gray-700 transition ease-in-out duration-150">
-                                    Previous
+                                    {{ __('trans.previous') }}
                                 </a>
                             @endif
 
                             @if ($enrollments->hasMorePages())
                                 <a href="{{ $enrollments->appends(request()->query())->nextPageUrl() }}" class="relative inline-flex items-center px-4 py-2 ml-3 text-sm font-medium text-gray-700 bg-white border border-gray-300 leading-5 rounded-md hover:text-gray-500 focus:outline-none focus:ring ring-purple-300 focus:border-purple-300 active:bg-gray-100 active:text-gray-700 transition ease-in-out duration-150">
-                                    Next
+                                    {{ __('trans.next') }}
                                 </a>
                             @else
                                 <span class="relative inline-flex items-center px-4 py-2 ml-3 text-sm font-medium text-gray-500 bg-white border border-gray-300 cursor-default leading-5 rounded-md">
-                                    Next
+                                    {{ __('trans.next') }}
                                 </span>
                             @endif
                         </div>
@@ -318,13 +318,13 @@
                         <div class="hidden sm:flex-1 sm:flex sm:items-center sm:justify-between">
                             <div>
                                 <p class="text-sm text-gray-700 leading-5">
-                                    Showing
+                                    {{ __('trans.showing') }}
                                     <span class="font-medium">{{ $enrollments->firstItem() ?? 0 }}</span>
-                                    to
+                                    {{ __('trans.to') }}
                                     <span class="font-medium">{{ $enrollments->lastItem() ?? 0 }}</span>
-                                    of
+                                    {{ __('trans.of') }}
                                     <span class="font-medium">{{ $enrollments->total() }}</span>
-                                    sessions
+                                    {{ __('trans.sessions') }}
                                 </p>
                             </div>
 
@@ -381,28 +381,28 @@
                 </div>
                 <h3 class="text-lg font-medium text-gray-900 mb-2">
                     @if($request->date_from || $request->date_to || $request->status || $request->mentor)
-                        No sessions found
+                        {{ __('trans.no_sessions_found_title') }}
                     @else
-                        No sessions yet
+                        {{ __('trans.no_sessions_yet_title') }}
                     @endif
                 </h3>
                 <p class="text-gray-500 mb-6">
                     @if($request->date_from || $request->date_to || $request->status || $request->mentor)
-                        Try adjusting your date range or filters.
+                        {{ __('trans.try_adjusting_filters') }}
                     @else
-                        Start booking sessions with mentors to see them here.
+                        {{ __('trans.start_booking_sessions') }}
                     @endif
                 </p>
                 
                 @if($request->date_from || $request->date_to || $request->status || $request->mentor)
                     <a href="{{ route('user.sessions') }}" class="text-purple-600 hover:text-purple-700 font-medium">
                         <i class="fa-solid fa-arrow-left mr-2"></i>
-                        View All Sessions
+                        {{ __('trans.view_all_sessions') }}
                     </a>
                 @else
                     <a href="{{ route('mentors') }}" class="bg-purple-600 hover:bg-purple-700 text-white px-6 py-3 rounded-lg font-medium transition-colors">
                         <i class="fa-solid fa-plus mr-2"></i>
-                        Book Your First Session
+                        {{ __('trans.book_first_session') }}
                     </a>
                 @endif
             </div>

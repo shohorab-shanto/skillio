@@ -1,11 +1,11 @@
 @extends('backend.layouts.app')
 
-@section('title', 'Dashboard')
+@section('title', __('trans.user_dashboard'))
 
 @section('header')
     <div class="flex items-center justify-between">
         <div>
-            <h1 class="text-2xl font-bold text-gray-900">Dashboard</h1>
+            <h1 class="text-2xl font-bold text-gray-900">{{ __('trans.user_dashboard') }}</h1>
         </div>
     </div>
 @endsection
@@ -19,18 +19,18 @@
         <div class="card bg-base-100 w-full h-36 rounded-xl max-w-sm flex flex-col justify-center p-5 shadow-lg">
             <div class="flex gap-2 items-center">
                 <div class="w-8 h-8 bg-purple-100 rounded-lg flex items-center justify-center">
-                    <img src="{{ asset('assets/images/user_dashboard-1.png') }}" alt="Active Courses" class="w-5 h-5 object-contain" />
+                    <img src="{{ asset('assets/images/user_dashboard-1.png') }}" alt="{{ __('trans.active_course') }}" class="w-5 h-5 object-contain" />
                 </div>
-                <span class="text-sm text-gray-500">Active Course</span>
+                <span class="text-sm text-gray-500">{{ __('trans.active_course') }}</span>
             </div>
             <p class="text-2xl font-extrabold mt-3 text-gray-700">{{ $activeCourses }}</p>
             <span class="flex items-center space-x-2 text-sm text-gray-800">
                 <i class="fa-solid fa-chart-line"></i>
                 <span>
                     @if($activeCourses > 0)
-                        {{ $activeCourses }} in progress
+                        {{ $activeCourses }} {{ __('trans.in_progress') }}
                     @else
-                        No active courses
+                        {{ __('trans.no_active_courses') }}
                     @endif
                 </span>
             </span>
@@ -40,18 +40,18 @@
         <div class="card bg-base-100 w-full h-36 rounded-xl max-w-sm flex flex-col justify-center p-5 shadow-lg">
             <div class="flex gap-2 items-center">
                 <div class="w-8 h-8 bg-green-100 rounded-lg flex items-center justify-center">
-                    <img src="{{ asset('assets/images/user_dashboard-2.png') }}" alt="Completed Courses" class="w-5 h-5 object-contain" />
+                    <img src="{{ asset('assets/images/user_dashboard-2.png') }}" alt="{{ __('trans.completed_course') }}" class="w-5 h-5 object-contain" />
                 </div>
-                <span class="text-sm text-gray-500">Completed Course</span>
+                <span class="text-sm text-gray-500">{{ __('trans.completed_course') }}</span>
             </div>
             <p class="text-2xl font-extrabold mt-3 text-gray-700">{{ $completedCourses }}</p>
             <span class="flex items-center space-x-2 text-sm text-gray-800">
                 <i class="fa-solid fa-check-circle"></i>
                 <span>
                     @if($completedCourses > 0)
-                        {{ $completedCourses }} completed
+                        {{ $completedCourses }} {{ __('trans.completed') }}
                     @else
-                        No courses
+                        {{ __('trans.no_courses') }}
                     @endif
                 </span>
             </span>
@@ -61,18 +61,18 @@
         <div class="card bg-base-100 w-full h-36 rounded-xl max-w-sm flex flex-col justify-center p-5 shadow-lg">
             <div class="flex gap-2 items-center">
                 <div class="w-8 h-8 bg-blue-100 rounded-lg flex items-center justify-center">
-                    <img src="{{ asset('assets/images/user_dashboard-3.png') }}" alt="Upcoming Sessions" class="w-5 h-5 object-contain" />
+                    <img src="{{ asset('assets/images/user_dashboard-3.png') }}" alt="{{ __('trans.upcoming_sessions') }}" class="w-5 h-5 object-contain" />
                 </div>
-                <span class="text-sm text-gray-500">Upcoming Sessions</span>
+                <span class="text-sm text-gray-500">{{ __('trans.upcoming_sessions') }}</span>
             </div>
             <p class="text-2xl font-extrabold mt-3 text-gray-700">{{ $upcomingCount }}</p>
             <span class="flex items-center space-x-2 text-sm text-gray-800">
                 <i class="fa-solid fa-calendar-alt"></i>
                 <span>
                     @if($upcomingCount > 0)
-                        Next: {{ $upcomingSessionsDisplay->first()?->enrollable?->date?->format('M d') ?? 'Soon' }}
+                        {{ __('trans.next') }}: {{ $upcomingSessionsDisplay->first()?->enrollable?->date?->format('M d') ?? __('trans.soon') }}
                     @else
-                        No sessions
+                        {{ __('trans.no_sessions') }}
                     @endif
                 </span>
             </span>
@@ -82,18 +82,18 @@
         <div class="card bg-base-100 w-full h-36 rounded-xl max-w-sm flex flex-col justify-center p-5 shadow-lg">
             <div class="flex gap-2 items-center">
                 <div class="w-8 h-8 bg-orange-100 rounded-lg flex items-center justify-center">
-                    <img src="{{ asset('assets/images/user_dashboard-4.png') }}" alt="Learning Hours" class="w-5 h-5 object-contain" />
+                    <img src="{{ asset('assets/images/user_dashboard-4.png') }}" alt="{{ __('trans.learning_hours') }}" class="w-5 h-5 object-contain" />
                 </div>
-                <span class="text-sm text-gray-500">Learning Hours</span>
+                <span class="text-sm text-gray-500">{{ __('trans.learning_hours') }}</span>
             </div>
             <p class="text-2xl font-extrabold mt-3 text-gray-700">{{ $learningHours }}</p>
             <span class="flex items-center space-x-2 text-sm text-gray-800">
                 <i class="fa-solid fa-chart-line"></i>
                 <span>
                     @if($learningHours > 0)
-                        +{{ $learningHours }} this month
+                        +{{ $learningHours }} {{ __('trans.this_month') }}
                     @else
-                        No hours
+                        {{ __('trans.no_hours') }}
                     @endif
                 </span>
             </span>
@@ -105,8 +105,8 @@
         {{-- left - All Courses --}}
         <div class="w-full bg-white p-5 rounded-2xl shadow-lg">
             <div class="flex justify-between items-center mb-4">
-                <p class="font-semibold text-xl">All Courses</p>
-                <a href="{{ route('user.courses') }}" class="font-semibold text-xl text-purple-600 hover:text-purple-800">See All</a>
+                <p class="font-semibold text-xl">{{ __('trans.all_courses') }}</p>
+                <a href="{{ route('user.courses') }}" class="font-semibold text-xl text-purple-600 hover:text-purple-800">{{ __('trans.see_all') }}</a>
             </div>
             
             @forelse($currentCourses as $enrollment)
@@ -135,7 +135,7 @@
                                         $months = $diff->m + ($diff->y * 12);
                                         $days = $diff->d;
                                     @endphp
-                                    Duration: 
+                                    {{ __('trans.duration') }}: 
                                     @if($months > 0)
                                         {{ $months }} Month{{ $months > 1 ? 's' : '' }}
                                     @endif
@@ -146,7 +146,7 @@
                                         {{ $days }} Day{{ $days > 1 ? 's' : '' }}
                                     @endif
                                 @else
-                                    Duration: Ongoing
+                                    {{ __('trans.duration') }}: {{ __('trans.ongoing') }}
                                 @endif
                             </p>
                         </div>
@@ -159,14 +159,14 @@
                                 @if($course->start_date)
                                     {{ $course->start_date->format('M d, Y') }}
                                 @else
-                                    Ongoing
+                                    {{ __('trans.ongoing') }}
                                 @endif
                             </p>
                         </div>
                     </div>
                     <a href="{{ route('user.courses.show', $enrollment) }}"
                         class="px-6 py-2 border bg-[#6E3FF3] text-white rounded hover:bg-white hover:text-[#6E3FF3] transition-colors duration-300 inline-block">
-                        Continue Learning
+                        {{ __('trans.continue_learning') }}
                     </a>
                 </div>
             @empty
@@ -174,10 +174,10 @@
                     <div class="w-16 h-16 bg-gray-100 rounded-full flex items-center justify-center mx-auto mb-4">
                         <i class="fa-solid fa-book text-2xl text-gray-400"></i>
                     </div>
-                    <h3 class="text-lg font-medium text-gray-900 mb-2">No Active Courses</h3>
-                    <p class="text-gray-500 text-sm">Start your learning journey by enrolling in courses!</p>
+                    <h3 class="text-lg font-medium text-gray-900 mb-2">{{ __('trans.no_active_courses_title') }}</h3>
+                    <p class="text-gray-500 text-sm">{{ __('trans.start_learning_journey') }}</p>
                     <a href="{{ route('courses') }}" class="mt-4 px-6 py-2 bg-purple-600 text-white rounded-lg hover:bg-purple-700 transition-colors inline-block">
-                        Browse Courses
+                        {{ __('trans.browse_courses') }}
                     </a>
                 </div>
             @endforelse
@@ -187,8 +187,8 @@
         <div class="w-full">
             <div class="w-full bg-white p-5 rounded-2xl shadow-lg">
                 <div class="flex justify-between items-center mb-4">
-                    <p class="font-semibold text-xl">Upcoming Sessions</p>
-                    <a href="{{ route('user.sessions') }}" class="font-semibold text-xl text-purple-600 hover:text-purple-800">See All</a>
+                    <p class="font-semibold text-xl">{{ __('trans.upcoming_sessions_title') }}</p>
+                    <a href="{{ route('user.sessions') }}" class="font-semibold text-xl text-purple-600 hover:text-purple-800">{{ __('trans.see_all') }}</a>
                 </div>
                 
                 @forelse($upcomingSessionsDisplay as $enrollment)
@@ -213,7 +213,7 @@
                                     @if($session->subCategories && $session->subCategories->count() > 0)
                                         {{ $session->subCategories->pluck('name')->implode(', ') }}
                                     @else
-                                        Session
+                                        {{ __('trans.session') }}
                                     @endif
                                 </p>
                             </div>
@@ -222,14 +222,14 @@
                                     @if($session->start_time)
                                         {{ \Carbon\Carbon::parse($session->start_time)->format('g:i A') }}
                                     @else
-                                        TBD
+                                        {{ __('trans.time_tbd') }}
                                     @endif
                                 </p>
                                 <p class="text-sm text-gray-500">
                                     @if($session->date)
                                         {{ $session->date->format('M d, Y') }}
                                     @else
-                                        Date TBD
+                                        {{ __('trans.date_tbd') }}
                                     @endif
                                 </p>
                             </div>
@@ -240,8 +240,8 @@
                         <div class="w-16 h-16 bg-gray-100 rounded-full flex items-center justify-center mx-auto mb-4">
                             <i class="fa-solid fa-calendar text-2xl text-gray-400"></i>
                         </div>
-                        <h3 class="text-lg font-medium text-gray-900 mb-2">No Upcoming Sessions</h3>
-                        <p class="text-gray-500 text-sm">No sessions scheduled at the moment.</p>
+                        <h3 class="text-lg font-medium text-gray-900 mb-2">{{ __('trans.no_upcoming_sessions_title') }}</h3>
+                        <p class="text-gray-500 text-sm">{{ __('trans.no_sessions_scheduled') }}</p>
                     </div>
                 @endforelse
             </div>

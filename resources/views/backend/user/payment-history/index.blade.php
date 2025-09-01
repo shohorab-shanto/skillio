@@ -1,10 +1,10 @@
 @extends('backend.layouts.app')
 
-@section('title', 'Payment History')
+@section('title', __('trans.payment_history'))
 @section('header')
     <div class="flex items-center justify-between">
         <div>
-            <h1 class="text-xl font-bold text-gray-900">Payment History</h1>
+            <h1 class="text-xl font-bold text-gray-900">{{ __('trans.payment_history') }}</h1>
         </div>
     </div>
 @endsection
@@ -14,7 +14,7 @@
     <!-- Header Card with Title and Search -->
     <div class="bg-white rounded-lg shadow mb-6">
         <div class="flex justify-between items-center p-4">
-            <h1 class="text-l text-gray-900">Transaction</h1>
+            <h1 class="text-l text-gray-900">{{ __('trans.transaction') }}</h1>
             
             <!-- Search Bar -->
             <div class="relative">
@@ -29,7 +29,7 @@
                             type="text" 
                             name="search" 
                             value="{{ request('search') }}"
-                            placeholder="Search..." 
+                            placeholder="{{ __('trans.search_placeholder') }}" 
                             class="w-48 pl-8 pr-3 py-1.5 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent outline-none transition-all duration-300 text-sm"
                         >
                     </div>
@@ -46,12 +46,12 @@
             <table class="w-full">
                 <thead class="bg-gray-50">
                     <tr>
-                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 tracking-wider">Transaction ID</th>
-                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 tracking-wider">Date</th>
-                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 tracking-wider">Service Type</th>
-                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 tracking-wider">Title</th>
-                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 tracking-wider">Paid Amount</th>
-                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 tracking-wider">Status</th>
+                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 tracking-wider">{{ __('trans.transaction_id') }}</th>
+                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 tracking-wider">{{ __('trans.date') }}</th>
+                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 tracking-wider">{{ __('trans.service_type') }}</th>
+                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 tracking-wider">{{ __('trans.title') }}</th>
+                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 tracking-wider">{{ __('trans.paid_amount') }}</th>
+                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 tracking-wider">{{ __('trans.status') }}</th>
                     </tr>
                 </thead>
                 <tbody class="bg-white divide-y divide-gray-200">
@@ -87,11 +87,11 @@
                                 @if($enrollable)
                                     @if($enrollment->enrollable_type == 'App\Models\Course')
                                         <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-blue-100 text-blue-800">
-                                            Course
+                                            {{ __('trans.course_badge') }}
                                         </span>
                                     @elseif($enrollment->enrollable_type == 'App\Models\SessionBooking')
                                         <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-green-100 text-green-800">
-                                            Session
+                                            {{ __('trans.session_badge') }}
                                         </span>
                                     @else
                                         <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-gray-100 text-gray-800">
@@ -107,7 +107,7 @@
                                     <div>
                                         @if($enrollment->enrollable_type == 'App\Models\SessionBooking')
                                             <div class="font-medium text-gray-900">
-                                                Session with {{ $mentorName ?? 'Unknown Mentor' }}
+                                                {{ __('trans.session_with') }} {{ $mentorName ?? __('trans.unknown_mentor') }}
                                             </div>
                                         @else
                                             <div class="font-medium text-gray-900">
@@ -115,7 +115,7 @@
                                             </div>
                                             @if($mentorName)
                                                 <div class="text-sm text-gray-500">
-                                                    with {{ $mentorName }}
+                                                    {{ __('trans.with') }} {{ $mentorName }}
                                                 </div>
                                             @endif
                                         @endif
@@ -133,21 +133,21 @@
                                         <svg class="w-4 h-4 mr-1.5 text-green-400" fill="currentColor" viewBox="0 0 20 20">
                                             <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"></path>
                                         </svg>
-                                        Paid
+                                        {{ __('trans.paid') }}
                                     </span>
                                 @elseif($payment->transaction_status == 'failed')
                                     <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-red-100 text-red-800">
                                         <svg class="w-4 h-4 mr-1.5 text-red-400" fill="currentColor" viewBox="0 0 20 20">
                                             <path fill-rule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" clip-rule="evenodd"></path>
                                         </svg>
-                                        Failed
+                                        {{ __('trans.failed') }}
                                     </span>
                                 @elseif($payment->transaction_status == 'pending')
                                     <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-yellow-100 text-yellow-800">
                                         <svg class="w-4 h-4 mr-1.5 text-yellow-400" fill="currentColor" viewBox="0 0 20 20">
                                             <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm1-12a1 1 0 10-2 0v4a1 1 0 00.293.707l2.828 2.829a1 1 0 101.415-1.415L11 9.586V6z" clip-rule="evenodd"></path>
                                         </svg>
-                                        Pending
+                                        {{ __('trans.pending') }}
                                     </span>
                                 @else
                                     <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-gray-100 text-gray-800">
@@ -163,8 +163,8 @@
                                     <svg class="w-12 h-12 text-gray-300 mb-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path>
                                     </svg>
-                                    <h3 class="text-lg font-medium text-gray-900 mb-2">No transactions found</h3>
-                                    <p class="text-gray-500">You haven't made any payments yet.</p>
+                                    <h3 class="text-lg font-medium text-gray-900 mb-2">{{ __('trans.no_transactions_found_title') }}</h3>
+                                    <p class="text-gray-500">{{ __('trans.no_payments_yet') }}</p>
                                 </div>
                             </td>
                         </tr>

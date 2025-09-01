@@ -140,14 +140,14 @@
                                     <p class="text-sm text-gray-600 truncate">
                                         @if($lastMessage)
                                             @if($lastMessage->type == 'image')
-                                                <i class="fa-solid fa-image mr-1"></i> Image
+                                                <i class="fa-solid fa-image mr-1"></i> {{ __('trans.image') }}
                                             @elseif($lastMessage->type == 'file')
-                                                <i class="fa-solid fa-file mr-1"></i> File
+                                                <i class="fa-solid fa-file mr-1"></i> {{ __('trans.file') }}
                                             @else
                                                 {{ Str::limit($lastMessage->content, 30) }}
                                             @endif
                                         @else
-                                            No messages yet
+                                            {{ __('trans.no_messages_yet') }}
                                         @endif
                                     </p>
                                     @if($unreadCount > 0)
@@ -164,10 +164,10 @@
                                         <div class="text-xs text-gray-400 mt-1">
                                             @if($validityPeriod['type'] == 'session')
                                                 <i class="fa-solid fa-clock mr-1"></i>
-                                                Session: {{ $validityPeriod['start']->format('M d, H:i') }} - {{ $validityPeriod['end']->format('M d, H:i') }}
+                                                {{ __('trans.session') }}: {{ $validityPeriod['start']->format('M d, H:i') }} - {{ $validityPeriod['end']->format('M d, H:i') }}
                                             @else
                                                 <i class="fa-solid fa-graduation-cap mr-1"></i>
-                                                Course: {{ $list_conversation->enrollment->enrollable->title }}
+                                                {{ __('trans.course') }}: {{ $list_conversation->enrollment->enrollable->title }}
                                             @endif
                                         </div>
                                     @endif
@@ -181,8 +181,8 @@
                     <div class="w-12 h-12 bg-gray-100 rounded-full flex items-center justify-center mb-3">
                         <i class="fa-solid fa-comments text-xl text-gray-400"></i>
                     </div>
-                    <h3 class="text-sm font-medium text-gray-900 mb-1">No active conversations</h3>
-                    <p class="text-gray-500 text-xs">All your conversations are archived or expired.</p>
+                    <h3 class="text-sm font-medium text-gray-900 mb-1">{{ __('trans.no_active_conversations') }}</h3>
+                    <p class="text-gray-500 text-xs">{{ __('trans.all_conversations_archived') }}</p>
                 </div>
             @endif
             </div>
@@ -239,14 +239,14 @@
                                         <p class="text-sm text-gray-600 truncate">
                                             @if($lastMessage)
                                                 @if($lastMessage->type == 'image')
-                                                    <i class="fa-solid fa-image mr-1"></i> Image
+                                                    <i class="fa-solid fa-image mr-1"></i> {{ __('trans.image') }}
                                                 @elseif($lastMessage->type == 'file')
-                                                    <i class="fa-solid fa-file mr-1"></i> File
+                                                    <i class="fa-solid fa-file mr-1"></i> {{ __('trans.file') }}
                                                 @else
                                                     {{ Str::limit($lastMessage->content, 30) }}
                                                 @endif
                                             @else
-                                                No messages yet
+                                                {{ __('trans.no_messages_yet') }}
                                             @endif
                                         </p>
                                         @if($unreadCount > 0)
@@ -263,9 +263,9 @@
                                             <div class="text-xs text-gray-400 mt-1">
                                                 <i class="fa-solid fa-archive mr-1"></i>
                                                 @if($validityPeriod['type'] == 'session')
-                                                    Expired Session
+                                                    {{ __('trans.expired_session') }}
                                                 @else
-                                                    Expired Course - {{ $list_conversation->enrollment->enrollable->title }}
+                                                    {{ __('trans.expired_course') }} - {{ $list_conversation->enrollment->enrollable->title }}
                                                 @endif
                                             </div>
                                         @endif
@@ -279,8 +279,8 @@
                         <div class="w-12 h-12 bg-gray-100 rounded-full flex items-center justify-center mb-3">
                             <i class="fa-solid fa-archive text-xl text-gray-400"></i>
                         </div>
-                        <h3 class="text-sm font-medium text-gray-900 mb-1">No archived conversations</h3>
-                        <p class="text-gray-500 text-xs">All your conversations are currently active.</p>
+                        <h3 class="text-sm font-medium text-gray-900 mb-1">{{ __('trans.no_archived_conversations') }}</h3>
+                        <p class="text-gray-500 text-xs">{{ __('trans.all_conversations_active') }}</p>
                     </div>
                 @endif
             </div>
@@ -296,19 +296,19 @@
                     <div class="w-20 h-20 bg-red-100 rounded-full flex items-center justify-center mx-auto mb-4">
                         <i class="fa-solid fa-exclamation-triangle text-3xl text-red-600"></i>
                     </div>
-                    <h3 class="text-xl font-semibold text-gray-900 mb-2">Access Denied</h3>
+                    <h3 class="text-xl font-semibold text-gray-900 mb-2">{{ __('trans.access_denied') }}</h3>
                     <p class="text-gray-500 mb-4">{{ $error }}</p>
                     @if($errorType == 'no_permission')
                         <div class="text-sm text-gray-600">
-                            <p>This conversation belongs to other users. You can only access conversations where you are either:</p>
+                            <p>{{ __('trans.conversation_belongs_others') }}</p>
                             <ul class="mt-2 space-y-1">
-                                <li>• The student participant</li>
-                                <li>• The mentor participant</li>
+                                <li>• {{ __('trans.student_participant') }}</li>
+                                <li>• {{ __('trans.mentor_participant') }}</li>
                             </ul>
                         </div>
                     @endif
                     <button onclick="window.location.href='/chat'" class="mt-4 px-4 py-2 bg-purple-600 text-white rounded-lg hover:bg-purple-700 transition-colors">
-                        Back to Conversations
+                        {{ __('trans.back_to_conversations') }}
                     </button>
                 </div>
             </div>
@@ -321,8 +321,8 @@
                     <div class="w-20 h-20 bg-purple-100 rounded-full flex items-center justify-center mx-auto mb-4">
                         <i class="fa-solid fa-comments text-3xl text-purple-600"></i>
                     </div>
-                    <h3 class="text-xl font-semibold text-gray-900 mb-2">Welcome to Chat</h3>
-                    <p class="text-gray-500">Select a conversation to start messaging</p>
+                    <h3 class="text-xl font-semibold text-gray-900 mb-2">{{ __('trans.welcome_to_chat') }}</h3>
+                    <p class="text-gray-500">{{ __('trans.select_conversation_start') }}</p>
                 </div>
             </div>
         @endif
@@ -334,7 +334,7 @@
     <div class="bg-white rounded-xl shadow-xl max-w-md w-full mx-4">
         <div class="p-6">
             <div class="flex items-center justify-between mb-4">
-                <h3 class="text-lg font-semibold text-gray-900">Start New Conversation</h3>
+                <h3 class="text-lg font-semibold text-gray-900">{{ __('trans.start_new_conversation_title') }}</h3>
                 <button onclick="closeNewConversationModal()" class="text-gray-400 hover:text-gray-600">
                     <i class="fa-solid fa-times"></i>
                 </button>
@@ -344,10 +344,10 @@
                 @csrf
                 <div class="mb-4">
                     <label for="user-search" class="block text-sm font-medium text-gray-700 mb-2">
-                        Search {{ auth()->user()->mentor ? 'Students' : 'Mentors' }}
+                        {{ auth()->user()->mentor ? __('trans.search_students') : __('trans.search_mentors') }}
                     </label>
                     <div class="relative">
-                        <input type="text" id="user-search" placeholder="Type name or email..." 
+                        <input type="text" id="user-search" placeholder="{{ __('trans.type_name_email') }}" 
                                class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent">
                         <div class="absolute inset-y-0 right-0 pr-3 flex items-center">
                             <i class="fa-solid fa-search text-gray-400"></i>
@@ -362,11 +362,11 @@
                 <div class="flex justify-end space-x-3">
                     <button type="button" onclick="closeNewConversationModal()" 
                             class="px-4 py-2 text-gray-600 border border-gray-300 rounded-lg hover:bg-gray-50 transition-colors">
-                        Cancel
+                        {{ __('trans.cancel') }}
                     </button>
                     <button type="button" id="start-conversation-btn" disabled
                             class="px-4 py-2 bg-purple-600 text-white rounded-lg hover:bg-purple-700 disabled:opacity-50 disabled:cursor-not-allowed transition-colors">
-                        Start Conversation
+                        {{ __('trans.start_conversation') }}
                     </button>
                 </div>
             </form>
@@ -435,7 +435,7 @@ function displaySearchResults(users) {
     const resultsContainer = document.getElementById('user-results');
     
     if (users.length == 0) {
-        resultsContainer.innerHTML = '<p class="text-gray-500 text-sm p-3">No users found</p>';
+        resultsContainer.innerHTML = '<p class="text-gray-500 text-sm p-3">{{ __('trans.no_users_found') }}</p>';
         resultsContainer.classList.remove('hidden');
         return;
     }
@@ -452,7 +452,7 @@ function displaySearchResults(users) {
             <div class="flex-1">
                 <p class="font-medium text-gray-900">${user.name}</p>
                 <p class="text-sm text-gray-500">${user.email}</p>
-                <p class="text-xs text-gray-400">${user.role == 'mentor' ? 'Mentor' : 'Student'}</p>
+                <p class="text-xs text-gray-400">${user.role == 'mentor' ? '{{ __('trans.mentor') }}' : '{{ __('trans.student') }}'}</p>
             </div>
         </div>
     `).join('');
@@ -473,7 +473,7 @@ document.getElementById('start-conversation-btn').addEventListener('click', asyn
     if (!selectedUserId) return;
     
     this.disabled = true;
-    this.innerHTML = '<i class="fa-solid fa-spinner fa-spin mr-2"></i>Starting...';
+    this.innerHTML = '<i class="fa-solid fa-spinner fa-spin mr-2"></i>{{ __('trans.starting') }}';
     
     try {
         const response = await fetch('/chat/create', {
@@ -493,15 +493,15 @@ document.getElementById('start-conversation-btn').addEventListener('click', asyn
             window.location.href = `/chat/${result.conversation_code}`;
         } else {
             const error = await response.json();
-            alert(error.message || 'Failed to start conversation');
+            alert(error.message || '{{ __('trans.failed_start_conversation') }}');
         }
     } catch (error) {
         console.error('Error starting conversation:', error);
-        alert('Failed to start conversation. Please try again.');
+        alert('{{ __('trans.failed_start_conversation') }}');
     }
     
     this.disabled = false;
-    this.innerHTML = 'Start Conversation';
+    this.innerHTML = '{{ __('trans.start_conversation') }}';
 });
 
 // Search functionality

@@ -142,7 +142,7 @@
         <!-- Course Description -->
         <div class="mt-6 pt-6 border-t border-gray-200">
             <h3 class="text-lg font-semibold text-gray-900 mb-3">Description</h3>
-            <p class="text-gray-700 leading-relaxed">{{ $course->description }}</p>
+            <div class="text-gray-700 leading-relaxed">{!! nl2br(e($course->description)) !!}</div>
         </div>
     </div>
 
@@ -166,7 +166,7 @@
             <div class="flex items-center justify-between">
                 <div>
                     <p class="text-sm text-gray-600">Average Rating</p>
-                    <p class="text-2xl font-bold text-gray-900">{{ $course->averageRating() ? number_format($course->averageRating(), 1) : 'N/A' }}</p>
+                    <p class="text-2xl font-bold text-gray-900">{{ $course->averageRating() ? number_format($course->averageRating(), 1) : '0' }}</p>
                 </div>
                 <div class="w-12 h-12 bg-yellow-100 rounded-lg flex items-center justify-center">
                     <i class="fa-solid fa-star text-xl text-yellow-600"></i>

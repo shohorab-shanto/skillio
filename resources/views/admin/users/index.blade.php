@@ -1,9 +1,9 @@
 @extends('admin.layouts.backend')
 
-@section('title', 'Users Management')
+@section('title', __('trans.users_management'))
 
 @section('header')
-    Users Management
+    {{ __('trans.users_management') }}
 @endsection
 
 @section('content')
@@ -15,9 +15,9 @@
                             <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
                 <!-- Search -->
                 <div>
-                    <label class="block text-sm font-medium text-gray-700 mb-2">Search</label>
+                    <label class="block text-sm font-medium text-gray-700 mb-2">{{ __('trans.search') }}</label>
                     <input type="text" name="search" value="{{ request('search') }}" 
-                           placeholder="Name or email..." 
+                           placeholder="{{ __('trans.name_email') }}" 
                            class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent">
                 </div>
 
@@ -25,14 +25,14 @@
 
                 <!-- Date From -->
                 <div>
-                    <label class="block text-sm font-medium text-gray-700 mb-2">From Date</label>
+                    <label class="block text-sm font-medium text-gray-700 mb-2">{{ __('trans.from_date') }}</label>
                     <input type="date" name="date_from" value="{{ request('date_from') }}" 
                            class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent">
                 </div>
 
                 <!-- Date To -->
                 <div>
-                    <label class="block text-sm font-medium text-gray-700 mb-2">To Date</label>
+                    <label class="block text-sm font-medium text-gray-700 mb-2">{{ __('trans.to_date') }}</label>
                     <input type="date" name="date_to" value="{{ request('date_to') }}" 
                            class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent">
                 </div>
@@ -40,10 +40,10 @@
 
             <div class="flex items-center gap-3">
                 <button type="submit" class="px-6 py-2 bg-purple-600 text-white rounded-lg hover:bg-purple-700 transition-colors duration-200">
-                    <i class="fa-solid fa-filter mr-2"></i>Apply Filters
+                    <i class="fa-solid fa-filter mr-2"></i>{{ __('trans.apply_filters') }}
                 </button>
                 <a href="{{ route('admin.users.index') }}" class="px-6 py-2 bg-gray-100 text-gray-700 rounded-lg hover:bg-gray-200 transition-colors duration-200">
-                    <i class="fa-solid fa-times mr-2"></i>Clear Filters
+                    <i class="fa-solid fa-times mr-2"></i>{{ __('trans.clear_filters') }}
                 </a>
             </div>
         </form>
@@ -56,17 +56,17 @@
                 <thead class="bg-gray-50">
                     <tr>
                         <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                            User
+                            {{ __('trans.user') }}
                         </th>
                         <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                            Email
+                            {{ __('trans.email') }}
                         </th>
 
                         <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                            Joined Date
+                            {{ __('trans.joined_date') }}
                         </th>
                         <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                            Actions
+                            {{ __('trans.actions') }}
                         </th>
                     </tr>
                 </thead>
@@ -84,7 +84,7 @@
                                 </div>
                                 <div class="ml-4">
                                     <div class="text-sm font-medium text-gray-900">{{ $user->name }}</div>
-                                    <div class="text-sm text-gray-500">ID: {{ $user->id }}</div>
+                                    <div class="text-sm text-gray-500">{{ __('trans.id') }}: {{ $user->id }}</div>
                                 </div>
                             </div>
                         </td>
@@ -107,7 +107,7 @@
                                 <a href="{{ route('admin.users.enrollments', $user->id) }}" 
                                    class="px-3 py-1 text-xs bg-blue-100 text-blue-700 rounded-lg hover:bg-blue-200 transition-colors duration-200">
                                     <i class="fa-solid fa-history mr-1"></i>
-                                    Enrollments
+                                    {{ __('trans.enrollments') }}
                                 </a>
                             </div>
                         </td>
@@ -117,8 +117,8 @@
                         <td colspan="4" class="px-6 py-12 text-center text-gray-500">
                             <div class="flex flex-col items-center">
                                 <i class="fa-solid fa-users text-4xl text-gray-300 mb-3"></i>
-                                <p class="text-lg font-medium">No users found</p>
-                                <p class="text-sm">Try adjusting your filters or search terms</p>
+                                <p class="text-lg font-medium">{{ __('trans.no_users_available') }}</p>
+                                <p class="text-sm">{{ __('trans.try_different_keywords') }}</p>
                             </div>
                         </td>
                     </tr>
@@ -134,13 +134,13 @@
                 <!-- Pagination Details - Left Aligned -->
                 <div class="text-sm text-gray-700">
                     <p>
-                        Showing
+                        {{ __('trans.showing') }}
                         <span class="font-medium">{{ $users->firstItem() ?? 0 }}</span>
-                        to
+                        {{ __('trans.to') }}
                         <span class="font-medium">{{ $users->lastItem() ?? 0 }}</span>
-                        of
+                        {{ __('trans.of') }}
                         <span class="font-medium">{{ $users->total() }}</span>
-                        users
+                        {{ __('trans.entries') }}
                     </p>
                 </div>
 

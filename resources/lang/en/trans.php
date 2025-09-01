@@ -920,4 +920,19 @@ return [
     'search_placeholder_mentors' => 'Search mentors...',
     'search_placeholder_categories' => 'Search categories...',
     'search_placeholder_transactions' => 'Search transactions...',
+    
+    // Additional Admin Keys
+    'verification' => 'Verification',
+    'availability' => 'Availability',
+    'contact_info' => 'Contact Info',
+    'rating' => 'Rating',
+    'mentor_not_found' => 'Mentor not found',
+    'days' => 'days',
+    'all_availability' => 'All Availability',
+    'available' => 'Available',
+    'unavailable' => 'Unavailable',
+    'busy' => 'Busy',
+    'all_verification' => 'All Verification',
+    'verification_status' => 'Verification Status',
+    'enrollments' => 'Enrollments',
 ];

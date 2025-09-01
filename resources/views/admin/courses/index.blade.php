@@ -85,10 +85,10 @@
 
             <div class="flex items-center gap-3">
                 <button type="submit" class="px-6 py-2 bg-purple-600 text-white rounded-lg hover:bg-purple-700 transition-colors duration-200">
-                    <i class="fa-solid fa-filter mr-2"></i>Apply Filters
+                    <i class="fa-solid fa-filter mr-2"></i>{{ __('trans.apply_filters') }}
                 </button>
                 <a href="{{ route('admin.courses.index') }}" class="px-6 py-2 bg-gray-100 text-gray-700 rounded-lg hover:bg-gray-200 transition-colors duration-200">
-                    <i class="fa-solid fa-times mr-2"></i>Clear Filters
+                    <i class="fa-solid fa-times mr-2"></i>{{ __('trans.clear_filters') }}
                 </a>
             </div>
         </form>
@@ -101,23 +101,23 @@
                 <thead class="bg-gray-50">
                     <tr>
                         <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                            Course
+                            {{ __('trans.course') }}
                         </th>
                         <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                            Mentor
+                            {{ __('trans.mentor') }}
                         </th>
                         <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                            Category
+                            {{ __('trans.category') }}
                         </th>
                         <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                            Price
+                            {{ __('trans.price') }}
                         </th>
                         <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                            Status
+                            {{ __('trans.status') }}
                         </th>
 
                         <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                            Actions
+                            {{ __('trans.actions') }}
                         </th>
                     </tr>
                 </thead>

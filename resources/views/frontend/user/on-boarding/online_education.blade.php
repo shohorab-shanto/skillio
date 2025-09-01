@@ -8,7 +8,7 @@
 <div class="min-h-screen flex flex-col justify-between bg-gradient-to-br from-pink-50 via-white to-purple-100 px-2 md:px-0">
     <div class="flex-1 flex flex-col items-center justify-center">
         <!-- Logo and Title -->
-        <a href="/" class="mt-8 mb-2">
+        <a href="/" class="mt-8 mb-8">
             <img style="height:36px; width"112px;" src="{{ asset('assets/images/logo.png') }}" alt="" class="mx-auto mt-20">
         </a>
         <h2 class="text-2xl md:text-3xl font-semibold text-center mb-8 mt-2">{{ __('trans.online_education_options') }}</h2>

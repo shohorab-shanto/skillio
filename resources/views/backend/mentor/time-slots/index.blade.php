@@ -104,7 +104,7 @@
                             </div>
                             <div class="flex items-center space-x-2">
                                 @if($timeSlot->status == 'booked' && $timeSlot->user_id)
-                                    <button onclick="showUserDetails({{ $timeSlot->user_id }}, '{{ $timeSlot->user->name }}', '{{ $timeSlot->user->email }}', '{{ $timeSlot->user->phone ?? 'N/A' }}', '{{ $timeSlot->user->address ?? 'N/A' }}', '{{ $timeSlot->user->created_at->format('M d, Y') }}')"
+                                    <button onclick="showUserDetails({{ $timeSlot->user_id }}, '{{ $timeSlot->user->name }}', '{{ $timeSlot->user->created_at->format('M d, Y') }}')"
                                             class="text-blue-500 hover:text-blue-700 transition-colors"
                                             title="View Student Details">
                                         <i class="fa-solid fa-user text-sm"></i>
@@ -317,8 +317,8 @@
                     <i class="fa-solid fa-user text-blue-600 text-xl"></i>
                 </div>
                 <div>
-                    <h3 class="text-lg font-semibold text-gray-900">Student Details</h3>
-                    <p class="text-sm text-gray-500">Booked student information</p>
+                    <h3 class="text-lg font-semibold text-gray-900">{{ __('trans.student_details') }}</h3>
+                    <p class="text-sm text-gray-500">{{ __('trans.booked_student_information') }}</p>
                 </div>
             </div>
             <button onclick="closeUserDetailsModal()" class="text-gray-400 hover:text-gray-600 transition-colors">
@@ -326,37 +326,79 @@
             </button>
         </div>
         
-        
         <div class="space-y-3">
             <div class="text-gray-700">
-                <span class="font-medium">Name:</span> <span id="userName"></span>
+                <span class="font-medium">{{ __('trans.name') }}:</span> <span id="userName"></span>
+            </div>
+            <div class="text-gray-700">
+                <span class="font-medium">{{ __('trans.member_since') }}:</span> <span id="userJoined"></span>
             </div>
         </div>
         
-        
         <!-- Chat Button -->
-        <div class="mb-4 mt-4">
+        <div class="mt-6">
             <button onclick="chatWithUser()" class="w-full bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-lg font-medium transition-colors flex items-center justify-center space-x-2">
                 <i class="fa-solid fa-message"></i>
-                <span>Chat with Student</span>
+                <span>{{ __('trans.chat_with_student') }}</span>
             </button>
         </div>
     </div>
 </div>
 
 <script>
-function showUserDetails(userId, userName) {
+let currentUserId = null;
+
+function showUserDetails(userId, userName, userJoined) {
+    currentUserId = userId;
     document.getElementById('userName').textContent = userName;
+    document.getElementById('userJoined').textContent = userJoined;
     document.getElementById('userDetailsModal').classList.remove('hidden');
 }
 
 function closeUserDetailsModal() {
     document.getElementById('userDetailsModal').classList.add('hidden');
+    currentUserId = null;
 }
 
-function chatWithUser() {
-    // TODO: Add route link later
-    alert('Chat functionality will be implemented here');
+async function chatWithUser() {
+    if (!currentUserId) {
+        alert('{{ __("trans.no_student_selected") }}');
+        return;
+    }
+    
+    try {
+        const token = document.querySelector('meta[name="csrf-token"]')?.getAttribute('content');
+        
+        if (!token) {
+            alert('{{ __("trans.please_login_to_chat") }}');
+            return;
+        }
+        
+        const response = await fetch('/chat/create', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'Accept': 'application/json',
+                'X-CSRF-TOKEN': token
+            },
+            body: JSON.stringify({
+                other_user_id: currentUserId
+            })
+        });
+        
+        if (response.ok) {
+            const result = await response.json();
+            window.location.href = `/chat/${result.conversation_code}`;
+        } else if (response.status == 401) {
+            alert('{{ __("trans.please_login_to_chat") }}');
+        } else {
+            const error = await response.json();
+            alert(error.message || '{{ __("trans.failed_to_start_conversation") }}');
+        }
+    } catch (error) {
+        console.error('Error starting conversation:', error);
+        alert('{{ __("trans.failed_to_start_conversation") }}');
+    }
 }
 
 // Close modal when clicking outside

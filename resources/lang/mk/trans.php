@@ -695,4 +695,16 @@ return [
     'serbian_short' => 'SR',
     'slovenian_short' => 'SL',
     'macedonian_short' => 'MK',
+    
+    // Mentor Time Slots - Student Details Modal
+    'student_details' => 'Детали на студент',
+    'booked_student_information' => 'Информации за резервираниот студент',
+    'email' => 'Email',
+    'phone' => 'Телефон',
+    'address' => 'Адреса',
+    'member_since' => 'Член од',
+    'chat_with_student' => 'Chat со студент',
+    'no_student_selected' => 'Не е избран студент',
+    'please_login_to_chat' => 'Ве молиме најавете се за chat',
+    'failed_to_start_conversation' => 'Неуспешно започнување на разговор. Обидете се повторно.',
 ];

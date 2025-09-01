@@ -716,4 +716,16 @@ return [
     // Forgot Password Additional Keys
     'forgot_password_description' => 'Enter your email to receive a password reset link.',
     'email_password_reset_link' => 'Email Password Reset Link',
+    
+    // Mentor Time Slots - Student Details Modal
+    'student_details' => 'Student Details',
+    'booked_student_information' => 'Booked student information',
+    'email' => 'Email',
+    'phone' => 'Phone',
+    'address' => 'Address',
+    'member_since' => 'Member Since',
+    'chat_with_student' => 'Chat with Student',
+    'no_student_selected' => 'No student selected',
+    'please_login_to_chat' => 'Please log in to chat',
+    'failed_to_start_conversation' => 'Failed to start conversation. Please try again.',
 ];

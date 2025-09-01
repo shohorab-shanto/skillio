@@ -40,9 +40,7 @@ class HomeController extends Controller
             ->whereHas('user', function($q) {
                 $q->where('role', 'mentor');
             })
-            ->with(['user', 'sessionBookings' => function($q) {
-                $q->select('id', 'mentor_id', 'fee', 'category_id');
-            }, 'sessionBookings.category', 'sessionBookings.subCategories'])
+            ->with(['user', 'sessionBookings.category', 'sessionBookings.subCategories'])
             ->withCount(['reviews as total_reviews'])
             ->withAvg('reviews', 'rating');
 
@@ -107,27 +105,24 @@ class HomeController extends Controller
         // Combine preferred and regular mentors, with preferred ones first
         $allMentors = $preferredMentors->merge($regularMentors);
         
-        // Add lowest session rate for each mentor
+        // Add lowest session rate for each mentor (converted to hourly rate)
         $allMentors->each(function ($mentor) {
-            // Debug: Check if sessionBookings are loaded
+            $lowestHourlyRate = null;
+            
             if ($mentor->sessionBookings && $mentor->sessionBookings->isNotEmpty()) {
-                // Filter out null fees and get the minimum
-                $validFees = $mentor->sessionBookings
-                    ->whereNotNull('fee')
-                    ->where('fee', '>', 0)
-                    ->pluck('fee');
-                
-                if ($validFees->isNotEmpty()) {
-                    $mentor->lowest_session_rate = $validFees->min();
-                    \Log::info("Mentor {$mentor->user->name}: Found valid fees: " . $validFees->implode(', ') . ", Lowest: {$mentor->lowest_session_rate}");
-                } else {
-                    $mentor->lowest_session_rate = 0; // No valid fees
-                    \Log::info("Mentor {$mentor->user->name}: No valid fees found");
+                foreach ($mentor->sessionBookings as $session) {
+                    if ($session->fee > 0 && $session->duration_in_minutes > 0) {
+                        // Calculate hourly rate: (fee / duration_in_minutes) * 60
+                        $hourlyRate = ($session->fee / $session->duration_in_minutes) * 60;
+                        
+                        if ($lowestHourlyRate === null || $hourlyRate < $lowestHourlyRate) {
+                            $lowestHourlyRate = $hourlyRate;
+                        }
+                    }
                 }
-            } else {
-                $mentor->lowest_session_rate = 0; // No sessions
-                \Log::info("Mentor {$mentor->user->name}: No sessionBookings loaded");
             }
+            
+            $mentor->lowest_session_rate = $lowestHourlyRate ? number_format($lowestHourlyRate, 2) : '0';
         });
         
         return $allMentors;

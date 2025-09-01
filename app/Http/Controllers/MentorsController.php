@@ -170,15 +170,24 @@ class MentorsController extends Controller
     }
 
     /**
-     * Get the lowest session rate for a mentor.
+     * Get the lowest session rate for a mentor converted to hourly rate.
      */
     private function getLowestSessionRate($mentor)
     {
-        $lowestRate = $mentor->sessionBookings
-            ->where('fee', '>', 0)
-            ->min('fee');
+        $lowestHourlyRate = null;
         
-        return $lowestRate ? number_format($lowestRate, 2) : 'N/A';
+        foreach ($mentor->sessionBookings as $session) {
+            if ($session->fee > 0 && $session->duration_in_minutes > 0) {
+                // Calculate hourly rate: (fee / duration_in_minutes) * 60
+                $hourlyRate = ($session->fee / $session->duration_in_minutes) * 60;
+                
+                if ($lowestHourlyRate === null || $hourlyRate < $lowestHourlyRate) {
+                    $lowestHourlyRate = $hourlyRate;
+                }
+            }
+        }
+        
+        return $lowestHourlyRate ? number_format($lowestHourlyRate, 2) : '0';
     }
 
     /**

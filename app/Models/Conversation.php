@@ -12,7 +12,7 @@ class Conversation extends Model
         'mentor_id',
         'user_id',
         'unique_code',
-        'status',
+        'enrollment_id',
         'last_message_at',
     ];
 
@@ -42,6 +42,14 @@ class Conversation extends Model
     public function user(): BelongsTo
     {
         return $this->belongsTo(User::class, 'user_id');
+    }
+
+    /**
+     * Get the enrollment that owns the conversation.
+     */
+    public function enrollment(): BelongsTo
+    {
+        return $this->belongsTo(UserEnrollment::class, 'enrollment_id');
     }
 
     /**
@@ -88,6 +96,73 @@ class Conversation extends Model
         }
         
         return false;
+    }
+
+    /**
+     * Check if conversation is active based on enrollment validity.
+     */
+    public function isConversationActive()
+    {
+        if (!$this->enrollment) {
+            return false;
+        }
+
+        $enrollment = $this->enrollment;
+        
+        if ($enrollment->enrollable_type == 'App\Models\SessionBooking') {
+            $session = $enrollment->enrollable;
+            $now = now();
+            
+            // Allow chat 1 hour before session and 24 hours after
+            $preSessionTime = $session->start_time->subHour();
+            $postSessionTime = $session->end_time->addDay();
+            
+            return $now->between($preSessionTime, $postSessionTime);
+        }
+        
+        if ($enrollment->enrollable_type == 'App\Models\Course') {
+            $course = $enrollment->enrollable;
+            $enrolledAt = $enrollment->enrolled_at;
+            
+            // Course validity period
+            $courseEndDate = $enrolledAt->addDays($course->duration);
+            
+            return now()->lte($courseEndDate);
+        }
+        
+        return false;
+    }
+
+    /**
+     * Get the validity period for this conversation.
+     */
+    public function getValidityPeriod()
+    {
+        if (!$this->enrollment) {
+            return null;
+        }
+
+        $enrollment = $this->enrollment;
+        
+        if ($enrollment->enrollable_type == 'App\Models\SessionBooking') {
+            $session = $enrollment->enrollable;
+            return [
+                'start' => $session->start_time->subHour(),
+                'end' => $session->end_time->addDay(),
+                'type' => 'session'
+            ];
+        }
+        
+        if ($enrollment->enrollable_type == 'App\Models\Course') {
+            $course = $enrollment->enrollable;
+            return [
+                'start' => $enrollment->enrolled_at,
+                'end' => $enrollment->enrolled_at->addDays($course->duration),
+                'type' => 'course'
+            ];
+        }
+        
+        return null;
     }
 
     /**

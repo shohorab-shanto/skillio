@@ -75,6 +75,23 @@
             <div>
                 <h3 class="text-lg font-semibold text-gray-900">{{ $otherUser->name }}</h3>
                 <p class="text-sm text-gray-500">{{ $otherUserRole }} • Online</p>
+                
+                @if($conversation->enrollment)
+                    @php
+                        $validityPeriod = $conversation->getValidityPeriod();
+                    @endphp
+                    @if($validityPeriod)
+                        <p class="text-xs text-gray-400 mt-1">
+                            @if($validityPeriod['type'] == 'session')
+                                <i class="fa-solid fa-clock mr-1"></i>
+                                Session: {{ $validityPeriod['start']->format('M d, H:i') }} - {{ $validityPeriod['end']->format('M d, H:i') }}
+                            @else
+                                <i class="fa-solid fa-graduation-cap mr-1"></i>
+                                Course: {{ $validityPeriod['start']->format('M d') }} - {{ $validityPeriod['end']->format('M d') }}
+                            @endif
+                        </p>
+                    @endif
+                @endif
             </div>
         </div>
         

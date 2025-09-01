@@ -126,6 +126,23 @@
                                     @endif
                                 </div>
                                 <p class="text-xs text-gray-500">{{ $otherUserRole }}</p>
+                                
+                                @if($list_conversation->enrollment)
+                                    @php
+                                        $validityPeriod = $list_conversation->getValidityPeriod();
+                                    @endphp
+                                    @if($validityPeriod)
+                                        <div class="text-xs text-gray-400 mt-1">
+                                            @if($validityPeriod['type'] == 'session')
+                                                <i class="fa-solid fa-clock mr-1"></i>
+                                                Session: {{ $validityPeriod['start']->format('M d, H:i') }} - {{ $validityPeriod['end']->format('M d, H:i') }}
+                                            @else
+                                                <i class="fa-solid fa-graduation-cap mr-1"></i>
+                                                Course: {{ $validityPeriod['start']->format('M d') }} - {{ $validityPeriod['end']->format('M d') }}
+                                            @endif
+                                        </div>
+                                    @endif
+                                @endif
                             </div>
                         </div>
                     </div>

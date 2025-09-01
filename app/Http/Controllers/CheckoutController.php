@@ -206,6 +206,9 @@ class CheckoutController extends Controller
                     'payment_transaction_id' => $transaction->id,
                 ]);
 
+                // Create conversation for this enrollment
+                $conversation = $enrollment->createConversation();
+
                 // Update item status for localhost testing
                 if ($type == 'session') {
                     $item->update([

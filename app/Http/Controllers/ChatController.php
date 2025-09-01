@@ -175,9 +175,12 @@ class ChatController extends Controller
             // User is a mentor in conversation
             $query->where('user_id', $user->id);
         })
-        ->with(['mentor.user', 'user', 'latestMessage'])
+        ->with(['mentor.user', 'user', 'latestMessage', 'enrollment.enrollable'])
         ->orderBy('last_message_at', 'desc')
-        ->get();
+        ->get()
+        ->filter(function($conversation) {
+            return $conversation->isConversationActive();
+        });
 
         return view('chat.index', compact('list_conversations'));
     }
@@ -194,7 +197,7 @@ class ChatController extends Controller
         }
         
         // Load the relationships after finding the conversation
-        $conversation->load(['mentor.user', 'user']);
+        $conversation->load(['mentor.user', 'user', 'enrollment.enrollable']);
         
         // Debug: Log the loaded conversation data
         \Log::info('Loaded conversation data:', [
@@ -239,9 +242,12 @@ class ChatController extends Controller
             // User is a mentor in conversation
             $query->where('user_id', $user->id);
         })
-        ->with(['mentor.user', 'user', 'latestMessage'])
+        ->with(['mentor.user', 'user', 'latestMessage', 'enrollment.enrollable'])
         ->orderBy('last_message_at', 'desc')
-        ->get();
+        ->get()
+        ->filter(function($conversation) {
+            return $conversation->isConversationActive();
+        });
 
         // Mark messages as read
         $conversation->messages()
@@ -284,20 +290,16 @@ class ChatController extends Controller
             return redirect()->route('chat.index')->with('error', 'You do not have permission to send messages in this conversation.');
         }
 
-        // Check if user can chat based on time restrictions
-        $enrollmentCheckUserId = $user->mentor ? $conversation->user_id : $user->id;
-        $chatStatus = $this->getChatPermissionStatus($enrollmentCheckUserId, $conversation->mentor_id);
-        if (!$chatStatus['can_chat']) {
+        // Check if conversation is active based on enrollment validity
+        if (!$conversation->isConversationActive()) {
             if ($request->expectsJson()) {
                 return response()->json([
                     'success' => false,
-                    'message' => $chatStatus['reason'],
-                    'details' => $chatStatus['details'],
-                    'type' => $chatStatus['type'],
+                    'message' => 'This conversation is not active. Please check your enrollment status.',
                     'can_chat' => false
                 ], 403);
             }
-            return redirect()->back()->with('error', $chatStatus['reason'] . ': ' . $chatStatus['details']);
+            return redirect()->back()->with('error', 'This conversation is not active. Please check your enrollment status.');
         }
 
         $request->validate([

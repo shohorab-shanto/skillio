@@ -60,4 +60,28 @@ class UserEnrollment extends Model
     {
         return $this->belongsTo(PaymentTransaction::class);
     }
+
+    /**
+     * Get the conversation for this enrollment.
+     */
+    public function conversation()
+    {
+        return $this->hasOne(Conversation::class);
+    }
+
+    /**
+     * Create a conversation for this enrollment.
+     */
+    public function createConversation()
+    {
+        if (!$this->conversation) {
+            return Conversation::create([
+                'enrollment_id' => $this->id,
+                'mentor_id' => $this->enrollable->mentor->id,
+                'user_id' => $this->user_id,
+                'unique_code' => Conversation::generateUniqueCode(),
+            ]);
+        }
+        return $this->conversation;
+    }
 }

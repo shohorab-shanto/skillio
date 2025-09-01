@@ -9,6 +9,7 @@
     
     // Get the other user in the conversation - ONLY from the current conversation object
     $currentUser = auth()->user();
+    $currentUserMentor = $currentUser->mentor; // Get current user's mentor record if they are a mentor
     
     // CRITICAL: Only get mentor and student info from the CURRENT conversation object
     $currentConversationMentor = $conversation->mentor;
@@ -87,7 +88,7 @@
                                 Session: {{ $validityPeriod['start']->format('M d, H:i') }} - {{ $validityPeriod['end']->format('M d, H:i') }}
                             @else
                                 <i class="fa-solid fa-graduation-cap mr-1"></i>
-                                Course: {{ $validityPeriod['start']->format('M d') }} - {{ $validityPeriod['end']->format('M d') }}
+                                Course: {{ $conversation->enrollment->enrollable->title }}
                             @endif
                         </p>
                     @endif
@@ -293,6 +294,32 @@
     </div>
 </div>
 
+<!-- Error Modal -->
+<div id="error-modal" class="hidden fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
+    <div class="bg-white rounded-xl shadow-xl max-w-md w-full mx-4">
+        <div class="p-6">
+            <div class="flex items-center justify-between mb-4">
+                <div class="flex items-center space-x-3">
+                    <div id="error-icon" class="w-10 h-10 rounded-full flex items-center justify-center">
+                        <i id="error-icon-class" class="text-xl"></i>
+                    </div>
+                    <h3 id="error-title" class="text-lg font-semibold text-gray-900"></h3>
+                </div>
+                <button onclick="closeErrorModal()" class="text-gray-400 hover:text-gray-600">
+                    <i class="fa-solid fa-times"></i>
+                </button>
+            </div>
+            <p id="error-message" class="text-gray-600 mb-6"></p>
+            <div class="flex justify-end">
+                <button onclick="closeErrorModal()" 
+                        class="px-4 py-2 bg-gray-600 text-white rounded-lg hover:bg-gray-700 transition-colors">
+                    OK
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+
 <script>
 let selectedFile = null;
 
@@ -354,7 +381,7 @@ document.getElementById('message-form').addEventListener('submit', async functio
     
     // Check if chat is active
     @if(isset($chatStatus) && !$chatStatus['can_chat'])
-        alert('{{ $chatStatus['reason'] }}: {{ $chatStatus['details'] }}');
+        showErrorModal('{{ $chatStatus['reason'] }}', '{{ $chatStatus['details'] }}', 'warning');
         return;
     @endif
     
@@ -431,11 +458,16 @@ document.getElementById('message-form').addEventListener('submit', async functio
         } else {
             const errorText = await response.text();
             console.error('Error response:', response.status, errorText);
-            alert(`Failed to send message (${response.status}). Please try again.`);
+            
+            if (response.status === 403) {
+                showErrorModal('Conversation Expired', 'This conversation is no longer active. You can read previous messages but cannot send new ones.', 'warning');
+            } else {
+                showErrorModal('Error', `Failed to send message (${response.status}). Please try again.`, 'error');
+            }
         }
     } catch (error) {
         console.error('Error sending message:', error);
-        alert('Failed to send message. Please try again.');
+        showErrorModal('Error', 'Failed to send message. Please try again.', 'error');
     }
     
     // Re-enable form
@@ -452,6 +484,32 @@ function openImageModal(src) {
 
 function closeImageModal() {
     document.getElementById('image-modal').classList.add('hidden');
+}
+
+// Error modal functions
+function showErrorModal(title, message, type = 'error') {
+    const modal = document.getElementById('error-modal');
+    const icon = document.getElementById('error-icon');
+    const iconClass = document.getElementById('error-icon-class');
+    const titleElement = document.getElementById('error-title');
+    const messageElement = document.getElementById('error-message');
+    
+    // Set icon and colors based on type
+    if (type === 'warning') {
+        icon.className = 'w-10 h-10 rounded-full flex items-center justify-center bg-amber-100';
+        iconClass.className = 'fa-solid fa-exclamation-triangle text-amber-600 text-xl';
+    } else {
+        icon.className = 'w-10 h-10 rounded-full flex items-center justify-center bg-red-100';
+        iconClass.className = 'fa-solid fa-times-circle text-red-600 text-xl';
+    }
+    
+    titleElement.textContent = title;
+    messageElement.textContent = message;
+    modal.classList.remove('hidden');
+}
+
+function closeErrorModal() {
+    document.getElementById('error-modal').classList.add('hidden');
 }
 
 // Scroll to bottom on load

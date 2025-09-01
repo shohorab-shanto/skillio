@@ -113,9 +113,18 @@ class Conversation extends Model
             $session = $enrollment->enrollable;
             $now = now();
             
+            // Get raw values to avoid casting issues
+            $sessionDate = $session->getRawOriginal('date');
+            $sessionStartTime = $session->getRawOriginal('start_time');
+            $sessionEndTime = $session->getRawOriginal('end_time');
+            
+            // Combine date and time to create full datetime
+            $sessionStartDateTime = \Carbon\Carbon::parse($sessionDate . ' ' . $sessionStartTime);
+            $sessionEndDateTime = \Carbon\Carbon::parse($sessionDate . ' ' . $sessionEndTime);
+            
             // Allow chat 1 hour before session and 24 hours after
-            $preSessionTime = $session->start_time->subHour();
-            $postSessionTime = $session->end_time->addDay();
+            $preSessionTime = $sessionStartDateTime->subHour();
+            $postSessionTime = $sessionEndDateTime->addDay();
             
             return $now->between($preSessionTime, $postSessionTime);
         }
@@ -124,8 +133,13 @@ class Conversation extends Model
             $course = $enrollment->enrollable;
             $enrolledAt = $enrollment->enrolled_at;
             
-            // Course validity period
-            $courseEndDate = $enrolledAt->addDays($course->duration);
+            // Course validity period - handle NULL duration
+            if (is_null($course->duration) || $course->duration <= 0) {
+                // If no duration set, course is active for 365 days (1 year)
+                $courseEndDate = $enrolledAt->addDays(365);
+            } else {
+                $courseEndDate = $enrolledAt->addDays($course->duration);
+            }
             
             return now()->lte($courseEndDate);
         }
@@ -146,18 +160,36 @@ class Conversation extends Model
         
         if ($enrollment->enrollable_type == 'App\Models\SessionBooking') {
             $session = $enrollment->enrollable;
+            
+            // Get raw values to avoid casting issues
+            $sessionDate = $session->getRawOriginal('date');
+            $sessionStartTime = $session->getRawOriginal('start_time');
+            $sessionEndTime = $session->getRawOriginal('end_time');
+            
+            // Combine date and time to create full datetime
+            $sessionStartDateTime = \Carbon\Carbon::parse($sessionDate . ' ' . $sessionStartTime);
+            $sessionEndDateTime = \Carbon\Carbon::parse($sessionDate . ' ' . $sessionEndTime);
+            
             return [
-                'start' => $session->start_time->subHour(),
-                'end' => $session->end_time->addDay(),
+                'start' => $sessionStartDateTime->subHour(),
+                'end' => $sessionEndDateTime->addDay(),
                 'type' => 'session'
             ];
         }
         
         if ($enrollment->enrollable_type == 'App\Models\Course') {
             $course = $enrollment->enrollable;
+            
+            // Handle NULL duration
+            if (is_null($course->duration) || $course->duration <= 0) {
+                $courseEndDate = $enrollment->enrolled_at->addDays(365);
+            } else {
+                $courseEndDate = $enrollment->enrolled_at->addDays($course->duration);
+            }
+            
             return [
                 'start' => $enrollment->enrolled_at,
-                'end' => $enrollment->enrolled_at->addDays($course->duration),
+                'end' => $courseEndDate,
                 'type' => 'course'
             ];
         }

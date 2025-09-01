@@ -167,6 +167,13 @@ class ChatController extends Controller
     {
         $user = Auth::user();
         
+        // Debug: Log user information
+        \Log::info('Chat Index - User Info:', [
+            'user_id' => $user->id ?? 'null',
+            'user_name' => $user->name ?? 'null',
+            'authenticated' => Auth::check()
+        ]);
+        
         // Get user's conversations with latest message and unread count
         $list_conversations = Conversation::where(function($query) use ($user) {
             // User is a student in conversation
@@ -177,10 +184,13 @@ class ChatController extends Controller
         })
         ->with(['mentor.user', 'user', 'latestMessage', 'enrollment.enrollable'])
         ->orderBy('last_message_at', 'desc')
-        ->get()
-        ->filter(function($conversation) {
-            return $conversation->isConversationActive();
-        });
+        ->get();
+
+        // Debug: Log conversation query results
+        \Log::info('Chat Index - Conversation Query:', [
+            'total_conversations' => $list_conversations->count(),
+            'conversation_ids' => $list_conversations->pluck('id')->toArray()
+        ]);
 
         return view('chat.index', compact('list_conversations'));
     }
@@ -244,10 +254,7 @@ class ChatController extends Controller
         })
         ->with(['mentor.user', 'user', 'latestMessage', 'enrollment.enrollable'])
         ->orderBy('last_message_at', 'desc')
-        ->get()
-        ->filter(function($conversation) {
-            return $conversation->isConversationActive();
-        });
+        ->get();
 
         // Mark messages as read
         $conversation->messages()
@@ -263,7 +270,14 @@ class ChatController extends Controller
         $enrollmentCheckUserId = $user->mentor ? $conversation->user_id : $user->id;
         $chatStatus = $this->getChatPermissionStatus($enrollmentCheckUserId, $conversation->mentor_id);
 
-        return view('chat.index', compact('conversation', 'list_conversations', 'messages', 'chatStatus'));
+        // Add current conversation info for auto-tab activation
+        $currentConversationInfo = [
+            'id' => $conversation->id,
+            'unique_code' => $conversation->unique_code,
+            'is_active' => $conversation->isConversationActive()
+        ];
+        
+        return view('chat.index', compact('conversation', 'list_conversations', 'messages', 'chatStatus', 'currentConversationInfo'));
     }
 
     /**

@@ -62,8 +62,37 @@
 
         <!-- Conversations List -->
         <div class="flex-1 overflow-y-auto">
-            @if($list_conversations->count() > 0)
-                @foreach($list_conversations as $list_conversation)
+            @php
+                // Filter out conversations without enrollment_id first
+                $validConversations = $list_conversations->filter(function($conversation) {
+                    return $conversation->enrollment_id !== null;
+                });
+                
+                // Separate conversations into active and archived
+                $activeConversations = $validConversations->filter(function($conversation) {
+                    return $conversation->isConversationActive();
+                });
+                
+                $archivedConversations = $validConversations->filter(function($conversation) {
+                    return !$conversation->isConversationActive();
+                });
+                
+                // Debug information
+                \Log::info('Chat Debug', [
+                    'total_conversations' => $list_conversations->count(),
+                    'valid_conversations' => $validConversations->count(),
+                    'active_count' => $activeConversations->count(),
+                    'archived_count' => $archivedConversations->count(),
+                    'archived_ids' => $archivedConversations->pluck('id')->toArray(),
+                    'route_code' => request()->route('code'),
+                    'conversation_ids' => $list_conversations->pluck('id')->toArray()
+                ]);
+            @endphp
+            
+            <!-- Active Conversations -->
+            <div id="active-conversations" class="conversation-section">
+                @if($activeConversations->count() > 0)
+                    @foreach($activeConversations as $list_conversation)
                     @php
                         // Get the other user in the conversation
                         $currentUser = auth()->user();
@@ -138,7 +167,7 @@
                                                 Session: {{ $validityPeriod['start']->format('M d, H:i') }} - {{ $validityPeriod['end']->format('M d, H:i') }}
                                             @else
                                                 <i class="fa-solid fa-graduation-cap mr-1"></i>
-                                                Course: {{ $validityPeriod['start']->format('M d') }} - {{ $validityPeriod['end']->format('M d') }}
+                                                Course: {{ $list_conversation->enrollment->enrollable->title }}
                                             @endif
                                         </div>
                                     @endif
@@ -148,14 +177,113 @@
                     </div>
                 @endforeach
             @else
-                <div class="flex flex-col items-center justify-center h-full p-6 text-center">
-                    <div class="w-16 h-16 bg-gray-100 rounded-full flex items-center justify-center mb-4">
-                        <i class="fa-solid fa-comments text-2xl text-gray-400"></i>
+                <div class="flex flex-col items-center justify-center p-6 text-center">
+                    <div class="w-12 h-12 bg-gray-100 rounded-full flex items-center justify-center mb-3">
+                        <i class="fa-solid fa-comments text-xl text-gray-400"></i>
                     </div>
-                    <h3 class="text-lg font-medium text-gray-900 mb-2">No conversations yet</h3>
-                    <p class="text-gray-500 text-sm">Start a conversation with a mentor or student to begin chatting.</p>
+                    <h3 class="text-sm font-medium text-gray-900 mb-1">No active conversations</h3>
+                    <p class="text-gray-500 text-xs">All your conversations are archived or expired.</p>
                 </div>
             @endif
+            </div>
+            
+            <!-- Archived Conversations -->
+            <div id="archived-conversations" class="conversation-section hidden">
+                <!-- Debug: Valid conversations = {{ $validConversations->count() }}, Archived count = {{ $archivedConversations->count() }} -->
+                @if($archivedConversations->count() > 0)
+                    @foreach($archivedConversations as $list_conversation)
+                        @php
+                            // Get the other user in the conversation
+                            $currentUser = auth()->user();
+                            $currentUserMentor = $currentUser->mentor ?? null; // Get mentor record if user is a mentor
+                            
+                            if ($list_conversation->user_id == $currentUser->id) {
+                                // Current user is the student, so other user is the mentor
+                                $otherUser = $list_conversation->mentor->user;
+                                $otherUserRole = __('trans.mentor');
+                            } else {
+                                // Current user is the mentor, so other user is the student
+                                $otherUser = $list_conversation->user;
+                                $otherUserRole = __('trans.student');
+                            }
+                            
+                            $unreadCount = $list_conversation->unreadMessagesCount(auth()->id());
+                            $lastMessage = $list_conversation->latestMessage;
+                        @endphp
+                        <div class="conversation-item p-4 border-b border-gray-100 hover:bg-gray-50 cursor-pointer transition-colors opacity-60 {{ request()->route('code') == $list_conversation->unique_code ? 'bg-purple-50 border-r-4 border-r-purple-600' : '' }}"
+                             onclick="loadConversation('{{ $list_conversation->unique_code }}')">
+                            <div class="flex items-center space-x-3">
+                                <!-- Avatar -->
+                                <div class="relative">
+                                    @if($otherUser->photo)
+                                        <img src="{{ asset('storage/' . $otherUser->photo) }}" alt="{{ $otherUser->name }}" 
+                                             class="w-12 h-12 rounded-full object-cover">
+                                    @else
+                                        <div class="w-12 h-12 rounded-full bg-purple-100 flex items-center justify-center">
+                                            <i class="fa-solid fa-user text-purple-600"></i>
+                                        </div>
+                                    @endif
+                                    <!-- Archived Status -->
+                                    <div class="absolute bottom-0 right-0 w-3 h-3 bg-gray-400 rounded-full border-2 border-white"></div>
+                                </div>
+                                
+                                <!-- Conversation Info -->
+                                <div class="flex-1 min-w-0">
+                                    <div class="flex items-center justify-between">
+                                        <p class="text-sm font-semibold text-gray-900 truncate">{{ $otherUser->name }}</p>
+                                        @if($lastMessage)
+                                            <span class="text-xs text-gray-500">{{ $lastMessage->created_at->format('H:i') }}</span>
+                                        @endif
+                                    </div>
+                                    <div class="flex items-center justify-between">
+                                        <p class="text-sm text-gray-600 truncate">
+                                            @if($lastMessage)
+                                                @if($lastMessage->type == 'image')
+                                                    <i class="fa-solid fa-image mr-1"></i> Image
+                                                @elseif($lastMessage->type == 'file')
+                                                    <i class="fa-solid fa-file mr-1"></i> File
+                                                @else
+                                                    {{ Str::limit($lastMessage->content, 30) }}
+                                                @endif
+                                            @else
+                                                No messages yet
+                                            @endif
+                                        </p>
+                                        @if($unreadCount > 0)
+                                            <span class="bg-gray-400 text-white text-xs rounded-full px-2 py-1 min-w-[20px] text-center">{{ $unreadCount }}</span>
+                                        @endif
+                                    </div>
+                                    <p class="text-xs text-gray-500">{{ $otherUserRole }}</p>
+                                    
+                                    @if($list_conversation->enrollment)
+                                        @php
+                                            $validityPeriod = $list_conversation->getValidityPeriod();
+                                        @endphp
+                                        @if($validityPeriod)
+                                            <div class="text-xs text-gray-400 mt-1">
+                                                <i class="fa-solid fa-archive mr-1"></i>
+                                                @if($validityPeriod['type'] == 'session')
+                                                    Expired Session
+                                                @else
+                                                    Expired Course - {{ $list_conversation->enrollment->enrollable->title }}
+                                                @endif
+                                            </div>
+                                        @endif
+                                    @endif
+                                </div>
+                            </div>
+                        </div>
+                    @endforeach
+                @else
+                    <div class="flex flex-col items-center justify-center p-6 text-center">
+                        <div class="w-12 h-12 bg-gray-100 rounded-full flex items-center justify-center mb-3">
+                            <i class="fa-solid fa-archive text-xl text-gray-400"></i>
+                        </div>
+                        <h3 class="text-sm font-medium text-gray-900 mb-1">No archived conversations</h3>
+                        <p class="text-gray-500 text-xs">All your conversations are currently active.</p>
+                    </div>
+                @endif
+            </div>
         </div>
     </div>
 
@@ -395,20 +523,61 @@ document.getElementById('search-conversations').addEventListener('input', functi
 
 // Tab switching
 document.getElementById('active-tab').addEventListener('click', function() {
-    this.classList.add('text-white', 'bg-purple-600');
-    this.classList.remove('text-gray-600');
-    document.getElementById('archive-tab').classList.remove('text-white', 'bg-purple-600');
-    document.getElementById('archive-tab').classList.add('text-gray-600');
-    // TODO: Filter conversations by status
+    activateTab('active');
 });
 
 document.getElementById('archive-tab').addEventListener('click', function() {
-    this.classList.add('text-white', 'bg-purple-600');
-    this.classList.remove('text-gray-600');
-    document.getElementById('active-tab').classList.remove('text-white', 'bg-purple-600');
-    document.getElementById('active-tab').classList.add('text-gray-600');
-    // TODO: Filter conversations by status
+    activateTab('archive');
 });
+
+// Function to activate a specific tab
+function activateTab(tabName) {
+    if (tabName === 'active') {
+        document.getElementById('active-tab').classList.add('text-white', 'bg-purple-600');
+        document.getElementById('active-tab').classList.remove('text-gray-600');
+        document.getElementById('archive-tab').classList.remove('text-white', 'bg-purple-600');
+        document.getElementById('archive-tab').classList.add('text-gray-600');
+        
+        // Show active conversations, hide archived
+        document.getElementById('active-conversations').classList.remove('hidden');
+        document.getElementById('archived-conversations').classList.add('hidden');
+    } else {
+        document.getElementById('archive-tab').classList.add('text-white', 'bg-purple-600');
+        document.getElementById('archive-tab').classList.remove('text-gray-600');
+        document.getElementById('active-tab').classList.remove('text-white', 'bg-purple-600');
+        document.getElementById('active-tab').classList.add('text-gray-600');
+        
+        // Show archived conversations, hide active
+        document.getElementById('archived-conversations').classList.remove('hidden');
+        document.getElementById('active-conversations').classList.add('hidden');
+    }
+}
+
+// Auto-activate correct tab based on current conversation
+@if(isset($currentConversationInfo))
+    @php
+        // Debug log
+        \Log::info('Auto-tab activation debug', [
+            'conversation_id' => $currentConversationInfo['id'],
+            'conversation_code' => $currentConversationInfo['unique_code'],
+            'is_active' => $currentConversationInfo['is_active'] ? 'yes' : 'no'
+        ]);
+    @endphp
+    
+    @if($currentConversationInfo['is_active'])
+        // Current conversation is active, activate active tab
+        document.addEventListener('DOMContentLoaded', function() {
+            console.log('Auto-activating active tab for conversation: {{ $currentConversationInfo['unique_code'] }}');
+            activateTab('active');
+        });
+    @else
+        // Current conversation is archived, activate archive tab
+        document.addEventListener('DOMContentLoaded', function() {
+            console.log('Auto-activating archive tab for conversation: {{ $currentConversationInfo['unique_code'] }}');
+            activateTab('archive');
+        });
+    @endif
+@endif
 
 // Close modal on outside click
 document.getElementById('new-conversation-modal').addEventListener('click', function(e) {

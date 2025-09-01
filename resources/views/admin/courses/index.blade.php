@@ -1,9 +1,9 @@
 @extends('admin.layouts.backend')
 
-@section('title', 'Courses Management')
+@section('title', __('trans.courses_management'))
 
 @section('header')
-    Courses Management
+    {{ __('trans.courses_management') }}
 @endsection
 
 @section('content')
@@ -14,28 +14,28 @@
             <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
                 <!-- Search -->
                 <div>
-                    <label class="block text-sm font-medium text-gray-700 mb-2">Search</label>
+                    <label class="block text-sm font-medium text-gray-700 mb-2">{{ __('trans.search') }}</label>
                     <input type="text" name="search" value="{{ request('search') }}" 
-                           placeholder="Title, description, or mentor..." 
+                           placeholder="{{ __('trans.title_description_mentor') }}" 
                            class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent">
                 </div>
 
                 <!-- Status Filter -->
                 <div>
-                    <label class="block text-sm font-medium text-gray-700 mb-2">Status</label>
+                    <label class="block text-sm font-medium text-gray-700 mb-2">{{ __('trans.status') }}</label>
                     <select name="status" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent">
-                        <option value="">All Status</option>
-                        <option value="pending" {{ request('status') == 'pending' ? 'selected' : '' }}>Pending</option>
-                        <option value="approved" {{ request('status') == 'approved' ? 'selected' : '' }}>Approved</option>
-                        <option value="rejected" {{ request('status') == 'rejected' ? 'selected' : '' }}>Rejected</option>
+                        <option value="">{{ __('trans.all_status') }}</option>
+                        <option value="pending" {{ request('status') == 'pending' ? 'selected' : '' }}>{{ __('trans.pending') }}</option>
+                        <option value="approved" {{ request('status') == 'approved' ? 'selected' : '' }}>{{ __('trans.approved') }}</option>
+                        <option value="rejected" {{ request('status') == 'rejected' ? 'selected' : '' }}>{{ __('trans.rejected') }}</option>
                     </select>
                 </div>
 
                 <!-- Category Filter -->
                 <div>
-                    <label class="block text-sm font-medium text-gray-700 mb-2">Category</label>
+                    <label class="block text-sm font-medium text-gray-700 mb-2">{{ __('trans.category') }}</label>
                     <select name="category_id" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent">
-                        <option value="">All Categories</option>
+                        <option value="">{{ __('trans.all_categories') }}</option>
                         @foreach($categories as $category)
                             <option value="{{ $category->id }}" {{ request('category_id') == $category->id ? 'selected' : '' }}>
                                 {{ $category->name }}
@@ -46,9 +46,9 @@
 
                 <!-- Sub-Category Filter -->
                 <div>
-                    <label class="block text-sm font-medium text-gray-700 mb-2">Sub-Category</label>
+                    <label class="block text-sm font-medium text-gray-700 mb-2">{{ __('trans.sub_category') }}</label>
                     <select name="sub_category_id" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent">
-                        <option value="">All Sub-Categories</option>
+                        <option value="">{{ __('trans.all_sub_categories') }}</option>
                         @foreach($subCategories as $subCategory)
                             <option value="{{ $subCategory->id }}" {{ request('sub_category_id') == $subCategory->id ? 'selected' : '' }}>
                                 {{ $subCategory->name }}

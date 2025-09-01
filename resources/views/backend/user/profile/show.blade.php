@@ -163,8 +163,11 @@
                         </div>
                         <input type="password" id="password_confirmation" name="password_confirmation" 
                                maxlength="255"
-                               class="w-full pl-10 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent text-sm" 
+                               class="w-full pl-10 pr-10 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent text-sm" 
                                placeholder="• • • • • • • • • •">
+                        <button type="button" onclick="togglePassword('password_confirmation')" class="absolute inset-y-0 right-0 pr-3 flex items-center">
+                            <i class="fa-solid fa-eye text-gray-400 hover:text-gray-600"></i>
+                        </button>
                     </div>
                 </div>
 

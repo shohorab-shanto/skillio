@@ -72,7 +72,7 @@
                                     class="w-full px-4 py-2 border-none bg-base-100 rounded-md focus:outline-none focus:ring-2 focus:ring-purple-500 pr-10"
                                     required minlength="8"
                                     pattern="^(?=.*[A-Z])(?=.*\d).{8,}$"
-                                    title="Password must contain at least 1 uppercase letter, 1 number, and be at least 8 characters long." />
+                                    title="Must contain 1 uppercase letter, 1 number, min. 8 characters." />
                                 <span
                                     class="absolute inset-y-0 right-3 flex items-center text-gray-400 cursor-pointer"
                                     onclick="togglePasswordVisibility()"
@@ -89,8 +89,7 @@
                                     </svg>
                                 </span>
                             </div>
-                            <p class="text-gray-500 text-sm flex items-center justify-center gap-1">
-                                <span class="w-3 h-3 rounded-full bg-gray-200 text-black flex items-center justify-center text-sm">!</span>
+                            <p class="text-gray-500 text-sm flex items-center justify-left">
                                 {{ __('trans.password_hint') }}
                             </p>
                             @error('password')

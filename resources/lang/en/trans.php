@@ -638,7 +638,7 @@ return [
     'register_subheading' => 'Join thousands of learners and start your journey today',
     'full_name' => 'Full Name',
     'full_name_placeholder' => 'Enter your full name',
-    'password_hint' => 'Password must contain at least 1 uppercase letter, 1 number, and be at least 8 characters long',
+    'password_hint' => 'Must contain 1 uppercase letter, 1 number, min. 8 characters.',
     // GDPR Consent fragments
     'gdpr_consent_1' => 'I agree to the ',
     'gdpr_consent_2' => ' and ',

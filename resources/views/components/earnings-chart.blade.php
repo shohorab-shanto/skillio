@@ -1,31 +1,31 @@
 <!-- Earnings Chart Component -->
-<div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+<div class="grid grid-cols-1 lg:grid-cols-3 gap-4 sm:gap-6">
     <!-- Left Card - Earnings Line Chart (2/3 width) -->
-    <div class="lg:col-span-2 bg-white rounded-xl shadow-lg p-6">
-        <div class="flex items-center justify-between mb-2">
-            <h3 class="text-xl font-semibold text-gray-900">{{ __('trans.earnings') }}</h3>
-            <div class="flex space-x-2">
-                <button class="px-3 py-1 text-sm rounded-lg hover:bg-gray-100" data-period="1D">1D</button>
-                <button class="px-3 py-1 text-sm rounded-lg hover:bg-gray-100" data-period="7D">7D</button>
-                <button class="px-3 py-1 text-sm rounded-lg bg-purple-600 text-white" data-period="1M">1M</button>
-                <button class="px-3 py-1 text-sm rounded-lg hover:bg-gray-100" data-period="1YR">1YR</button>
-                <button class="px-3 py-1 text-sm rounded-lg hover:bg-gray-100" data-period="ALL">All</button>
+    <div class="lg:col-span-2 bg-white rounded-xl shadow-lg p-4 sm:p-6">
+        <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between mb-2 space-y-2 sm:space-y-0">
+            <h3 class="text-lg sm:text-xl font-semibold text-gray-900">{{ __('trans.earnings') }}</h3>
+            <div class="flex flex-wrap gap-1 sm:space-x-2">
+                <button class="px-2 py-1 text-xs sm:px-3 sm:py-1 sm:text-sm rounded-lg hover:bg-gray-100" data-period="1D">1D</button>
+                <button class="px-2 py-1 text-xs sm:px-3 sm:py-1 sm:text-sm rounded-lg hover:bg-gray-100" data-period="7D">7D</button>
+                <button class="px-2 py-1 text-xs sm:px-3 sm:py-1 sm:text-sm rounded-lg bg-purple-600 text-white" data-period="1M">1M</button>
+                <button class="px-2 py-1 text-xs sm:px-3 sm:py-1 sm:text-sm rounded-lg hover:bg-gray-100" data-period="1YR">1YR</button>
+                <button class="px-2 py-1 text-xs sm:px-3 sm:py-1 sm:text-sm rounded-lg hover:bg-gray-100" data-period="ALL">All</button>
             </div>
         </div>
         
         <div class="mb-2">
-            <p class="text-xl font-bold text-gray-900" id="earningsAmount">${{ number_format($currentMonthEarnings) }}</p>
+            <p class="text-lg sm:text-xl font-bold text-gray-900" id="earningsAmount">${{ number_format($currentMonthEarnings) }}</p>
             <p class="text-xs text-gray-500" id="earningsDate">{{ Carbon\Carbon::now()->format('M d, Y') }}</p>
         </div>
         
-        <!-- Improved Earnings Chart with increased height -->
-        <div class="relative h-56 bg-gradient-to-b from-purple-50 to-white rounded-lg p-4">
+        <!-- Improved Earnings Chart with responsive height -->
+        <div class="relative h-48 sm:h-56 bg-gradient-to-b from-purple-50 to-white rounded-lg p-3 sm:p-4">
             <canvas id="earningsChart" width="400" height="224"></canvas>
             
             <!-- Chart Legend -->
-            <div class="absolute bottom-2 left-4 flex items-center space-x-2">
+            <div class="absolute bottom-2 left-3 sm:left-4 flex items-center space-x-2">
                 <div class="flex items-center space-x-1">
-                    <div class="w-3 h-3 bg-purple-600 rounded-full"></div>
+                    <div class="w-2 h-2 sm:w-3 sm:h-3 bg-purple-600 rounded-full"></div>
                     <span class="text-xs text-gray-600">{{ __('trans.earnings') }}</span>
                 </div>
             </div>
@@ -33,17 +33,17 @@
     </div>
 
     <!-- Right Card - Monthly Earnings Bar Chart (1/3 width) -->
-    <div class="lg:col-span-1 bg-white rounded-xl shadow-lg p-8">
-        <h3 class="text-xl font-semibold text-gray-900 mb-8">{{ __('trans.monthly_earnings') }}</h3>
+    <div class="lg:col-span-1 bg-white rounded-xl shadow-lg p-4 sm:p-6 lg:p-8">
+        <h3 class="text-lg sm:text-xl font-semibold text-gray-900 mb-4 sm:mb-6 lg:mb-8">{{ __('trans.monthly_earnings') }}</h3>
         
-        <!-- Improved Monthly Earnings Chart with increased height -->
-        <div class="relative h-56 bg-gradient-to-b from-blue-50 to-white rounded-lg p-4">
+        <!-- Improved Monthly Earnings Chart with responsive height -->
+        <div class="relative h-48 sm:h-56 bg-gradient-to-b from-blue-50 to-white rounded-lg p-3 sm:p-4">
             <canvas id="monthlyChart" width="400" height="224"></canvas>
             
             <!-- Chart Legend -->
-            <div class="absolute bottom-2 left-4 flex items-center space-x-2">
+            <div class="absolute bottom-2 left-3 sm:left-4 flex items-center space-x-2">
                 <div class="flex items-center space-x-1">
-                    <div class="w-3 h-3 bg-gradient-to-t from-purple-500 to-pink-400 rounded"></div>
+                    <div class="w-2 h-2 sm:w-3 sm:h-3 bg-gradient-to-t from-purple-500 to-pink-400 rounded"></div>
                     <span class="text-xs text-gray-600">{{ __('trans.monthly') }}</span>
                 </div>
             </div>

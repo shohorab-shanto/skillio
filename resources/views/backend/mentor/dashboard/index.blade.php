@@ -11,87 +11,87 @@
 @endsection
 
 @section('content')
-<div>
+<div class="px-4 sm:px-0">
     <div class="mx-auto space-y-6">
         
         <!-- Top Row - Statistics Cards -->
-        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6">
             <!-- Total Courses Card -->
-            <div class="bg-white rounded-xl shadow-lg p-6">
-                <div class="flex items-center justify-between mb-4">
-                    <div class="flex items-center space-x-3">
-                        <div class="w-12 h-12 bg-yellow-100 rounded-lg flex items-center justify-center">
-                            <img src="{{ asset('assets/images/user_dashboard-1.png') }}" alt="{{ __('trans.total_courses') }}" class="w-6 h-6 object-contain" />
+            <div class="bg-white rounded-xl shadow-lg p-4 sm:p-6">
+                <div class="flex items-center justify-between mb-3 sm:mb-4">
+                    <div class="flex items-center space-x-2 sm:space-x-3">
+                        <div class="w-10 h-10 sm:w-12 sm:h-12 bg-yellow-100 rounded-lg flex items-center justify-center">
+                            <img src="{{ asset('assets/images/user_dashboard-1.png') }}" alt="{{ __('trans.total_courses') }}" class="w-5 h-5 sm:w-6 sm:h-6 object-contain" />
                         </div>
                         <div>
-                            <p class="text-sm text-gray-600">{{ __('trans.total_courses') }}</p>
-                            <p class="text-2xl font-bold text-gray-900">{{ $totalCourses }}</p>
+                            <p class="text-xs sm:text-sm text-gray-600">{{ __('trans.total_courses') }}</p>
+                            <p class="text-lg sm:text-2xl font-bold text-gray-900">{{ $totalCourses }}</p>
                         </div>
                     </div>
                 </div>
-                <div class="flex space-x-1">
+                <div class="flex space-x-1 justify-between">
                     @for($i = 1; $i <= 15; $i++)
-                        <div class="w-5 h-8 rounded-xl {{ $i <= min(15, $totalCourses) ? 'bg-teal-600' : 'bg-gray-200' }}"></div>
+                        <div class="w-2 h-6 sm:w-3 sm:h-8 rounded-xl flex-1 {{ $i <= min(15, $totalCourses) ? 'bg-teal-600' : 'bg-gray-200' }}"></div>
                     @endfor
                 </div>
             </div>
 
             <!-- Total Users Card -->
-            <div class="bg-white rounded-xl shadow-lg p-6">
-                <div class="flex items-center justify-between mb-4">
-                    <div class="flex items-center space-x-3">
-                        <div class="w-12 h-12 bg-green-100 rounded-lg flex items-center justify-center">
-                            <img src="{{ asset('assets/images/user_dashboard-2.png') }}" alt="{{ __('trans.total_user') }}" class="w-6 h-6 object-contain" />
+            <div class="bg-white rounded-xl shadow-lg p-4 sm:p-6">
+                <div class="flex items-center justify-between mb-3 sm:mb-4">
+                    <div class="flex items-center space-x-2 sm:space-x-3">
+                        <div class="w-10 h-10 sm:w-12 sm:h-12 bg-green-100 rounded-lg flex items-center justify-center">
+                            <img src="{{ asset('assets/images/user_dashboard-2.png') }}" alt="{{ __('trans.total_user') }}" class="w-5 h-5 sm:w-6 sm:h-6 object-contain" />
                         </div>
                         <div>
-                            <p class="text-sm text-gray-600">{{ __('trans.total_user') }}</p>
-                            <p class="text-2xl font-bold text-gray-900">{{ $totalUsers }}</p>
+                            <p class="text-xs sm:text-sm text-gray-600">{{ __('trans.total_user') }}</p>
+                            <p class="text-lg sm:text-2xl font-bold text-gray-900">{{ $totalUsers }}</p>
                         </div>
                     </div>
                 </div>
-                <div class="flex space-x-1">
+                <div class="flex space-x-1 justify-between">
                     @for($i = 1; $i <= 15; $i++)
-                        <div class="w-5 h-8 rounded-xl {{ $i <= min(15, $totalUsers / 20) ? 'bg-green-600' : 'bg-gray-200' }}"></div>
+                        <div class="w-2 h-6 sm:w-3 sm:h-8 rounded-xl flex-1 {{ $i <= min(15, $totalUsers / 20) ? 'bg-green-600' : 'bg-gray-200' }}"></div>
                     @endfor
                 </div>
             </div>
 
             <!-- Mentor Income Card -->
-            <div class="bg-white rounded-xl shadow-lg p-6">
-                <div class="flex items-center justify-between mb-4">
-                    <div class="flex items-center space-x-3">
-                        <div class="w-12 h-12 bg-blue-100 rounded-lg flex items-center justify-center">
-                            <img src="{{ asset('assets/images/user_dashboard-3.png') }}" alt="{{ __('trans.mentors_income') }}" class="w-6 h-6 object-contain" />
+            <div class="bg-white rounded-xl shadow-lg p-4 sm:p-6">
+                <div class="flex items-center justify-between mb-3 sm:mb-4">
+                    <div class="flex items-center space-x-2 sm:space-x-3">
+                        <div class="w-10 h-10 sm:w-12 sm:h-12 bg-blue-100 rounded-lg flex items-center justify-center">
+                            <img src="{{ asset('assets/images/user_dashboard-3.png') }}" alt="{{ __('trans.mentors_income') }}" class="w-5 h-5 sm:w-6 sm:h-6 object-contain" />
                         </div>
                         <div>
-                            <p class="text-sm text-gray-600">{{ __('trans.mentors_income') }}</p>
-                            <p class="text-2xl font-bold text-gray-900">${{ number_format($mentorIncome) }}</p>
+                            <p class="text-xs sm:text-sm text-gray-600">{{ __('trans.mentors_income') }}</p>
+                            <p class="text-lg sm:text-2xl font-bold text-gray-900">${{ number_format($mentorIncome) }}</p>
                         </div>
                     </div>
                 </div>
-                <div class="flex space-x-1">
+                <div class="flex space-x-1 justify-between">
                     @for($i = 1; $i <= 15; $i++)
-                        <div class="w-5 h-8 rounded-xl {{ $i <= min(15, $mentorIncome / 1000) ? 'bg-blue-600' : 'bg-gray-200' }}"></div>
+                        <div class="w-2 h-6 sm:w-3 sm:h-8 rounded-xl flex-1 {{ $i <= min(15, $mentorIncome / 1000) ? 'bg-blue-600' : 'bg-gray-200' }}"></div>
                     @endfor
                 </div>
             </div>
 
             <!-- Active Courses Card -->
-            <div class="bg-white rounded-xl shadow-lg p-6">
-                <div class="flex items-center justify-between mb-4">
-                    <div class="flex items-center space-x-3">
-                        <div class="w-12 h-12 bg-orange-100 rounded-lg flex items-center justify-center">
-                            <img src="{{ asset('assets/images/user_dashboard-4.png') }}" alt="{{ __('trans.active_courses') }}" class="w-6 h-6 object-contain" />
+            <div class="bg-white rounded-xl shadow-lg p-4 sm:p-6">
+                <div class="flex items-center justify-between mb-3 sm:mb-4">
+                    <div class="flex items-center space-x-2 sm:space-x-3">
+                        <div class="w-10 h-10 sm:w-12 sm:h-12 bg-orange-100 rounded-lg flex items-center justify-center">
+                            <img src="{{ asset('assets/images/user_dashboard-4.png') }}" alt="{{ __('trans.active_courses') }}" class="w-5 h-5 sm:w-6 sm:h-6 object-contain" />
                         </div>
                         <div>
-                            <p class="text-sm text-gray-600">{{ __('trans.active_courses') }}</p>
-                            <p class="text-2xl font-bold text-gray-900">{{ $activeCourses }}</p>
+                            <p class="text-xs sm:text-sm text-gray-600">{{ __('trans.active_courses') }}</p>
+                            <p class="text-lg sm:text-2xl font-bold text-gray-900">{{ $activeCourses }}</p>
                         </div>
                     </div>
                 </div>
-                <div class="flex space-x-1">
+                <div class="flex space-x-1 justify-between">
                     @for($i = 1; $i <= 15; $i++)
-                        <div class="w-5 h-8 rounded-xl {{ $i <= min(15, $activeCourses) ? 'bg-orange-600' : 'bg-gray-200' }}"></div>
+                        <div class="w-2 h-6 sm:w-3 sm:h-8 rounded-xl flex-1 {{ $i <= min(15, $activeCourses) ? 'bg-orange-600' : 'bg-gray-200' }}"></div>
                     @endfor
                 </div>
             </div>
@@ -101,8 +101,9 @@
         @include('components.earnings-chart')
 
         <!-- Bottom Section - Student List -->
-        <div class="bg-white rounded-xl shadow-lg p-6">
-            <div class="flex items-center justify-between mb-6">
+        <div class="bg-white rounded-xl shadow-lg p-4 sm:p-6">
+            <!-- Desktop Header -->
+            <div class="hidden lg:flex items-center justify-between mb-6">
                 <h3 class="text-xl font-semibold text-gray-900">{{ __('trans.student_list') }}</h3>
                 <div class="flex items-center space-x-4">
                     <div class="relative">
@@ -135,8 +136,42 @@
                 </div>
             </div>
 
-            <!-- Student Table -->
-            <div class="overflow-x-auto">
+            <!-- Mobile Header -->
+            <div class="lg:hidden mb-4">
+                <h3 class="text-lg font-semibold text-gray-900 mb-3">{{ __('trans.student_list') }}</h3>
+                <div class="space-y-3">
+                    <div class="relative">
+                        <input type="text" 
+                               placeholder="{{ __('trans.search_students_services') }}" 
+                               class="w-full pl-10 pr-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent text-sm"
+                               value="{{ request('search') }}">
+                        <i class="fa-solid fa-search absolute left-3 top-3 text-gray-400"></i>
+                    </div>
+                    <div class="relative">
+                        <button id="filterBtnMobile" class="w-full px-4 py-2 border border-gray-300 rounded-lg hover:bg-gray-50 flex items-center justify-center space-x-2 text-sm">
+                            <span>{{ __('trans.filter') }}</span>
+                            <i class="fa-solid fa-chevron-down text-xs"></i>
+                        </button>
+                        <div id="filterDropdownMobile" class="hidden absolute right-0 mt-2 w-40 bg-white border border-gray-200 rounded-lg shadow-lg z-10">
+                            <a href="{{ request()->fullUrlWithQuery(['status' => 'all']) }}" 
+                               class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 {{ request('status', 'all') == 'all' ? 'bg-purple-100 text-purple-700' : '' }}">
+                                <i class="fa-solid fa-list mr-2"></i>{{ __('trans.all_students') }}
+                            </a>
+                            <a href="{{ request()->fullUrlWithQuery(['status' => 'active']) }}" 
+                               class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 {{ request('status') == 'active' ? 'bg-purple-100 text-purple-700' : '' }}">
+                                <i class="fa-solid fa-check-circle mr-2 text-green-600"></i>{{ __('trans.active') }}
+                            </a>
+                            <a href="{{ request()->fullUrlWithQuery(['status' => 'inactive']) }}" 
+                               class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 {{ request('status') == 'inactive' ? 'bg-purple-100 text-purple-700' : '' }}">
+                                <i class="fa-solid fa-times-circle mr-2 text-red-600"></i>{{ __('trans.inactive') }}
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Desktop Table View -->
+            <div class="hidden lg:block overflow-x-auto">
                 <table class="w-full">
                     <thead>
                         <tr class="border-b border-gray-200">
@@ -268,6 +303,112 @@
                 </table>
             </div>
 
+            <!-- Mobile Grid View -->
+            <div class="lg:hidden">
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                    @forelse($students as $enrollment)
+                        @php
+                            $student = $enrollment->user;
+                            $service = $enrollment->enrollable;
+                            $durationLeft = $enrollment->duration_left;
+                            $isActive = $enrollment->is_active ?? true;
+                        @endphp
+                        <div class="bg-gray-50 rounded-lg p-4 border border-gray-200">
+                            <!-- Student Info -->
+                            <div class="flex items-center space-x-3 mb-3">
+                                @if($student->photo)
+                                    <img src="{{ asset('storage/' . $student->photo) }}" 
+                                         class="w-10 h-10 rounded-full object-cover" 
+                                         alt="{{ $student->name }}">
+                                @else
+                                    <div class="w-10 h-10 rounded-full bg-purple-100 flex items-center justify-center">
+                                        <i class="fa-solid fa-user text-purple-600"></i>
+                                    </div>
+                                @endif
+                                <div class="flex-1 min-w-0">
+                                    <p class="font-medium text-gray-900 truncate">{{ $student->name }}</p>
+                                    <p class="text-xs text-gray-500">Student-{{ $student->id }}</p>
+                                </div>
+                                <span class="inline-block px-2 py-1 rounded-full text-xs font-medium
+                                    {{ $isActive ? 'bg-green-100 text-green-800' : 'bg-red-100 text-red-800' }}">
+                                    {{ $isActive ? __('trans.active') : __('trans.inactive') }}
+                                </span>
+                            </div>
+
+                            <!-- Service Info -->
+                            <div class="mb-3">
+                                <p class="text-xs text-gray-600 mb-1">{{ __('trans.service') }}</p>
+                                <p class="font-medium text-gray-900 text-sm truncate">
+                                    @if($enrollment->enrollable_type == 'App\Models\Course')
+                                        {{ $service->title }}
+                                    @else
+                                        {{ __('trans.session') }}
+                                    @endif
+                                </p>
+                                <p class="text-xs text-gray-500">
+                                    @if($enrollment->enrollable_type == 'App\Models\Course')
+                                        {{ __('trans.course') }}
+                                    @else
+                                        {{ __('trans.session') }}
+                                    @endif
+                                </p>
+                            </div>
+
+                            <!-- Details -->
+                            <div class="grid grid-cols-2 gap-2 mb-3 text-xs">
+                                <div>
+                                    <p class="text-gray-600">{{ __('trans.enrollment_date') }}</p>
+                                    <p class="font-medium text-gray-900">{{ $enrollment->created_at->format('M d') }}</p>
+                                </div>
+                                <div>
+                                    <p class="text-gray-600">{{ __('trans.duration_left') }}</p>
+                                    @if($durationLeft && $durationLeft != 'No end date' && $durationLeft != 'No time set')
+                                        <span class="inline-block px-1 py-0.5 rounded text-xs font-medium
+                                            {{ $isActive ? 'bg-green-100 text-green-800' : 'bg-gray-100 text-gray-800' }}">
+                                            {{ Str::limit($durationLeft, 8) }}
+                                        </span>
+                                    @else
+                                        <span class="inline-block px-1 py-0.5 bg-gray-100 text-gray-600 rounded text-xs font-medium">
+                                            N/A
+                                        </span>
+                                    @endif
+                                </div>
+                            </div>
+
+                            <!-- Action Button -->
+                            @php
+                                $currentMentor = auth()->user()->mentor;
+                                $conversation = \App\Models\Conversation::where('mentor_id', $currentMentor->id)
+                                    ->where('user_id', $student->id)
+                                    ->first();
+                                
+                                if (!$conversation) {
+                                    $conversation = \App\Models\Conversation::create([
+                                        'mentor_id' => $currentMentor->id,
+                                        'user_id' => $student->id,
+                                        'last_message_at' => now(),
+                                    ]);
+                                }
+                            @endphp
+                            
+                            <a href="{{ route('chat.show', $conversation->unique_code) }}" 
+                               class="w-full inline-flex items-center justify-center px-3 py-2 bg-blue-600 text-white text-xs font-medium rounded-lg hover:bg-blue-700 transition-colors">
+                                <i class="fa-solid fa-comment mr-1"></i>
+                                {{ __('trans.chat') }}
+                            </a>
+                        </div>
+                    @empty
+                        <div class="col-span-full text-center py-8 text-gray-500">
+                            <div class="flex flex-col items-center">
+                                <i class="fa-solid fa-users text-4xl text-gray-300 mb-4"></i>
+                                <p class="text-lg">{{ __('trans.no_students_found') }}</p>
+                                <p class="text-sm">{{ __('trans.students_appear_here') }}</p>
+                            </div>
+                        </div>
+                    @endforelse
+                </div>
+            </div>
+
             <!-- Pagination -->
             @if($students->hasPages())
                 <div class="mt-6 bg-white px-6 py-4 border-t border-gray-200">
@@ -301,18 +442,36 @@
 
 <script>
 document.addEventListener('DOMContentLoaded', function() {
-    // Filter functionality
+    // Desktop Filter functionality
     const filterBtn = document.getElementById('filterBtn');
     const filterDropdown = document.getElementById('filterDropdown');
     
-    filterBtn.addEventListener('click', function() {
-        filterDropdown.classList.toggle('hidden');
-    });
+    if (filterBtn && filterDropdown) {
+        filterBtn.addEventListener('click', function() {
+            filterDropdown.classList.toggle('hidden');
+        });
+    }
     
-    // Close dropdown when clicking outside
+    // Mobile Filter functionality
+    const filterBtnMobile = document.getElementById('filterBtnMobile');
+    const filterDropdownMobile = document.getElementById('filterDropdownMobile');
+    
+    if (filterBtnMobile && filterDropdownMobile) {
+        filterBtnMobile.addEventListener('click', function() {
+            filterDropdownMobile.classList.toggle('hidden');
+        });
+    }
+    
+    // Close dropdowns when clicking outside
     document.addEventListener('click', function(event) {
-        if (!filterBtn.contains(event.target) && !filterDropdown.contains(event.target)) {
+        // Desktop dropdown
+        if (filterBtn && filterDropdown && !filterBtn.contains(event.target) && !filterDropdown.contains(event.target)) {
             filterDropdown.classList.add('hidden');
+        }
+        
+        // Mobile dropdown
+        if (filterBtnMobile && filterDropdownMobile && !filterBtnMobile.contains(event.target) && !filterDropdownMobile.contains(event.target)) {
+            filterDropdownMobile.classList.add('hidden');
         }
     });
     

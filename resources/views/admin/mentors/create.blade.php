@@ -93,30 +93,17 @@
             <div class="border-b border-gray-200 pb-6">
                 <h3 class="text-lg font-medium text-gray-900 mb-4">Contact Information</h3>
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                    <!-- Address -->
-                    <div>
-                        <label for="address" class="block text-sm font-medium text-gray-700 mb-2">
-                            Location
-                        </label>
-                        <input type="text" id="address" name="address" value="{{ old('address') }}"
-                               placeholder="City, Country"
-                               class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent @error('address') border-red-500 @enderror">
-                        @error('address')
-                            <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
-                        @enderror
-                    </div>
-
                     <!-- Phone -->
                     <div>
-                        <label for="phone" class="block text-sm font-medium text-gray-700 mb-2">
-                            Phone Number
-                        </label>
-                        <input type="text" id="phone" name="phone" value="{{ old('phone') }}"
-                               placeholder="+1234567890"
-                               class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent @error('phone') border-red-500 @enderror">
-                        <p class="mt-1 text-xs text-gray-500">International format (e.g., +1234567890)</p>
+                        <label for="phone" class="block text-sm font-medium text-gray-700 mb-2">Phone Number</label>
+                        <input type="tel" 
+                               id="phone" 
+                               name="phone" 
+                               value="{{ old('phone') }}"
+                               class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent @error('phone') border-red-500 @enderror"
+                               placeholder="+1 (555) 123-4567">
                         @error('phone')
-                            <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
+                            <p class="text-red-500 text-sm mt-1">{{ $message }}</p>
                         @enderror
                     </div>
                 </div>
@@ -161,22 +148,6 @@
                             <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
                         @enderror
                     </div>
-
-                    <!-- Mentor Type -->
-                    <div>
-                        <label for="type" class="block text-sm font-medium text-gray-700 mb-2">
-                            Mentor Type <span class="text-red-500">*</span>
-                        </label>
-                        <select id="type" name="type" required
-                                class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent @error('type') border-red-500 @enderror">
-                            <option value="">Select type</option>
-                            <option value="online" {{ old('type') == 'online' ? 'selected' : '' }}>Online</option>
-                            <option value="in-person" {{ old('type') == 'in-person' ? 'selected' : '' }}>In-Person</option>
-                        </select>
-                        @error('type')
-                            <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
-                        @enderror
-                    </div>
                 </div>
 
                 <!-- Bio -->
@@ -203,11 +174,10 @@
                 <h3 class="text-lg font-medium text-gray-900 mb-4">Mentor Settings</h3>
                 
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                
                     <!-- Availability -->
                     <div>
-                        <label for="availability" class="block text-sm font-medium text-gray-700 mb-2">
-                            Availability <span class="text-red-500">*</span>
-                        </label>
+                        <label class="block text-sm font-medium text-gray-700 mb-2">Availability *</label>
                         <div class="flex items-center space-x-4">
                             <label class="flex items-center">
                                 <input type="radio" 
@@ -231,17 +201,62 @@
                         @enderror
                     </div>
 
-                    <!-- Verified -->
-                    <div class="flex items-center">
-                        <div class="flex items-center h-5">
-                            <input id="verified" name="verified" type="checkbox" value="1" {{ old('verified') ? 'checked' : '' }}
-                                   class="focus:ring-purple-500 h-4 w-4 text-purple-600 border-gray-300 rounded">
-                        </div>
-                        <div class="ml-3 text-sm">
-                            <label for="verified" class="font-medium text-gray-700">Verified Mentor</label>
-                            <p class="text-gray-500">Check to mark this mentor as verified</p>
-                        </div>
+                    <!-- Verification Status -->
+                    <div>
+                        <label class="flex items-center">
+                            <input type="checkbox" 
+                                   name="verified" 
+                                   value="1"
+                                   {{ old('verified') ? 'checked' : '' }}
+                                   class="mr-2 text-purple-600 focus:ring-purple-500">
+                            <span class="text-sm text-gray-700">Verified Mentor</span>
+                        </label>
+                        @error('verified')
+                            <p class="text-red-500 text-sm mt-1">{{ $message }}</p>
+                        @enderror
                     </div>
+                                    <!-- Type -->
+                <div>
+                    <label class="block text-sm font-medium text-gray-700 mb-2">Mentor Type *</label>
+                    <div class="flex items-center space-x-4">
+                        <label class="flex items-center">
+                            <input type="radio" 
+                                   name="type" 
+                                   value="online" 
+                                   {{ old('type', 'online') == 'online' ? 'checked' : '' }}
+                                   class="mr-2 text-purple-600 focus:ring-purple-500"
+                                   onchange="toggleLocationField()">
+                            <span class="text-sm text-gray-700">Online</span>
+                        </label>
+                        <label class="flex items-center">
+                            <input type="radio" 
+                                   name="type" 
+                                   value="in-person" 
+                                   {{ old('type', 'online') == 'in-person' ? 'checked' : '' }}
+                                   class="mr-2 text-purple-600 focus:ring-purple-500"
+                                   onchange="toggleLocationField()">
+                            <span class="text-sm text-gray-700">In-Person</span>
+                        </label>
+                    </div>
+                    @error('type')
+                        <p class="text-red-500 text-sm mt-1">{{ $message }}</p>
+                    @enderror
+                </div>
+
+                <!-- Location (conditional) -->
+                <div id="location-field" style="display: none;">
+                    <label for="address" class="block text-sm font-medium text-gray-700 mb-2">Location <span class="text-red-500">*</span></label>
+                    <input type="text" 
+                           id="address" 
+                           name="address" 
+                           value="{{ old('address') }}"
+                           class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent @error('address') border-red-500 @enderror"
+                           placeholder="City, Country">
+                    <p class="text-sm text-gray-500 mt-1">Required for in-person mentors</p>
+                    @error('address')
+                        <p class="text-red-500 text-sm mt-1">{{ $message }}</p>
+                    @enderror
+                </div>
                 </div>
             </div>
 
@@ -439,6 +454,14 @@ document.querySelector('form').addEventListener('submit', function(e) {
         document.getElementById('type').focus();
         return;
     }
+
+    // Additional validation for in-person mentors
+    if (type === 'in-person' && !document.getElementById('address').value.trim()) {
+        e.preventDefault();
+        alert('Location is required for in-person mentors.');
+        document.getElementById('address').focus();
+        return;
+    }
 });
 
 // Initialize character counter on page load
@@ -448,6 +471,28 @@ document.addEventListener('DOMContentLoaded', function() {
         const event = new Event('input', { bubbles: true });
         bioField.dispatchEvent(event);
     }
+});
+
+// Toggle location field based on mentor type
+function toggleLocationField() {
+    const onlineRadio = document.querySelector('input[name="type"][value="online"]');
+    const inPersonRadio = document.querySelector('input[name="type"][value="in-person"]');
+    const locationField = document.getElementById('location-field');
+    const addressInput = document.getElementById('address');
+    
+    if (inPersonRadio.checked) {
+        locationField.style.display = 'block';
+        addressInput.required = true;
+    } else {
+        locationField.style.display = 'none';
+        addressInput.required = false;
+        addressInput.value = ''; // Clear the field when hidden
+    }
+}
+
+// Initialize on page load
+document.addEventListener('DOMContentLoaded', function() {
+    toggleLocationField();
 });
 </script>
 @endpush

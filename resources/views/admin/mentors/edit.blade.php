@@ -67,20 +67,6 @@
                         <p class="text-red-500 text-sm mt-1">{{ $message }}</p>
                     @enderror
                 </div>
-
-                <!-- Location -->
-                <div>
-                    <label for="location" class="block text-sm font-medium text-gray-700 mb-2">Location</label>
-                    <input type="text" 
-                           id="location" 
-                           name="location" 
-                           value="{{ old('location', $user->address ?? '') }}"
-                           class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent @error('location') border-red-500 @enderror"
-                           placeholder="City, Country">
-                    @error('location')
-                        <p class="text-red-500 text-sm mt-1">{{ $message }}</p>
-                    @enderror
-                </div>
             </div>
         </div>
 
@@ -224,7 +210,8 @@
                                    name="type" 
                                    value="online" 
                                    {{ old('type', $mentor->type ?? 'online') == 'online' ? 'checked' : '' }}
-                                   class="mr-2 text-purple-600 focus:ring-purple-500">
+                                   class="mr-2 text-purple-600 focus:ring-purple-500"
+                                   onchange="toggleLocationField()">
                             <span class="text-sm text-gray-700">Online</span>
                         </label>
                         <label class="flex items-center">
@@ -232,11 +219,27 @@
                                    name="type" 
                                    value="in-person" 
                                    {{ old('type', $mentor->type ?? 'online') == 'in-person' ? 'checked' : '' }}
-                                   class="mr-2 text-purple-600 focus:ring-purple-500">
+                                   class="mr-2 text-purple-600 focus:ring-purple-500"
+                                   onchange="toggleLocationField()">
                             <span class="text-sm text-gray-700">In-Person</span>
                         </label>
                     </div>
                     @error('type')
+                        <p class="text-red-500 text-sm mt-1">{{ $message }}</p>
+                    @enderror
+                </div>
+
+                <!-- Location (conditional) -->
+                <div id="location-field" style="display: none;">
+                    <label for="address" class="block text-sm font-medium text-gray-700 mb-2">Location <span class="text-red-500">*</span></label>
+                    <input type="text" 
+                           id="address" 
+                           name="address" 
+                           value="{{ old('address', $user->address ?? '') }}"
+                           class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent @error('address') border-red-500 @enderror"
+                           placeholder="City, Country">
+                    <p class="text-sm text-gray-500 mt-1">Required for in-person mentors</p>
+                    @error('address')
                         <p class="text-red-500 text-sm mt-1">{{ $message }}</p>
                     @enderror
                 </div>
@@ -293,6 +296,27 @@ document.addEventListener('DOMContentLoaded', function() {
     
     bioTextarea.addEventListener('input', updateCounter);
     updateCounter(); // Initial count
+});
+
+// Toggle location field based on mentor type
+function toggleLocationField() {
+    const onlineRadio = document.querySelector('input[name="type"][value="online"]');
+    const inPersonRadio = document.querySelector('input[name="type"][value="in-person"]');
+    const locationField = document.getElementById('location-field');
+    const addressInput = document.getElementById('address');
+    
+    if (inPersonRadio.checked) {
+        locationField.style.display = 'block';
+        addressInput.required = true;
+    } else {
+        locationField.style.display = 'none';
+        addressInput.required = false;
+    }
+}
+
+// Initialize on page load
+document.addEventListener('DOMContentLoaded', function() {
+    toggleLocationField();
 });
 </script>
 @endsection

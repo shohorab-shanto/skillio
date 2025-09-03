@@ -81,6 +81,11 @@ class AdminMentorController extends Controller
             'phone.regex' => 'Please enter a valid phone number format (e.g., +1234567890).',
         ]);
 
+        // Additional validation: address is required for in-person mentors
+        if ($request->type === 'in-person' && empty($request->address)) {
+            return back()->withErrors(['address' => 'Location is required for in-person mentors.'])->withInput();
+        }
+
         // Create user account
         $user = User::create([
             'name' => $request->name,
@@ -169,6 +174,11 @@ class AdminMentorController extends Controller
         ], [
             'phone.regex' => 'Please enter a valid phone number format (e.g., +1234567890).',
         ]);
+
+        // Additional validation: address is required for in-person mentors
+        if ($request->type === 'in-person' && empty($request->address)) {
+            return back()->withErrors(['address' => 'Location is required for in-person mentors.'])->withInput();
+        }
 
         // Update user account
         $userData = [

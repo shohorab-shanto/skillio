@@ -2,19 +2,21 @@
     <div class=" space-y-10">
 
         <!-- Top Section: Contact | Subscribe | Social -->
-        <div class="flex flex-col md:flex-row justify-between items-center md:items-start gap-10">
+        <div class="flex flex-col md:flex-row justify-between items-center md:items-start gap-5 md:gap-10">
 
             <!-- Left: Contact Us -->
-            <div class="flex items-center h-48">
-                <div class="flex flex-col items-center justify-center space-y-2 md:pr-20 w-full ml-[50px]">
-                    <p class="text-base text-center w-full">{{ __('trans.contact_us') }}</p>
+            <div class="flex items-center h-auto md:h-48">
+                <div class="flex flex-col items-center justify-center space-y-0 md:space-y-2 md:pr-20 w-full ml-0 md:ml-[50px]">
+                    <p class="text-base text-center w-full mb-1 md:mb-0">{{ __('trans.contact_us') }}</p>
                     <a href="mailto:info@skillio.pro" class="text-base cursor-pointer hover:underline text-center w-full">
                         info@skillio.pro
                     </a>
                 </div>
-                <div class="h-48 md:border-r border-white/30 min-h-[120px] ">
-                </div>
+                <div class="h-auto md:h-48 md:border-r border-white/30 min-h-[80px] md:min-h-[120px]"></div>
             </div>
+
+
+
 
             <!-- Center: Subscribe (All Content Center Aligned) -->
             <div class="flex flex-col items-center justify-center text-center space-y-4 text-white max-w-md w-full mx-auto">
@@ -42,12 +44,11 @@
             </div>
 
             <!-- Right: Social Media -->
-            <div class="flex items-center h-48">
-                <div class="h-48 md:border-r border-white/30 min-h-[120px] ">
-                </div>
-                <div class="flex flex-col items-center md:items-end space-y-2 md:pl-10 mr-[50px]">
+            <div class="flex items-center h-auto md:h-48">
+                <div class="h-auto md:h-48 md:border-r border-white/30 min-h-[60px] md:min-h-[120px]"></div>
+                <div class="flex flex-col items-center md:items-end space-y-0 md:space-y-2 md:pl-10 mr-0 md:mr-[50px]">
                     <p class="text-base text-center w-full">{{ __('trans.social_media') }}</p>
-                    <div class="flex flex-wrap justify-center gap-4">
+                    <div class="flex flex-wrap justify-center gap-2 md:gap-4">
                         <!-- TikTok -->
                         <a href="https://www.tiktok.com/@skillio.official?_t=ZS-8zKoEUxHhEP&_r=1" aria-label="TikTok" class="hover:text-gray-300" target="_blank" rel="noopener noreferrer">
                             <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor"

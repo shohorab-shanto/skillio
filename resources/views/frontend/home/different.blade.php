@@ -1,4 +1,4 @@
-<div id="why-we-are-different" class="bg-gray-50 py-16">
+<div id="why-we-are-different" class="bg-gray-50">
     <section class="px-6">
         <x-section-header title="{{ __('trans.what_makes_skillio_different_title') }}"
             subtitle="{{ __('trans.what_makes_skillio_different_subtitle') }}" />

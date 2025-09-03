@@ -1,9 +1,10 @@
-<section id="faq">
-<x-section-header title="{{ __('trans.frequently_asked_questions_title') }}"
-    subtitle="{{ __('trans.frequently_asked_questions_subtitle') }}" />
 
-<section class="bg-gray-50 pb-16">
+
+
+<section  id="faq" class="bg-gray-50 pb-16">
     <div class="max-w-[1400px] mx-auto px-6">
+        <x-section-header title="{{ __('trans.frequently_asked_questions_title') }}"
+    subtitle="{{ __('trans.frequently_asked_questions_subtitle') }}" />
         <div class="space-y-4">
             
             <!-- FAQ Item 1 -->
@@ -144,5 +145,4 @@
 
         </div>
     </div>
-</section>
 </section>

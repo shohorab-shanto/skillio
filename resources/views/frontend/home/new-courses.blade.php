@@ -1,4 +1,4 @@
-<section id="new-courses" class="py-16 bg-gray-50">
+<section id="new-courses" class="bg-gray-50">
     <div class="max-w-[1400px] mx-auto px-6">
         <x-section-header 
             title="Explore New Courses"

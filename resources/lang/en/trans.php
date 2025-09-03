@@ -22,6 +22,14 @@ return [
     'card_3_title' => 'Earn & Inspire',
     'card_3_description' => 'Take our personalized quiz to find courses and mentors that match your goals and learning style.',
 
+    // Learners Content
+    'learners_card_1_title' => 'Apply & Answer The Questions',
+    'learners_card_1_description' => 'Answer a few qualification questions so that we can choose the best education and mentor for you. This step only takes a few minutes and is crucial for the process to continue.',
+    'learners_card_2_title' => 'Find A Mentor For Education',
+    'learners_card_2_description' => 'After filling in the answers, you will be shown a list of mentors and educations that are best for you.',
+    'learners_card_3_title' => 'Educate & Earn',
+    'learners_card_3_description' => 'You start with education in the skill you have chosen with the help of a quality and experienced mentor.',
+
     // What We Offer Section
     'what_we_offer_title' => 'What Does Skillio Offer?',
     'what_we_offer_subtitle' => 'Skillio connects learners with expert mentors and interactive courses both online and offline. Transform your learning journey today.',

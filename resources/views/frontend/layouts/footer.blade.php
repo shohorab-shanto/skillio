@@ -1,4 +1,4 @@
-<footer class="max-w-[1440px] w-full mx-auto tracking-wide bg-[#6E3FF3] rounded-[40px] px-4 sm:px-6 lg:px-8 py-10 text-white my-10">
+<footer class="max-w-[1440px] w-full mx-auto tracking-wide bg-[#6E3FF3] rounded-[40px] px-4 sm:px-6 lg:px-8 py-10 text-white">
     <div class=" space-y-10">
 
         <!-- Top Section: Contact | Subscribe | Social -->

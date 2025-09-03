@@ -1,9 +1,7 @@
-<section id="testimonials">
-<x-section-header title="{{ __('trans.what_our_members_say_title') }}"
-    subtitle="{{ __('trans.what_our_members_say_subtitle') }}" />
-
-<section class="pb-16 mb-4 bg-gray-50">
+<section id="testimonials" class="bg-gray-50">
     <div class="max-w-[1400px] mx-auto px-6">
+    <x-section-header title="{{ __('trans.what_our_members_say_title') }}"
+    subtitle="{{ __('trans.what_our_members_say_subtitle') }}" />
         <!-- Testimonials Container with Navigation -->
         <div class="relative">
             <!-- Navigation Arrows -->
@@ -276,7 +274,6 @@
             </div>
         </div>
     </div>
-</section>
 </section>
 
 <script>

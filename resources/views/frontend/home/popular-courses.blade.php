@@ -1,4 +1,4 @@
-<section id="popular-courses" class="py-16 bg-gray-50">
+<section id="popular-courses" class="mb-20 bg-gray-50">
     <div class="max-w-[1400px] mx-auto px-6">
         <x-section-header 
             title="{{ __('trans.explore_popular_courses_title') }}"

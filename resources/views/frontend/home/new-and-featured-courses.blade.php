@@ -1,5 +1,5 @@
 <!-- New and Featured Courses Section -->
-<section class="py-16 bg-gray-50">
+<section class="bg-gray-50">
     <div class="max-w-[1400px] mx-auto px-6">
         <!-- Section Header with Tabs -->
         <div class="text-center mb-12">

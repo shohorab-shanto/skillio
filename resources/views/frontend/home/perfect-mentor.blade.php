@@ -1,4 +1,4 @@
-<section id="mentors" class="py-16 bg-gray-50">
+<section id="mentors" class="bg-gray-50">
     <div class="max-w-[1400px] mx-auto px-6">
         <x-section-header 
             title="{{ __('trans.find_perfect_mentor_title') }}"

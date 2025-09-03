@@ -1,9 +1,9 @@
 @extends('admin.layouts.backend')
 
-@section('title', 'Mentor Courses')
+@section('title', __('trans.mentor_courses'))
 
 @section('header')
-    Mentor Courses
+    {{ __('trans.mentor_courses') }}
 @endsection
 
 @section('content')
@@ -11,17 +11,17 @@
     <!-- Page Header -->
     <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
         <div>
-            <h1 class="text-2xl font-bold text-gray-900">Mentor Courses</h1>
-            <p class="text-gray-600 mt-1">All courses created by {{ $user->name }}</p>
+            <h1 class="text-2xl font-bold text-gray-900">{{ __('trans.mentor_courses') }}</h1>
+            <p class="text-gray-600 mt-1">{{ __('trans.all_courses_created_by') }} {{ $user->name }}</p>
         </div>
         <div class="flex items-center gap-3">
             <a href="{{ route('admin.mentors.show', $user->id) }}" 
                class="px-4 py-2 bg-gray-100 text-gray-700 rounded-lg hover:bg-gray-200 transition-colors duration-200">
                 <i class="fa-solid fa-arrow-left mr-2"></i>
-                Back to Mentor
+                {{ __('trans.back_to_mentor') }}
             </a>
             <span class="text-sm text-gray-500">
-                Total: <span class="font-semibold">{{ $courses->total() }}</span> courses
+                {{ __('trans.total') }} <span class="font-semibold">{{ $courses->total() }}</span> {{ __('trans.courses') }}
             </span>
         </div>
     </div>
@@ -33,22 +33,22 @@
                 <thead class="bg-gray-50">
                     <tr>
                         <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                            Course
+                            {{ __('trans.course') }}
                         </th>
                         <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                            Category
+                            {{ __('trans.category') }}
                         </th>
                         <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                            Status
+                            {{ __('trans.status') }}
                         </th>
                         <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                            Price
+                            {{ __('trans.price') }}
                         </th>
                         <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                            Duration
+                            {{ __('trans.duration') }}
                         </th>
                         <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                            Created
+                            {{ __('trans.created') }}
                         </th>
                     </tr>
                 </thead>
@@ -80,7 +80,7 @@
                                     {{ $course->category->name }}
                                 </span>
                             @else
-                                <span class="text-gray-400">No Category</span>
+                                <span class="text-gray-400">{{ __('trans.no_category') }}</span>
                             @endif
                         </td>
                         <td class="px-6 py-4 whitespace-nowrap">
@@ -88,19 +88,19 @@
                                 @case('approved')
                                     <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-green-100 text-green-800">
                                         <i class="fa-solid fa-check mr-1"></i>
-                                        Approved
+                                        {{ __('trans.approved') }}
                                     </span>
                                     @break
                                 @case('pending')
                                     <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-yellow-100 text-yellow-800">
                                         <i class="fa-solid fa-clock mr-1"></i>
-                                        Pending
+                                        {{ __('trans.pending') }}
                                     </span>
                                     @break
                                 @case('rejected')
                                     <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-red-100 text-red-800">
                                         <i class="fa-solid fa-times mr-1"></i>
-                                        Rejected
+                                        {{ __('trans.rejected') }}
                                     </span>
                                     @break
                                 @default
@@ -122,9 +122,9 @@
                         </td>
                         <td class="px-6 py-4 whitespace-nowrap">
                             @if($course->duration_days)
-                                <div class="text-sm text-gray-900">{{ $course->duration_days }} {{ Str::plural('day', $course->duration_days) }}</div>
+                                <div class="text-sm text-gray-900">{{ $course->duration_days }} {{ Str::plural(__('trans.day'), $course->duration_days) }}</div>
                             @else
-                                <span class="text-gray-400">N/A</span>
+                                <span class="text-gray-400">{{ __('trans.na') }}</span>
                             @endif
                         </td>
                         <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
@@ -136,8 +136,8 @@
                         <td colspan="6" class="px-6 py-12 text-center text-gray-500">
                             <div class="flex flex-col items-center">
                                 <i class="fa-solid fa-book text-4xl text-gray-300 mb-3"></i>
-                                <p class="text-lg font-medium">No courses found</p>
-                                <p class="text-sm">This mentor hasn't created any courses yet</p>
+                                <p class="text-lg font-medium">{{ __('trans.no_courses_found') }}</p>
+                                <p class="text-sm">{{ __('trans.mentor_hasnt_created_courses') }}</p>
                             </div>
                         </td>
                     </tr>
@@ -153,13 +153,13 @@
                 <!-- Pagination Details - Left Aligned -->
                 <div class="text-sm text-gray-700">
                     <p>
-                        Showing
+                        {{ __('trans.showing') }}
                         <span class="font-medium">{{ $courses->firstItem() ?? 0 }}</span>
-                        to
+                        {{ __('trans.to') }}
                         <span class="font-medium">{{ $courses->lastItem() ?? 0 }}</span>
-                        of
+                        {{ __('trans.of') }}
                         <span class="font-medium">{{ $courses->total() }}</span>
-                        courses
+                        {{ __('trans.courses') }}
                     </p>
                 </div>
 

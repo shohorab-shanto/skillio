@@ -13,7 +13,7 @@
         <a href="{{ route('admin.mentors.create') }}" 
            class="px-4 py-2 bg-purple-600 text-white rounded-lg hover:bg-purple-700 transition-colors duration-200">
             <i class="fa-solid fa-plus mr-2"></i>
-            Create Mentor
+            {{ __('trans.create_mentor') }}
         </a>
     </div>
 
@@ -31,35 +31,35 @@
 
                 <!-- Verification Status Filter -->
                 <div>
-                    <label class="block text-sm font-medium text-gray-700 mb-2">Verification</label>
+                    <label class="block text-sm font-medium text-gray-700 mb-2">{{ __('trans.verification') }}</label>
                     <select name="verification_status" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent">
-                        <option value="">All Status</option>
-                        <option value="verified" {{ request('verification_status') == 'verified' ? 'selected' : '' }}>Verified</option>
-                        <option value="unverified" {{ request('verification_status') == 'unverified' ? 'selected' : '' }}>Unverified</option>
+                        <option value="">{{ __('trans.all_status') }}</option>
+                        <option value="verified" {{ request('verification_status') == 'verified' ? 'selected' : '' }}>{{ __('trans.verified') }}</option>
+                        <option value="unverified" {{ request('verification_status') == 'unverified' ? 'selected' : '' }}>{{ __('trans.unverified') }}</option>
                     </select>
                 </div>
 
                 <!-- Availability Filter -->
                 <div>
-                    <label class="block text-sm font-medium text-gray-700 mb-2">Availability</label>
+                    <label class="block text-sm font-medium text-gray-700 mb-2">{{ __('trans.availability') }}</label>
                     <select name="availability" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent">
-                        <option value="">All Availability</option>
-                        <option value="available" {{ request('availability') == 'available' ? 'selected' : '' }}>Available</option>
-                        <option value="unavailable" {{ request('availability') == 'unavailable' ? 'selected' : '' }}>Unavailable</option>
-                        <option value="busy" {{ request('availability') == 'busy' ? 'selected' : '' }}>Busy</option>
+                        <option value="">{{ __('trans.all_availability') }}</option>
+                        <option value="available" {{ request('availability') == 'available' ? 'selected' : '' }}>{{ __('trans.available') }}</option>
+                        <option value="unavailable" {{ request('availability') == 'unavailable' ? 'selected' : '' }}>{{ __('trans.unavailable') }}</option>
+                        <option value="busy" {{ request('availability') == 'busy' ? 'selected' : '' }}>{{ __('trans.busy') }}</option>
                     </select>
                 </div>
 
                 <!-- Date From -->
                 <div>
-                    <label class="block text-sm font-medium text-gray-700 mb-2">From Date</label>
+                    <label class="block text-sm font-medium text-gray-700 mb-2">{{ __('trans.from_date') }}</label>
                     <input type="date" name="date_from" value="{{ request('date_from') }}" 
                            class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent">
                 </div>
 
                 <!-- Date To -->
                 <div>
-                    <label class="block text-sm font-medium text-gray-700 mb-2">To Date</label>
+                    <label class="block text-sm font-medium text-gray-700 mb-2">{{ __('trans.to_date') }}</label>
                     <input type="date" name="date_to" value="{{ request('date_to') }}" 
                            class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent">
                 </div>
@@ -67,10 +67,10 @@
 
             <div class="flex items-center gap-3">
                 <button type="submit" class="px-6 py-2 bg-purple-600 text-white rounded-lg hover:bg-purple-700 transition-colors duration-200">
-                    <i class="fa-solid fa-filter mr-2"></i>Apply Filters
+                    <i class="fa-solid fa-filter mr-2"></i>{{ __('trans.apply_filters') }}
                 </button>
                 <a href="{{ route('admin.mentors.index') }}" class="px-6 py-2 bg-gray-100 text-gray-700 rounded-lg hover:bg-gray-200 transition-colors duration-200">
-                    <i class="fa-solid fa-times mr-2"></i>Clear Filters
+                    <i class="fa-solid fa-times mr-2"></i>{{ __('trans.clear_filters') }}
                 </a>
             </div>
         </form>
@@ -83,22 +83,22 @@
                 <thead class="bg-gray-50">
                     <tr>
                         <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                            Mentor
+                            {{ __('trans.mentor') }}
                         </th>
                         <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                            Contact Info
+                            {{ __('trans.contact_info') }}
                         </th>
                         <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                            Verification
+                            {{ __('trans.verification') }}
                         </th>
                         <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                            Availability
+                            {{ __('trans.availability') }}
                         </th>
                         <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                            Rating
+                            {{ __('trans.rating') }}
                         </th>
                         <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                            Actions
+                            {{ __('trans.actions') }}
                         </th>
                     </tr>
                 </thead>
@@ -129,19 +129,19 @@
                         <td class="px-6 py-4 whitespace-nowrap">
                             <div class="text-sm text-gray-900">{{ $mentor->email }}</div>
                             @if($mentor->mentor && $mentor->mentor->work_experience)
-                                <div class="text-sm text-gray-500">{{ $mentor->mentor->work_experience }} years exp.</div>
+                                <div class="text-sm text-gray-500">{{ $mentor->mentor->work_experience }} {{ __('trans.years_exp') }}</div>
                             @endif
                         </td>
                         <td class="px-6 py-4 whitespace-nowrap">
                             @if($mentor->mentor && $mentor->mentor->verified)
                                 <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-green-100 text-green-800">
                                     <i class="fa-solid fa-check-circle mr-1"></i>
-                                    Verified
+                                    {{ __('trans.verified') }}
                                 </span>
                             @else
                                 <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-yellow-100 text-yellow-800">
                                     <i class="fa-solid fa-clock mr-1"></i>
-                                    Unverified
+                                    {{ __('trans.unverified') }}
                                 </span>
                             @endif
                         </td>
@@ -151,29 +151,29 @@
                                     @case('available')
                                         <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-green-100 text-green-800">
                                             <i class="fa-solid fa-check mr-1"></i>
-                                            Available
+                                            {{ __('trans.available') }}
                                         </span>
                                         @break
                                     @case('unavailable')
                                         <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-red-100 text-red-800">
                                             <i class="fa-solid fa-times mr-1"></i>
-                                            Unavailable
+                                            {{ __('trans.unavailable') }}
                                         </span>
                                         @break
                                     @case('busy')
                                         <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-yellow-100 text-yellow-800">
                                             <i class="fa-solid fa-clock mr-1"></i>
-                                            Busy
+                                            {{ __('trans.busy') }}
                                         </span>
                                         @break
                                     @default
                                         <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-gray-100 text-gray-800">
                                             <i class="fa-solid fa-question mr-1"></i>
-                                            Unknown
+                                            {{ __('trans.unknown') }}
                                         </span>
                                 @endswitch
                             @else
-                                <span class="text-gray-400">N/A</span>
+                                <span class="text-gray-400">{{ __('trans.na') }}</span>
                             @endif
                         </td>
                         <td class="px-6 py-4 whitespace-nowrap">
@@ -185,7 +185,7 @@
                                     </div>
                                 </div>
                             @else
-                                <span class="text-gray-400">N/A</span>
+                                <span class="text-gray-400">{{ __('trans.na') }}</span>
                             @endif
                         </td>
                         <td class="px-6 py-4 whitespace-nowrap text-sm font-medium">
@@ -193,17 +193,17 @@
                                 <a href="{{ route('admin.mentors.show', $mentor->id) }}" 
                                    class="px-3 py-1 text-xs bg-blue-100 text-blue-700 rounded-lg hover:bg-blue-200 transition-colors duration-200">
                                     <i class="fa-solid fa-eye mr-1"></i>
-                                    View
+                                    {{ __('trans.view') }}
                                 </a>
                                 <a href="{{ route('admin.mentors.edit', $mentor->id) }}" 
                                    class="px-3 py-1 text-xs bg-green-100 text-green-700 rounded-lg hover:bg-green-200 transition-colors duration-200">
                                     <i class="fa-solid fa-edit mr-1"></i>
-                                    Edit
+                                    {{ __('trans.edit') }}
                                 </a>
                                 <button onclick="deleteMentor({{ $mentor->id }}, '{{ $mentor->name }}')" 
                                         class="px-3 py-1 text-xs bg-red-100 text-red-700 rounded-lg hover:bg-red-200 transition-colors duration-200">
                                     <i class="fa-solid fa-trash mr-1"></i>
-                                    Delete
+                                    {{ __('trans.delete') }}
                                 </button>
                             </div>
                         </td>
@@ -213,8 +213,8 @@
                         <td colspan="6" class="px-6 py-12 text-center text-gray-500">
                             <div class="flex flex-col items-center">
                                 <i class="fa-solid fa-chalkboard-teacher text-4xl text-gray-300 mb-3"></i>
-                                <p class="text-lg font-medium">No mentors found</p>
-                                <p class="text-sm">Try adjusting your filters or search terms</p>
+                                <p class="text-lg font-medium">{{ __('trans.no_mentors_found') }}</p>
+                                <p class="text-sm">{{ __('trans.try_adjusting_filters') }}</p>
                             </div>
                         </td>
                     </tr>
@@ -230,13 +230,13 @@
                 <!-- Pagination Details - Left Aligned -->
                 <div class="text-sm text-gray-700">
                     <p>
-                        Showing
+                        {{ __('trans.showing') }}
                         <span class="font-medium">{{ $mentors->firstItem() ?? 0 }}</span>
-                        to
+                        {{ __('trans.to') }}
                         <span class="font-medium">{{ $mentors->lastItem() ?? 0 }}</span>
-                        of
+                        {{ __('trans.of') }}
                         <span class="font-medium">{{ $mentors->total() }}</span>
-                        mentors
+                        {{ __('trans.mentors') }}
                     </p>
                 </div>
 

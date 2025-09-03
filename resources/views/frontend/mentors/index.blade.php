@@ -1,6 +1,6 @@
 @extends('frontend.layouts.app')
 
-@section('title', 'Mentors')
+@section('title', __('trans.mentors'))
 
 @section('navbar-style')
     <style>

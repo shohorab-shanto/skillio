@@ -1,6 +1,6 @@
 @extends('backend.layouts.app')
 
-@section('title', 'My Reviews')
+@section('title', __('trans.my_reviews'))
 
 @section('header')
     <div class="flex items-center justify-between">
@@ -9,7 +9,7 @@
                 <i class="fa-solid fa-arrow-left"></i>
             </a>
             <div>
-                <h1 class="text-2xl font-bold text-gray-900">My Reviews</h1>
+                <h1 class="text-2xl font-bold text-gray-900">{{ __('trans.my_reviews') }}</h1>
             </div>
         </div>
     </div>
@@ -20,7 +20,7 @@
     
     <!-- Rating Overview Section -->
     <div class="bg-white rounded-xl shadow-sm border border-gray-100 p-6">
-        <h2 class="text-lg font-semibold text-gray-900 mb-6">Rating Overview</h2>
+        <h2 class="text-lg font-semibold text-gray-900 mb-6">{{ __('trans.rating_overview') }}</h2>
         
         <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
             <!-- Overall Rating -->
@@ -37,26 +37,26 @@
                         @endif
                     @endfor
                 </div>
-                <p class="text-sm text-gray-600">{{ $stats['total_reviews'] }} {{ Str::plural('Review', $stats['total_reviews']) }}</p>
+                <p class="text-sm text-gray-600">{{ $stats['total_reviews'] }} {{ Str::plural(__('trans.reviews'), $stats['total_reviews']) }}</p>
                 
                 @if($stats['has_excellent_reviews'])
                     <span class="inline-flex items-center px-3 py-1 rounded-full text-xs font-medium bg-green-100 text-green-800 mt-2">
                         <i class="fa-solid fa-badge-check mr-1"></i>
-                        Excellent Reviews
+                        {{ __('trans.excellent_reviews') }}
                     </span>
                 @endif
             </div>
 
             <!-- Rating Distribution -->
             <div class="md:col-span-2">
-                <h3 class="text-sm font-medium text-gray-700 mb-4">Rating Distribution</h3>
+                <h3 class="text-sm font-medium text-gray-700 mb-4">{{ __('trans.rating_distribution') }}</h3>
                 @for($rating = 5; $rating >= 1; $rating--)
                     @php
                         $count = $stats['rating_distribution'][$rating] ?? 0;
                         $percentage = $stats['total_reviews'] > 0 ? ($count / $stats['total_reviews']) * 100 : 0;
                     @endphp
                     <div class="flex items-center mb-3">
-                        <span class="text-sm text-gray-600 w-12">{{ $rating }} star</span>
+                        <span class="text-sm text-gray-600 w-12">{{ $rating }} {{ __('trans.star') }}</span>
                         <div class="flex-1 mx-4 bg-gray-200 rounded-full h-3">
                             <div class="bg-yellow-400 h-3 rounded-full transition-all duration-300" style="width: {{ $percentage }}%"></div>
                         </div>
@@ -70,19 +70,19 @@
         <div class="grid grid-cols-1 md:grid-cols-4 gap-4 mt-6 pt-6 border-t border-gray-200">
             <div class="text-center">
                 <div class="text-2xl font-bold text-green-600">{{ $stats['five_star_percentage'] }}%</div>
-                <p class="text-sm text-gray-600">5-Star Reviews</p>
+                <p class="text-sm text-gray-600">{{ __('trans.5_star_reviews') }}</p>
             </div>
             <div class="text-center">
                 <div class="text-2xl font-bold text-blue-600">{{ $stats['rating_distribution'][4] ?? 0 }}</div>
-                <p class="text-sm text-gray-600">4-Star Reviews</p>
+                <p class="text-sm text-gray-600">{{ __('trans.4_star_reviews') }}</p>
             </div>
             <div class="text-center">
                 <div class="text-2xl font-bold text-orange-600">{{ ($stats['rating_distribution'][3] ?? 0) + ($stats['rating_distribution'][2] ?? 0) + ($stats['rating_distribution'][1] ?? 0) }}</div>
-                <p class="text-sm text-gray-600">Below 4-Star</p>
+                <p class="text-sm text-gray-600">{{ __('trans.below_4_star') }}</p>
             </div>
             <div class="text-center">
                 <div class="text-2xl font-bold text-purple-600">{{ $stats['total_reviews'] }}</div>
-                <p class="text-sm text-gray-600">Total Reviews</p>
+                <p class="text-sm text-gray-600">{{ __('trans.total_reviews') }}</p>
             </div>
         </div>
     </div>
@@ -99,19 +99,19 @@
                     </div>
                     <input type="text" name="search" value="{{ $request->search }}" 
                            class="w-full pl-10 pr-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent text-sm" 
-                           placeholder="Search reviews by comment or student name...">
+                           placeholder="{{ __('trans.search_reviews_placeholder') }}">
                 </div>
             </div>
 
             <!-- Rating Filter -->
             <div>
                 <select name="rating" class="border border-gray-300 rounded-lg px-3 py-2 text-sm focus:ring-2 focus:ring-purple-500 focus:border-transparent">
-                    <option value="">All Ratings</option>
-                    <option value="5" {{ $request->rating == '5' ? 'selected' : '' }}>5 Stars</option>
-                    <option value="4" {{ $request->rating == '4' ? 'selected' : '' }}>4 Stars</option>
-                    <option value="3" {{ $request->rating == '3' ? 'selected' : '' }}>3 Stars</option>
-                    <option value="2" {{ $request->rating == '2' ? 'selected' : '' }}>2 Stars</option>
-                    <option value="1" {{ $request->rating == '1' ? 'selected' : '' }}>1 Star</option>
+                    <option value="">{{ __('trans.all_ratings') }}</option>
+                    <option value="5" {{ $request->rating == '5' ? 'selected' : '' }}>{{ __('trans.5_stars') }}</option>
+                    <option value="4" {{ $request->rating == '4' ? 'selected' : '' }}>{{ __('trans.4_stars') }}</option>
+                    <option value="3" {{ $request->rating == '3' ? 'selected' : '' }}>{{ __('trans.3_stars') }}</option>
+                    <option value="2" {{ $request->rating == '2' ? 'selected' : '' }}>{{ __('trans.2_stars') }}</option>
+                    <option value="1" {{ $request->rating == '1' ? 'selected' : '' }}>{{ __('trans.1_star') }}</option>
                 </select>
             </div>
 
@@ -119,12 +119,12 @@
             <div class="flex items-center space-x-2">
                 <button type="submit" class="bg-purple-600 hover:bg-purple-700 text-white px-4 py-2 rounded-lg text-sm font-medium transition-colors">
                     <i class="fa-solid fa-filter mr-2"></i>
-                    Filter
+                    {{ __('trans.filter') }}
                 </button>
                 
                 <a href="{{ route('mentor.reviews.index') }}" class="bg-gray-100 hover:bg-gray-200 text-gray-700 px-4 py-2 rounded-lg text-sm font-medium transition-colors">
                     <i class="fa-solid fa-refresh mr-2"></i>
-                    Clear
+                    {{ __('trans.clear') }}
                 </a>
             </div>
         </form>
@@ -135,16 +135,16 @@
         <div class="p-6 border-b border-gray-200">
             <div class="flex items-center justify-between">
                 <h2 class="text-lg font-semibold text-gray-900">
-                    Student Reviews 
+                    {{ __('trans.student_reviews') }}
                     @if($request->rating)
-                        <span class="text-sm font-normal text-gray-500">({{ $request->rating }}-star reviews)</span>
+                        <span class="text-sm font-normal text-gray-500">({{ $request->rating }}{{ __('trans.star_reviews') }})</span>
                     @endif
                     @if($request->search)
                         <span class="text-sm font-normal text-gray-500">(searching "{{ $request->search }}")</span>
                     @endif
                 </div>
                 <div class="text-sm text-gray-500">
-                    Showing {{ $reviews->firstItem() ?? 0 }}-{{ $reviews->lastItem() ?? 0 }} of {{ $reviews->total() }} reviews
+                    {{ __('trans.showing') }} {{ $reviews->firstItem() ?? 0 }}-{{ $reviews->lastItem() ?? 0 }} {{ __('trans.of') }} {{ $reviews->total() }} {{ __('trans.reviews') }}
                 </div>
             </div>
         </div>
@@ -177,19 +177,19 @@
                                         
                                         @if($review->rating >= 5)
                                             <span class="inline-flex items-center px-2 py-1 rounded-full text-xs font-medium bg-green-100 text-green-800 ml-2">
-                                                Excellent
+                                                {{ __('trans.excellent') }}
                                             </span>
                                         @elseif($review->rating >= 4)
                                             <span class="inline-flex items-center px-2 py-1 rounded-full text-xs font-medium bg-blue-100 text-blue-800 ml-2">
-                                                Good
+                                                {{ __('trans.good') }}
                                             </span>
                                         @elseif($review->rating >= 3)
                                             <span class="inline-flex items-center px-2 py-1 rounded-full text-xs font-medium bg-yellow-100 text-yellow-800 ml-2">
-                                                Average
+                                                {{ __('trans.average') }}
                                             </span>
                                         @else
                                             <span class="inline-flex items-center px-2 py-1 rounded-full text-xs font-medium bg-red-100 text-red-800 ml-2">
-                                                Needs Improvement
+                                                {{ __('trans.needs_improvement') }}
                                             </span>
                                         @endif
                                     </div>
@@ -211,14 +211,14 @@
                                 <div class="mt-3 p-3 bg-gray-50 rounded-lg">
                                     <p class="text-sm text-gray-600">
                                         <i class="fa-solid fa-book mr-1"></i>
-                                        Review for course: <span class="font-medium">{{ $review->course->title }}</span>
+                                        {{ __('trans.review_for_course') }} <span class="font-medium">{{ $review->course->title }}</span>
                                     </p>
                                 </div>
                             @else
                                 <div class="mt-3 p-3 bg-purple-50 rounded-lg">
                                     <p class="text-sm text-purple-700">
                                         <i class="fa-solid fa-user-graduate mr-1"></i>
-                                        Mentoring review
+                                        {{ __('trans.mentoring_review') }}
                                     </p>
                                 </div>
                             @endif
@@ -242,23 +242,23 @@
                 </div>
                 <h3 class="text-lg font-medium text-gray-900 mb-2">
                     @if($request->search || $request->rating)
-                        No reviews found
+                        {{ __('trans.no_reviews_found') }}
                     @else
-                        No reviews yet
+                        {{ __('trans.no_reviews_yet') }}
                     @endif
                 </h3>
                 <p class="text-gray-500 mb-6">
                     @if($request->search || $request->rating)
-                        Try adjusting your search criteria or filters.
+                        {{ __('trans.try_adjusting_search_criteria') }}
                     @else
-                        Your student reviews will appear here once they start rating your mentoring.
+                        {{ __('trans.student_reviews_will_appear') }}
                     @endif
                 </p>
                 
                 @if($request->search || $request->rating)
                     <a href="{{ route('mentor.reviews.index') }}" class="text-purple-600 hover:text-purple-700 font-medium">
                         <i class="fa-solid fa-arrow-left mr-2"></i>
-                        View All Reviews
+                        {{ __('trans.view_all_reviews') }}
                     </a>
                 @endif
             </div>

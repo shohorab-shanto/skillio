@@ -1,9 +1,9 @@
 @extends('admin.layouts.backend')
 
-@section('title', 'User Enrollment History')
+@section('title', __('trans.user_enrollment_history'))
 
 @section('header')
-    User Enrollment History
+    {{ __('trans.user_enrollment_history') }}
 @endsection
 
 @section('content')
@@ -16,10 +16,10 @@
             <a href="{{ route('admin.users.index') }}" 
                class="px-4 py-2 bg-gray-100 text-gray-700 rounded-lg hover:bg-gray-200 transition-colors duration-200">
                 <i class="fa-solid fa-arrow-left mr-2"></i>
-                Back to Users
+                {{ __('trans.back_to_users') }}
             </a>
             <span class="text-sm text-gray-500">
-                Total: <span class="font-semibold">{{ $enrollments->total() }}</span> enrollments
+                {{ __('trans.total') }} <span class="font-semibold">{{ $enrollments->total() }}</span> {{ __('trans.enrollments') }}
             </span>
         </div>
     </div>
@@ -35,7 +35,7 @@
             <div>
                 <h2 class="text-xl font-semibold text-gray-900">{{ $user->name }}</h2>
                 <p class="text-gray-600">{{ $user->email }}</p>
-                <p class="text-sm text-gray-500">User ID: {{ $user->id }}</p>
+                <p class="text-sm text-gray-500">{{ __('trans.user_id') }} {{ $user->id }}</p>
             </div>
         </div>
     </div>
@@ -47,22 +47,22 @@
                 <thead class="bg-gray-50">
                     <tr>
                         <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                            Enrollment Type
+                            {{ __('trans.enrollment_type') }}
                         </th>
                         <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                            Title/Details
+                            {{ __('trans.title_details') }}
                         </th>
                         <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                            Mentor
+                            {{ __('trans.mentor') }}
                         </th>
                         <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                            Payment Amount
+                            {{ __('trans.payment_amount') }}
                         </th>
                         <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                            Enrollment Date
+                            {{ __('trans.enrollment_date') }}
                         </th>
                         <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                            Status
+                            {{ __('trans.status') }}
                         </th>
                     </tr>
                 </thead>
@@ -73,12 +73,12 @@
                             @if($enrollment->enrollable_type == 'App\Models\Course')
                                 <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-blue-100 text-blue-800">
                                     <i class="fa-solid fa-book mr-1"></i>
-                                    Course
+                                    {{ __('trans.course') }}
                                 </span>
                             @elseif($enrollment->enrollable_type == 'App\Models\SessionBooking')
                                 <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-green-100 text-green-800">
                                     <i class="fa-solid fa-clock mr-1"></i>
-                                    Session
+                                    {{ __('trans.session') }}
                                 </span>
                             @else
                                 <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-gray-100 text-gray-800">
@@ -90,18 +90,18 @@
                             @if($enrollment->enrollable)
                                 @if($enrollment->enrollable_type == 'App\Models\Course')
                                     <div class="text-sm font-medium text-gray-900">
-                                        {{ $enrollment->enrollable->title ?? 'Untitled Course' }}
+                                        {{ $enrollment->enrollable->title ?? __('trans.untitled_course') }}
                                     </div>
                                     <div class="text-sm text-gray-500">
                                         @if($enrollment->enrollable->duration_days)
-                                            Duration: {{ $enrollment->enrollable->duration_days }} {{ Str::plural('day', $enrollment->enrollable->duration_days) }}
+                                            {{ __('trans.duration') }} {{ $enrollment->enrollable->duration_days }} {{ Str::plural(__('trans.day'), $enrollment->enrollable->duration_days) }}
                                         @else
-                                            Duration: N/A
+                                            {{ __('trans.duration') }} {{ __('trans.na') }}
                                         @endif
                                     </div>
                                 @elseif($enrollment->enrollable_type == 'App\Models\SessionBooking')
                                     <div class="text-sm font-medium text-gray-900">
-                                        Session with {{ $enrollment->enrollable->mentor->user->name ?? 'Unknown Mentor' }}
+                                        {{ __('trans.session_with') }} {{ $enrollment->enrollable->mentor->user->name ?? __('trans.unknown_mentor') }}
                                     </div>
                                     <div class="text-sm text-gray-500">
                                         @if($enrollment->enrollable->date && $enrollment->enrollable->start_time && $enrollment->enrollable->end_time)
@@ -109,12 +109,12 @@
                                             {{ \Carbon\Carbon::parse($enrollment->enrollable->start_time)->format('g:i A') }} - 
                                             {{ \Carbon\Carbon::parse($enrollment->enrollable->end_time)->format('g:i A') }}
                                         @else
-                                            Time: N/A
+                                            {{ __('trans.time') }} {{ __('trans.na') }}
                                         @endif
                                     </div>
                                 @endif
                             @else
-                                <span class="text-gray-400">N/A</span>
+                                <span class="text-gray-400">{{ __('trans.na') }}</span>
                             @endif
                         </td>
                         <td class="px-6 py-4 whitespace-nowrap">
@@ -129,12 +129,12 @@
                                     </div>
                                     <div class="ml-3">
                                         <div class="text-sm font-medium text-gray-900">
-                                            {{ $enrollment->enrollable->mentor->user->name ?? 'Unknown Mentor' }}
+                                            {{ $enrollment->enrollable->mentor->user->name ?? __('trans.unknown_mentor') }}
                                         </div>
                                     </div>
                                 </div>
                             @else
-                                <span class="text-gray-400">N/A</span>
+                                <span class="text-gray-400">{{ __('trans.na') }}</span>
                             @endif
                         </td>
                         <td class="px-6 py-4 whitespace-nowrap">
@@ -148,15 +148,15 @@
                                     </div>
                                     <div class="text-xs text-gray-500">
                                         @if($payment->transaction_status == 'completed')
-                                            <span class="text-green-600">Paid</span>
+                                            <span class="text-green-600">{{ __('trans.paid') }}</span>
                                         @elseif($payment->transaction_status == 'pending')
-                                            <span class="text-yellow-600">Pending</span>
+                                            <span class="text-yellow-600">{{ __('trans.pending') }}</span>
                                         @else
                                             <span class="text-red-600">{{ ucfirst($payment->transaction_status) }}</span>
                                         @endif
                                     </div>
                                 @else
-                                    <span class="text-gray-400">Payment record not found</span>
+                                    <span class="text-gray-400">{{ __('trans.payment_record_not_found') }}</span>
                                 @endif
                             @else
                                 <div class="text-sm font-medium text-gray-900">
@@ -164,9 +164,9 @@
                                 </div>
                                 <div class="text-xs text-gray-500">
                                     @if($enrollment->payment_status == 'paid')
-                                        <span class="text-green-600">Paid</span>
+                                        <span class="text-green-600">{{ __('trans.paid') }}</span>
                                     @elseif($enrollment->payment_status == 'pending')
-                                        <span class="text-yellow-600">Pending</span>
+                                        <span class="text-yellow-600">{{ __('trans.pending') }}</span>
                                     @else
                                         <span class="text-red-600">{{ ucfirst($enrollment->payment_status) }}</span>
                                     @endif
@@ -181,37 +181,37 @@
                                 @case('pending')
                                     <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-yellow-100 text-yellow-800">
                                         <i class="fa-solid fa-clock mr-1"></i>
-                                        Pending
+                                        {{ __('trans.pending') }}
                                     </span>
                                     @break
                                 @case('active')
                                     <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-green-100 text-green-800">
                                         <i class="fa-solid fa-play mr-1"></i>
-                                        Active
+                                        {{ __('trans.active') }}
                                     </span>
                                     @break
                                 @case('completed')
                                     <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-blue-100 text-blue-800">
                                         <i class="fa-solid fa-check-circle mr-1"></i>
-                                        Completed
+                                        {{ __('trans.completed') }}
                                     </span>
                                     @break
                                 @case('cancelled')
                                     <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-red-100 text-red-800">
                                         <i class="fa-solid fa-times-circle mr-1"></i>
-                                        Cancelled
+                                        {{ __('trans.cancelled') }}
                                     </span>
                                     @break
                                 @case('refunded')
                                     <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-gray-100 text-gray-800">
                                         <i class="fa-solid fa-undo mr-1"></i>
-                                        Refunded
+                                        {{ __('trans.refunded') }}
                                     </span>
                                     @break
                                 @default
                                     <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-gray-100 text-gray-800">
                                         <i class="fa-solid fa-question mr-1"></i>
-                                        {{ ucfirst($enrollment->enrollment_status ?? 'Unknown') }}
+                                        {{ ucfirst($enrollment->enrollment_status ?? __('trans.unknown')) }}
                                     </span>
                             @endswitch
                         </td>
@@ -221,8 +221,8 @@
                         <td colspan="6" class="px-6 py-12 text-center text-gray-500">
                             <div class="flex flex-col items-center">
                                 <i class="fa-solid fa-graduation-cap text-4xl text-gray-300 mb-3"></i>
-                                <p class="text-lg font-medium">No enrollments found</p>
-                                <p class="text-sm">This user hasn't enrolled in any courses or sessions yet</p>
+                                <p class="text-lg font-medium">{{ __('trans.no_enrollments_found') }}</p>
+                                <p class="text-sm">{{ __('trans.user_no_enrollments_yet') }}</p>
                             </div>
                         </td>
                     </tr>
@@ -238,13 +238,13 @@
                 <!-- Pagination Details - Left Aligned -->
                 <div class="text-sm text-gray-700">
                     <p>
-                        Showing
+                        {{ __('trans.showing') }}
                         <span class="font-medium">{{ $enrollments->firstItem() ?? 0 }}</span>
-                        to
+                        {{ __('trans.to') }}
                         <span class="font-medium">{{ $enrollments->lastItem() ?? 0 }}</span>
-                        of
+                        {{ __('trans.of') }}
                         <span class="font-medium">{{ $enrollments->total() }}</span>
-                        enrollments
+                        {{ __('trans.enrollments') }}
                     </p>
                 </div>
 

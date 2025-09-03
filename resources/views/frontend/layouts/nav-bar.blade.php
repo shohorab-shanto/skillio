@@ -414,7 +414,7 @@
                         </div>
                     @else
                         <a href="{{ route('user.onboarding.login') }}" class="block w-full text-center px-4 py-2 border border-purple-700 text-purple-700 rounded hover:bg-purple-700 hover:text-white transition-colors duration-300">
-                            Login
+                            {{ __('trans.login') }}
                         </a>
                     @endauth
                 </div>
@@ -433,20 +433,20 @@
                 </svg>
             </div>
             <h3 class="text-xl font-semibold text-gray-900 text-center mb-2">
-                Confirm Logout
+                {{ __('trans.confirm_logout') }}
             </h3>
             <p class="text-gray-600 text-center mb-6">
-                Are you sure you want to logout? You will need to sign in again to access your account.
+                {{ __('trans.logout_confirmation_message') }}
             </p>
             <div class="flex space-x-3">
                 <button onclick="cancelLogout()" class="flex-1 px-4 py-3 bg-gray-100 text-gray-700 rounded-xl font-medium hover:bg-gray-200 transition-colors duration-200">
-                    Cancel
+                    {{ __('trans.cancel') }}
                 </button>
                 <button onclick="confirmLogout()" class="flex-1 px-4 py-3 bg-red-600 text-white rounded-xl font-medium hover:bg-red-700 transition-colors duration-200">
                     <svg class="w-4 h-4 mr-2 inline-block text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a2 2 0 01-2 2H7a2 2 0 01-2-2V7a2 2 0 012-2h4a2 2 0 012 2v1" />
                     </svg>
-                    Logout
+                    {{ __('trans.logout') }}
                 </button>
             </div>
         </div>

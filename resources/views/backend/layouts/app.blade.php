@@ -123,7 +123,7 @@
                     </div>
                     <div class="user-info sidebar-label">
                         <p class="user-name">
-                            {{ Auth::user()->name ?? 'User name' }}
+                            {{ Auth::user()->name ?? __('trans.user_name') }}
                         </p>
                         <p class="user-role">
                             {{ Auth::user()->role ?? 'mentor' }}
@@ -172,7 +172,7 @@
                                         <button type="submit" name="lang" value="en" class="block w-full text-left px-3 py-2 text-sm text-gray-700 hover:bg-gray-100 hover:text-purple-700 transition-colors duration-200 {{ app()->getLocale() == 'en' ? 'bg-purple-50 text-purple-700' : '' }}">
                                             <span class="flex items-center space-x-2">
                                                 <span class="text-sm">🇺🇸</span>
-                                                <span>English</span>
+                                                <span>{{ __('trans.english') }}</span>
                                                 @if(app()->getLocale() == 'en')
                                                     <svg class="w-4 h-4 text-purple-600 ml-auto" fill="currentColor" viewBox="0 0 20 20">
                                                         <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/>
@@ -183,7 +183,7 @@
                                         <button type="submit" name="lang" value="hr" class="block w-full text-left px-3 py-2 text-sm text-gray-700 hover:bg-gray-100 hover:text-purple-700 transition-colors duration-200 {{ app()->getLocale() == 'hr' ? 'bg-purple-50 text-purple-700' : '' }}">
                                             <span class="flex items-center space-x-2">
                                                 <span class="text-sm">🇭🇷</span>
-                                                <span>Hrvatski</span>
+                                                <span>{{ __('trans.hrvatski') }}</span>
                                                 @if(app()->getLocale() == 'hr')
                                                     <svg class="w-4 h-4 text-purple-600 ml-auto" fill="currentColor" viewBox="0 0 20 20">
                                                         <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/>
@@ -194,7 +194,7 @@
                                         <button type="submit" name="lang" value="sr" class="block w-full text-left px-3 py-2 text-sm text-gray-700 hover:bg-gray-100 hover:text-purple-700 transition-colors duration-200 {{ app()->getLocale() == 'sr' ? 'bg-purple-50 text-purple-700' : '' }}">
                                             <span class="flex items-center space-x-2">
                                                 <span class="text-sm">🇷🇸</span>
-                                                <span>Српски</span>
+                                                <span>{{ __('trans.srpski') }}</span>
                                                 @if(app()->getLocale() == 'sr')
                                                     <svg class="w-4 h-4 text-purple-600 ml-auto" fill="currentColor" viewBox="0 0 20 20">
                                                         <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/>
@@ -205,7 +205,7 @@
                                         <button type="submit" name="lang" value="sl" class="block w-full text-left px-3 py-2 text-sm text-gray-700 hover:bg-gray-100 hover:text-purple-700 transition-colors duration-200 {{ app()->getLocale() == 'sl' ? 'bg-purple-50 text-purple-700' : '' }}">
                                             <span class="flex items-center space-x-2">
                                                 <span class="text-sm">🇸🇮</span>
-                                                <span>Slovenščina</span>
+                                                <span>{{ __('trans.slovenscina') }}</span>
                                                 @if(app()->getLocale() == 'sl')
                                                     <svg class="w-4 h-4 text-purple-600 ml-auto" fill="currentColor" viewBox="0 0 20 20">
                                                         <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/>
@@ -216,7 +216,7 @@
                                         <button type="submit" name="lang" value="mk" class="block w-full text-left px-3 py-2 text-sm text-gray-700 hover:bg-gray-100 hover:text-purple-700 transition-colors duration-200 {{ app()->getLocale() == 'mk' ? 'bg-purple-50 text-purple-700' : '' }}">
                                             <span class="flex items-center space-x-2">
                                                 <span class="text-sm">🇲🇰</span>
-                                                <span>Македонски</span>
+                                                <span>{{ __('trans.makedonski') }}</span>
                                                 @if(app()->getLocale() == 'mk')
                                                     <svg class="w-4 h-4 text-purple-600 ml-auto" fill="currentColor" viewBox="0 0 20 20">
                                                         <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/>
@@ -240,7 +240,7 @@
                             <!-- Notification Dropdown -->
                             <div id="notification-dropdown" class="absolute right-0 mt-2 w-80 bg-white rounded-xl shadow-lg border border-gray-200 hidden z-50">
                                 <div class="p-4 border-b border-gray-100">
-                                    <h3 class="font-semibold text-gray-900">Notifications</h3>
+                                    <h3 class="font-semibold text-gray-900">{{ __('trans.notifications') }}</h3>
                                 </div>
                                 <div class="max-h-96 overflow-y-auto">
                                     <!-- Dynamic Notifications -->
@@ -253,7 +253,7 @@
                                         <div class="w-16 h-16 bg-gray-100 rounded-full flex items-center justify-center mx-auto mb-4">
                                             <i class="fa-solid fa-bell-slash text-gray-400 text-xl"></i>
                                         </div>
-                                        <p class="text-gray-500 text-sm">No notifications yet</p>
+                                        <p class="text-gray-500 text-sm">{{ __('trans.no_notifications_yet') }}</p>
                                     </div>
                                     
                                     <!-- Loading State -->
@@ -261,14 +261,14 @@
                                         <div class="w-16 h-16 bg-gray-100 rounded-full flex items-center justify-center mx-auto mb-4">
                                             <i class="fa-solid fa-spinner fa-spin text-gray-400 text-xl"></i>
                                         </div>
-                                        <p class="text-gray-500 text-sm">Loading notifications...</p>
+                                        <p class="text-gray-500 text-sm">{{ __('trans.loading_notifications') }}</p>
                                     </div>
                                 </div>
                                 
                                 <!-- Footer -->
                                 <div class="p-4 border-t border-gray-100">
                                     <button onclick="markAllAsRead()" class="w-full text-center text-sm text-purple-600 hover:text-purple-700 font-medium">
-                                        Mark all as read
+                                        {{ __('trans.mark_all_as_read') }}
                                     </button>
                                 </div>
                             </div>
@@ -319,7 +319,7 @@
                                             <button type="submit" name="lang" value="en" class="block w-full text-left px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 hover:text-purple-700 transition-colors duration-200 {{ app()->getLocale() == 'en' ? 'bg-purple-50 text-purple-700' : '' }}">
                                                 <span class="flex items-center space-x-2">
                                                     <span class="text-sm">🇺🇸</span>
-                                                    <span>English</span>
+                                                    <span>{{ __('trans.english') }}</span>
                                                     @if(app()->getLocale() == 'en')
                                                         <svg class="w-4 h-4 text-purple-600 ml-auto" fill="currentColor" viewBox="0 0 20 20">
                                                             <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/>
@@ -330,7 +330,7 @@
                                             <button type="submit" name="lang" value="hr" class="block w-full text-left px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 hover:text-purple-700 transition-colors duration-200 {{ app()->getLocale() == 'hr' ? 'bg-purple-50 text-purple-700' : '' }}">
                                                 <span class="flex items-center space-x-2">
                                                     <span class="text-sm">🇭🇷</span>
-                                                    <span>Hrvatski</span>
+                                                    <span>{{ __('trans.hrvatski') }}</span>
                                                     @if(app()->getLocale() == 'hr')
                                                         <svg class="w-4 h-4 text-purple-600 ml-auto" fill="currentColor" viewBox="0 0 20 20">
                                                             <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/>
@@ -341,7 +341,7 @@
                                             <button type="submit" name="lang" value="sr" class="block w-full text-left px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 hover:text-purple-700 transition-colors duration-200 {{ app()->getLocale() == 'sr' ? 'bg-purple-50 text-purple-700' : '' }}">
                                                 <span class="flex items-center space-x-2">
                                                     <span class="text-sm">🇷🇸</span>
-                                                    <span>Српски</span>
+                                                    <span>{{ __('trans.srpski') }}</span>
                                                     @if(app()->getLocale() == 'sr')
                                                         <svg class="w-4 h-4 text-purple-600 ml-auto" fill="currentColor" viewBox="0 0 20 20">
                                                             <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/>
@@ -352,7 +352,7 @@
                                             <button type="submit" name="lang" value="sl" class="block w-full text-left px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 hover:text-purple-700 transition-colors duration-200 {{ app()->getLocale() == 'sl' ? 'bg-purple-50 text-purple-700' : '' }}">
                                                 <span class="flex items-center space-x-2">
                                                     <span class="text-sm">🇸🇮</span>
-                                                    <span>Slovenščina</span>
+                                                    <span>{{ __('trans.slovenscina') }}</span>
                                                     @if(app()->getLocale() == 'sl')
                                                         <svg class="w-4 h-4 text-purple-600 ml-auto" fill="currentColor" viewBox="0 0 20 20">
                                                             <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/>
@@ -363,7 +363,7 @@
                                             <button type="submit" name="lang" value="mk" class="block w-full text-left px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 hover:text-purple-700 transition-colors duration-200 {{ app()->getLocale() == 'mk' ? 'bg-purple-50 text-purple-700' : '' }}">
                                                 <span class="flex items-center space-x-2">
                                                     <span class="text-sm">🇲🇰</span>
-                                                    <span>Македонски</span>
+                                                    <span>{{ __('trans.makedonski') }}</span>
                                                     @if(app()->getLocale() == 'mk')
                                                         <svg class="w-4 h-4 text-purple-600 ml-auto" fill="currentColor" viewBox="0 0 20 20">
                                                             <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/>
@@ -387,7 +387,7 @@
                                 <!-- Notification Dropdown -->
                                 <div id="notification-dropdown-desktop" class="absolute right-0 mt-2 w-80 bg-white rounded-xl shadow-lg border border-gray-200 hidden z-50">
                                     <div class="p-4 border-b border-gray-100">
-                                        <h3 class="font-semibold text-gray-900">Notifications</h3>
+                                        <h3 class="font-semibold text-gray-900">{{ __('trans.notifications') }}</h3>
                                     </div>
                                     <div class="max-h-96 overflow-y-auto">
                                         <!-- Dynamic Notifications -->
@@ -400,7 +400,7 @@
                                             <div class="w-16 h-16 bg-gray-100 rounded-full flex items-center justify-center mx-auto mb-4">
                                                 <i class="fa-solid fa-bell-slash text-gray-400 text-xl"></i>
                                             </div>
-                                            <p class="text-gray-500 text-sm">No notifications yet</p>
+                                            <p class="text-gray-500 text-sm">{{ __('trans.no_notifications_yet') }}</p>
                                         </div>
                                         
                                         <!-- Loading State -->
@@ -408,14 +408,14 @@
                                             <div class="w-16 h-16 bg-gray-100 rounded-full flex items-center justify-center mx-auto mb-4">
                                                 <i class="fa-solid fa-spinner fa-spin text-gray-400 text-xl"></i>
                                             </div>
-                                            <p class="text-gray-500 text-sm">Loading notifications...</p>
+                                            <p class="text-gray-500 text-sm">{{ __('trans.loading_notifications') }}</p>
                                         </div>
                                     </div>
                                     
                                     <!-- Footer -->
                                     <div class="p-4 border-t border-gray-100">
                                         <button onclick="markAllAsRead()" class="w-full text-center text-sm text-purple-600 hover:text-purple-700 font-medium">
-                                            Mark all as read
+                                            {{ __('trans.mark_all_as_read') }}
                                         </button>
                                     </div>
                                 </div>

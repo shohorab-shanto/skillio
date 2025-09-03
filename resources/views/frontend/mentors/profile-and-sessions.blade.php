@@ -1,6 +1,6 @@
 @extends('frontend.layouts.app')
 
-@section('title', $mentorInfo['name'] . ' - Profile & Sessions')
+@section('title', $mentorInfo['name'] . ' - ' . __('trans.profile_sessions'))
 
 @section('navbar-style')
     <style>
@@ -65,11 +65,11 @@
                                         </svg>
                                     @endfor
                                     <span class="font-semibold text-gray-900 ml-2">{{ $mentorInfo['formatted_rating'] }}</span>
-                                    <span class="text-gray-400 ml-1">({{ $mentorInfo['total_reviews'] }} {{ Str::plural('Review', $mentorInfo['total_reviews']) }})</span>
+                                    <span class="text-gray-400 ml-1">({{ $mentorInfo['total_reviews'] }} {{ Str::plural(__('trans.reviews'), $mentorInfo['total_reviews']) }})</span>
                                 </span>
                             </div>
                             <div class="space-y-2">
-                                <p class="text-sm text-gray-500">Mentor</p>
+                                <p class="text-sm text-gray-500">{{ __('trans.mentor') }}</p>
                                 <p class="font-semibold text-gray-900 break-words leading-tight">{{ $mentorInfo['top_category'] }}</p>
                             </div>
                         </div>
@@ -77,9 +77,9 @@
                     
                     <!-- Bio/Experience (center section) -->
                     <div class="flex flex-col justify-center h-full text-feft mt-10 md:mt-0">
-                        <p class="text-sm text-gray-500 mb-1">Work Experience</p>
+                        <p class="text-sm text-gray-500 mb-1">{{ __('trans.work_experience') }}</p>
                         <p class="font-semibold text-gray-900">{{ $mentorInfo['experience_years'] }}</p>
-                        <p class="text-sm text-gray-500 mb-1 mt-4">Bio</p>
+                        <p class="text-sm text-gray-500 mb-1 mt-4">{{ __('trans.bio') }}</p>
                         <p class="font-semibold text-gray-900">{{ $mentorInfo['bio'] }}</p>
                     </div>
                     
@@ -96,7 +96,7 @@
                 
                 <!-- Categories Section -->
                 <div class="px-6 flex flex-col gap-2">
-                    <p class="text-sm text-gray-600 mb-2">Categories</p>
+                    <p class="text-sm text-gray-600 mb-2">{{ __('trans.categories') }}</p>
                     <div class="flex items-center justify-between flex-wrap gap-3">
                         <div class="flex flex-wrap gap-3">
                             @if($mentorInfo['top_category_sub_categories'] && count($mentorInfo['top_category_sub_categories']) > 0)
@@ -104,14 +104,14 @@
                                     <span class="px-6 py-2 bg-gray-100 text-gray-800 rounded-full whitespace-nowrap text-sm">{{ $subCategory }}</span>
                                 @endforeach
                             @else
-                                <span class="px-6 py-2 bg-gray-100 text-gray-800 rounded-full whitespace-nowrap text-sm">Expert</span>
-                                <span class="px-6 py-2 bg-gray-100 text-gray-800 rounded-full whitespace-nowrap text-sm">Professional</span>
-                                <span class="px-6 py-2 bg-gray-100 text-gray-800 rounded-full whitespace-nowrap text-sm">Verified</span>
+                                <span class="px-6 py-2 bg-gray-100 text-gray-800 rounded-full whitespace-nowrap text-sm">{{ __('trans.expert') }}</span>
+                                <span class="px-6 py-2 bg-gray-100 text-gray-800 rounded-full whitespace-nowrap text-sm">{{ __('trans.professional') }}</span>
+                                <span class="px-6 py-2 bg-gray-100 text-gray-800 rounded-full whitespace-nowrap text-sm">{{ __('trans.verified') }}</span>
                             @endif
                         </div>
                         <div class="ml-auto">
                             <button @click="activeTab = 'review'" class="block px-4 py-2 bg-purple-700 text-white rounded hover:bg-purple-800 transition-colors duration-300 text-center whitespace-nowrap">
-                                Review
+                                {{ __('trans.review') }}
                             </button>
                         </div>
                     </div>
@@ -125,10 +125,10 @@
                         <nav class="-mb-px flex space-x-8">
                             <button @click="activeTab = 'timeslots'" 
                                 :class="activeTab == 'timeslots' ? 'text-purple-600 border-purple-600' : 'text-gray-500 border-transparent'"
-                                class="mentor-profile-tab-button py-4 px-1 border-b-2 text-sm font-medium hover:text-gray-700 transition-colors">Time Slots</button>
+                                class="mentor-profile-tab-button py-4 px-1 border-b-2 text-sm font-medium hover:text-gray-700 transition-colors">{{ __('trans.time_slots') }}</button>
                             <button @click="activeTab = 'review'" 
                                 :class="activeTab == 'review' ? 'text-purple-600 border-purple-600' : 'text-gray-500 border-transparent'"
-                                class="mentor-profile-tab-button py-4 px-1 border-b-2 text-sm font-medium hover:text-gray-700 transition-colors">Reviews</button>
+                                class="mentor-profile-tab-button py-4 px-1 border-b-2 text-sm font-medium hover:text-gray-700 transition-colors">{{ __('trans.reviews') }}</button>
                         </nav>
                     </div>
 
@@ -139,7 +139,7 @@
                         <div x-show="activeTab == 'timeslots'" class="mentor-profile-tab-content">
                             <div class="flex justify-between items-center mb-6">
                                 <!-- Left: Title -->
-                                <h2 class="font-semibold text-gray-900">All Time Slots</h2>
+                                <h2 class="font-semibold text-gray-900">{{ __('trans.all_time_slots') }}</h2>
                                 
                                                 <!-- Right: Date Selection Dropdown -->
                 <div class="relative" x-data="{ open: false, selectedPeriod: '{{ request("start_date") && request("end_date") ? request("start_date") . " - " . request("end_date") : now()->format("F Y") }}' }">
@@ -170,10 +170,10 @@
                                     >
                                         <!-- Date Range Inputs -->
                                         <form method="GET" action="{{ route('mentor.sessions', $mentorInfo['id']) }}" class="p-4">
-                                            <div class="text-sm font-medium text-gray-700 mb-3">Select Date Range</div>
+                                            <div class="text-sm font-medium text-gray-700 mb-3">{{ __('trans.select_date_range') }}</div>
                                             <div class="space-y-3">
                                                 <div>
-                                                    <label class="block text-xs text-gray-600 mb-1">From Date</label>
+                                                    <label class="block text-xs text-gray-600 mb-1">{{ __('trans.from_date') }}</label>
                                                     <input 
                                                         type="date" 
                                                         name="start_date"
@@ -182,7 +182,7 @@
                                                     >
                                                 </div>
                                                 <div>
-                                                    <label class="block text-xs text-gray-600 mb-1">To Date</label>
+                                                    <label class="block text-xs text-gray-600 mb-1">{{ __('trans.to_date') }}</label>
                                                     <input 
                                                         type="date" 
                                                         name="end_date"
@@ -194,7 +194,7 @@
                                                     type="submit"
                                                     class="w-full px-4 py-2 text-sm bg-purple-600 text-white rounded-lg hover:bg-purple-700 transition-colors duration-200 font-medium"
                                                 >
-                                                    Apply Filter
+                                                    {{ __('trans.apply_filter') }}
                                                 </button>
                                             </div>
                                         </form>
@@ -223,19 +223,19 @@
                                         <svg class="mx-auto h-12 w-12 text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"></path>
                                         </svg>
-                                        <h3 class="mt-2 text-sm font-medium text-gray-900">No Active Sessions</h3>
+                                        <h3 class="mt-2 text-sm font-medium text-gray-900">{{ __('trans.no_active_sessions') }}</h3>
                                         <p class="mt-1 text-sm text-gray-500">
                                             @if(request('start_date') || request('end_date'))
-                                                No sessions found for the selected date range.
+                                                {{ __('trans.no_sessions_found_date_range') }}
                                             @else
-                                                This mentor doesn't have any available time slots at the moment.
+                                                {{ __('trans.no_available_time_slots') }}
                                             @endif
                                         </p>
                                         @if(request('start_date') || request('end_date'))
                                             <div class="mt-4">
                                                 <a href="{{ route('mentor.sessions', $mentorInfo['id']) }}" 
                                                    class="inline-flex items-center px-4 py-2 border border-transparent shadow-sm text-sm font-medium rounded-md text-purple-600 bg-purple-100 hover:bg-purple-200 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-purple-500">
-                                                    Clear Date Filter
+                                                    {{ __('trans.clear_date_filter') }}
                                                 </a>
                                             </div>
                                         @else
@@ -244,7 +244,7 @@
                                                     <svg class="-ml-1 mr-2 h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                                                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6v6m0 0v6m0-6h6m-6 0H6"></path>
                                                     </svg>
-                                                    Check Back Later
+                                                    {{ __('trans.check_back_later') }}
                                                 </button>
                                             </div>
                                         @endif
@@ -255,7 +255,7 @@
 
                         <!-- Review Tab -->
                         <div x-show="activeTab == 'review'" class="mentor-profile-tab-content">
-                            <h3 class="text-lg font-semibold mb-6">Mentor Reviews</h3>
+                            <h3 class="text-lg font-semibold mb-6">{{ __('trans.mentor_reviews') }}</h3>
                             
                             @php
                                 $mentor = \App\Models\Mentor::find($mentorInfo['id']);
@@ -267,7 +267,7 @@
                             @if($mentorReviews->count() > 0)
                                 <!-- Review Statistics -->
                                 <div class="bg-gray-50 rounded-xl p-6 mb-6">
-                                    <h4 class="text-md font-semibold mb-4">Review Statistics</h4>
+                                    <h4 class="text-md font-semibold mb-4">{{ __('trans.review_statistics') }}</h4>
                                     <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
                                         <!-- Overall Rating -->
                                         <div class="text-center">
@@ -295,7 +295,7 @@
                                                     @endif
                                                 @endfor
                                             </div>
-                                            <div class="text-sm text-gray-600">{{ $totalReviews }} {{ Str::plural('Review', $totalReviews) }}</div>
+                                            <div class="text-sm text-gray-600">{{ $totalReviews }} {{ Str::plural(__('trans.reviews'), $totalReviews) }}</div>
                                         </div>
                                         
                                         <!-- Rating Distribution -->
@@ -360,7 +360,7 @@
                                     <svg class="w-16 h-16 text-gray-300 mx-auto mb-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11.049 2.927c.3-.921 1.603-.921 1.902 0l1.519 4.674a1 1 0 00.95.69h4.915c.969 0 1.371 1.24.588 1.81l-3.976 2.888a1 1 0 00-.363 1.118l1.518 4.674c.3.922-.755 1.688-1.538 1.118l-3.976-2.888a1 1 0 00-1.176 0l-3.976 2.888c-.783.57-1.838-.197-1.538-1.118l1.518-4.674a1 1 0 00-.363-1.118l-3.976-2.888c-.784-.57-.38-1.81.588-1.81h4.914a1 1 0 00.951-.69l1.519-4.674z"></path>
                                     </svg>
-                                    <p class="text-gray-500">No reviews yet. Be the first to share your experience!</p>
+                                    <p class="text-gray-500">{{ __('trans.no_reviews_yet_first') }}</p>
                                 </div>
                             @endif
 

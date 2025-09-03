@@ -75,7 +75,7 @@
             <!-- User Info -->
             <div>
                 <h3 class="text-lg font-semibold text-gray-900">{{ $otherUser->name }}</h3>
-                <p class="text-sm text-gray-500">{{ $otherUserRole }} • Online</p>
+                <p class="text-sm text-gray-500">{{ $otherUserRole }} • {{ __('trans.online') }}</p>
                 
                 @if($conversation->enrollment)
                     @php
@@ -85,10 +85,10 @@
                         <p class="text-xs text-gray-400 mt-1">
                             @if($validityPeriod['type'] == 'session')
                                 <i class="fa-solid fa-clock mr-1"></i>
-                                Session: {{ $validityPeriod['start']->format('M d, H:i') }} - {{ $validityPeriod['end']->format('M d, H:i') }}
+                                {{ __('trans.session') }} {{ $validityPeriod['start']->format('M d, H:i') }} - {{ $validityPeriod['end']->format('M d, H:i') }}
                             @else
                                 <i class="fa-solid fa-graduation-cap mr-1"></i>
-                                Course: {{ $conversation->enrollment->enrollable->title }}
+                                {{ __('trans.course') }} {{ $conversation->enrollment->enrollable->title }}
                             @endif
                         </p>
                     @endif
@@ -100,9 +100,9 @@
         @if(isset($chatStatus) && $chatStatus['can_chat'])
             <div class="text-right">
                 @if($chatStatus['type'] == 'session')
-                    <p class="text-sm text-gray-600">Session ends at {{ \Carbon\Carbon::parse($chatStatus['session_end_time'])->format('H:i') }}</p>
+                    <p class="text-sm text-gray-600">{{ __('trans.session_ends_at') }} {{ \Carbon\Carbon::parse($chatStatus['session_end_time'])->format('H:i') }}</p>
                 @elseif($chatStatus['type'] == 'course')
-                    <p class="text-sm text-gray-600">Course ends {{ \Carbon\Carbon::parse($chatStatus['course_end_date'])->format('M d, Y') }}</p>
+                    <p class="text-sm text-gray-600">{{ __('trans.course_ends') }} {{ \Carbon\Carbon::parse($chatStatus['course_end_date'])->format('M d, Y') }}</p>
                 @endif
             </div>
         @endif
@@ -152,7 +152,7 @@
                     <div class="relative {{ $isMyMessage ? 'bg-purple-600 text-white' : 'bg-white text-gray-900' }} rounded-2xl px-4 py-2 shadow-sm">
                         @if($message->type == 'image')
                             <div class="mb-2">
-                                <img src="{{ $message->getFileUrl() }}" alt="Shared image" 
+                                <img src="{{ $message->getFileUrl() }}" alt="{{ __('trans.shared_image') }}" 
                                      class="max-w-full h-auto rounded-lg cursor-pointer"
                                      onclick="openImageModal('{{ $message->getFileUrl() }}')">
                             </div>
@@ -164,12 +164,12 @@
                                 <i class="fa-solid fa-file text-lg"></i>
                                 <div class="flex-1 min-w-0">
                                     <p class="text-xs {{ $isMyMessage ? 'text-purple-200' : 'text-gray-500' }}">
-                                        {{ $message->file_size ? number_format($message->file_size / 1024, 1) . ' KB' : 'File' }}
+                                        {{ $message->file_size ? number_format($message->file_size / 1024, 1) . ' KB' : __('trans.file') }}
                                     </p>
                                 </div>
                                 <a href="{{ $message->getFileUrl() }}" download="{{ $message->file_name ?? basename($message->file_path) }}" 
                                    class="text-sm font-medium hover:underline">
-                                    Download
+                                    {{ __('trans.download') }}
                                 </a>
                             </div>
                             @if($message->content)
@@ -216,8 +216,8 @@
                 <div class="w-16 h-16 bg-gray-200 rounded-full flex items-center justify-center mx-auto mb-4">
                     <i class="fa-solid fa-comment-dots text-2xl text-gray-400"></i>
                 </div>
-                <h3 class="text-lg font-medium text-gray-900 mb-2">Start the conversation</h3>
-                <p class="text-gray-500 text-sm">Send a message to begin chatting with {{ $otherUser->name }}</p>
+                <h3 class="text-lg font-medium text-gray-900 mb-2">{{ __('trans.start_the_conversation') }}</h3>
+                <p class="text-gray-500 text-sm">{{ __('trans.send_message_to_begin_chatting') }} {{ $otherUser->name }}</p>
             </div>
         </div>
     @endforelse
@@ -230,12 +230,12 @@
             @csrf
             <!-- File Upload -->
             <div class="flex space-x-2">
-                <label for="file-input" class="cursor-pointer p-2 text-gray-600 hover:text-gray-900 hover:bg-gray-100 rounded-lg transition-colors" title="Attach File">
+                <label for="file-input" class="cursor-pointer p-2 text-gray-600 hover:text-gray-900 hover:bg-gray-100 rounded-lg transition-colors" title="{{ __('trans.attach_file') }}">
                     <i class="fa-solid fa-paperclip"></i>
                 </label>
                 <input type="file" id="file-input" name="file" class="hidden" accept="image/*,.pdf,.doc,.docx,.txt">
                 
-                <label for="image-input" class="cursor-pointer p-2 text-gray-600 hover:text-gray-900 hover:bg-gray-100 rounded-lg transition-colors" title="Send Image">
+                <label for="image-input" class="cursor-pointer p-2 text-gray-600 hover:text-gray-900 hover:bg-gray-100 rounded-lg transition-colors" title="{{ __('trans.send_image') }}">
                     <i class="fa-solid fa-image"></i>
                 </label>
                 <input type="file" id="image-input" name="image" class="hidden" accept="image/*">
@@ -244,7 +244,7 @@
             <!-- Message Input -->
             <div class="flex-1 relative">
                 <textarea id="message-input" name="content" rows="1" 
-                          placeholder="Type your message..." 
+                          placeholder="{{ __('trans.type_your_message') }}" 
                           class="w-full resize-none border border-gray-300 rounded-lg px-4 py-2 focus:ring-2 focus:ring-purple-500 focus:border-transparent text-sm"
                           style="min-height: 40px; max-height: 120px;"></textarea>
             </div>
@@ -262,8 +262,8 @@
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"/>
                 </svg>
             </div>
-            <p class="text-gray-600 font-medium">{{ $chatStatus['reason'] ?? 'Chat is not available' }}</p>
-            <p class="text-sm text-gray-500 mt-1">{{ $chatStatus['details'] ?? 'You cannot send messages at this time' }}</p>
+            <p class="text-gray-600 font-medium">{{ $chatStatus['reason'] ?? __('trans.chat_not_available') }}</p>
+            <p class="text-sm text-gray-500 mt-1">{{ $chatStatus['details'] ?? __('trans.cannot_send_messages_at_this_time') }}</p>
         </div>
     @endif
     
@@ -313,7 +313,7 @@
             <div class="flex justify-end">
                 <button onclick="closeErrorModal()" 
                         class="px-4 py-2 bg-gray-600 text-white rounded-lg hover:bg-gray-700 transition-colors">
-                    OK
+                    {{ __('trans.ok') }}
                 </button>
             </div>
         </div>
@@ -421,7 +421,7 @@ document.getElementById('message-form').addEventListener('submit', async functio
         
         if (response.status == 302) {
             console.error('Received 302 redirect - likely authentication issue');
-            alert('Session expired. Please refresh the page and try again.');
+            alert('{{ __("trans.session_expired") }}');
             window.location.reload();
             return;
         }
@@ -460,14 +460,14 @@ document.getElementById('message-form').addEventListener('submit', async functio
             console.error('Error response:', response.status, errorText);
             
             if (response.status === 403) {
-                showErrorModal('Conversation Expired', 'This conversation is no longer active. You can read previous messages but cannot send new ones.', 'warning');
+                showErrorModal('{{ __("trans.conversation_expired") }}', '{{ __("trans.conversation_no_longer_active") }}', 'warning');
             } else {
-                showErrorModal('Error', `Failed to send message (${response.status}). Please try again.`, 'error');
+                showErrorModal('{{ __("trans.error") }}', '{{ __("trans.failed_to_send_message") }}'.replace('{{status}}', response.status), 'error');
             }
         }
     } catch (error) {
         console.error('Error sending message:', error);
-        showErrorModal('Error', 'Failed to send message. Please try again.', 'error');
+        showErrorModal('{{ __("trans.error") }}', '{{ __("trans.failed_to_send_message_generic") }}', 'error');
     }
     
     // Re-enable form
@@ -645,7 +645,7 @@ function createMessageHtml(messageData, isMyMessage) {
     if (messageData.type == 'image') {
         messageContentHtml = `
             <div class="mb-2">
-                <img src="${messageData.file_url}" alt="Shared image" 
+                <img src="${messageData.file_url}" alt="{{ __('trans.shared_image') }}" 
                      class="max-w-full h-auto rounded-lg cursor-pointer"
                      onclick="openImageModal('${messageData.file_url}')">
             </div>
@@ -657,12 +657,12 @@ function createMessageHtml(messageData, isMyMessage) {
                 <i class="fa-solid fa-file text-lg"></i>
                 <div class="flex-1 min-w-0">
                     <p class="text-xs ${isMyMessage ? 'text-purple-200' : 'text-gray-500'}">
-                        ${messageData.file_size ? Math.round(messageData.file_size / 1024) + ' KB' : 'File'}
+                        ${messageData.file_size ? Math.round(messageData.file_size / 1024) + ' KB' : '{{ __("trans.file") }}'}
                     </p>
                 </div>
                 <a href="${messageData.file_url}" download="${messageData.file_name}" 
                    class="text-sm font-medium hover:underline">
-                    Download
+                    {{ __('trans.download') }}
                 </a>
             </div>
             ${messageData.content ? `<p class="text-sm mt-2">${messageData.content}</p>` : ''}

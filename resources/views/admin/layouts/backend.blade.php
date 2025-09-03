@@ -5,7 +5,7 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta name="csrf-token" content="{{ csrf_token() }}">
-    <title>@yield('title', 'Admin Dashboard') | Skillio</title>
+    <title>@yield('title', __('trans.admin_dashboard')) | Skillio</title>
 
     <!-- Favicon -->
     <link rel="icon" type="image/x-icon" href="{{ asset('assets/images/favicon.ico') }}">
@@ -62,18 +62,18 @@
                     <i class="fa-solid fa-right-from-bracket text-2xl text-red-600"></i>
                 </div>
                 <h3 class="text-xl font-semibold text-gray-900 text-center mb-2">
-                    Confirm Logout
+                    {{ __('trans.confirm_logout') }}
                 </h3>
                 <p class="text-gray-600 text-center mb-6">
-                    Are you sure you want to logout? You will need to sign in again to access your account.
+                    {{ __('trans.logout_confirmation_message') }}
                 </p>
                 <div class="flex space-x-3">
                     <button onclick="cancelLogout()" class="flex-1 px-4 py-3 bg-gray-100 text-gray-700 rounded-xl font-medium hover:bg-gray-200 transition-colors duration-200">
-                        Cancel
+                        {{ __('trans.cancel') }}
                     </button>
                     <button onclick="confirmLogout()" class="flex-1 px-4 py-3 bg-red-600 text-white rounded-xl font-medium hover:bg-red-700 transition-colors duration-200">
                         <i class="fa-solid fa-right-from-bracket mr-2"></i>
-                        Logout
+                        {{ __('trans.logout') }}
                     </button>
                 </div>
             </div>
@@ -118,7 +118,7 @@
                     </div>
                     <div class="user-info sidebar-label">
                         <p class="user-name">{{ auth()->user()->name }}</p>
-                        <p class="user-role">Administrator</p>
+                        <p class="user-role">{{ __('trans.administrator') }}</p>
                     </div>
                 </div>
             </div>
@@ -133,7 +133,7 @@
                         <i class="fa-solid fa-bars text-xl"></i>
                     </button>
                     <div>
-                        <h1 class="text-xl font-bold text-gray-900">@yield('header', 'Dashboard')</h1>
+                        <h1 class="text-xl font-bold text-gray-900">@yield('header', __('trans.dashboard'))</h1>
                     </div>
                 </div>
                 
@@ -170,7 +170,7 @@
                                     <button type="submit" name="lang" value="en" class="block w-full text-left px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 hover:text-purple-700 transition-colors duration-200 {{ app()->getLocale() == 'en' ? 'bg-purple-50 text-purple-700' : '' }}">
                                         <span class="flex items-center space-x-2">
                                             <span class="text-sm">🇺🇸</span>
-                                            <span>English</span>
+                                            <span>{{ __('trans.english') }}</span>
                                             @if(app()->getLocale() == 'en')
                                                 <svg class="w-4 h-4 text-purple-600 ml-auto" fill="currentColor" viewBox="0 0 20 20">
                                                     <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/>
@@ -181,7 +181,7 @@
                                     <button type="submit" name="lang" value="hr" class="block w-full text-left px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 hover:text-purple-700 transition-colors duration-200 {{ app()->getLocale() == 'hr' ? 'bg-purple-50 text-purple-700' : '' }}">
                                         <span class="flex items-center space-x-2">
                                             <span class="text-sm">🇭🇷</span>
-                                            <span>Hrvatski</span>
+                                            <span>{{ __('trans.hrvatski') }}</span>
                                             @if(app()->getLocale() == 'hr')
                                                 <svg class="w-4 h-4 text-purple-600 ml-auto" fill="currentColor" viewBox="0 0 20 20">
                                                     <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/>
@@ -192,7 +192,7 @@
                                     <button type="submit" name="lang" value="sr" class="block w-full text-left px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 hover:text-purple-700 transition-colors duration-200 {{ app()->getLocale() == 'sr' ? 'bg-purple-50 text-purple-700' : '' }}">
                                         <span class="flex items-center space-x-2">
                                             <span class="text-sm">🇷🇸</span>
-                                            <span>Српски</span>
+                                            <span>{{ __('trans.srpski') }}</span>
                                             @if(app()->getLocale() == 'sr')
                                                 <svg class="w-4 h-4 text-purple-600 ml-auto" fill="currentColor" viewBox="0 0 20 20">
                                                     <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/>
@@ -203,7 +203,7 @@
                                     <button type="submit" name="lang" value="sl" class="block w-full text-left px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 hover:text-purple-700 transition-colors duration-200 {{ app()->getLocale() == 'sl' ? 'bg-purple-50 text-purple-700' : '' }}">
                                         <span class="flex items-center space-x-2">
                                             <span class="text-sm">🇸🇮</span>
-                                            <span>Slovenščina</span>
+                                            <span>{{ __('trans.slovenscina') }}</span>
                                             @if(app()->getLocale() == 'sl')
                                                 <svg class="w-4 h-4 text-purple-600 ml-auto" fill="currentColor" viewBox="0 0 20 20">
                                                     <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/>
@@ -214,7 +214,7 @@
                                     <button type="submit" name="lang" value="mk" class="block w-full text-left px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 hover:text-purple-700 transition-colors duration-200 {{ app()->getLocale() == 'mk' ? 'bg-purple-50 text-purple-700' : '' }}">
                                         <span class="flex items-center space-x-2">
                                             <span class="text-sm">🇲🇰</span>
-                                            <span>Македонски</span>
+                                            <span>{{ __('trans.makedonski') }}</span>
                                             @if(app()->getLocale() == 'mk')
                                                 <svg class="w-4 h-4 text-purple-600 ml-auto" fill="currentColor" viewBox="0 0 20 20">
                                                     <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/>

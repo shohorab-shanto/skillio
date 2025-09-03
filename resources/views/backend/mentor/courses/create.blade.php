@@ -1,6 +1,6 @@
 @extends('backend.layouts.app')
 
-@section('title', 'Create New Course')
+@section('title', __('trans.create_new_course'))
 
 @section('header')
     <div class="flex items-center justify-between">
@@ -9,7 +9,7 @@
                 <i class="fa-solid fa-arrow-left"></i>
             </a>
             <div>
-                <h1 class="text-2xl font-bold text-gray-900">Create New Course</h1>
+                <h1 class="text-2xl font-bold text-gray-900">{{ __('trans.create_new_course') }}</h1>
             </div>
         </div>
     </div>
@@ -22,19 +22,19 @@
         
         <!-- Course Basic Information -->
         <div class="bg-white rounded-xl shadow-sm border border-gray-100 p-6">
-            <h2 class="text-lg font-semibold text-gray-900 mb-6">Course Information</h2>
+            <h2 class="text-lg font-semibold text-gray-900 mb-6">{{ __('trans.course_information') }}</h2>
             
             <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
                 <!-- Course Title -->
                 <div class="md:col-span-2">
-                    <label for="title" class="block text-sm font-medium text-gray-700 mb-2">Course Title *</label>
+                    <label for="title" class="block text-sm font-medium text-gray-700 mb-2">{{ __('trans.course_title') }} *</label>
                     <input type="text" id="title" name="title" value="{{ old('title') }}" 
                            maxlength="255"
                            class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent" 
                            placeholder="e.g., Complete Web Development Bootcamp" required
                            oninput="updateCharacterCount('title', 'title-count', 255)">
                     <p class="text-xs text-gray-500 mt-1">
-                        <span id="title-count">0</span>/255 characters
+                        <span id="title-count">0</span>/255 {{ __('trans.characters') }}
                     </p>
                     @error('title')
                         <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
@@ -43,11 +43,11 @@
 
                 <!-- Category -->
                 <div class="relative">
-                    <label for="category_id" class="block text-sm font-medium text-gray-700 mb-2">Category *</label>
+                    <label for="category_id" class="block text-sm font-medium text-gray-700 mb-2">{{ __('trans.category') }} *</label>
                     <select id="category_id" name="category_id" 
                             class="w-full px-3 py-2 pr-10 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent bg-white text-gray-900 appearance-none cursor-pointer hover:border-gray-400 transition-colors" 
                             required onchange="updateSubCategories()">
-                        <option value="" class="text-gray-500">Select a category</option>
+                        <option value="" class="text-gray-500">{{ __('trans.select_a_category') }}</option>
                         @foreach($categories as $category)
                             <option value="{{ $category->id }}" class="text-gray-900" {{ old('category_id') == $category->id ? 'selected' : '' }}>
                                 {{ $category->name }}
@@ -65,7 +65,7 @@
 
                 <!-- Sub Categories -->
                 <div class="relative">
-                    <label for="sub_category_ids" class="block text-sm font-medium text-gray-700 mb-2">Sub Categories *</label>
+                    <label for="sub_category_ids" class="block text-sm font-medium text-gray-700 mb-2">{{ __('trans.sub_categories') }} *</label>
                     
                     <!-- Multi-Select Dropdown -->
                     <div class="relative">
@@ -74,7 +74,7 @@
                                 class="relative py-3 ps-4 pe-9 flex gap-x-2 text-nowrap w-full cursor-pointer bg-white border border-gray-300 rounded-lg text-start text-sm focus:outline-none focus:ring-2 focus:ring-purple-500 hover:border-gray-400 transition-colors"
                                 onclick="toggleSubcategoryDropdown()" aria-expanded="false">
                             <div class="flex flex-wrap gap-1 flex-1" id="selected-display">
-                                <span class="text-gray-500" id="placeholder-text">Select sub-categories...</span>
+                                <span class="text-gray-500" id="placeholder-text">{{ __('trans.select_sub_categories') }}</span>
                             </div>
                             <!-- Dropdown Arrow -->
                             <div class="absolute top-1/2 end-3 -translate-y-1/2">
@@ -88,7 +88,7 @@
                         <!-- Dropdown Menu -->
                         <div id="subcategory-dropdown" class="hidden absolute mt-2 z-50 w-full max-h-72 p-1 space-y-0.5 bg-white border border-gray-200 rounded-lg shadow-lg overflow-hidden overflow-y-auto [&::-webkit-scrollbar]:w-2 [&::-webkit-scrollbar-thumb]:rounded-full [&::-webkit-scrollbar-track]:bg-gray-100 [&::-webkit-scrollbar-thumb]:bg-gray-300">
                             <div class="text-center py-4 text-sm text-gray-500" id="dropdown-placeholder">
-                                Please select a category first
+                                {{ __('trans.please_select_category_first') }}
                             </div>
                         </div>
                     </div>
@@ -103,7 +103,7 @@
 
                 <!-- Price -->
                 <div>
-                    <label for="price" class="block text-sm font-medium text-gray-700 mb-2">Price (USD) *</label>
+                    <label for="price" class="block text-sm font-medium text-gray-700 mb-2">{{ __('trans.price_usd') }} *</label>
                     <div class="relative">
                         <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
                             <span class="text-gray-500 sm:text-sm">$</span>
@@ -120,7 +120,7 @@
 
                 <!-- Discount -->
                 <div>
-                    <label for="discount" class="block text-sm font-medium text-gray-700 mb-2">Discount (%)</label>
+                    <label for="discount" class="block text-sm font-medium text-gray-700 mb-2">{{ __('trans.discount') }}</label>
                     <input type="number" id="discount" name="discount" value="{{ old('discount') }}" 
                            min="0" max="100"
                            class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent" 
@@ -132,12 +132,12 @@
 
                 <!-- Course Duration -->
                 <div>
-                    <label for="duration_days" class="block text-sm font-medium text-gray-700 mb-2">Course Duration (Days) *</label>
+                    <label for="duration_days" class="block text-sm font-medium text-gray-700 mb-2">{{ __('trans.course_duration_days') }} *</label>
                     <input type="number" id="duration_days" name="duration_days" value="{{ old('duration_days') }}" 
                            min="1" max="365"
                            class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent" 
                            placeholder="e.g., 30" required>
-                    <p class="text-xs text-gray-500 mt-1">Enter the number of days for the course (1-365 days)</p>
+                    <p class="text-xs text-gray-500 mt-1">{{ __('trans.enter_number_days_course') }}</p>
                     @error('duration_days')
                         <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
                     @enderror
@@ -145,14 +145,14 @@
 
                 <!-- Description -->
                 <div class="md:col-span-2">
-                    <label for="description" class="block text-sm font-medium text-gray-700 mb-2">Course Description *</label>
+                    <label for="description" class="block text-sm font-medium text-gray-700 mb-2">{{ __('trans.course_description') }} *</label>
                     <textarea id="description" name="description" rows="6" 
                               maxlength="5000"
                               class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent" 
-                              placeholder="Describe your course, what students will learn, prerequisites, and what makes it unique..." required
+                              placeholder="{{ __('trans.describe_course_placeholder') }}" required
                               oninput="updateCharacterCount('description', 'description-count', 5000)">{{ old('description') }}</textarea>
                     <p class="text-xs text-gray-500 mt-1">
-                        <span id="description-count">0</span>/5,000 characters
+                        <span id="description-count">0</span>/5,000 {{ __('trans.characters') }}
                     </p>
                     @error('description')
                         <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
@@ -163,23 +163,23 @@
 
         <!-- Course Images -->
         <div class="bg-white rounded-xl shadow-sm border border-gray-100 p-6">
-            <h2 class="text-lg font-semibold text-gray-900 mb-6">Course Image</h2>
+            <h2 class="text-lg font-semibold text-gray-900 mb-6">{{ __('trans.course_image') }}</h2>
             
             <div class="grid grid-cols-1 gap-6">
                 <!-- Course Image -->
                 <div>
-                    <label for="course_image" class="block text-sm font-medium text-gray-700 mb-2">Course Image *</label>
+                    <label for="course_image" class="block text-sm font-medium text-gray-700 mb-2">{{ __('trans.course_image') }} *</label>
                     <div class="mt-1 flex justify-center px-6 pt-5 pb-6 border-2 border-gray-300 border-dashed rounded-lg hover:border-purple-400 transition-colors">
                         <div class="space-y-1 text-center">
                             <div class="flex text-sm text-gray-600 justify-center items-center">
                                 <label for="course_image" class="relative cursor-pointer bg-white rounded-md font-medium text-purple-600 hover:text-purple-500 focus-within:outline-none focus-within:ring-2 focus-within:ring-offset-2 focus-within:ring-purple-500">
-                                    <span>Upload course image</span>
+                                    <span>{{ __('trans.upload_course_image') }}</span>
                                     <input id="course_image" name="course_image" type="file" class="sr-only" accept="image/*" onchange="previewImage(this, 'course-image-preview')" required>
                                 </label>
-                                <p class="pl-1">or drag and drop</p>
+                                <p class="pl-1">{{ __('trans.or_drag_and_drop') }}</p>
                             </div>
-                            <p class="text-xs text-gray-500">PNG, JPG, GIF up to 2MB</p>
-                            <p class="text-xs text-gray-400">This image will be used as cover photo and automatically resized for thumbnail</p>
+                            <p class="text-xs text-gray-500">{{ __('trans.png_jpg_gif_up_to_2mb') }}</p>
+                            <p class="text-xs text-gray-400">{{ __('trans.image_cover_photo_thumbnail') }}</p>
                             <div id="course-image-preview" class="mt-4"></div>
                         </div>
                     </div>
@@ -195,12 +195,12 @@
             <div class="flex items-center justify-between">
                 <a href="{{ route('mentor.courses.index') }}" class="text-gray-600 hover:text-gray-800 font-medium">
                     <i class="fa-solid fa-arrow-left mr-2"></i>
-                    Cancel
+                    {{ __('trans.cancel') }}
                 </a>
                 
                 <button type="submit" class="bg-purple-600 hover:bg-purple-700 text-white px-6 py-3 rounded-lg font-medium transition-colors">
                     <i class="fa-solid fa-paper-plane mr-2"></i>
-                    Submit for Review
+                    {{ __('trans.submit_for_review') }}
                 </button>
             </div>
         </div>
@@ -426,10 +426,10 @@ function updateSubCategories() {
                 dropdown.appendChild(optionDiv);
             });
         } else {
-            dropdown.innerHTML = '<div class="text-center py-4 text-sm text-gray-500">No sub-categories available for this category</div>';
+            dropdown.innerHTML = '<div class="text-center py-4 text-sm text-gray-500">{{ __('trans.no_sub_categories_available') }}</div>';
         }
     } else {
-        dropdown.innerHTML = '<div class="text-center py-4 text-sm text-gray-500">Please select a category first</div>';
+        dropdown.innerHTML = '<div class="text-center py-4 text-sm text-gray-500">{{ __('trans.please_select_category_first') }}</div>';
     }
 }
 
@@ -483,7 +483,7 @@ function updateSelectedDisplay() {
         if (selectedSubCategories.length > 3) {
             const countBadge = document.createElement('span');
             countBadge.className = 'text-xs text-gray-500';
-            countBadge.textContent = `+${selectedSubCategories.length - 3} more`;
+            countBadge.textContent = `+${selectedSubCategories.length - 3} {{ __('trans.more') }}`;
             container.appendChild(countBadge);
         }
     }

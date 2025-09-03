@@ -1,9 +1,9 @@
 @extends('admin.layouts.backend')
 
-@section('title', 'Mentor Sessions')
+@section('title', __('trans.mentor_sessions'))
 
 @section('header')
-    Mentor Sessions
+    {{ __('trans.mentor_sessions') }}
 @endsection
 
 @section('content')
@@ -11,17 +11,17 @@
     <!-- Page Header -->
     <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
         <div>
-            <h1 class="text-2xl font-bold text-gray-900">Mentor Sessions</h1>
-            <p class="text-gray-600 mt-1">All sessions created by {{ $user->name }}</p>
+            <h1 class="text-2xl font-bold text-gray-900">{{ __('trans.mentor_sessions') }}</h1>
+            <p class="text-gray-600 mt-1">{{ __('trans.all_sessions_created_by') }} {{ $user->name }}</p>
         </div>
         <div class="flex items-center gap-3">
             <a href="{{ route('admin.mentors.show', $user->id) }}" 
                class="px-4 py-2 bg-gray-100 text-gray-700 rounded-lg hover:bg-gray-200 transition-colors duration-200">
                 <i class="fa-solid fa-arrow-left mr-2"></i>
-                Back to Mentor
+                {{ __('trans.back_to_mentor') }}
             </a>
             <span class="text-sm text-gray-500">
-                Total: <span class="font-semibold">{{ $sessions->total() }}</span> sessions
+                {{ __('trans.total') }} <span class="font-semibold">{{ $sessions->total() }}</span> {{ __('trans.sessions') }}
             </span>
         </div>
     </div>
@@ -33,22 +33,22 @@
                 <thead class="bg-gray-50">
                     <tr>
                         <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                            Session
+                            {{ __('trans.session') }}
                         </th>
                         <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                            Category
+                            {{ __('trans.category') }}
                         </th>
                         <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                            Date & Time
+                            {{ __('trans.date_time') }}
                         </th>
                         <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                            fee
+                            {{ __('trans.fee') }}
                         </th>
                         <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                            Status
+                            {{ __('trans.status') }}
                         </th>
                         <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                            Created
+                            {{ __('trans.created') }}
                         </th>
                     </tr>
                 </thead>
@@ -80,7 +80,7 @@
                                     {{ $session->category->name }}
                                 </span>
                             @else
-                                <span class="text-gray-400">No Category</span>
+                                <span class="text-gray-400">{{ __('trans.no_category') }}</span>
                             @endif
                         </td>
                         <td class="px-6 py-4 whitespace-nowrap">
@@ -93,7 +93,7 @@
                                     </div>
                                 </div>
                             @else
-                                <span class="text-gray-400">Not Scheduled</span>
+                                <span class="text-gray-400">{{ __('trans.not_scheduled') }}</span>
                             @endif
                         </td>
                         <td class="px-6 py-4 whitespace-nowrap">
@@ -112,25 +112,25 @@
                                 @case('available')
                                     <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-green-100 text-green-800">
                                         <i class="fa-solid fa-check mr-1"></i>
-                                        Available
+                                        {{ __('trans.available') }}
                                     </span>
                                     @break
                                 @case('booked')
                                     <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-blue-100 text-blue-800">
                                         <i class="fa-solid fa-calendar-check mr-1"></i>
-                                        Booked
+                                        {{ __('trans.booked') }}
                                     </span>
                                     @break
                                 @case('completed')
                                     <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-purple-100 text-purple-800">
                                         <i class="fa-solid fa-check-circle mr-1"></i>
-                                        Completed
+                                        {{ __('trans.completed') }}
                                     </span>
                                     @break
                                 @case('cancelled')
                                     <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-red-100 text-red-800">
                                         <i class="fa-solid fa-times-circle mr-1"></i>
-                                        Cancelled
+                                        {{ __('trans.cancelled') }}
                                     </span>
                                     @break
                                 @default
@@ -148,8 +148,8 @@
                         <td colspan="6" class="px-6 py-12 text-center text-gray-500">
                             <div class="flex flex-col items-center">
                                 <i class="fa-solid fa-clock text-4xl text-gray-300 mb-3"></i>
-                                <p class="text-lg font-medium">No sessions found</p>
-                                <p class="text-sm">This mentor hasn't created any sessions yet</p>
+                                <p class="text-lg font-medium">{{ __('trans.no_sessions_found') }}</p>
+                                <p class="text-sm">{{ __('trans.mentor_no_sessions_yet') }}</p>
                             </div>
                         </td>
                     </tr>
@@ -165,13 +165,13 @@
                 <!-- Pagination Details - Left Aligned -->
                 <div class="text-sm text-gray-700">
                     <p>
-                        Showing
+                        {{ __('trans.showing') }}
                         <span class="font-medium">{{ $sessions->firstItem() ?? 0 }}</span>
-                        to
+                        {{ __('trans.to') }}
                         <span class="font-medium">{{ $sessions->lastItem() ?? 0 }}</span>
-                        of
+                        {{ __('trans.of') }}
                         <span class="font-medium">{{ $sessions->total() }}</span>
-                        sessions
+                        {{ __('trans.sessions') }}
                     </p>
                 </div>
 

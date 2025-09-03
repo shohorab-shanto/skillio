@@ -1,9 +1,9 @@
 @extends('admin.layouts.backend')
 
-@section('title', 'Course Details')
+@section('title', __('trans.course_details'))
 
 @section('header')
-    Course Details
+    {{ __('trans.course_details') }}
 @endsection
 
 @section('content')
@@ -11,14 +11,14 @@
     <!-- Page Header -->
     <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
         <div>
-            <h1 class="text-2xl font-bold text-gray-900">Course Information</h1>
+            <h1 class="text-2xl font-bold text-gray-900">{{ __('trans.course_information') }}</h1>
             <p class="text-gray-600 mt-1">{{ $course->title }}</p>
         </div>
         <div class="flex items-center gap-3">
             <a href="{{ route('admin.courses.index') }}" 
                class="px-4 py-2 bg-gray-100 text-gray-700 rounded-lg hover:bg-gray-200 transition-colors duration-200">
                 <i class="fa-solid fa-arrow-left mr-2"></i>
-                Back to Courses
+                {{ __('trans.back_to_courses') }}
             </a>
             
             <!-- Course Action Buttons -->
@@ -26,25 +26,25 @@
                 <button onclick="approveCourse({{ $course->id }})" 
                         class="px-4 py-2 bg-green-600 text-white rounded-lg hover:bg-green-700 transition-colors duration-200">
                     <i class="fa-solid fa-check mr-2"></i>
-                    Approve Course
+                    {{ __('trans.approve_course') }}
                 </button>
                 
                 <button onclick="showRejectModal({{ $course->id }})" 
                         class="px-4 py-2 bg-red-600 text-white rounded-lg hover:bg-red-700 transition-colors duration-200">
                     <i class="fa-solid fa-times mr-2"></i>
-                    Reject Course
+                    {{ __('trans.reject_course') }}
                 </button>
             @elseif($course->status == 'approved')
                 <button onclick="toggleCourseStatus({{ $course->id }})" 
                         class="px-4 py-2 bg-yellow-600 text-white rounded-lg hover:bg-yellow-700 transition-colors duration-200">
                     <i class="fa-solid fa-pause mr-2"></i>
-                    Pause Course
+                    {{ __('trans.pause_course') }}
                 </button>
             @elseif($course->status == 'rejected')
                 <button onclick="approveCourse({{ $course->id }})" 
                         class="px-4 py-2 bg-green-600 text-white rounded-lg hover:bg-green-700 transition-colors duration-200">
                     <i class="fa-solid fa-check mr-2"></i>
-                    Approve Course
+                    {{ __('trans.approve_course') }}
                 </button>
             @endif
 
@@ -53,7 +53,7 @@
                 <button onclick="toggleFeatured({{ $course->id }})" 
                         class="px-4 py-2 {{ $course->isFeatured() ? 'bg-yellow-600 hover:bg-yellow-700' : 'bg-purple-600 hover:bg-purple-700' }} text-white rounded-lg transition-colors duration-200">
                     <i class="fa-solid {{ $course->isFeatured() ? 'fa-star' : 'fa-star-half-stroke' }} mr-2"></i>
-                    {{ $course->isFeatured() ? 'Remove Featured' : 'Make Featured' }}
+                    {{ $course->isFeatured() ? __('trans.remove_featured') : __('trans.make_featured') }}
                 </button>
             @endif
         </div>
@@ -83,19 +83,19 @@
                         @case('approved')
                             <span class="inline-flex items-center px-3 py-1 rounded-full text-sm font-medium bg-green-100 text-green-800">
                                 <i class="fa-solid fa-check mr-1"></i>
-                                Approved
+                                {{ __('trans.approved') }}
                             </span>
                             @break
                         @case('pending')
                             <span class="inline-flex items-center px-3 py-1 rounded-full text-sm font-medium bg-yellow-100 text-yellow-800">
                                 <i class="fa-solid fa-clock mr-1"></i>
-                                Pending
+                                {{ __('trans.pending') }}
                             </span>
                             @break
                         @case('rejected')
                             <span class="inline-flex items-center px-3 py-1 rounded-full text-sm font-medium bg-red-100 text-red-800">
                                 <i class="fa-solid fa-times mr-1"></i>
-                                Rejected
+                                {{ __('trans.rejected') }}
                             </span>
                             @break
                     @endswitch
@@ -103,36 +103,36 @@
                     @if($course->isFeatured())
                         <span class="inline-flex items-center px-3 py-1 rounded-full text-sm font-medium bg-yellow-100 text-yellow-800">
                             <i class="fa-solid fa-star mr-1"></i>
-                            Featured
+                            {{ __('trans.featured') }}
                         </span>
                     @endif
                 </div>
 
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
                     <div>
-                        <p class="text-gray-600"><strong>Price:</strong> ${{ number_format($course->price, 2) }}</p>
+                        <p class="text-gray-600"><strong>{{ __('trans.price') }}:</strong> ${{ number_format($course->price, 2) }}</p>
                         @if($course->discount > 0)
-                            <p class="text-gray-600"><strong>Discount:</strong> {{ number_format($course->discount, 0) }}%</p>
-                            <p class="text-gray-600"><strong>Final Price:</strong> ${{ number_format($course->price - ($course->price * $course->discount / 100), 2) }}</p>
+                            <p class="text-gray-600"><strong>{{ __('trans.discount') }}:</strong> {{ number_format($course->discount, 0) }}%</p>
+                            <p class="text-gray-600"><strong>{{ __('trans.final_price') }}:</strong> ${{ number_format($course->price - ($course->price * $course->discount / 100), 2) }}</p>
                         @endif
-                        <p class="text-gray-600"><strong>Duration:</strong> {{ $course->duration_days }} {{ Str::plural('day', $course->duration_days) }}</p>
+                        <p class="text-gray-600"><strong>{{ __('trans.duration') }}:</strong> {{ $course->duration_days }} {{ Str::plural(__('trans.day'), $course->duration_days) }}</p>
                     </div>
                     <div>
-                        <p class="text-gray-600"><strong>Category:</strong> {{ $course->category->name ?? 'N/A' }}</p>
-                        <p class="text-gray-600"><strong>Sub-Categories:</strong> 
+                        <p class="text-gray-600"><strong>{{ __('trans.category') }}:</strong> {{ $course->category->name ?? __('trans.na') }}</p>
+                        <p class="text-gray-600"><strong>{{ __('trans.sub_categories') }}:</strong> 
                             @if($course->subCategories->count() > 0)
                                 {{ $course->subCategories->pluck('name')->implode(', ') }}
                             @else
-                                N/A
+                                {{ __('trans.na') }}
                             @endif
                         </p>
-                        <p class="text-gray-600"><strong>Created:</strong> {{ $course->created_at->format('M d, Y') }}</p>
+                        <p class="text-gray-600"><strong>{{ __('trans.created') }}:</strong> {{ $course->created_at->format('M d, Y') }}</p>
                     </div>
                 </div>
 
                 @if($course->rejection_reason)
                 <div class="mt-4 p-4 bg-red-50 border border-red-200 rounded-lg">
-                    <h4 class="text-sm font-medium text-red-800 mb-2">Rejection Reason:</h4>
+                    <h4 class="text-sm font-medium text-red-800 mb-2">{{ __('trans.rejection_reason') }}</h4>
                     <p class="text-sm text-red-700">{{ $course->rejection_reason }}</p>
                 </div>
                 @endif
@@ -141,7 +141,7 @@
 
         <!-- Course Description -->
         <div class="mt-6 pt-6 border-t border-gray-200">
-            <h3 class="text-lg font-semibold text-gray-900 mb-3">Description</h3>
+            <h3 class="text-lg font-semibold text-gray-900 mb-3">{{ __('trans.description') }}</h3>
             <div class="text-gray-700 leading-relaxed">{!! nl2br(e($course->description)) !!}</div>
         </div>
     </div>
@@ -152,7 +152,7 @@
         <div class="bg-white rounded-xl shadow-lg p-6">
             <div class="flex items-center justify-between">
                 <div>
-                    <p class="text-sm text-gray-600">Total Students</p>
+                    <p class="text-sm text-gray-600">{{ __('trans.total_students') }}</p>
                     <p class="text-2xl font-bold text-gray-900">{{ $course->enrolledStudentsCount() }}</p>
                 </div>
                 <div class="w-12 h-12 bg-blue-100 rounded-lg flex items-center justify-center">
@@ -165,7 +165,7 @@
         <div class="bg-white rounded-xl shadow-lg p-6">
             <div class="flex items-center justify-between">
                 <div>
-                    <p class="text-sm text-gray-600">Average Rating</p>
+                    <p class="text-sm text-gray-600">{{ __('trans.average_rating') }}</p>
                     <p class="text-2xl font-bold text-gray-900">{{ $course->averageRating() ? number_format($course->averageRating(), 1) : '0' }}</p>
                 </div>
                 <div class="w-12 h-12 bg-yellow-100 rounded-lg flex items-center justify-center">
@@ -178,7 +178,7 @@
         <div class="bg-white rounded-xl shadow-lg p-6">
             <div class="flex items-center justify-between">
                 <div>
-                    <p class="text-sm text-gray-600">Total Reviews</p>
+                    <p class="text-sm text-gray-600">{{ __('trans.total_reviews') }}</p>
                     <p class="text-2xl font-bold text-gray-900">{{ $course->totalReviews() }}</p>
                 </div>
                 <div class="w-12 h-12 bg-purple-100 rounded-lg flex items-center justify-center">
@@ -191,7 +191,7 @@
         <div class="bg-white rounded-xl shadow-lg p-6">
             <div class="flex items-center justify-between">
                 <div>
-                    <p class="text-sm text-gray-600">Total Income</p>
+                    <p class="text-sm text-gray-600">{{ __('trans.total_income') }}</p>
                     <p class="text-2xl font-bold text-gray-900">${{ number_format($course->totalIncome(), 2) }}</p>
                 </div>
                 <div class="w-12 h-12 bg-green-100 rounded-lg flex items-center justify-center">
@@ -203,7 +203,7 @@
 
     <!-- Mentor Information -->
     <div class="bg-white rounded-xl shadow-lg p-6">
-        <h3 class="text-lg font-semibold text-gray-900 mb-4">Mentor Information</h3>
+        <h3 class="text-lg font-semibold text-gray-900 mb-4">{{ __('trans.mentor_information') }}</h3>
         @if($course->mentor && $course->mentor->user)
         <div class="flex items-center gap-4">
             <div class="flex-shrink-0">
@@ -223,7 +223,7 @@
                 <h4 class="text-lg font-medium text-gray-900">{{ $course->mentor->user->name }}</h4>
                 <p class="text-gray-600">{{ $course->mentor->user->email }}</p>
                 @if($course->mentor->work_experience)
-                    <p class="text-sm text-gray-500">{{ $course->mentor->work_experience }} years experience</p>
+                    <p class="text-sm text-gray-500">{{ $course->mentor->work_experience }} {{ __('trans.years_experience') }}</p>
                 @endif
                 @if($course->mentor->bio)
                     <p class="text-sm text-gray-600 mt-2">{{ $course->mentor->bio }}</p>
@@ -233,25 +233,25 @@
                 @if($course->mentor->verified)
                     <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-green-100 text-green-800">
                         <i class="fa-solid fa-check-circle mr-1"></i>
-                        Verified
+                        {{ __('trans.verified') }}
                     </span>
                 @else
                     <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-yellow-100 text-yellow-800">
                         <i class="fa-solid fa-clock mr-1"></i>
-                        Unverified
+                        {{ __('trans.unverified') }}
                     </span>
                 @endif
             </div>
         </div>
         @else
-        <p class="text-gray-500">Mentor information not available</p>
+        <p class="text-gray-500">{{ __('trans.mentor_information_not_available') }}</p>
         @endif
     </div>
 
     <!-- Course Reviews -->
     @if($course->reviews->count() > 0)
     <div class="bg-white rounded-xl shadow-lg p-6">
-        <h3 class="text-lg font-semibold text-gray-900 mb-4">Course Reviews</h3>
+        <h3 class="text-lg font-semibold text-gray-900 mb-4">{{ __('trans.course_reviews') }}</h3>
         <div class="space-y-4">
             @foreach($course->reviews->take(5) as $review)
             <div class="border-l-4 border-purple-500 pl-4 py-2">
@@ -276,7 +276,7 @@
         </div>
         @if($course->reviews->count() > 5)
         <div class="mt-4 text-center">
-            <p class="text-sm text-gray-500">Showing 5 of {{ $course->reviews->count() }} reviews</p>
+            <p class="text-sm text-gray-500">{{ __('trans.showing_reviews') }} {{ $course->reviews->count() }} {{ __('trans.reviews') }}</p>
         </div>
         @endif
     </div>
@@ -293,27 +293,27 @@
                 <i class="fa-solid fa-times text-2xl text-red-600"></i>
             </div>
             <h3 class="text-xl font-semibold text-gray-900 text-center mb-2">
-                Reject Course
+                {{ __('trans.reject_course') }}
             </h3>
             <p class="text-gray-600 text-center mb-6">
-                Please provide a reason for rejecting this course.
+                {{ __('trans.provide_rejection_reason') }}
             </p>
             
             <form id="reject-form" class="space-y-4">
                 <div>
-                    <label class="block text-sm font-medium text-gray-700 mb-2">Rejection Reason</label>
+                    <label class="block text-sm font-medium text-gray-700 mb-2">{{ __('trans.rejection_reason') }}</label>
                     <textarea id="rejection-reason" rows="4" 
                               class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent"
-                              placeholder="Enter the reason for rejection..."></textarea>
+                              placeholder="{{ __('trans.enter_rejection_reason') }}"></textarea>
                 </div>
                 
                 <div class="flex space-x-3">
                     <button type="button" onclick="cancelReject()" class="flex-1 px-4 py-3 bg-gray-100 text-gray-700 rounded-xl font-medium hover:bg-gray-200 transition-colors duration-200">
-                        Cancel
+                        {{ __('trans.cancel') }}
                     </button>
                     <button type="submit" class="flex-1 px-4 py-3 bg-red-600 text-white rounded-xl font-medium hover:bg-red-700 transition-colors duration-200">
                         <i class="fa-solid fa-times mr-2"></i>
-                        Reject Course
+                        {{ __('trans.reject_course_button') }}
                     </button>
                 </div>
             </form>
@@ -330,7 +330,7 @@ function approveCourse(courseId) {
     
     // Disable button and show loading
     button.disabled = true;
-    button.textContent = 'Approving...';
+    button.textContent = '{{ __('trans.approving') }}';
     
     fetch(`/admin/courses/${courseId}/approve`, {
         method: 'PATCH',
@@ -350,7 +350,7 @@ function approveCourse(courseId) {
     })
     .catch(error => {
         console.error('Error:', error);
-        showNotification('An error occurred while approving the course', 'error');
+        showNotification('{{ __('trans.an_error_occurred_approving') }}', 'error');
     })
     .finally(() => {
         button.disabled = false;
@@ -389,7 +389,7 @@ function toggleFeatured(courseId) {
     
     // Disable button and show loading
     button.disabled = true;
-    button.textContent = 'Updating...';
+    button.textContent = '{{ __('trans.updating') }}';
     
     fetch(`/admin/courses/${courseId}/toggle-featured`, {
         method: 'PATCH',
@@ -410,7 +410,7 @@ function toggleFeatured(courseId) {
     })
     .catch(error => {
         console.error('Error:', error);
-        showNotification('An error occurred while updating featured status', 'error');
+        showNotification('{{ __('trans.an_error_occurred_updating_featured') }}', 'error');
     })
     .finally(() => {
         button.disabled = false;
@@ -424,7 +424,7 @@ function toggleCourseStatus(courseId) {
     
     // Disable button and show loading
     button.disabled = true;
-    button.textContent = 'Updating...';
+    button.textContent = '{{ __('trans.updating') }}';
     
     fetch(`/admin/courses/${courseId}/toggle-status`, {
         method: 'PATCH',
@@ -444,7 +444,7 @@ function toggleCourseStatus(courseId) {
     })
     .catch(error => {
         console.error('Error:', error);
-        showNotification('An error occurred while updating course status', 'error');
+        showNotification('{{ __('trans.an_error_occurred_updating_status') }}', 'error');
     })
     .finally(() => {
         button.disabled = false;
@@ -459,7 +459,7 @@ document.getElementById('reject-form').addEventListener('submit', function(e) {
     const rejectionReason = document.getElementById('rejection-reason').value.trim();
     
     if (!rejectionReason) {
-        showNotification('Please provide a rejection reason', 'error');
+        showNotification('{{ __('trans.please_provide_rejection_reason') }}', 'error');
         return;
     }
     
@@ -488,7 +488,7 @@ document.getElementById('reject-form').addEventListener('submit', function(e) {
     })
     .catch(error => {
         console.error('Error:', error);
-        showNotification('An error occurred while rejecting the course', 'error');
+        showNotification('{{ __('trans.an_error_occurred_rejecting') }}', 'error');
     });
 });
 

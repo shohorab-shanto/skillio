@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
-    <title>{{ config('app.name', 'Laravel') }} - Admin Login</title>
+    <title>{{ config('app.name', 'Laravel') }} - {{ __('trans.admin_login_title') }}</title>
 
     <!-- Favicon -->
     <link rel="icon" type="image/x-icon" href="{{ asset('assets/images/favicon.ico') }}">
@@ -29,8 +29,8 @@
         <!-- Admin Login Card -->
         <div class="w-full sm:max-w-md px-6 py-8 bg-white shadow-lg rounded-2xl">
             <div class="text-center mb-8">
-                <h2 class="text-3xl font-bold text-gray-900 mb-2">Admin Access</h2>
-                <p class="text-gray-600">Sign in to your admin account</p>
+                <h2 class="text-3xl font-bold text-gray-900 mb-2">{{ __('trans.admin_access') }}</h2>
+                <p class="text-gray-600">{{ __('trans.sign_in_to_admin_account') }}</p>
             </div>
 
             @if ($errors->any())
@@ -65,28 +65,28 @@
                 <!-- Email -->
                 <div>
                     <label for="email" class="block text-sm font-medium text-gray-700 mb-2">
-                        Email Address
+                        {{ __('trans.email_address') }}
                     </label>
                     <input id="email" type="email" name="email" value="{{ old('email') }}" required autofocus
                            class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-purple-500 transition-colors duration-200"
-                           placeholder="Enter your email">
+                           placeholder="{{ __('trans.enter_your_email') }}">
                 </div>
 
                 <!-- Password -->
                 <div>
                     <label for="password" class="block text-sm font-medium text-gray-700 mb-2">
-                        Password
+                        {{ __('trans.password') }}
                     </label>
                     <input id="password" type="password" name="password" required
                            class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-purple-500 transition-colors duration-200"
-                           placeholder="Enter your password">
+                           placeholder="{{ __('trans.enter_your_password') }}">
                 </div>
 
                 <!-- Submit Button -->
                 <div>
                     <button type="submit"
                             class="w-full bg-purple-600 hover:bg-purple-700 text-white font-semibold py-3 px-4 rounded-lg transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-purple-500 focus:ring-offset-2">
-                        Sign In
+                        {{ __('trans.sign_in') }}
                     </button>
                 </div>
             </form>
@@ -94,14 +94,14 @@
             <!-- Back to Home -->
             <div class="mt-6 text-center">
                 <a href="{{ route('home') }}" class="text-sm text-purple-600 hover:text-purple-700 transition-colors duration-200">
-                    ← Back to Home
+                    {{ __('trans.back_to_home') }}
                 </a>
             </div>
         </div>
 
         <!-- Footer -->
         <div class="mt-8 text-center text-sm text-gray-500">
-            <p>&copy; {{ date('Y') }} {{ config('app.name', 'Skillio') }}. All rights reserved.</p>
+            <p>&copy; {{ date('Y') }} {{ config('app.name', 'Skillio') }}. {{ __('trans.all_rights_reserved') }}</p>
         </div>
     </div>
 </body>

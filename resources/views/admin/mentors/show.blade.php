@@ -1,9 +1,9 @@
 @extends('admin.layouts.backend')
 
-@section('title', 'Mentor Details')
+@section('title', __('trans.mentor_details'))
 
 @section('header')
-    Mentor Details
+    {{ __('trans.mentor_details') }}
 @endsection
 
 @section('content')
@@ -13,7 +13,7 @@
         <a href="{{ route('admin.mentors.index') }}" 
            class="px-4 py-2 bg-gray-100 text-gray-700 rounded-lg hover:bg-gray-200 transition-colors duration-200">
             <i class="fa-solid fa-arrow-left mr-2"></i>
-            Back to Mentors
+            {{ __('trans.back_to_mentors') }}
         </a>
     </div>
 
@@ -42,37 +42,37 @@
                     @if($mentor->verified)
                         <span class="inline-flex items-center px-3 py-1 rounded-full text-sm font-medium bg-green-100 text-green-800">
                             <i class="fa-solid fa-check-circle mr-1"></i>
-                            Verified
+                            {{ __('trans.verified') }}
                         </span>
                     @else
                         <span class="inline-flex items-center px-3 py-1 rounded-full text-sm font-medium bg-yellow-100 text-yellow-800">
                             <i class="fa-solid fa-clock mr-1"></i>
-                            Unverified
+                            {{ __('trans.unverified') }}
                         </span>
                     @endif
                 </div>
 
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
                     <div>
-                        <p class="text-gray-600"><strong>Email:</strong> {{ $user->email }}</p>
-                        <p class="text-gray-600"><strong>User ID:</strong> {{ $user->id }}</p>
-                        <p class="text-gray-600"><strong>Joined:</strong> {{ $user->created_at->format('M d, Y') }}</p>
+                        <p class="text-gray-600"><strong>{{ __('trans.email') }}</strong> {{ $user->email }}</p>
+                        <p class="text-gray-600"><strong>{{ __('trans.user_id') }}</strong> {{ $user->id }}</p>
+                        <p class="text-gray-600"><strong>{{ __('trans.joined') }}</strong> {{ $user->created_at->format('M d, Y') }}</p>
                     </div>
                     <div>
-                        <p class="text-gray-600"><strong>Work Experience:</strong> {{ $mentor->work_experience ?? 'N/A' }} years</p>
-                        <p class="text-gray-600"><strong>Type:</strong> {{ ucfirst($mentor->type ?? 'Standard') }}</p>
-                        <p class="text-gray-600"><strong>Availability:</strong> 
+                        <p class="text-gray-600"><strong>{{ __('trans.work_experience') }}</strong> {{ $mentor->work_experience ?? __('trans.na') }} {{ __('trans.years') }}</p>
+                        <p class="text-gray-600"><strong>{{ __('trans.type') }}</strong> {{ ucfirst($mentor->type ?? __('trans.standard')) }}</p>
+                        <p class="text-gray-600"><strong>{{ __('trans.availability') }}</strong> 
                             @if($mentor->availability == 'available')
-                                <span class="text-green-600 font-medium">Available</span>
+                                <span class="text-green-600 font-medium">{{ __('trans.available') }}</span>
                             @else
-                                <span class="text-red-600 font-medium">Unavailable</span>
+                                <span class="text-red-600 font-medium">{{ __('trans.unavailable') }}</span>
                             @endif
                         </p>
-                        <p class="text-gray-600"><strong>Stripe Account:</strong> 
+                        <p class="text-gray-600"><strong>{{ __('trans.stripe_account') }}</strong> 
                             @if($mentor->hasStripeConnectAccount())
-                                <span class="text-green-600">Connected</span>
+                                <span class="text-green-600">{{ __('trans.connected') }}</span>
                             @else
-                                <span class="text-red-600">Not Connected</span>
+                                <span class="text-red-600">{{ __('trans.not_connected') }}</span>
                             @endif
                         </p>
                     </div>
@@ -83,7 +83,7 @@
         <!-- Bio Section -->
         @if($mentor->bio)
         <div class="mt-6 pt-6 border-t border-gray-200">
-            <h3 class="text-lg font-semibold text-gray-900 mb-3">Biography</h3>
+            <h3 class="text-lg font-semibold text-gray-900 mb-3">{{ __('trans.biography') }}</h3>
             <p class="text-gray-700 leading-relaxed">{{ $mentor->bio }}</p>
         </div>
         @endif
@@ -91,7 +91,7 @@
         <!-- Certifications Section -->
         @if($mentor->certifications && is_array($mentor->certifications) && count($mentor->certifications) > 0)
         <div class="mt-6 pt-6 border-t border-gray-200">
-            <h3 class="text-lg font-semibold text-gray-900 mb-3">Certifications</h3>
+            <h3 class="text-lg font-semibold text-gray-900 mb-3">{{ __('trans.certifications') }}</h3>
             <div class="flex flex-wrap gap-2">
                 @foreach($mentor->certifications as $certification)
                     <span class="inline-flex items-center px-3 py-1 rounded-full text-sm font-medium bg-blue-100 text-blue-800">
@@ -110,7 +110,7 @@
         <div class="bg-white rounded-xl shadow-lg p-6">
             <div class="flex items-center justify-between">
                 <div>
-                    <p class="text-sm text-gray-600">Total Courses</p>
+                    <p class="text-sm text-gray-600">{{ __('trans.total_courses') }}</p>
                     <p class="text-2xl font-bold text-gray-900">{{ $mentor->totalCourses() }}</p>
                 </div>
                 <div class="w-12 h-12 bg-blue-100 rounded-lg flex items-center justify-center">
@@ -123,7 +123,7 @@
         <div class="bg-white rounded-xl shadow-lg p-6">
             <div class="flex items-center justify-between">
                 <div>
-                    <p class="text-sm text-gray-600">Total Sessions</p>
+                    <p class="text-sm text-gray-600">{{ __('trans.total_sessions') }}</p>
                     <p class="text-2xl font-bold text-gray-900">{{ $mentor->sessionBookings()->count() }}</p>
                 </div>
                 <div class="w-12 h-12 bg-green-100 rounded-lg flex items-center justify-center">
@@ -136,7 +136,7 @@
         <div class="bg-white rounded-xl shadow-lg p-6">
             <div class="flex items-center justify-between">
                 <div>
-                    <p class="text-sm text-gray-600">Average Rating</p>
+                    <p class="text-sm text-gray-600">{{ __('trans.average_rating') }}</p>
                     <p class="text-2xl font-bold text-gray-900">{{ $mentor->getFormattedAverageRatingAttribute() }}</p>
                 </div>
                 <div class="w-12 h-12 bg-yellow-100 rounded-lg flex items-center justify-center">
@@ -149,7 +149,7 @@
         <div class="bg-white rounded-xl shadow-lg p-6">
             <div class="flex items-center justify-between">
                 <div>
-                    <p class="text-sm text-gray-600">Total Reviews</p>
+                    <p class="text-sm text-gray-600">{{ __('trans.total_reviews') }}</p>
                     <p class="text-2xl font-bold text-gray-900">{{ $mentor->totalReviews() }}</p>
                 </div>
                 <div class="w-12 h-12 bg-purple-100 rounded-lg flex items-center justify-center">
@@ -161,36 +161,36 @@
 
     <!-- Quick Actions -->
     <div class="bg-white rounded-xl shadow-lg p-6">
-        <h3 class="text-lg font-semibold text-gray-900 mb-4">Quick Actions</h3>
+        <h3 class="text-lg font-semibold text-gray-900 mb-4">{{ __('trans.quick_actions') }}</h3>
         <div class="flex flex-wrap gap-3">
             <a href="{{ route('admin.mentors.courses', $user->id) }}" 
                class="px-6 py-3 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors duration-200">
                 <i class="fa-solid fa-book mr-2"></i>
-                View Courses
+                {{ __('trans.view_courses') }}
             </a>
             
             <a href="{{ route('admin.mentors.sessions', $user->id) }}" 
                class="px-6 py-3 bg-green-600 text-white rounded-lg hover:bg-green-700 transition-colors duration-200">
                 <i class="fa-solid fa-clock mr-2"></i>
-                View Sessions
+                {{ __('trans.view_sessions') }}
             </a>
             
             <button onclick="toggleVerification({{ $user->id }}, {{ $mentor->verified ? 'true' : 'false' }})" 
                     class="px-6 py-3 rounded-lg transition-colors duration-200 {{ $mentor->verified ? 'bg-red-600 hover:bg-red-700' : 'bg-green-600 hover:bg-green-700' }} text-white">
                 <i class="fa-solid {{ $mentor->verified ? 'fa-times-circle' : 'fa-check-circle' }} mr-2"></i>
-                {{ $mentor->verified ? 'Unverify' : 'Verify' }}
+                {{ $mentor->verified ? __('trans.unverify') : __('trans.verify') }}
             </button>
             
             <button onclick="showAccountDetailsModal()" 
                     class="px-6 py-3 bg-purple-600 text-white rounded-lg hover:bg-purple-700 transition-colors duration-200">
                 <i class="fa-solid fa-credit-card mr-2"></i>
-                Stripe Connect
+                {{ __('trans.stripe_connect') }}
             </button>
             
             <button onclick="showAvailabilityModal({{ $user->id }}, '{{ $mentor->availability }}')" 
                     class="px-6 py-3 bg-orange-600 text-white rounded-lg hover:bg-orange-700 transition-colors duration-200">
                 <i class="fa-solid fa-edit mr-2"></i>
-                Update Availability
+                {{ __('trans.update_availability') }}
             </button>
         </div>
     </div>
@@ -198,7 +198,7 @@
     <!-- Recent Reviews -->
     @if($mentor->recentReviews()->count() > 0)
     <div class="bg-white rounded-xl shadow-lg p-6">
-        <h3 class="text-lg font-semibold text-gray-900 mb-4">Recent Reviews</h3>
+        <h3 class="text-lg font-semibold text-gray-900 mb-4">{{ __('trans.recent_reviews') }}</h3>
         <div class="space-y-4">
             @foreach($mentor->recentReviews()->get() as $review)
             <div class="border-l-4 border-purple-500 pl-4 py-2">
@@ -224,11 +224,11 @@
     </div>
     @else
     <div class="bg-white rounded-xl shadow-lg p-6">
-        <h3 class="text-lg font-semibold text-gray-900 mb-4">Recent Reviews</h3>
+        <h3 class="text-lg font-semibold text-gray-900 mb-4">{{ __('trans.recent_reviews') }}</h3>
         <div class="text-center py-8">
             <i class="fa-solid fa-comments text-4xl text-gray-300 mb-3"></i>
-            <p class="text-gray-500">No reviews yet</p>
-            <p class="text-sm text-gray-400">This mentor hasn't received any reviews</p>
+            <p class="text-gray-500">{{ __('trans.no_reviews_yet') }}</p>
+            <p class="text-sm text-gray-400">{{ __('trans.mentor_no_reviews') }}</p>
         </div>
     </div>
     @endif
@@ -242,28 +242,28 @@
                 <i class="fa-solid fa-clock text-2xl text-orange-600"></i>
             </div>
             <h3 class="text-xl font-semibold text-gray-900 text-center mb-2">
-                Toggle Availability
+                {{ __('trans.toggle_availability') }}
             </h3>
             <p class="text-gray-600 text-center mb-6">
-                Switch between available and unavailable status.
+                {{ __('trans.switch_availability_status') }}
             </p>
             
             <form id="availability-form" class="space-y-4">
                 <div>
-                    <label class="block text-sm font-medium text-gray-700 mb-2">Set Status To</label>
+                    <label class="block text-sm font-medium text-gray-700 mb-2">{{ __('trans.set_status_to') }}</label>
                     <select id="availability-select" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent">
-                        <option value="available">Available</option>
-                        <option value="unavailable">Unavailable</option>
+                        <option value="available">{{ __('trans.available') }}</option>
+                        <option value="unavailable">{{ __('trans.unavailable') }}</option>
                     </select>
                 </div>
                 
                 <div class="flex space-x-3">
                     <button type="button" onclick="cancelAvailabilityUpdate()" class="flex-1 px-4 py-3 bg-gray-100 text-gray-700 rounded-xl font-medium hover:bg-gray-200 transition-colors duration-200">
-                        Cancel
+                        {{ __('trans.cancel') }}
                     </button>
                     <button type="submit" class="flex-1 px-4 py-3 bg-orange-600 text-white rounded-xl font-medium hover:bg-orange-700 transition-colors duration-200">
                         <i class="fa-solid fa-update mr-2"></i>
-                        Update
+                        {{ __('trans.update') }}
                     </button>
                 </div>
             </form>
@@ -279,10 +279,10 @@
                 <i class="fa-solid fa-user-cog text-2xl text-purple-600"></i>
             </div>
             <h3 class="text-xl font-semibold text-gray-900 text-center mb-2">
-                Stripe Connect Account
+                {{ __('trans.stripe_connect_account') }}
             </h3>
             <p class="text-gray-600 text-center mb-6">
-                Manage mentor's Stripe Connect account for payment processing.
+                {{ __('trans.manage_stripe_connect') }}
             </p>
             
             <form id="account-details-form" class="space-y-4">
@@ -293,10 +293,10 @@
 
                 <!-- Stripe Connect Information -->
                 <div class="border-t border-gray-200 pt-4">
-                    <h4 class="text-lg font-medium text-gray-900 mb-3">Stripe Connect Account</h4>
+                    <h4 class="text-lg font-medium text-gray-900 mb-3">{{ __('trans.stripe_connect_account') }}</h4>
                     <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
                         <div>
-                            <label class="block text-sm font-medium text-gray-700 mb-2">Connect Account ID</label>
+                            <label class="block text-sm font-medium text-gray-700 mb-2">{{ __('trans.connect_account_id') }}</label>
                             <input type="text" name="stripe_connect_account_id" value="{{ $mentor->stripe_connect_account_id ?? '' }}" 
                                    placeholder="acct_..." 
                                    class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent">
@@ -304,12 +304,12 @@
                         </div>
                         
                         <div>
-                            <label class="block text-sm font-medium text-gray-700 mb-2">Account Status</label>
+                            <label class="block text-sm font-medium text-gray-700 mb-2">{{ __('trans.account_status') }}</label>
                             <select name="connect_account_status" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent">
-                                <option value="pending" {{ ($mentor->connect_account_status ?? 'pending') == 'pending' ? 'selected' : '' }}>Pending</option>
-                                <option value="active" {{ ($mentor->connect_account_status ?? 'pending') == 'active' ? 'selected' : '' }}>Active</option>
-                                <option value="rejected" {{ ($mentor->connect_account_status ?? 'pending') == 'rejected' ? 'selected' : '' }}>Rejected</option>
-                                <option value="restricted" {{ ($mentor->connect_account_status ?? 'pending') == 'restricted' ? 'selected' : '' }}>Restricted</option>
+                                <option value="pending" {{ ($mentor->connect_account_status ?? 'pending') == 'pending' ? 'selected' : '' }}>{{ __('trans.pending') }}</option>
+                                <option value="active" {{ ($mentor->connect_account_status ?? 'pending') == 'active' ? 'selected' : '' }}>{{ __('trans.active') }}</option>
+                                <option value="rejected" {{ ($mentor->connect_account_status ?? 'pending') == 'rejected' ? 'selected' : '' }}>{{ __('trans.rejected') }}</option>
+                                <option value="restricted" {{ ($mentor->connect_account_status ?? 'pending') == 'restricted' ? 'selected' : '' }}>{{ __('trans.restricted') }}</option>
                             </select>
                         </div>
                     </div>
@@ -321,11 +321,11 @@
                 
                 <div class="flex space-x-3 pt-4">
                     <button type="button" onclick="cancelAccountDetailsUpdate()" class="flex-1 px-4 py-3 bg-gray-100 text-gray-700 rounded-xl font-medium hover:bg-gray-200 transition-colors duration-200">
-                        Cancel
+                        {{ __('trans.cancel') }}
                     </button>
                     <button type="submit" class="flex-1 px-4 py-3 bg-purple-600 text-white rounded-xl font-medium hover:bg-purple-700 transition-colors duration-200">
                         <i class="fa-solid fa-credit-card mr-2"></i>
-                        Update Stripe Connect
+                        {{ __('trans.update_stripe_connect') }}
                     </button>
                 </div>
             </form>
@@ -365,7 +365,7 @@ function toggleVerification(mentorId, currentStatus) {
     
     // Disable button and show loading
     button.disabled = true;
-    button.textContent = 'Updating...';
+    button.textContent = '{{ __('trans.updating') }}';
     
     fetch(`/admin/mentors/${mentorId}/toggle-verification`, {
         method: 'PATCH',
@@ -385,7 +385,7 @@ function toggleVerification(mentorId, currentStatus) {
     })
     .catch(error => {
         console.error('Error:', error);
-        showNotification('An error occurred while updating verification status', 'error');
+        showNotification('{{ __('trans.error_updating_verification') }}', 'error');
     })
     .finally(() => {
         button.disabled = false;
@@ -449,7 +449,7 @@ document.getElementById('availability-form').addEventListener('submit', function
     })
     .catch(error => {
         console.error('Error:', error);
-        showNotification('An error occurred while updating availability', 'error');
+        showNotification('{{ __('trans.error_updating_availability') }}', 'error');
     });
 });
 
@@ -494,7 +494,7 @@ document.getElementById('account-details-form').addEventListener('submit', funct
     
     // Disable button and show loading
     submitButton.disabled = true;
-    submitButton.innerHTML = '<i class="fa-solid fa-spinner fa-spin mr-2"></i>Updating...';
+    submitButton.innerHTML = '<i class="fa-solid fa-spinner fa-spin mr-2"></i>{{ __('trans.updating') }}';
     
     // Collect form data
     const formData = new FormData(form);
@@ -509,7 +509,7 @@ document.getElementById('account-details-form').addEventListener('submit', funct
     .then(response => response.json())
     .then(data => {
         if (data.success) {
-            showNotification('Account details updated successfully!', 'success');
+            showNotification('{{ __('trans.account_details_updated') }}', 'success');
             cancelAccountDetailsUpdate();
             
             // Reload page after a short delay to reflect changes
@@ -517,12 +517,12 @@ document.getElementById('account-details-form').addEventListener('submit', funct
                 location.reload();
             }, 1500);
         } else {
-            showNotification(data.message || 'Failed to update account details. Please try again.', 'error');
+            showNotification(data.message || '{{ __('trans.failed_update_account') }}', 'error');
         }
     })
     .catch(error => {
         console.error('Error:', error);
-        showNotification('An error occurred. Please try again.', 'error');
+        showNotification('{{ __('trans.error_occurred') }}', 'error');
     })
     .finally(() => {
         // Re-enable button and restore original text

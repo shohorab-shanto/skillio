@@ -30,7 +30,7 @@
     <!-- Back to Login -->
     <div class="mt-6 text-center">
         <a href="{{ route('login') }}" class="text-sm text-purple-600 hover:text-purple-700 transition-colors duration-200">
-            ← Back to Login
+            {{ __('trans.back_to_login') }}
         </a>
     </div>
 </x-guest-layout>

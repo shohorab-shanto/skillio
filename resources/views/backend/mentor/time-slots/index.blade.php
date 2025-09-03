@@ -1,17 +1,17 @@
 @extends('backend.layouts.app')
 
-@section('title', 'My Time Slots')
+@section('title', __('trans.my_time_slots'))
 
 @section('header')
     <div class="flex items-center justify-between">
         <div>
-            <h1 class="text-2xl font-bold text-gray-900">My Time Slots</h1>
+            <h1 class="text-2xl font-bold text-gray-900">{{ __('trans.my_time_slots') }}</h1>
         </div>
         
         <div class="flex items-center space-x-3">
             <a href="{{ route('mentor.time-slots.create') }}" class="bg-purple-600 hover:bg-purple-700 text-white px-4 py-2 rounded-lg text-sm font-medium transition-colors">
                 <i class="fa-solid fa-plus mr-2"></i>
-                Create Time Slot
+                {{ __('trans.create_time_slot') }}
             </a>
         </div>
     </div>
@@ -26,27 +26,27 @@
             
             <!-- Date From -->
             <div>
-                <label class="block text-sm font-medium text-gray-700 mb-1">From Date</label>
+                <label class="block text-sm font-medium text-gray-700 mb-1">{{ __('trans.from_date') }}</label>
                 <input type="date" name="date_from" value="{{ $request->date_from }}" 
                        class="border border-gray-300 rounded-lg px-3 py-2 text-sm focus:ring-2 focus:ring-purple-500 focus:border-transparent">
             </div>
 
             <!-- Date To -->
             <div>
-                <label class="block text-sm font-medium text-gray-700 mb-1">To Date</label>
+                <label class="block text-sm font-medium text-gray-700 mb-1">{{ __('trans.to_date') }}</label>
                 <input type="date" name="date_to" value="{{ $request->date_to }}" 
                        class="border border-gray-300 rounded-lg px-3 py-2 text-sm focus:ring-2 focus:ring-purple-500 focus:border-transparent">
             </div>
 
             <!-- Status Filter -->
             <div>
-                <label class="block text-sm font-medium text-gray-700 mb-1">Status</label>
+                <label class="block text-sm font-medium text-gray-700 mb-1">{{ __('trans.status') }}</label>
                 <select name="status" class="border border-gray-300 rounded-lg px-3 py-2 text-sm focus:ring-2 focus:ring-purple-500 focus:border-transparent bg-white text-gray-900 cursor-pointer hover:border-gray-400 transition-colors appearance-none">
-                    <option value="">All Status</option>
-                    <option value="active" {{ $request->status == 'active' ? 'selected' : '' }}>Available</option>
-                    <option value="booked" {{ $request->status == 'booked' ? 'selected' : '' }}>Booked</option>
-                    <option value="completed" {{ $request->status == 'completed' ? 'selected' : '' }}>Completed</option>
-                    <option value="cancelled" {{ $request->status == 'cancelled' ? 'selected' : '' }}>Cancelled</option>
+                    <option value="">{{ __('trans.all_status') }}</option>
+                    <option value="active" {{ $request->status == 'active' ? 'selected' : '' }}>{{ __('trans.available') }}</option>
+                    <option value="booked" {{ $request->status == 'booked' ? 'selected' : '' }}>{{ __('trans.booked') }}</option>
+                    <option value="completed" {{ $request->status == 'completed' ? 'selected' : '' }}>{{ __('trans.completed') }}</option>
+                    <option value="cancelled" {{ $request->status == 'cancelled' ? 'selected' : '' }}>{{ __('trans.cancelled') }}</option>
                 </select>
             </div>
 
@@ -56,12 +56,12 @@
                 <div class="flex items-center space-x-2">
                     <button type="submit" class="bg-purple-600 hover:bg-purple-700 text-white px-4 py-2 rounded-lg text-sm font-medium transition-colors">
                         <i class="fa-solid fa-filter mr-2"></i>
-                        Filter
+                        {{ __('trans.filter') }}
                     </button>
                     
                     <a href="{{ route('mentor.time-slots.index') }}" class="bg-gray-100 hover:bg-gray-200 text-gray-700 px-4 py-2 rounded-lg text-sm font-medium transition-colors">
                         <i class="fa-solid fa-refresh mr-2"></i>
-                        Clear
+                        {{ __('trans.clear') }}
                     </a>
                 </div>
             </div>
@@ -74,9 +74,9 @@
             <div class="p-6 border-b border-gray-200">
                 <div class="flex items-center justify-between">
                     <h2 class="text-lg font-semibold text-gray-900">
-                        Your Time Slots
+                        {{ __('trans.your_time_slots') }}
                         @if($request->status)
-                            <span class="text-sm font-normal text-gray-500">({{ ucfirst($request->status) }} slots)</span>
+                            <span class="text-sm font-normal text-gray-500">({{ ucfirst($request->status) }} {{ __('trans.slots') }})</span>
                         @endif
                         @if($request->date_from || $request->date_to)
                             <span class="text-sm font-normal text-gray-500">
@@ -85,7 +85,7 @@
                         @endif
                     </h2>
                     <div class="text-sm text-gray-500">
-                        Showing {{ $timeSlots->firstItem() ?? 0 }}-{{ $timeSlots->lastItem() ?? 0 }} of {{ $timeSlots->total() }} slots
+                        {{ __('trans.showing') }} {{ $timeSlots->firstItem() ?? 0 }}-{{ $timeSlots->lastItem() ?? 0 }} {{ __('trans.of') }} {{ $timeSlots->total() }} {{ __('trans.slots') }}
                     </div>
                 </div>
             </div>
@@ -106,14 +106,14 @@
                                 @if($timeSlot->status == 'booked' && $timeSlot->user_id)
                                     <button onclick="showUserDetails({{ $timeSlot->user_id }}, '{{ $timeSlot->user->name }}', '{{ $timeSlot->user->created_at->format('M d, Y') }}')"
                                             class="text-blue-500 hover:text-blue-700 transition-colors"
-                                            title="View Student Details">
+                                            title="{{ __('trans.view_student_details') }}">
                                         <i class="fa-solid fa-user text-sm"></i>
                                     </button>
                                 @endif
                                 @if($timeSlot->status == 'active')
                                     <a href="{{ route('mentor.time-slots.edit', $timeSlot) }}" 
                                        class="text-gray-400 hover:text-purple-600 transition-colors"
-                                       title="Edit Time Slot">
+                                       title="{{ __('trans.edit_time_slot') }}">
                                         <i class="fa-solid fa-edit"></i>
                                     </a>
                                 @endif
@@ -153,20 +153,20 @@
                                 <div class="flex items-center space-x-2">
                                     <span class="inline-flex items-center px-2.5 py-1 rounded-full text-xs font-medium bg-purple-500 text-white">
                                         <i class="fa-solid fa-user mr-1"></i>
-                                        Booked
+                                        {{ __('trans.booked') }}
                                     </span>
                                 </div>
                             @elseif($timeSlot->status == 'active')
                                 <span class="inline-flex items-center px-2.5 py-1 rounded-full text-xs font-medium bg-green-500 text-white">
-                                    Available
+                                    {{ __('trans.available') }}
                                 </span>
                             @elseif($timeSlot->status == 'completed')
                                 <span class="inline-flex items-center px-2.5 py-1 rounded-full text-xs font-medium bg-blue-500 text-white">
-                                    Completed
+                                    {{ __('trans.completed') }}
                                 </span>
                             @elseif($timeSlot->status == 'cancelled')
                                 <span class="inline-flex items-center px-2.5 py-1 rounded-full text-xs font-medium bg-red-500 text-white">
-                                    Cancelled
+                                    {{ __('trans.cancelled') }}
                                 </span>
                             @endif
                         </div>
@@ -194,21 +194,21 @@
                         <div class="flex-1 flex justify-between sm:hidden">
                             @if ($timeSlots->onFirstPage())
                                 <span class="relative inline-flex items-center px-4 py-2 text-sm font-medium text-gray-500 bg-white border border-gray-300 cursor-default leading-5 rounded-md">
-                                    Previous
+                                    {{ __('trans.previous') }}
                                 </span>
                             @else
                                 <a href="{{ $timeSlots->appends(request()->query())->previousPageUrl() }}" class="relative inline-flex items-center px-4 py-2 text-sm font-medium text-gray-700 bg-white border border-gray-300 leading-5 rounded-md hover:text-gray-500 focus:outline-none focus:ring ring-purple-300 focus:border-purple-300 active:bg-gray-100 active:text-gray-700 transition ease-in-out duration-150">
-                                    Previous
+                                    {{ __('trans.previous') }}
                                 </a>
                             @endif
 
                             @if ($timeSlots->hasMorePages())
                                 <a href="{{ $timeSlots->appends(request()->query())->nextPageUrl() }}" class="relative inline-flex items-center px-4 py-2 ml-3 text-sm font-medium text-gray-700 bg-white border border-gray-300 leading-5 rounded-md hover:text-gray-500 focus:outline-none focus:ring ring-purple-300 focus:border-purple-300 active:bg-gray-100 active:text-gray-700 transition ease-in-out duration-150">
-                                    Next
+                                    {{ __('trans.next') }}
                                 </a>
                             @else
                                 <span class="relative inline-flex items-center px-4 py-2 ml-3 text-sm font-medium text-gray-500 bg-white border border-gray-300 cursor-default leading-5 rounded-md">
-                                    Next
+                                    {{ __('trans.next') }}
                                 </span>
                             @endif
                         </div>
@@ -216,13 +216,13 @@
                         <div class="hidden sm:flex-1 sm:flex sm:items-center sm:justify-between">
                             <div>
                                 <p class="text-sm text-gray-700 leading-5">
-                                    Showing
+                                    {{ __('trans.showing') }}
                                     <span class="font-medium">{{ $timeSlots->firstItem() ?? 0 }}</span>
-                                    to
+                                    {{ __('trans.to') }}
                                     <span class="font-medium">{{ $timeSlots->lastItem() ?? 0 }}</span>
-                                    of
+                                    {{ __('trans.of') }}
                                     <span class="font-medium">{{ $timeSlots->total() }}</span>
-                                    time slots
+                                    {{ __('trans.time_slots') }}
                                 </p>
                             </div>
 
@@ -230,13 +230,13 @@
                                 <span class="relative z-0 inline-flex shadow-sm rounded-md">
                                     {{-- Previous Page Link --}}
                                     @if ($timeSlots->onFirstPage())
-                                        <span aria-disabled="true" aria-label="Previous">
+                                        <span aria-disabled="true" aria-label="{{ __('trans.previous') }}">
                                             <span class="relative inline-flex items-center px-3 py-2 text-sm font-medium text-gray-400 bg-gray-50 border border-gray-300 cursor-default rounded-l-md leading-5" aria-hidden="true">
                                                 <i class="fa-solid fa-chevron-left"></i>
                                             </span>
                                         </span>
                                     @else
-                                        <a href="{{ $timeSlots->appends(request()->query())->previousPageUrl() }}" rel="prev" class="relative inline-flex items-center px-3 py-2 text-sm font-medium text-gray-500 bg-white border border-gray-300 rounded-l-md leading-5 hover:text-gray-400 hover:bg-purple-50 focus:z-10 focus:outline-none focus:ring ring-purple-300 focus:border-purple-300 active:bg-gray-100 active:text-gray-500 transition ease-in-out duration-150" aria-label="Previous">
+                                        <a href="{{ $timeSlots->appends(request()->query())->previousPageUrl() }}" rel="prev" class="relative inline-flex items-center px-3 py-2 text-sm font-medium text-gray-500 bg-white border border-gray-300 rounded-l-md leading-5 hover:text-gray-400 hover:bg-purple-50 focus:z-10 focus:outline-none focus:ring ring-purple-300 focus:border-purple-300 active:bg-gray-100 active:text-gray-500 transition ease-in-out duration-150" aria-label="{{ __('trans.previous') }}">
                                             <i class="fa-solid fa-chevron-left"></i>
                                         </a>
                                     @endif
@@ -248,17 +248,17 @@
                                                 <span class="relative inline-flex items-center px-4 py-2 -ml-px text-sm font-bold text-white bg-purple-600 border border-purple-600 cursor-default leading-5">{{ $page }}</span>
                                             </span>
                                         @else
-                                            <a href="{{ $timeSlots->appends(request()->query())->url($page) }}" class="relative inline-flex items-center px-4 py-2 -ml-px text-sm font-medium text-gray-700 bg-white border border-gray-300 leading-5 hover:text-purple-600 hover:bg-purple-50 focus:z-10 focus:outline-none focus:ring ring-purple-300 focus:border-purple-300 active:bg-gray-100 active:text-gray-700 transition ease-in-out duration-150" aria-label="Go to page {{ $page }}">{{ $page }}</a>
+                                            <a href="{{ $timeSlots->appends(request()->query())->url($page) }}" class="relative inline-flex items-center px-4 py-2 -ml-px text-sm font-medium text-gray-700 bg-white border border-gray-300 leading-5 hover:text-purple-600 hover:bg-purple-50 focus:z-10 focus:outline-none focus:ring ring-purple-300 focus:border-purple-300 active:bg-gray-100 active:text-gray-700 transition ease-in-out duration-150" aria-label="{{ __('trans.go_to_page') }} {{ $page }}">{{ $page }}</a>
                                         @endif
                                     @endforeach
 
                                     {{-- Next Page Link --}}
                                     @if ($timeSlots->hasMorePages())
-                                        <a href="{{ $timeSlots->appends(request()->query())->nextPageUrl() }}" rel="next" class="relative inline-flex items-center px-3 py-2 -ml-px text-sm font-medium text-gray-500 bg-white border border-gray-300 rounded-r-md leading-5 hover:text-gray-400 hover:bg-purple-50 focus:z-10 focus:outline-none focus:ring ring-purple-300 focus:border-purple-300 active:bg-gray-100 active:text-gray-500 transition ease-in-out duration-150" aria-label="Next">
+                                        <a href="{{ $timeSlots->appends(request()->query())->nextPageUrl() }}" rel="next" class="relative inline-flex items-center px-3 py-2 -ml-px text-sm font-medium text-gray-500 bg-white border border-gray-300 rounded-r-md leading-5 hover:text-gray-400 hover:bg-purple-50 focus:z-10 focus:outline-none focus:ring ring-purple-300 focus:border-purple-300 active:bg-gray-100 active:text-gray-500 transition ease-in-out duration-150" aria-label="{{ __('trans.next') }}">
                                             <i class="fa-solid fa-chevron-right"></i>
                                         </a>
                                     @else
-                                        <span aria-disabled="true" aria-label="Next">
+                                        <span aria-disabled="true" aria-label="{{ __('trans.next') }}">
                                             <span class="relative inline-flex items-center px-3 py-2 -ml-px text-sm font-medium text-gray-400 bg-gray-50 border border-gray-300 cursor-default rounded-r-md leading-5" aria-hidden="true">
                                                 <i class="fa-solid fa-chevron-right"></i>
                                             </span>
@@ -279,28 +279,28 @@
                 </div>
                 <h3 class="text-lg font-medium text-gray-900 mb-2">
                     @if($request->date_from || $request->date_to || $request->status)
-                        No time slots found
+                        {{ __('trans.no_time_slots_found') }}
                     @else
-                        No time slots yet
+                        {{ __('trans.no_time_slots_yet') }}
                     @endif
                 </h3>
                 <p class="text-gray-500 mb-6">
                     @if($request->date_from || $request->date_to || $request->status)
-                        Try adjusting your date range or filters.
+                        {{ __('trans.try_adjusting_filters') }}
                     @else
-                        Start creating time slots for students to book sessions with you.
+                        {{ __('trans.start_creating_time_slots') }}
                     @endif
                 </p>
                 
                 @if($request->date_from || $request->date_to || $request->status)
                     <a href="{{ route('mentor.time-slots.index') }}" class="text-purple-600 hover:text-purple-700 font-medium">
                         <i class="fa-solid fa-arrow-left mr-2"></i>
-                        View All Time Slots
+                        {{ __('trans.view_all_time_slots') }}
                     </a>
                 @else
                     <a href="{{ route('mentor.time-slots.create') }}" class="bg-purple-600 hover:bg-purple-700 text-white px-6 py-3 rounded-lg font-medium transition-colors">
                         <i class="fa-solid fa-plus mr-2"></i>
-                        Create Your First Time Slot
+                        {{ __('trans.create_your_first_time_slot') }}
                     </a>
                 @endif
             </div>

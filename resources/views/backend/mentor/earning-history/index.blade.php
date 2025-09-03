@@ -1,11 +1,11 @@
 @extends('backend.layouts.app')
 
-@section('title', 'Earning History')
+@section('title', __('trans.earning_history'))
 
 @section('header')
     <div class="flex items-center justify-between">
         <div>
-            <h1 class="text-xl font-bold text-gray-900">Earning History</h1>
+            <h1 class="text-xl font-bold text-gray-900">{{ __('trans.earning_history') }}</h1>
         </div>
     </div>
 @endsection
@@ -23,7 +23,7 @@
                     </div>
                 </div>
                 <div class="ml-4">
-                    <p class="text-sm font-medium text-gray-500">Total Earning</p>
+                    <p class="text-sm font-medium text-gray-500">{{ __('trans.total_earning') }}</p>
                     <p class="text-2xl font-bold text-gray-900">${{ number_format($totalEarning, 2) }}</p>
                 </div>
             </div>
@@ -38,7 +38,7 @@
                     </div>
                 </div>
                 <div class="ml-4">
-                    <p class="text-sm font-medium text-gray-500">This Month</p>
+                    <p class="text-sm font-medium text-gray-500">{{ __('trans.this_month') }}</p>
                     <p class="text-2xl font-bold text-gray-900">${{ number_format($thisMonthEarning, 2) }}</p>
                 </div>
             </div>
@@ -53,7 +53,7 @@
                     </div>
                 </div>
                 <div class="ml-4">
-                    <p class="text-sm font-medium text-gray-500">Today</p>
+                    <p class="text-sm font-medium text-gray-500">{{ __('trans.today') }}</p>
                     <p class="text-2xl font-bold text-gray-900">${{ number_format($todayEarning, 2) }}</p>
                 </div>
             </div>
@@ -63,7 +63,7 @@
     <!-- Header Card with Title and Search -->
     <div class="bg-white rounded-lg shadow mb-6">
         <div class="flex justify-between items-center p-4">
-            <h1 class="text-l text-gray-900">Transaction</h1>
+            <h1 class="text-l text-gray-900">{{ __('trans.transaction') }}</h1>
             
             <!-- Search and Date Range -->
             <div class="flex items-center space-x-3">
@@ -80,7 +80,7 @@
                             type="text" 
                             name="search" 
                             value="{{ request('search') }}"
-                            placeholder="Search by Transaction ID or Date..." 
+                            placeholder="{{ __('trans.search_transaction_id_date') }}" 
                             class="w-48 pl-8 pr-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent outline-none transition-all duration-300 text-sm"
                         >
                     </div>
@@ -93,7 +93,7 @@
                             value="{{ request('start_date') }}"
                             class="px-3 py-2 text-sm border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent outline-none transition-all duration-300"
                         >
-                        <span class="text-gray-500 text-sm">to</span>
+                        <span class="text-gray-500 text-sm">{{ __('trans.to') }}</span>
                         <input 
                             type="date" 
                             name="end_date"
@@ -110,13 +110,13 @@
                         <svg class="w-4 h-4 inline mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 4a1 1 0 011-1h16a1 1 0 011 1v2.586a1 1 0 01-.293.707l-6.414 6.414a1 1 0 00-.293.707V17l-4 4v-6.586a1 1 0 00-.293-.707L6.293 13H5a1 1 0 01-1-1V4z"></path>
                         </svg>
-                        Filter
+                        {{ __('trans.filter') }}
                     </button>
                     
                     @if(request('start_date') || request('end_date') || request('search'))
                         <a href="{{ route('mentor.earnings') }}" 
                            class="px-3 py-2 text-sm bg-gray-500 text-white rounded-lg hover:bg-gray-600 transition-colors duration-200 font-medium">
-                            Clear
+                            {{ __('trans.clear') }}
                         </a>
                     @endif
                 </form>
@@ -131,12 +131,12 @@
             <table class="w-full">
                 <thead class="bg-gray-50">
                     <tr>
-                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 tracking-wider">Transaction ID</th>
-                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 tracking-wider">Date</th>
-                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 tracking-wider">Service Type</th>
-                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 tracking-wider">Title</th>
-                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 tracking-wider">Earning Amount</th>
-                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 tracking-wider">Status</th>
+                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 tracking-wider">{{ __('trans.transaction_id') }}</th>
+                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 tracking-wider">{{ __('trans.date') }}</th>
+                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 tracking-wider">{{ __('trans.service_type') }}</th>
+                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 tracking-wider">{{ __('trans.title') }}</th>
+                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 tracking-wider">{{ __('trans.earning_amount') }}</th>
+                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 tracking-wider">{{ __('trans.status') }}</th>
                     </tr>
                 </thead>
                 <tbody class="bg-white divide-y divide-gray-200">
@@ -164,11 +164,11 @@
                                 @if($enrollable)
                                     @if($enrollment->enrollable_type == 'App\Models\Course')
                                         <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-blue-100 text-blue-800">
-                                            Course
+                                            {{ __('trans.course') }}
                                         </span>
                                     @elseif($enrollment->enrollable_type == 'App\Models\SessionBooking')
                                         <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-green-100 text-green-800">
-                                            Session
+                                            {{ __('trans.session') }}
                                         </span>
                                     @else
                                         <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-gray-100 text-gray-800">
@@ -184,15 +184,15 @@
                                     <div>
                                         @if($enrollment->enrollable_type == 'App\Models\SessionBooking')
                                             <div class="font-medium text-gray-900">
-                                                Session with {{ $student ? $student->name : 'Unknown Student' }}
+                                                {{ __('trans.session_with') }} {{ $student ? $student->name : __('trans.unknown_student') }}
                                             </div>
                                         @else
                                             <div class="font-medium text-gray-900">
-                                                {{ $enrollable->title ?? 'Untitled' }}
+                                                {{ $enrollable->title ?? __('trans.untitled') }}
                                             </div>
                                             @if($mentorName)
                                                 <div class="text-sm text-gray-500">
-                                                    by {{ $mentorName }}
+                                                    {{ __('trans.by') }} {{ $mentorName }}
                                                 </div>
                                             @endif
                                         @endif
@@ -210,21 +210,21 @@
                                         <svg class="w-4 h-4 mr-1.5 text-green-400" fill="currentColor" viewBox="0 0 20 20">
                                             <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"></path>
                                         </svg>
-                                        Paid
+                                        {{ __('trans.paid') }}
                                     </span>
                                 @elseif($payment->transaction_status == 'failed')
                                     <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-red-100 text-red-800">
                                         <svg class="w-4 h-4 mr-1.5 text-red-400" fill="currentColor" viewBox="0 0 20 20">
                                             <path fill-rule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" clip-rule="evenodd"></path>
                                         </svg>
-                                        Failed
+                                        {{ __('trans.failed') }}
                                     </span>
                                 @elseif($payment->transaction_status == 'pending')
                                     <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-yellow-100 text-yellow-800">
                                         <svg class="w-4 h-4 mr-1.5 text-yellow-400" fill="currentColor" viewBox="0 0 20 20">
                                             <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm1-12a1 1 0 10-2 0v4a1 1 0 00.293.707l2.828 2.829a1 1 0 101.415-1.415L11 9.586V6z" clip-rule="evenodd"></path>
                                         </svg>
-                                        Pending
+                                        {{ __('trans.pending') }}
                                     </span>
                                 @else
                                     <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-gray-100 text-gray-800">
@@ -240,12 +240,12 @@
                                     <svg class="w-12 h-12 text-gray-300 mb-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path>
                                     </svg>
-                                    <h3 class="text-lg font-medium text-gray-900 mb-2">No earnings found</h3>
+                                    <h3 class="text-lg font-medium text-gray-900 mb-2">{{ __('trans.no_earnings_found') }}</h3>
                                     <p class="text-gray-500">
                                         @if(request('start_date') || request('end_date') || request('search'))
-                                            No earnings found for the selected criteria.
+                                            {{ __('trans.no_earnings_criteria') }}
                                         @else
-                                            You haven't earned any money yet.
+                                            {{ __('trans.no_earnings_yet') }}
                                         @endif
                                     </p>
                                 </div>

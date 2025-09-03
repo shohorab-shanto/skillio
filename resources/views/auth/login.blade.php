@@ -23,7 +23,7 @@
         <!-- Password -->
         <div class="space-y-1">
             <x-input-label for="password" :value="__('trans.password')" />
-            <x-text-input id="password" type="password" name="password" required autocomplete="current-password" placeholder="Enter your password" />
+            <x-text-input id="password" type="password" name="password" required autocomplete="current-password" placeholder="{{ __('trans.enter_your_password') }}" />
             <x-input-error :messages="$errors->get('password')" />
         </div>
 

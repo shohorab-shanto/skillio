@@ -2,37 +2,37 @@
     <div style="display: flex; flex-direction: column; gap: 2px;">
         <a href="{{ route('admin.dashboard') }}" class="sidebar-item {{ request()->routeIs('admin.dashboard') ? 'active' : '' }}">
             <i class="fa-solid fa-gauge"></i>
-            <span class="sidebar-label">Dashboard</span>
+            <span class="sidebar-label">{{ __('trans.dashboard') }}</span>
         </a>
         
                             <a href="{{ route('admin.users.index') }}" class="sidebar-item {{ request()->routeIs('admin.users*') ? 'active' : '' }}">
                         <i class="fa-solid fa-users"></i>
-                        <span class="sidebar-label">Users</span>
+                        <span class="sidebar-label">{{ __('trans.users') }}</span>
                     </a>
         
         <a href="{{ route('admin.courses.index') }}" class="sidebar-item {{ request()->routeIs('admin.courses*') ? 'active' : '' }}">
             <i class="fa-solid fa-book"></i>
-            <span class="sidebar-label">Courses</span>
+            <span class="sidebar-label">{{ __('trans.courses') }}</span>
         </a>
         
                                     <a href="{{ route('admin.mentors.index') }}" class="sidebar-item {{ request()->routeIs('admin.mentors*') ? 'active' : '' }}">
             <i class="fa-solid fa-chalkboard-teacher"></i>
-            <span class="sidebar-label">Mentors</span>
+            <span class="sidebar-label">{{ __('trans.mentors') }}</span>
         </a>
         
         <a href="{{ route('admin.categories.index') }}" class="sidebar-item {{ request()->routeIs('admin.categories*') ? 'active' : '' }}">
             <i class="fa-solid fa-tags"></i>
-            <span class="sidebar-label">Categories</span>
+            <span class="sidebar-label">{{ __('trans.categories') }}</span>
         </a>
         
         <a href="{{ route('admin.sub-categories.index') }}" class="sidebar-item {{ request()->routeIs('admin.sub-categories*') ? 'active' : '' }}">
             <i class="fa-solid fa-tag"></i>
-            <span class="sidebar-label">Sub-Categories</span>
+            <span class="sidebar-label">{{ __('trans.sub_categories') }}</span>
         </a>
         
         <a href="{{ route('admin.transactions.index') }}" class="sidebar-item {{ request()->routeIs('admin.transactions*') ? 'active' : '' }}">
             <i class="fa-solid fa-credit-card"></i>
-            <span class="sidebar-label">Transactions</span>
+            <span class="sidebar-label">{{ __('trans.transactions') }}</span>
         </a>
         
 
@@ -41,7 +41,7 @@
         
         <button onclick="showLogoutModal()" class="sidebar-item w-full text-left">
             <i class="fa-solid fa-right-from-bracket"></i>
-            <span class="sidebar-label">Logout</span>
+            <span class="sidebar-label">{{ __('trans.logout') }}</span>
         </a>
     </div>
 </nav>

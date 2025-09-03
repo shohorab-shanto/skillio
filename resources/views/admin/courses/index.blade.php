@@ -61,7 +61,7 @@
             <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
                 <!-- Price Min -->
                 <div>
-                    <label class="block text-sm font-medium text-gray-700 mb-2">Min Price</label>
+                    <label class="block text-sm font-medium text-gray-700 mb-2">{{ __('trans.min_price') }}</label>
                     <input type="number" name="price_min" value="{{ request('price_min') }}" 
                            placeholder="0" min="0" step="0.01"
                            class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent">
@@ -69,7 +69,7 @@
 
                 <!-- Price Max -->
                 <div>
-                    <label class="block text-sm font-medium text-gray-700 mb-2">Max Price</label>
+                    <label class="block text-sm font-medium text-gray-700 mb-2">{{ __('trans.max_price') }}</label>
                     <input type="number" name="price_max" value="{{ request('price_max') }}" 
                            placeholder="1000" min="0" step="0.01"
                            class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent">
@@ -77,7 +77,7 @@
 
                 <!-- Date From -->
                 <div>
-                    <label class="block text-sm font-medium text-gray-700 mb-2">From Date</label>
+                    <label class="block text-sm font-medium text-gray-700 mb-2">{{ __('trans.from_date') }}</label>
                     <input type="date" name="date_from" value="{{ request('date_from') }}" 
                            class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent">
                 </div>
@@ -140,7 +140,7 @@
                                 <div class="ml-4">
                                     <div class="text-sm font-medium text-gray-900">{{ $course->title }}</div>
                                     <div class="text-sm text-gray-500">{{ Str::limit($course->description, 50) }}</div>
-                                    <div class="text-xs text-gray-400">{{ $course->duration_days }} days</div>
+                                    <div class="text-xs text-gray-400">{{ $course->duration_days }} {{ __('trans.days') }}</div>
                                 </div>
                             </div>
                         </td>
@@ -166,12 +166,12 @@
                                     </div>
                                 </div>
                             @else
-                                <span class="text-gray-400">Mentor not found</span>
+                                <span class="text-gray-400">{{ __('trans.mentor_not_found') }}</span>
                             @endif
                         </td>
                         <td class="px-6 py-4 whitespace-nowrap">
                             <div class="text-sm text-gray-900">
-                                <div class="font-medium">{{ $course->category->name ?? 'N/A' }}</div>
+                                <div class="font-medium">{{ $course->category->name ?? __('trans.na') }}</div>
                                 @if($course->subCategories->count() > 0)
                                     <div class="text-xs text-gray-500">
                                         {{ $course->subCategories->pluck('name')->implode(', ') }}
@@ -195,19 +195,19 @@
                                 @case('approved')
                                     <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-green-100 text-green-800">
                                         <i class="fa-solid fa-check mr-1"></i>
-                                        Approved
+                                        {{ __('trans.approved') }}
                                     </span>
                                     @break
                                 @case('pending')
                                     <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-yellow-100 text-yellow-800">
                                         <i class="fa-solid fa-clock mr-1"></i>
-                                        Pending
+                                        {{ __('trans.pending') }}
                                     </span>
                                     @break
                                 @case('rejected')
                                     <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-red-100 text-red-800">
                                         <i class="fa-solid fa-times mr-1"></i>
-                                        Rejected
+                                        {{ __('trans.rejected') }}
                                     </span>
                                     @if($course->rejection_reason)
                                         <div class="text-xs text-gray-500 mt-1" title="{{ $course->rejection_reason }}">
@@ -223,7 +223,7 @@
                                 <a href="{{ route('admin.courses.show', $course->id) }}" 
                                    class="px-3 py-1 text-xs bg-blue-100 text-blue-700 rounded-lg hover:bg-blue-200 transition-colors duration-200">
                                     <i class="fa-solid fa-eye mr-1"></i>
-                                    Details
+                                    {{ __('trans.details') }}
                                 </a>
                             </div>
                         </td>
@@ -233,8 +233,8 @@
                         <td colspan="6" class="px-6 py-12 text-center text-gray-500">
                             <div class="flex flex-col items-center">
                                 <i class="fa-solid fa-book text-4xl text-gray-300 mb-3"></i>
-                                <p class="text-lg font-medium">No courses found</p>
-                                <p class="text-sm">Try adjusting your filters or search terms</p>
+                                <p class="text-lg font-medium">{{ __('trans.no_courses_found') }}</p>
+                                <p class="text-sm">{{ __('trans.try_adjusting_filters') }}</p>
                             </div>
                         </td>
                     </tr>
@@ -250,13 +250,13 @@
                 <!-- Pagination Details - Left Aligned -->
                 <div class="text-sm text-gray-700">
                     <p>
-                        Showing
+                        {{ __('trans.showing') }}
                         <span class="font-medium">{{ $courses->firstItem() ?? 0 }}</span>
-                        to
+                        {{ __('trans.to') }}
                         <span class="font-medium">{{ $courses->lastItem() ?? 0 }}</span>
-                        of
+                        {{ __('trans.of') }}
                         <span class="font-medium">{{ $courses->total() }}</span>
-                        courses
+                        {{ __('trans.courses') }}
                     </p>
                 </div>
 
@@ -315,27 +315,27 @@
                 <i class="fa-solid fa-times text-2xl text-red-600"></i>
             </div>
             <h3 class="text-xl font-semibold text-gray-900 text-center mb-2">
-                Reject Course
+                {{ __('trans.reject_course') }}
             </h3>
             <p class="text-gray-600 text-center mb-6">
-                Please provide a reason for rejecting this course.
+                {{ __('trans.provide_rejection_reason') }}
             </p>
             
             <form id="reject-form" class="space-y-4">
                 <div>
-                    <label class="block text-sm font-medium text-gray-700 mb-2">Rejection Reason</label>
+                    <label class="block text-sm font-medium text-gray-700 mb-2">{{ __('trans.rejection_reason') }}</label>
                     <textarea id="rejection-reason" rows="4" 
                               class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent"
-                              placeholder="Enter the reason for rejection..."></textarea>
+                              placeholder="{{ __('trans.enter_rejection_reason') }}"></textarea>
                 </div>
                 
                 <div class="flex space-x-3">
                     <button type="button" onclick="cancelReject()" class="flex-1 px-4 py-3 bg-gray-100 text-gray-700 rounded-xl font-medium hover:bg-gray-200 transition-colors duration-200">
-                        Cancel
+                        {{ __('trans.cancel') }}
                     </button>
                     <button type="submit" class="flex-1 px-4 py-3 bg-red-600 text-white rounded-xl font-medium hover:bg-red-700 transition-colors duration-200">
                         <i class="fa-solid fa-times mr-2"></i>
-                        Reject Course
+                        {{ __('trans.reject_course_button') }}
                     </button>
                 </div>
             </form>
@@ -354,7 +354,7 @@ function approveCourse(courseId) {
     
     // Disable button and show loading
     button.disabled = true;
-    button.textContent = 'Approving...';
+    button.textContent = '{{ __('trans.approving') }}';
     
     fetch(`/admin/courses/${courseId}/approve`, {
         method: 'PATCH',
@@ -374,7 +374,7 @@ function approveCourse(courseId) {
     })
     .catch(error => {
         console.error('Error:', error);
-        showNotification('An error occurred while approving the course', 'error');
+        showNotification('{{ __('trans.an_error_occurred_approving') }}', 'error');
     })
     .finally(() => {
         button.disabled = false;
@@ -416,7 +416,7 @@ function toggleCourseStatus(courseId) {
     
     // Disable button and show loading
     button.disabled = true;
-    button.textContent = 'Updating...';
+    button.textContent = '{{ __('trans.updating') }}';
     
     fetch(`/admin/courses/${courseId}/toggle-status`, {
         method: 'PATCH',
@@ -436,7 +436,7 @@ function toggleCourseStatus(courseId) {
     })
     .catch(error => {
         console.error('Error:', error);
-        showNotification('An error occurred while updating course status', 'error');
+        showNotification('{{ __('trans.an_error_occurred_updating') }}', 'error');
     })
     .finally(() => {
         button.disabled = false;
@@ -452,7 +452,7 @@ document.getElementById('reject-form').addEventListener('submit', function(e) {
         const rejectionReason = document.getElementById('rejection-reason').value.trim();
         
         if (!rejectionReason) {
-            showNotification('Please provide a rejection reason', 'error');
+            showNotification('{{ __('trans.please_provide_rejection_reason') }}', 'error');
             return;
         }
         
@@ -479,7 +479,7 @@ document.getElementById('reject-form').addEventListener('submit', function(e) {
         })
         .catch(error => {
             console.error('Error:', error);
-            showNotification('An error occurred while rejecting the course', 'error');
+            showNotification('{{ __('trans.an_error_occurred_rejecting') }}', 'error');
         });
     }
 });

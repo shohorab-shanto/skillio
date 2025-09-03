@@ -1,9 +1,9 @@
 @extends('admin.layouts.backend')
 
-@section('title', 'Sub-Categories Management')
+@section('title', __('trans.sub_categories_management'))
 
 @section('header')
-    Sub-Categories Management
+    {{ __('trans.sub_categories_management') }}
 @endsection
 
 @section('content')
@@ -13,7 +13,7 @@
         <a href="{{ route('admin.sub-categories.create') }}" 
            class="px-4 py-2 bg-purple-600 text-white rounded-lg hover:bg-purple-700 transition-colors duration-200">
             <i class="fa-solid fa-plus mr-2"></i>
-            Create Sub-Category
+            {{ __('trans.create_sub_category') }}
         </a>
     </div>
 
@@ -24,19 +24,19 @@
                 <thead class="bg-gray-50">
                     <tr>
                         <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                            Sub-Category
+                            {{ __('trans.sub_category') }}
                         </th>
                         <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                            Parent Category
+                            {{ __('trans.parent_category') }}
                         </th>
                         <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                            Usage Stats
+                            {{ __('trans.usage_stats') }}
                         </th>
                         <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                            Created
+                            {{ __('trans.created') }}
                         </th>
                         <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                            Actions
+                            {{ __('trans.actions') }}
                         </th>
                     </tr>
                 </thead>
@@ -58,7 +58,7 @@
                                 </div>
                                 <div class="ml-4">
                                     <div class="text-sm font-medium text-gray-900">{{ $subCategory->name }}</div>
-                                    <div class="text-sm text-gray-500">{{ Str::limit($subCategory->description, 60) ?: 'No description' }}</div>
+                                    <div class="text-sm text-gray-500">{{ Str::limit($subCategory->description, 60) ?: __('trans.no_description') }}</div>
                                 </div>
                             </div>
                         </td>
@@ -68,7 +68,7 @@
                                     <div class="w-8 h-8 bg-purple-100 rounded-lg flex items-center justify-center mr-3">
                                         <i class="fa-solid fa-tags text-sm text-purple-600"></i>
                                     </div>
-                                    <span class="font-medium">{{ $subCategory->category->name ?? 'N/A' }}</span>
+                                    <span class="font-medium">{{ $subCategory->category->name ?? __('trans.na') }}</span>
                                 </div>
                             </div>
                         </td>
@@ -77,11 +77,11 @@
                                 <div class="flex items-center gap-4">
                                     <div class="text-center">
                                         <div class="text-lg font-semibold text-blue-600">{{ $subCategory->courses_count }}</div>
-                                        <div class="text-xs text-gray-500">Courses</div>
+                                        <div class="text-xs text-gray-500">{{ __('trans.courses') }}</div>
                                     </div>
                                     <div class="text-center">
                                         <div class="text-lg font-semibold text-green-600">{{ $subCategory->session_bookings_count }}</div>
-                                        <div class="text-xs text-gray-500">Sessions</div>
+                                        <div class="text-xs text-gray-500">{{ __('trans.sessions') }}</div>
                                     </div>
                                 </div>
                             </div>
@@ -94,13 +94,13 @@
                                 <a href="{{ route('admin.sub-categories.edit', $subCategory->id) }}" 
                                    class="px-3 py-1 text-xs bg-blue-100 text-blue-700 rounded-lg hover:bg-blue-200 transition-colors duration-200">
                                     <i class="fa-solid fa-edit mr-1"></i>
-                                    Edit
+                                    {{ __('trans.edit') }}
                                 </a>
                                 
                                 <button onclick="deleteSubCategory({{ $subCategory->id }}, '{{ $subCategory->name }}')" 
                                         class="px-3 py-1 text-xs bg-red-100 text-red-700 rounded-lg hover:bg-red-200 transition-colors duration-200">
                                     <i class="fa-solid fa-trash mr-1"></i>
-                                    Delete
+                                    {{ __('trans.delete') }}
                                 </button>
                             </div>
                         </td>
@@ -110,8 +110,8 @@
                         <td colspan="5" class="px-6 py-12 text-center text-gray-500">
                             <div class="flex flex-col items-center">
                                 <i class="fa-solid fa-tag text-4xl text-gray-300 mb-3"></i>
-                                <p class="text-lg font-medium">No sub-categories found</p>
-                                <p class="text-sm">Create your first sub-category to get started</p>
+                                <p class="text-lg font-medium">{{ __('trans.no_sub_categories_found') }}</p>
+                                <p class="text-sm">{{ __('trans.create_first_sub_category') }}</p>
                             </div>
                         </td>
                     </tr>
@@ -127,13 +127,13 @@
                 <!-- Pagination Details - Left Aligned -->
                 <div class="text-sm text-gray-700">
                     <p>
-                        Showing
+                        {{ __('trans.showing') }}
                         <span class="font-medium">{{ $subCategories->firstItem() ?? 0 }}</span>
-                        to
+                        {{ __('trans.to') }}
                         <span class="font-medium">{{ $subCategories->lastItem() ?? 0 }}</span>
-                        of
+                        {{ __('trans.of') }}
                         <span class="font-medium">{{ $subCategories->total() }}</span>
-                        sub-categories
+                        {{ __('trans.sub_categories') }}
                     </p>
                 </div>
 
@@ -192,21 +192,21 @@
                 <i class="fa-solid fa-exclamation-triangle text-2xl text-red-600"></i>
             </div>
             <h3 class="text-xl font-semibold text-gray-900 text-center mb-2">
-                Delete Sub-Category
+                {{ __('trans.delete_sub_category') }}
             </h3>
             <p class="text-gray-600 text-center mb-6">
-                Are you sure you want to delete "<span id="sub-category-name" class="font-semibold"></span>"?
+                {{ __('trans.are_you_sure_delete') }} "<span id="sub-category-name" class="font-semibold"></span>"?
                 <br><br>
-                <span class="text-sm text-red-600">This action cannot be undone.</span>
+                <span class="text-sm text-red-600">{{ __('trans.this_action_cannot_be_undone') }}</span>
             </p>
             
             <div class="flex space-x-3">
                 <button onclick="cancelDelete()" class="flex-1 px-4 py-3 bg-gray-100 text-gray-700 rounded-xl font-medium hover:bg-gray-200 transition-colors duration-200">
-                    Cancel
+                    {{ __('trans.cancel') }}
                 </button>
                 <button onclick="confirmDelete()" class="flex-1 px-4 py-3 bg-red-600 text-white rounded-xl font-medium hover:bg-red-700 transition-colors duration-200">
                     <i class="fa-solid fa-trash mr-2"></i>
-                    Delete
+                    {{ __('trans.delete') }}
                 </button>
             </div>
         </div>
@@ -269,7 +269,7 @@ function confirmDelete() {
         })
         .catch(error => {
             console.error('Error:', error);
-            showNotification('An error occurred while deleting the sub-category', 'error');
+            showNotification('{{ __('trans.error_deleting_sub_category') }}', 'error');
             cancelDelete();
         });
     }

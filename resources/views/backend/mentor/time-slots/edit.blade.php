@@ -1,6 +1,6 @@
 @extends('backend.layouts.app')
 
-@section('title', 'Edit Time Slot')
+@section('title', __('trans.edit_time_slot'))
 
 @push('styles')
 <style>
@@ -33,7 +33,7 @@ select.custom-dropdown:-moz-focusring {
                 <i class="fa-solid fa-arrow-left"></i>
             </a>
             <div>
-                <h1 class="text-2xl font-bold text-gray-900">Edit Time Slot</h1>
+                <h1 class="text-2xl font-bold text-gray-900">{{ __('trans.edit_time_slot') }}</h1>
             </div>
         </div>
         
@@ -43,9 +43,9 @@ select.custom-dropdown:-moz-focusring {
                 <button type="button" 
                         onclick="confirmDelete()"
                         class="bg-red-600 hover:bg-red-700 text-white px-3 py-2 rounded-lg transition-colors flex items-center space-x-1"
-                        title="Delete Time Slot">
+                        title="{{ __('trans.delete_time_slot') }}">
                     <i class="fa-solid fa-trash text-xs"></i>
-                    <span class="text-sm font-medium">Delete The Slot</span>
+                    <span class="text-sm font-medium">{{ __('trans.delete_time_slot') }}</span>
                 </button>
             @endif
             <!-- Notification icon would go here -->
@@ -64,7 +64,7 @@ select.custom-dropdown:-moz-focusring {
             <!-- Date Selection -->
             <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
                 <div>
-                    <label class="block text-sm font-medium text-gray-700 mb-2">Date *</label>
+                    <label class="block text-sm font-medium text-gray-700 mb-2">{{ __('trans.date') }} *</label>
                     <input type="date" 
                            name="date"
                            class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent"
@@ -74,7 +74,7 @@ select.custom-dropdown:-moz-focusring {
                     @enderror
                 </div>
                 <div>
-                    <label class="block text-sm font-medium text-gray-700 mb-2">Price *</label>
+                    <label class="block text-sm font-medium text-gray-700 mb-2">{{ __('trans.price') }} *</label>
                     <div class="relative">
                         <span class="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-500">$</span>
                         <input type="number" 
@@ -94,13 +94,13 @@ select.custom-dropdown:-moz-focusring {
             <!-- Category Selection -->
             <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
                 <div>
-                    <label class="block text-sm font-medium text-gray-700 mb-2">Category *</label>
+                    <label class="block text-sm font-medium text-gray-700 mb-2">{{ __('trans.category') }} *</label>
                     <div class="relative">
                         <select name="category_id" 
                                 id="category_id"
                                 class="custom-dropdown w-full px-3 py-2 pr-10 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent bg-white text-gray-900 cursor-pointer hover:border-gray-400 transition-colors"
                                 required onchange="updateSubCategories()">
-                            <option value="">Select a category</option>
+                            <option value="">{{ __('trans.select_a_category') }}</option>
                             @foreach($categories as $category)
                                 <option value="{{ $category->id }}" {{ old('category_id', $timeSlot->category_id) == $category->id ? 'selected' : '' }}>
                                     {{ $category->name }}
@@ -116,13 +116,13 @@ select.custom-dropdown:-moz-focusring {
                     @enderror
                 </div>
                 <div>
-                    <label class="block text-sm font-medium text-gray-700 mb-2">Sub Category *</label>
+                    <label class="block text-sm font-medium text-gray-700 mb-2">{{ __('trans.sub_category') }} *</label>
                     <div class="relative">
                         <select name="sub_category_id" 
                                 id="sub_category_id"
                                 class="custom-dropdown w-full px-3 py-2 pr-10 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent bg-white text-gray-900 cursor-pointer hover:border-gray-400 transition-colors"
                                 required>
-                            <option value="">Select a sub category</option>
+                            <option value="">{{ __('trans.select_a_sub_category') }}</option>
                             @foreach($timeSlot->subCategories as $subCategory)
                                 <option value="{{ $subCategory->id }}" selected>{{ $subCategory->name }}</option>
                             @endforeach
@@ -140,7 +140,7 @@ select.custom-dropdown:-moz-focusring {
             <!-- Time Selection -->
             <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
                 <div>
-                    <label class="block text-sm font-medium text-gray-700 mb-2">Start Time *</label>
+                    <label class="block text-sm font-medium text-gray-700 mb-2">{{ __('trans.start_time') }} *</label>
                     <input type="time" 
                            name="start_time"
                            class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent"
@@ -150,7 +150,7 @@ select.custom-dropdown:-moz-focusring {
                     @enderror
                 </div>
                 <div>
-                    <label class="block text-sm font-medium text-gray-700 mb-2">End Time *</label>
+                    <label class="block text-sm font-medium text-gray-700 mb-2">{{ __('trans.end_time') }} *</label>
                     <input type="time" 
                            name="end_time"
                            class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent"
@@ -165,12 +165,12 @@ select.custom-dropdown:-moz-focusring {
             <div class="flex flex-col sm:flex-row sm:items-center sm:justify-end space-y-3 sm:space-y-0 sm:space-x-4 pt-6">
                 <a href="{{ route('mentor.time-slots.index') }}" 
                    class="w-full sm:w-auto bg-gray-100 hover:bg-gray-200 text-gray-700 px-8 py-3 rounded-lg text-center font-medium transition-colors">
-                    Cancel
+                    {{ __('trans.cancel') }}
                 </a>
                 <button type="submit" 
                         class="w-full sm:w-auto bg-purple-600 hover:bg-purple-700 text-white px-8 py-3 rounded-lg font-medium transition-colors flex items-center justify-center space-x-2">
                     <i class="fa-solid fa-save"></i>
-                    <span>Update Time Slot</span>
+                    <span>{{ __('trans.update_time_slot') }}</span>
                 </button>
             </div>
         </form>
@@ -185,27 +185,27 @@ select.custom-dropdown:-moz-focusring {
                 <i class="fa-solid fa-exclamation-triangle text-red-600 text-xl"></i>
             </div>
             <div>
-                <h3 class="text-lg font-semibold text-gray-900">Delete Time Slot</h3>
-                <p class="text-sm text-gray-500">This action cannot be undone</p>
+                <h3 class="text-lg font-semibold text-gray-900">{{ __('trans.delete_time_slot_modal_title') }}</h3>
+                <p class="text-sm text-gray-500">{{ __('trans.this_action_cannot_be_undone') }}</p>
             </div>
         </div>
         
         <p class="text-gray-700 mb-6">
-            Are you sure you want to delete this time slot? This will permanently remove it from your schedule.
+            {{ __('trans.delete_time_slot_modal_message') }}
         </p>
         
         <div class="flex space-x-3">
             <button type="button" 
                     onclick="closeDeleteModal()"
                     class="flex-1 bg-gray-100 hover:bg-gray-200 text-gray-700 px-4 py-2 rounded-lg font-medium transition-colors">
-                Cancel
+                {{ __('trans.cancel') }}
             </button>
             <form action="{{ route('mentor.time-slots.destroy', $timeSlot) }}" method="POST" class="flex-1">
                 @csrf
                 @method('DELETE')
                 <button type="submit" 
                         class="w-full bg-red-600 hover:bg-red-700 text-white px-4 py-2 rounded-lg font-medium transition-colors">
-                    Delete
+                    {{ __('trans.delete') }}
                 </button>
             </form>
         </div>
@@ -223,7 +223,7 @@ function updateSubCategories() {
     const selectedCategoryId = categorySelect.value;
     
     // Clear existing options
-    subCategorySelect.innerHTML = '<option value="">Select a sub category</option>';
+    subCategorySelect.innerHTML = '<option value="">{{ __('trans.select_a_sub_category') }}</option>';
     
     if (selectedCategoryId) {
         const selectedCategory = categoriesData.find(cat => cat.id == selectedCategoryId);

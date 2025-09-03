@@ -1,6 +1,6 @@
 @extends('frontend.layouts.app')
 
-@section('title', 'Home')
+@section('title', __('trans.home'))
 
 @section('navbar-style')
     <style>

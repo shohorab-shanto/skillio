@@ -1,6 +1,6 @@
 @extends('backend.layouts.app')
 
-@section('title', 'Edit Course')
+@section('title', __('trans.edit_course'))
 
 @section('styles')
 <style>
@@ -113,7 +113,7 @@
                 <i class="fa-solid fa-arrow-left"></i>
             </a>
             <div>
-                <h1 class="text-2xl font-bold text-gray-900">Edit Course</h1>
+                <h1 class="text-2xl font-bold text-gray-900">{{ __('trans.edit_course') }}</h1>
             </div>
         </div>
         
@@ -122,24 +122,24 @@
             @if($course->status == 'approved')
                 <span class="inline-flex items-center px-3 py-1 rounded-full text-sm font-medium bg-green-100 text-green-800">
                     <i class="fa-solid fa-check mr-1"></i>
-                    Approved
+                    {{ __('trans.approved') }}
                 </span>
             @elseif($course->status == 'pending')
                 <span class="inline-flex items-center px-3 py-1 rounded-full text-sm font-medium bg-yellow-100 text-yellow-800">
                     <i class="fa-solid fa-clock mr-1"></i>
-                    Pending Approval
+                    {{ __('trans.pending_approval') }}
                 </span>
             @else
                 <span class="inline-flex items-center px-3 py-1 rounded-full text-sm font-medium bg-red-100 text-red-800">
                     <i class="fa-solid fa-times mr-1"></i>
-                    Rejected
+                    {{ __('trans.rejected') }}
                 </span>
             @endif
 
             @if($course->needs_reapproval)
                 <span class="inline-flex items-center px-3 py-1 rounded-full text-sm font-medium bg-orange-100 text-orange-800">
                     <i class="fa-solid fa-exclamation-triangle mr-1"></i>
-                    Needs Reapproval
+                    {{ __('trans.needs_reapproval') }}
                 </span>
             @endif
 
@@ -147,7 +147,7 @@
             <button type="button" onclick="showDeleteModal()" 
                     class="inline-flex items-center px-3 py-1 rounded-lg text-sm font-medium bg-red-100 text-red-700 hover:bg-red-200 transition-colors">
                 <i class="fa-solid fa-trash mr-1"></i>
-                Delete Course
+                {{ __('trans.delete_course') }}
             </button>
         </div>
     </div>
@@ -163,10 +163,10 @@
                 </div>
                 <div class="ml-3">
                     <h3 class="text-sm font-medium text-blue-800">
-                        Course Update Notice
+                        {{ __('trans.course_update_notice') }}
                     </h3>
                     <div class="mt-2 text-sm text-blue-700">
-                        <p>This course is currently approved and live. Any significant changes will require admin approval before being reflected to students.</p>
+                        <p>{{ __('trans.course_approved_live_changes') }}</p>
                     </div>
                 </div>
             </div>
@@ -181,7 +181,7 @@
                 </div>
                 <div class="ml-3">
                     <h3 class="text-sm font-medium text-red-800">
-                        Rejection Reason
+                        {{ __('trans.rejection_reason') }}
                     </h3>
                     <div class="mt-2 text-sm text-red-700">
                         <p>{{ $course->rejection_reason }}</p>
@@ -196,19 +196,19 @@
         
         <!-- Course Basic Information -->
         <div class="bg-white rounded-xl shadow-sm border border-gray-100 p-6">
-            <h2 class="text-lg font-semibold text-gray-900 mb-6">Course Information</h2>
+            <h2 class="text-lg font-semibold text-gray-900 mb-6">{{ __('trans.course_information') }}</h2>
             
             <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
                 <!-- Course Title -->
                 <div class="md:col-span-2">
-                    <label for="title" class="block text-sm font-medium text-gray-700 mb-2">Course Title *</label>
+                    <label for="title" class="block text-sm font-medium text-gray-700 mb-2">{{ __('trans.course_title') }} *</label>
                     <input type="text" id="title" name="title" value="{{ old('title', $course->title) }}" 
                            maxlength="255"
                            class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent" 
                            placeholder="e.g., Complete Web Development Bootcamp" required
                            oninput="updateCharacterCount('title', 'title-count', 255)">
                     <p class="text-xs text-gray-500 mt-1">
-                        <span id="title-count">0</span>/255 characters
+                        <span id="title-count">0</span>/255 {{ __('trans.characters') }}
                     </p>
                     @error('title')
                         <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
@@ -217,11 +217,11 @@
 
                 <!-- Category -->
                 <div>
-                    <label for="category_id" class="block text-sm font-medium text-gray-700 mb-2">Category *</label>
+                    <label for="category_id" class="block text-sm font-medium text-gray-700 mb-2">{{ __('trans.category') }} *</label>
                     <select id="category_id" name="category_id" 
                             class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent" 
                             required onchange="updateSubCategories()">
-                        <option value="">Select a category</option>
+                        <option value="">{{ __('trans.select_a_category') }}</option>
                         @foreach($categories as $category)
                             <option value="{{ $category->id }}" {{ old('category_id', $course->category_id) == $category->id ? 'selected' : '' }}>
                                 {{ $category->name }}
@@ -235,7 +235,7 @@
 
                 <!-- Sub Categories -->
                 <div class="relative">
-                    <label for="sub_category_ids" class="block text-sm font-medium text-gray-700 mb-2">Sub Categories *</label>
+                    <label for="sub_category_ids" class="block text-sm font-medium text-gray-700 mb-2">{{ __('trans.sub_categories') }} *</label>
                     
                     <!-- Multi-Select Dropdown -->
                     <div class="relative">
@@ -244,7 +244,7 @@
                                 class="relative py-3 ps-4 pe-9 flex gap-x-2 text-nowrap w-full cursor-pointer bg-white border border-gray-300 rounded-lg text-start text-sm focus:outline-none focus:ring-2 focus:ring-purple-500 hover:border-gray-400 transition-colors"
                                 onclick="toggleSubcategoryDropdown()" aria-expanded="false">
                             <div class="flex flex-wrap gap-1 flex-1" id="selected-display">
-                                <span class="text-gray-500" id="placeholder-text">Select sub-categories...</span>
+                                <span class="text-gray-500" id="placeholder-text">{{ __('trans.select_sub_categories') }}</span>
                             </div>
                             <!-- Dropdown Arrow -->
                             <div class="absolute top-1/2 end-3 -translate-y-1/2">
@@ -257,7 +257,7 @@
                         <!-- Dropdown Menu -->
                         <div id="subcategory-dropdown" class="hidden absolute mt-2 z-50 w-full max-h-72 p-1 space-y-0.5 bg-white border border-gray-200 rounded-lg shadow-lg overflow-hidden overflow-y-auto [&::-webkit-scrollbar]:w-2 [&::-webkit-scrollbar-thumb]:rounded-full [&::-webkit-scrollbar-track]:bg-gray-100 [&::-webkit-scrollbar-thumb]:bg-gray-300">
                             <div class="text-center py-4 text-sm text-gray-500" id="dropdown-placeholder">
-                                Please select a category first
+                                {{ __('trans.please_select_category_first') }}
                             </div>
                         </div>
                     </div>
@@ -272,7 +272,7 @@
 
                 <!-- Price -->
                 <div>
-                    <label for="price" class="block text-sm font-medium text-gray-700 mb-2">Price (USD) *</label>
+                    <label for="price" class="block text-sm font-medium text-gray-700 mb-2">{{ __('trans.price_usd') }} *</label>
                     <div class="relative">
                         <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
                             <span class="text-gray-500 sm:text-sm">$</span>
@@ -289,7 +289,7 @@
 
                 <!-- Discount -->
                 <div>
-                    <label for="discount" class="block text-sm font-medium text-gray-700 mb-2">Discount (%)</label>
+                    <label for="discount" class="block text-sm font-medium text-gray-700 mb-2">{{ __('trans.discount') }}</label>
                     <input type="number" id="discount" name="discount" value="{{ old('discount', $course->discount) }}" 
                            min="0" max="100"
                            class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent" 
@@ -301,12 +301,12 @@
 
                 <!-- Course Duration -->
                 <div>
-                    <label for="duration_days" class="block text-sm font-medium text-gray-700 mb-2">Course Duration (Days) *</label>
+                    <label for="duration_days" class="block text-sm font-medium text-gray-700 mb-2">{{ __('trans.course_duration_days') }} *</label>
                     <input type="number" id="duration_days" name="duration_days" value="{{ old('duration_days', $course->duration_days) }}" 
                            min="1" max="365"
                            class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent" 
                            placeholder="e.g., 30" required>
-                    <p class="text-xs text-gray-500 mt-1">Enter the number of days for the course (1-365 days)</p>
+                    <p class="text-xs text-gray-500 mt-1">{{ __('trans.enter_number_days_course') }}</p>
                     @error('duration_days')
                         <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
                     @enderror
@@ -314,14 +314,14 @@
 
                 <!-- Description -->
                 <div class="md:col-span-2">
-                    <label for="description" class="block text-sm font-medium text-gray-700 mb-2">Course Description *</label>
+                    <label for="description" class="block text-sm font-medium text-gray-700 mb-2">{{ __('trans.course_description') }} *</label>
                     <textarea id="description" name="description" rows="6" 
                               maxlength="5000"
                               class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent" 
-                              placeholder="Describe your course, what students will learn, prerequisites, and what makes it unique..." required
+                              placeholder="{{ __('trans.describe_course_placeholder') }}" required
                               oninput="updateCharacterCount('description', 'description-count', 5000)">{{ old('description', $course->description) }}</textarea>
                     <p class="text-xs text-gray-500 mt-1">
-                        <span id="description-count">0</span>/5,000 characters
+                        <span id="description-count">0</span>/5,000 {{ __('trans.characters') }}
                     </p>
                     @error('description')
                         <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
@@ -332,17 +332,17 @@
 
         <!-- Course Images -->
         <div class="bg-white rounded-xl shadow-sm border border-gray-100 p-6">
-            <h2 class="text-lg font-semibold text-gray-900 mb-6">Course Image</h2>
+            <h2 class="text-lg font-semibold text-gray-900 mb-6">{{ __('trans.course_image') }}</h2>
             
             <div class="grid grid-cols-1 gap-6">
                 <!-- Course Image -->
                 <div>
-                    <label for="course_image" class="block text-sm font-medium text-gray-700 mb-2">Course Image</label>
+                    <label for="course_image" class="block text-sm font-medium text-gray-700 mb-2">{{ __('trans.course_image') }}</label>
                     
                     @if($course->cover_photo)
                         <div class="mb-4">
                             <img src="{{ asset('storage/' . $course->cover_photo) }}" alt="Current course image" class="w-full h-48 object-cover rounded-lg border">
-                            <p class="text-xs text-gray-500 mt-1">Current course image</p>
+                            <p class="text-xs text-gray-500 mt-1">{{ __('trans.current_course_image') }}</p>
                         </div>
                     @endif
                     
@@ -350,13 +350,13 @@
                         <div class="space-y-1 text-center flex flex-col items-center justify-center">
                             <div class="flex flex-col items-center justify-center text-sm text-gray-600 text-center">
                                 <label for="course_image" class="relative cursor-pointer bg-white rounded-md font-medium text-purple-600 hover:text-purple-500 focus-within:outline-none focus-within:ring-2 focus-within:ring-offset-2 focus-within:ring-purple-500">
-                                    <span>{{ $course->cover_photo ? 'Change course image' : 'Upload course image' }}</span>
+                                    <span>{{ $course->cover_photo ? __('trans.change_course_image') : __('trans.upload_course_image') }}</span>
                                     <input id="course_image" name="course_image" type="file" class="sr-only" accept="image/*" onchange="previewImage(this, 'course-image-preview')">
                                 </label>
-                                <p class="pl-1 mt-2">or drag and drop</p>
+                                <p class="pl-1 mt-2">{{ __('trans.or_drag_and_drop') }}</p>
                             </div>
-                            <p class="text-xs text-gray-500">PNG, JPG, GIF up to 2MB</p>
-                            <p class="text-xs text-gray-400">This image will be used as cover photo and automatically resized for thumbnail</p>
+                            <p class="text-xs text-gray-500">{{ __('trans.png_jpg_gif_up_to_2mb') }}</p>
+                            <p class="text-xs text-gray-400">{{ __('trans.image_cover_photo_thumbnail') }}</p>
                             <div id="course-image-preview" class="mt-4 flex justify-center"></div>
                         </div>
                     </div>
@@ -372,13 +372,13 @@
             <div class="flex items-center justify-between">
                 <a href="{{ route('mentor.courses.index') }}" class="text-gray-600 hover:text-gray-800 font-medium">
                     <i class="fa-solid fa-arrow-left mr-2"></i>
-                    Back to Courses
+                    {{ __('trans.back_to_courses') }}
                 </a>
                 
                 <div class="flex items-center space-x-3">
                     <button type="submit" class="bg-purple-600 hover:bg-purple-700 text-white px-6 py-3 rounded-lg font-medium transition-colors">
                         <i class="fa-solid fa-save mr-2"></i>
-                        Update Course
+                        {{ __('trans.update_course') }}
                     </button>
                 </div>
             </div>
@@ -396,15 +396,15 @@
             </div>
             
             <!-- Modal Title -->
-            <h3 class="text-lg font-medium text-gray-900 mb-2">Delete Course</h3>
+            <h3 class="text-lg font-medium text-gray-900 mb-2">{{ __('trans.delete_course_modal_title') }}</h3>
             
             <!-- Modal Message -->
             <div class="mt-2 px-7 py-3">
                 <p class="text-sm text-gray-500 mb-4">
-                    Are you sure you want to delete "<span class="font-medium text-gray-900">{{ $course->title }}</span>"?
+                    {{ __('trans.delete_course_modal_message') }} "<span class="font-medium text-gray-900">{{ $course->title }}</span>"?
                 </p>
                 <p class="text-xs text-red-600">
-                    This action cannot be undone. All course data including images will be permanently removed.
+                    {{ __('trans.delete_course_modal_warning') }}
                 </p>
             </div>
             
@@ -412,12 +412,12 @@
             <div class="flex items-center justify-center space-x-4 mt-6">
                 <button type="button" onclick="hideDeleteModal()" 
                         class="px-4 py-2 bg-gray-300 text-gray-800 text-sm font-medium rounded-lg hover:bg-gray-400 transition-colors">
-                    Cancel
+                    {{ __('trans.cancel') }}
                 </button>
                 <button type="button" onclick="confirmDelete()" 
                         class="px-4 py-2 bg-red-600 text-white text-sm font-medium rounded-lg hover:bg-red-700 transition-colors">
                     <i class="fa-solid fa-trash mr-1"></i>
-                    Delete Course
+                    {{ __('trans.delete_course_button') }}
                 </button>
             </div>
         </div>
@@ -527,10 +527,10 @@ function updateSubCategories() {
                 dropdown.appendChild(optionDiv);
             });
         } else {
-            dropdown.innerHTML = '<div class="text-center py-4 text-sm text-gray-500">No sub-categories available for this category</div>';
+            dropdown.innerHTML = '<div class="text-center py-4 text-sm text-gray-500">{{ __('trans.no_sub_categories_available') }}</div>';
         }
     } else {
-        dropdown.innerHTML = '<div class="text-center py-4 text-sm text-gray-500">Please select a category first</div>';
+        dropdown.innerHTML = '<div class="text-center py-4 text-sm text-gray-500">{{ __('trans.please_select_category_first') }}</div>';
     }
 }
 
@@ -584,7 +584,7 @@ function updateSelectedDisplay() {
         if (selectedSubCategories.length > 3) {
             const countBadge = document.createElement('span');
             countBadge.className = 'text-xs text-gray-500';
-            countBadge.textContent = `+${selectedSubCategories.length - 3} more`;
+            countBadge.textContent = `+${selectedSubCategories.length - 3} {{ __('trans.more') }}`;
             container.appendChild(countBadge);
         }
     }

@@ -72,7 +72,7 @@
                     $minutes = $totalMinutes % 60;
                 @endphp
                 @if($hours > 0 && $minutes > 0)
-                    {{ $hours }}h {{ $minutes }}m session
+                    {{ $hours }}h {{ $minutes }}m {{ __('trans.session') }}
                 @elseif($hours > 0)
                     {{ $hours }} {{ __('trans.hour_session') }}
                 @else

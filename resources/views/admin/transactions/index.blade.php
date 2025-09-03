@@ -1,9 +1,9 @@
 @extends('admin.layouts.backend')
 
-@section('title', 'Transactions Management')
+@section('title', __('trans.transactions_management'))
 
 @section('header')
-    Transactions Management
+    {{ __('trans.transactions_management') }}
 @endsection
 
 @section('content')
@@ -14,7 +14,7 @@
         <div class="bg-white rounded-xl shadow-lg p-6">
             <div class="flex items-center justify-between">
                 <div>
-                    <p class="text-sm text-gray-600">Total Transactions</p>
+                    <p class="text-sm text-gray-600">{{ __('trans.total_transactions') }}</p>
                     <p class="text-2xl font-bold text-gray-900">{{ $summary['total_transactions'] }}</p>
                 </div>
                 <div class="w-12 h-12 bg-blue-100 rounded-lg flex items-center justify-center">
@@ -27,7 +27,7 @@
         <div class="bg-white rounded-xl shadow-lg p-6">
             <div class="flex items-center justify-between">
                 <div>
-                    <p class="text-sm text-gray-600">Total Revenue</p>
+                    <p class="text-sm text-gray-600">{{ __('trans.total_revenue') }}</p>
                     <p class="text-2xl font-bold text-gray-900">${{ number_format($summary['total_gross_amount'], 2) }}</p>
                 </div>
                 <div class="w-12 h-12 bg-green-100 rounded-lg flex items-center justify-center">
@@ -40,7 +40,7 @@
         <div class="bg-white rounded-xl shadow-lg p-6">
             <div class="flex items-center justify-between">
                 <div>
-                    <p class="text-sm text-gray-600">Admin Commission</p>
+                    <p class="text-sm text-gray-600">{{ __('trans.admin_commission') }}</p>
                     <p class="text-2xl font-bold text-gray-900">${{ number_format($summary['total_admin_amount'], 2) }}</p>
                 </div>
                 <div class="w-12 h-12 bg-purple-100 rounded-lg flex items-center justify-center">
@@ -53,7 +53,7 @@
         <div class="bg-white rounded-xl shadow-lg p-6">
             <div class="flex items-center justify-between">
                 <div>
-                    <p class="text-sm text-gray-600">Completed</p>
+                    <p class="text-sm text-gray-600">{{ __('trans.completed') }}</p>
                     <p class="text-2xl font-bold text-gray-900">{{ $summary['completed_transactions'] }}</p>
                 </div>
                 <div class="w-12 h-12 bg-green-100 rounded-lg flex items-center justify-center">
@@ -69,42 +69,42 @@
             <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
                 <!-- Search -->
                 <div>
-                    <label class="block text-sm font-medium text-gray-700 mb-2">Search</label>
+                    <label class="block text-sm font-medium text-gray-700 mb-2">{{ __('trans.search') }}</label>
                     <input type="text" name="search" value="{{ request('search') }}" 
-                           placeholder="Transaction ID, Customer ID, Description..." 
+                           placeholder="{{ __('trans.transaction_id_customer_description') }}" 
                            class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent">
                 </div>
 
                 <!-- Transaction Status -->
                 <div>
-                    <label class="block text-sm font-medium text-gray-700 mb-2">Status</label>
+                    <label class="block text-sm font-medium text-gray-700 mb-2">{{ __('trans.status') }}</label>
                     <select name="transaction_status" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent">
-                        <option value="">All Status</option>
-                        <option value="pending" {{ request('transaction_status') == 'pending' ? 'selected' : '' }}>Pending</option>
-                        <option value="processing" {{ request('transaction_status') == 'processing' ? 'selected' : '' }}>Processing</option>
-                        <option value="completed" {{ request('transaction_status') == 'completed' ? 'selected' : '' }}>Completed</option>
-                        <option value="failed" {{ request('transaction_status') == 'failed' ? 'selected' : '' }}>Failed</option>
-                        <option value="cancelled" {{ request('transaction_status') == 'cancelled' ? 'selected' : '' }}>Cancelled</option>
-                        <option value="refunded" {{ request('transaction_status') == 'refunded' ? 'selected' : '' }}>Refunded</option>
+                        <option value="">{{ __('trans.all_status') }}</option>
+                        <option value="pending" {{ request('transaction_status') == 'pending' ? 'selected' : '' }}>{{ __('trans.pending') }}</option>
+                        <option value="processing" {{ request('transaction_status') == 'processing' ? 'selected' : '' }}>{{ __('trans.processing') }}</option>
+                        <option value="completed" {{ request('transaction_status') == 'completed' ? 'selected' : '' }}>{{ __('trans.completed') }}</option>
+                        <option value="failed" {{ request('transaction_status') == 'failed' ? 'selected' : '' }}>{{ __('trans.failed') }}</option>
+                        <option value="cancelled" {{ request('transaction_status') == 'cancelled' ? 'selected' : '' }}>{{ __('trans.cancelled') }}</option>
+                        <option value="refunded" {{ request('transaction_status') == 'refunded' ? 'selected' : '' }}>{{ __('trans.refunded') }}</option>
                     </select>
                 </div>
 
                 <!-- Transaction Type -->
                 <div>
-                    <label class="block text-sm font-medium text-gray-700 mb-2">Type</label>
+                    <label class="block text-sm font-medium text-gray-700 mb-2">{{ __('trans.type') }}</label>
                     <select name="transaction_type" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent">
-                        <option value="">All Types</option>
-                        <option value="payment" {{ request('transaction_type') == 'payment' ? 'selected' : '' }}>Payment</option>
-                        <option value="refund" {{ request('transaction_type') == 'refund' ? 'selected' : '' }}>Refund</option>
-                        <option value="partial_refund" {{ request('transaction_type') == 'partial_refund' ? 'selected' : '' }}>Partial Refund</option>
+                        <option value="">{{ __('trans.all_types') }}</option>
+                        <option value="payment" {{ request('transaction_type') == 'payment' ? 'selected' : '' }}>{{ __('trans.payment') }}</option>
+                        <option value="refund" {{ request('transaction_type') == 'refund' ? 'selected' : '' }}>{{ __('trans.refund') }}</option>
+                        <option value="partial_refund" {{ request('transaction_type') == 'partial_refund' ? 'selected' : '' }}>{{ __('trans.partial_refund') }}</option>
                     </select>
                 </div>
 
                 <!-- Currency -->
                 <div>
-                    <label class="block text-sm font-medium text-gray-700 mb-2">Currency</label>
+                    <label class="block text-sm font-medium text-gray-700 mb-2">{{ __('trans.currency') }}</label>
                     <select name="currency" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent">
-                        <option value="">All Currencies</option>
+                        <option value="">{{ __('trans.all_currencies') }}</option>
                         <option value="USD" {{ request('currency') == 'USD' ? 'selected' : '' }}>USD</option>
                         <option value="EUR" {{ request('currency') == 'EUR' ? 'selected' : '' }}>EUR</option>
                         <option value="GBP" {{ request('currency') == 'GBP' ? 'selected' : '' }}>GBP</option>
@@ -115,7 +115,7 @@
             <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
                 <!-- Amount Min -->
                 <div>
-                    <label class="block text-sm font-medium text-gray-700 mb-2">Min Amount</label>
+                    <label class="block text-sm font-medium text-gray-700 mb-2">{{ __('trans.min_amount') }}</label>
                     <input type="number" name="amount_min" value="{{ request('amount_min') }}" 
                            placeholder="0" min="0" step="0.01"
                            class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent">
@@ -123,7 +123,7 @@
 
                 <!-- Amount Max -->
                 <div>
-                    <label class="block text-sm font-medium text-gray-700 mb-2">Max Amount</label>
+                    <label class="block text-sm font-medium text-gray-700 mb-2">{{ __('trans.max_amount') }}</label>
                     <input type="number" name="amount_max" value="{{ request('amount_max') }}" 
                            placeholder="1000" min="0" step="0.01"
                            class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent">
@@ -131,7 +131,7 @@
 
                 <!-- Date From -->
                 <div>
-                    <label class="block text-sm font-medium text-gray-700 mb-2">From Date</label>
+                    <label class="block text-sm font-medium text-gray-700 mb-2">{{ __('trans.from_date') }}</label>
                     <input type="date" name="date_from" value="{{ request('date_from') }}" 
                            class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent">
                 </div>
@@ -139,10 +139,10 @@
 
             <div class="flex items-center gap-3">
                 <button type="submit" class="px-6 py-2 bg-purple-600 text-white rounded-lg hover:bg-purple-700 transition-colors duration-200">
-                    <i class="fa-solid fa-filter mr-2"></i>Apply Filters
+                    <i class="fa-solid fa-filter mr-2"></i>{{ __('trans.apply_filters') }}
                 </button>
                 <a href="{{ route('admin.transactions.index') }}" class="px-6 py-2 bg-gray-100 text-gray-700 rounded-lg hover:bg-gray-200 transition-colors duration-200">
-                    <i class="fa-solid fa-times mr-2"></i>Clear Filters
+                    <i class="fa-solid fa-times mr-2"></i>{{ __('trans.clear_filters') }}
                 </a>
             </div>
         </form>
@@ -155,25 +155,25 @@
                 <thead class="bg-gray-50">
                     <tr>
                         <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                            Transaction
+                            {{ __('trans.transaction') }}
                         </th>
                         <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                            Customer
+                            {{ __('trans.customer') }}
                         </th>
                         <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                            Amount Details
+                            {{ __('trans.amount_details') }}
                         </th>
                         <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                            Status
+                            {{ __('trans.status') }}
                         </th>
                         <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                            Payment Method
+                            {{ __('trans.payment_method') }}
                         </th>
                         <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                            Date
+                            {{ __('trans.date') }}
                         </th>
                         <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                            Actions
+                            {{ __('trans.actions') }}
                         </th>
                     </tr>
                 </thead>
@@ -185,7 +185,7 @@
                                 <div class="font-medium text-gray-900">{{ $transaction->transaction_id }}</div>
                                 <div class="text-gray-500">{{ $transaction->transaction_type }}</div>
                                 @if($transaction->stripe_payment_intent_id)
-                                    <div class="text-xs text-gray-400">Stripe: {{ Str::limit($transaction->stripe_payment_intent_id, 20) }}</div>
+                                    <div class="text-xs text-gray-400">{{ __('trans.stripe') }} {{ Str::limit($transaction->stripe_payment_intent_id, 20) }}</div>
                                 @endif
                             </div>
                         </td>
@@ -193,25 +193,25 @@
                             @if($transaction->enrollments->count() > 0)
                                 @php $enrollment = $transaction->enrollments->first() @endphp
                                 <div class="text-sm">
-                                    <div class="font-medium text-gray-900">{{ $enrollment->user->name ?? 'N/A' }}</div>
-                                    <div class="text-gray-500">{{ $enrollment->user->email ?? 'N/A' }}</div>
+                                    <div class="font-medium text-gray-900">{{ $enrollment->user->name ?? __('trans.na') }}</div>
+                                    <div class="text-gray-500">{{ $enrollment->user->email ?? __('trans.na') }}</div>
                                     @if($transaction->stripe_customer_id)
                                         <div class="text-xs text-gray-400">ID: {{ Str::limit($transaction->stripe_customer_id, 20) }}</div>
                                     @endif
                                 </div>
                             @else
-                                <span class="text-gray-400">No enrollment data</span>
+                                <span class="text-gray-400">{{ __('trans.no_enrollment_data') }}</span>
                             @endif
                         </td>
                         <td class="px-6 py-4 whitespace-nowrap">
                             <div class="text-sm text-gray-900">
                                 <div class="font-medium">${{ number_format($transaction->gross_amount, 2) }}</div>
                                 <div class="text-xs text-gray-500">
-                                    Admin: ${{ number_format($transaction->admin_amount, 2) }} | 
-                                    Mentor: ${{ number_format($transaction->mentor_amount, 2) }}
+                                    {{ __('trans.admin') }} ${{ number_format($transaction->admin_amount, 2) }} | 
+                                    {{ __('trans.mentor') }} ${{ number_format($transaction->mentor_amount, 2) }}
                                 </div>
                                 @if($transaction->stripe_fee > 0)
-                                    <div class="text-xs text-gray-400">Fee: ${{ number_format($transaction->stripe_fee, 2) }}</div>
+                                    <div class="text-xs text-gray-400">{{ __('trans.fee') }} ${{ number_format($transaction->stripe_fee, 2) }}</div>
                                 @endif
                             </div>
                         </td>
@@ -220,37 +220,37 @@
                                 @case('completed')
                                     <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-green-100 text-green-800">
                                         <i class="fa-solid fa-check mr-1"></i>
-                                        Completed
+                                        {{ __('trans.completed') }}
                                     </span>
                                     @break
                                 @case('pending')
                                     <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-yellow-100 text-yellow-800">
                                         <i class="fa-solid fa-clock mr-1"></i>
-                                        Pending
+                                        {{ __('trans.pending') }}
                                     </span>
                                     @break
                                 @case('processing')
                                     <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-blue-100 text-blue-800">
                                         <i class="fa-solid fa-spinner mr-1"></i>
-                                        Processing
+                                        {{ __('trans.processing') }}
                                     </span>
                                     @break
                                 @case('failed')
                                     <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-red-100 text-red-800">
                                         <i class="fa-solid fa-times mr-1"></i>
-                                        Failed
+                                        {{ __('trans.failed') }}
                                     </span>
                                     @break
                                 @case('cancelled')
                                     <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-gray-100 text-gray-800">
                                         <i class="fa-solid fa-ban mr-1"></i>
-                                        Cancelled
+                                        {{ __('trans.cancelled') }}
                                     </span>
                                     @break
                                 @case('refunded')
                                     <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-orange-100 text-orange-800">
                                         <i class="fa-solid fa-undo mr-1"></i>
-                                        Refunded
+                                        {{ __('trans.refunded') }}
                                     </span>
                                     @break
                             @endswitch
@@ -266,7 +266,7 @@
                                         <div class="text-xs text-gray-400">{{ ucfirst($transaction->payment_method_brand) }}</div>
                                     @endif
                                 @else
-                                    <span class="text-gray-400">N/A</span>
+                                    <span class="text-gray-400">{{ __('trans.na') }}</span>
                                 @endif
                             </div>
                         </td>
@@ -277,7 +277,7 @@
                             <a href="{{ route('admin.transactions.show', $transaction->id) }}" 
                                class="px-3 py-1 text-xs bg-blue-100 text-blue-700 rounded-lg hover:bg-blue-200 transition-colors duration-200">
                                 <i class="fa-solid fa-eye mr-1"></i>
-                                Details
+                                {{ __('trans.details') }}
                             </a>
                         </td>
                     </tr>
@@ -286,8 +286,8 @@
                         <td colspan="7" class="px-6 py-12 text-center text-gray-500">
                             <div class="flex flex-col items-center">
                                 <i class="fa-solid fa-credit-card text-4xl text-gray-300 mb-3"></i>
-                                <p class="text-lg font-medium">No transactions found</p>
-                                <p class="text-sm">Try adjusting your filters or search terms</p>
+                                <p class="text-lg font-medium">{{ __('trans.no_transactions_found') }}</p>
+                                <p class="text-sm">{{ __('trans.try_adjusting_filters') }}</p>
                             </div>
                         </td>
                     </tr>
@@ -303,13 +303,13 @@
                 <!-- Pagination Details - Left Aligned -->
                 <div class="text-sm text-gray-700">
                     <p>
-                        Showing
+                        {{ __('trans.showing') }}
                         <span class="font-medium">{{ $transactions->firstItem() ?? 0 }}</span>
-                        to
+                        {{ __('trans.to') }}
                         <span class="font-medium">{{ $transactions->lastItem() ?? 0 }}</span>
-                        of
+                        {{ __('trans.of') }}
                         <span class="font-medium">{{ $transactions->total() }}</span>
-                        transactions
+                        {{ __('trans.transactions') }}
                     </p>
                 </div>
 

@@ -1,9 +1,9 @@
 @extends('admin.layouts.backend')
 
-@section('title', 'Create Sub-Category')
+@section('title', __('trans.create_sub_category'))
 
 @section('header')
-    Create Sub-Category
+    {{ __('trans.create_sub_category') }}
 @endsection
 
 @section('content')
@@ -13,7 +13,7 @@
         <a href="{{ route('admin.sub-categories.index') }}" 
            class="px-4 py-2 bg-gray-100 text-gray-700 rounded-lg hover:bg-gray-200 transition-colors duration-200">
             <i class="fa-solid fa-arrow-left mr-2"></i>
-            Back to Sub-Categories
+            {{ __('trans.back_to_sub_categories') }}
         </a>
     </div>
 
@@ -25,11 +25,11 @@
             <!-- Category Selection -->
             <div>
                 <label for="category_id" class="block text-sm font-medium text-gray-700 mb-2">
-                    Parent Category <span class="text-red-500">*</span>
+                    {{ __('trans.parent_category') }} <span class="text-red-500">*</span>
                 </label>
                 <select id="category_id" name="category_id" required
                         class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent @error('category_id') border-red-500 @enderror">
-                    <option value="">Select a category</option>
+                    <option value="">{{ __('trans.select_a_category') }}</option>
                     @foreach($categories as $category)
                         <option value="{{ $category->id }}" {{ old('category_id') == $category->id ? 'selected' : '' }}>
                             {{ $category->name }}
@@ -44,29 +44,29 @@
             <!-- Sub-Category Name -->
             <div>
                 <label for="name" class="block text-sm font-medium text-gray-700 mb-2">
-                    Sub-Category Name <span class="text-red-500">*</span>
+                    {{ __('trans.sub_category_name') }} <span class="text-red-500">*</span>
                 </label>
                 <input type="text" id="name" name="name" value="{{ old('name') }}" required
-                       placeholder="Enter sub-category name"
+                       placeholder="{{ __('trans.enter_sub_category_name') }}"
                        class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent @error('name') border-red-500 @enderror">
                 @error('name')
                     <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
                 @enderror
-                <p class="mt-1 text-sm text-gray-500">This name must be unique within the selected category.</p>
+                <p class="mt-1 text-sm text-gray-500">{{ __('trans.sub_category_name_unique') }}</p>
             </div>
 
             <!-- Description -->
             <div>
                 <label for="description" class="block text-sm font-medium text-gray-700 mb-2">
-                    Description
+                    {{ __('trans.description') }}
                 </label>
                 <textarea id="description" name="description" rows="4"
-                          placeholder="Enter a description for this sub-category (optional)"
+                          placeholder="{{ __('trans.enter_description_optional') }}"
                           class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent @error('description') border-red-500 @enderror">{{ old('description') }}</textarea>
                 @error('description')
                     <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
                 @enderror
-                <p class="mt-1 text-sm text-gray-500">Provide a brief description to help users understand this sub-category.</p>
+                <p class="mt-1 text-sm text-gray-500">{{ __('trans.provide_brief_description') }}</p>
             </div>
 
 
@@ -75,12 +75,12 @@
             <div class="flex items-center justify-end gap-4 pt-6 border-t border-gray-200">
                 <a href="{{ route('admin.sub-categories.index') }}" 
                    class="px-6 py-3 bg-gray-100 text-gray-700 rounded-lg hover:bg-gray-200 transition-colors duration-200">
-                    Cancel
+                    {{ __('trans.cancel') }}
                 </a>
                 <button type="submit" 
                         class="px-6 py-3 bg-purple-600 text-white rounded-lg hover:bg-purple-700 transition-colors duration-200">
                     <i class="fa-solid fa-plus mr-2"></i>
-                    Create Sub-Category
+                    {{ __('trans.create_sub_category') }}
                 </button>
             </div>
         </form>
@@ -93,11 +93,11 @@
                 <i class="fa-solid fa-info text-sm text-blue-600"></i>
             </div>
             <div>
-                <h3 class="text-sm font-medium text-blue-800 mb-2">Creating Sub-Categories</h3>
+                <h3 class="text-sm font-medium text-blue-800 mb-2">{{ __('trans.creating_sub_categories') }}</h3>
                 <div class="text-sm text-blue-700 space-y-1">
-                    <p>• <strong>Parent Category:</strong> Choose the main category this sub-category belongs to.</p>
-                    <p>• <strong>Unique Names:</strong> Sub-category names must be unique within the same category.</p>
-                    <p>• <strong>Organization:</strong> Use sub-categories to further organize courses and sessions.</p>
+                    <p>• <strong>{{ __('trans.parent_category') }}:</strong> {{ __('trans.parent_category_help') }}</p>
+                    <p>• <strong>{{ __('trans.unique_names') }}</strong> {{ __('trans.unique_names_description') }}</p>
+                    <p>• <strong>{{ __('trans.organization') }}</strong> {{ __('trans.organization_description') }}</p>
 
                 </div>
             </div>
@@ -117,14 +117,14 @@ document.querySelector('form').addEventListener('submit', function(e) {
     
     if (!categoryId) {
         e.preventDefault();
-        alert('Please select a parent category.');
+        alert('{{ __('trans.please_select_parent_category') }}');
         document.getElementById('category_id').focus();
         return;
     }
     
     if (!name) {
         e.preventDefault();
-        alert('Please enter a sub-category name.');
+        alert('{{ __('trans.please_enter_sub_category_name') }}');
         document.getElementById('name').focus();
         return;
     }

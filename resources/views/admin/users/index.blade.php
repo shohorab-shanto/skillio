@@ -199,18 +199,18 @@
                 <i class="fa-solid fa-trash text-2xl text-red-600"></i>
             </div>
             <h3 class="text-xl font-semibold text-gray-900 text-center mb-2">
-                Delete User
+                {{ __('trans.delete_user') }}
             </h3>
             <p class="text-gray-600 text-center mb-6">
-                Are you sure you want to delete this user? This action cannot be undone.
+                {{ __('trans.are_you_sure_delete_user') }}
             </p>
             <div class="flex space-x-3">
                 <button onclick="cancelDelete()" class="flex-1 px-4 py-3 bg-gray-100 text-gray-700 rounded-xl font-medium hover:bg-gray-200 transition-colors duration-200">
-                    Cancel
+                    {{ __('trans.cancel') }}
                 </button>
                 <button onclick="confirmDelete()" class="flex-1 px-4 py-3 bg-red-600 text-white rounded-xl font-medium hover:bg-red-700 transition-colors duration-200">
                     <i class="fa-solid fa-trash mr-2"></i>
-                    Delete
+                    {{ __('trans.delete') }}
                 </button>
             </div>
         </div>

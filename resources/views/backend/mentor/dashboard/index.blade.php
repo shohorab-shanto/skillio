@@ -1,11 +1,11 @@
 @extends('backend.layouts.app')
 
-@section('title', 'Mentor Dashboard')
+@section('title', __('trans.mentor_dashboard'))
 
 @section('header')
     <div class="flex items-center justify-between">
         <div>
-            <h1 class="text-xl font-bold text-gray-900">Dashboard</h1>
+            <h1 class="text-xl font-bold text-gray-900">{{ __('trans.dashboard') }}</h1>
         </div>
     </div>
 @endsection
@@ -21,10 +21,10 @@
                 <div class="flex items-center justify-between mb-4">
                     <div class="flex items-center space-x-3">
                         <div class="w-12 h-12 bg-yellow-100 rounded-lg flex items-center justify-center">
-                            <img src="{{ asset('assets/images/user_dashboard-1.png') }}" alt="Total Courses" class="w-6 h-6 object-contain" />
+                            <img src="{{ asset('assets/images/user_dashboard-1.png') }}" alt="{{ __('trans.total_courses') }}" class="w-6 h-6 object-contain" />
                         </div>
                         <div>
-                            <p class="text-sm text-gray-600">Total Courses</p>
+                            <p class="text-sm text-gray-600">{{ __('trans.total_courses') }}</p>
                             <p class="text-2xl font-bold text-gray-900">{{ $totalCourses }}</p>
                         </div>
                     </div>
@@ -41,10 +41,10 @@
                 <div class="flex items-center justify-between mb-4">
                     <div class="flex items-center space-x-3">
                         <div class="w-12 h-12 bg-green-100 rounded-lg flex items-center justify-center">
-                            <img src="{{ asset('assets/images/user_dashboard-2.png') }}" alt="Total Users" class="w-6 h-6 object-contain" />
+                            <img src="{{ asset('assets/images/user_dashboard-2.png') }}" alt="{{ __('trans.total_user') }}" class="w-6 h-6 object-contain" />
                         </div>
                         <div>
-                            <p class="text-sm text-gray-600">Total User</p>
+                            <p class="text-sm text-gray-600">{{ __('trans.total_user') }}</p>
                             <p class="text-2xl font-bold text-gray-900">{{ $totalUsers }}</p>
                         </div>
                     </div>
@@ -61,10 +61,10 @@
                 <div class="flex items-center justify-between mb-4">
                     <div class="flex items-center space-x-3">
                         <div class="w-12 h-12 bg-blue-100 rounded-lg flex items-center justify-center">
-                            <img src="{{ asset('assets/images/user_dashboard-3.png') }}" alt="Mentor Income" class="w-6 h-6 object-contain" />
+                            <img src="{{ asset('assets/images/user_dashboard-3.png') }}" alt="{{ __('trans.mentors_income') }}" class="w-6 h-6 object-contain" />
                         </div>
                         <div>
-                            <p class="text-sm text-gray-600">Mentors Income</p>
+                            <p class="text-sm text-gray-600">{{ __('trans.mentors_income') }}</p>
                             <p class="text-2xl font-bold text-gray-900">${{ number_format($mentorIncome) }}</p>
                         </div>
                     </div>
@@ -81,10 +81,10 @@
                 <div class="flex items-center justify-between mb-4">
                     <div class="flex items-center space-x-3">
                         <div class="w-12 h-12 bg-orange-100 rounded-lg flex items-center justify-center">
-                            <img src="{{ asset('assets/images/user_dashboard-4.png') }}" alt="Active Courses" class="w-6 h-6 object-contain" />
+                            <img src="{{ asset('assets/images/user_dashboard-4.png') }}" alt="{{ __('trans.active_courses') }}" class="w-6 h-6 object-contain" />
                         </div>
                         <div>
-                            <p class="text-sm text-gray-600">Active Courses</p>
+                            <p class="text-sm text-gray-600">{{ __('trans.active_courses') }}</p>
                             <p class="text-2xl font-bold text-gray-900">{{ $activeCourses }}</p>
                         </div>
                     </div>
@@ -103,32 +103,32 @@
         <!-- Bottom Section - Student List -->
         <div class="bg-white rounded-xl shadow-lg p-6">
             <div class="flex items-center justify-between mb-6">
-                <h3 class="text-xl font-semibold text-gray-900">Student List</h3>
+                <h3 class="text-xl font-semibold text-gray-900">{{ __('trans.student_list') }}</h3>
                 <div class="flex items-center space-x-4">
                     <div class="relative">
                         <input type="text" 
-                               placeholder="Search students or services..." 
+                               placeholder="{{ __('trans.search_students_services') }}" 
                                class="pl-10 pr-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent"
                                value="{{ request('search') }}">
                         <i class="fa-solid fa-search absolute left-3 top-3 text-gray-400"></i>
                     </div>
                     <div class="relative">
                         <button id="filterBtn" class="px-4 py-2 border border-gray-300 rounded-lg hover:bg-gray-50 flex items-center space-x-2">
-                            <span>Filter</span>
+                            <span>{{ __('trans.filter') }}</span>
                             <i class="fa-solid fa-chevron-down text-xs"></i>
                         </button>
                         <div id="filterDropdown" class="hidden absolute right-0 mt-2 w-40 bg-white border border-gray-200 rounded-lg shadow-lg z-10">
                             <a href="{{ request()->fullUrlWithQuery(['status' => 'all']) }}" 
                                class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 {{ request('status', 'all') == 'all' ? 'bg-purple-100 text-purple-700' : '' }}">
-                                <i class="fa-solid fa-list mr-2"></i>All Students
+                                <i class="fa-solid fa-list mr-2"></i>{{ __('trans.all_students') }}
                             </a>
                             <a href="{{ request()->fullUrlWithQuery(['status' => 'active']) }}" 
                                class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 {{ request('status') == 'active' ? 'bg-purple-100 text-purple-700' : '' }}">
-                                <i class="fa-solid fa-check-circle mr-2 text-green-600"></i>Active
+                                <i class="fa-solid fa-check-circle mr-2 text-green-600"></i>{{ __('trans.active') }}
                             </a>
                             <a href="{{ request()->fullUrlWithQuery(['status' => 'inactive']) }}" 
                                class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 {{ request('status') == 'inactive' ? 'bg-purple-100 text-purple-700' : '' }}">
-                                <i class="fa-solid fa-times-circle mr-2 text-red-600"></i>Inactive
+                                <i class="fa-solid fa-times-circle mr-2 text-red-600"></i>{{ __('trans.inactive') }}
                             </a>
                         </div>
                     </div>
@@ -140,12 +140,12 @@
                 <table class="w-full">
                     <thead>
                         <tr class="border-b border-gray-200">
-                            <th class="text-left py-3 px-4 font-medium text-gray-700">Student Name</th>
-                            <th class="text-left py-3 px-4 font-medium text-gray-700">Service</th>
-                            <th class="text-left py-3 px-4 font-medium text-gray-700">Enrollment Date</th>
-                            <th class="text-left py-3 px-4 font-medium text-gray-700">Duration Left</th>
-                            <th class="text-left py-3 px-4 font-medium text-gray-700">Status</th>
-                            <th class="text-left py-3 px-4 font-medium text-gray-700">Action</th>
+                            <th class="text-left py-3 px-4 font-medium text-gray-700">{{ __('trans.student_name') }}</th>
+                            <th class="text-left py-3 px-4 font-medium text-gray-700">{{ __('trans.service') }}</th>
+                            <th class="text-left py-3 px-4 font-medium text-gray-700">{{ __('trans.enrollment_date') }}</th>
+                            <th class="text-left py-3 px-4 font-medium text-gray-700">{{ __('trans.duration_left') }}</th>
+                            <th class="text-left py-3 px-4 font-medium text-gray-700">{{ __('trans.status') }}</th>
+                            <th class="text-left py-3 px-4 font-medium text-gray-700">{{ __('trans.action') }}</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -180,14 +180,14 @@
                                             @if($enrollment->enrollable_type == 'App\Models\Course')
                                                 {{ $service->title }}
                                             @else
-                                                Session
+                                                {{ __('trans.session') }}
                                             @endif
                                         </p>
                                         <p class="text-xs text-gray-500">
                                             @if($enrollment->enrollable_type == 'App\Models\Course')
-                                                Course
+                                                {{ __('trans.course') }}
                                             @else
-                                                Session
+                                                {{ __('trans.session') }}
                                             @endif
                                         </p>
                                     </div>
@@ -210,7 +210,7 @@
                                 <td class="py-4 px-4">
                                     <span class="inline-block px-3 py-1 rounded-full text-sm font-medium
                                         {{ $isActive ? 'bg-green-100 text-green-800' : 'bg-red-100 text-red-800' }}">
-                                        {{ $isActive ? 'Active' : 'Inactive' }}
+                                        {{ $isActive ? __('trans.active') : __('trans.inactive') }}
                                     </span>
                                 </td>
                                 <td class="py-4 px-4">
@@ -249,7 +249,7 @@
                                     <a href="{{ route('chat.show', $conversation->unique_code) }}" 
                                        class="inline-flex items-center px-3 py-2 bg-blue-600 text-white text-sm font-medium rounded-lg hover:bg-blue-700 transition-colors">
                                         <i class="fa-solid fa-comment mr-2"></i>
-                                        Chat
+                                        {{ __('trans.chat') }}
                                     </a>
                                 </td>
                             </tr>
@@ -258,8 +258,8 @@
                                 <td colspan="6" class="py-8 text-center text-gray-500">
                                     <div class="flex flex-col items-center">
                                         <i class="fa-solid fa-users text-4xl text-gray-300 mb-4"></i>
-                                        <p class="text-lg">No students found</p>
-                                        <p class="text-sm">Students will appear here once they enroll in your courses or book sessions</p>
+                                        <p class="text-lg">{{ __('trans.no_students_found') }}</p>
+                                        <p class="text-sm">{{ __('trans.students_appear_here') }}</p>
                                     </div>
                                 </td>
                             </tr>
@@ -275,13 +275,13 @@
                         <!-- Pagination Details - Left Aligned -->
                         <div class="text-sm text-gray-700">
                             <p>
-                                Showing
+                                {{ __('trans.showing') }}
                                 <span class="font-medium">{{ $students->firstItem() ?? 0 }}</span>
-                                to
+                                {{ __('trans.to') }}
                                 <span class="font-medium">{{ $students->lastItem() ?? 0 }}</span>
-                                of
+                                {{ __('trans.of') }}
                                 <span class="font-medium">{{ $students->total() }}</span>
-                                students
+                                {{ __('trans.students') }}
                             </p>
                         </div>
 
@@ -317,7 +317,7 @@ document.addEventListener('DOMContentLoaded', function() {
     });
     
     // Handle search form submission
-    const searchInput = document.querySelector('input[placeholder="Search students or services..."]');
+    const searchInput = document.querySelector('input[placeholder="{{ __('trans.search_students_services') }}"]');
     searchInput.addEventListener('keypress', function(e) {
         if (e.key == 'Enter') {
             const searchValue = this.value;
@@ -334,7 +334,7 @@ document.addEventListener('DOMContentLoaded', function() {
         data: {
             labels: @json(collect($dailyEarnings)->pluck('date')->toArray()),
             datasets: [{
-                label: 'Earnings',
+                label: '{{ __('trans.earnings') }}',
                 data: @json(collect($dailyEarnings)->pluck('earnings')->toArray()),
                 borderColor: '#9333ea',
                 backgroundColor: 'rgba(147, 51, 234, 0.15)',
@@ -398,7 +398,7 @@ document.addEventListener('DOMContentLoaded', function() {
         data: {
             labels: @json(collect($monthlyEarnings)->pluck('month')->toArray()),
             datasets: [{
-                label: 'Monthly Earnings',
+                label: '{{ __('trans.monthly_earnings') }}',
                 data: @json(collect($monthlyEarnings)->pluck('earnings')->toArray()),
                 backgroundColor: [
                     '#ec4899', // pink

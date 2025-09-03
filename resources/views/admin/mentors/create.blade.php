@@ -1,9 +1,9 @@
 @extends('admin.layouts.backend')
 
-@section('title', 'Create Mentor')
+@section('title', __('trans.create_mentor'))
 
 @section('header')
-    Create Mentor
+    {{ __('trans.create_mentor') }}
 @endsection
 
 @section('content')
@@ -13,7 +13,7 @@
         <a href="{{ route('admin.mentors.index') }}" 
            class="px-4 py-2 bg-gray-100 text-gray-700 rounded-lg hover:bg-gray-200 transition-colors duration-200">
             <i class="fa-solid fa-arrow-left mr-2"></i>
-            Back to Mentors
+            {{ __('trans.back_to_mentors') }}
         </a>
     </div>
 
@@ -24,15 +24,15 @@
             
             <!-- Basic Information -->
             <div class="border-b border-gray-200 pb-6">
-                <h3 class="text-lg font-medium text-gray-900 mb-4">Basic Information</h3>
+                <h3 class="text-lg font-medium text-gray-900 mb-4">{{ __('trans.basic_information') }}</h3>
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
                     <!-- Name -->
                     <div>
                         <label for="name" class="block text-sm font-medium text-gray-700 mb-2">
-                            Full Name <span class="text-red-500">*</span>
+                            {{ __('trans.full_name') }} <span class="text-red-500">*</span>
                         </label>
                         <input type="text" id="name" name="name" value="{{ old('name') }}" required
-                               placeholder="Enter mentor's full name"
+                               placeholder="{{ __('trans.enter_mentor_full_name') }}"
                                class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent @error('name') border-red-500 @enderror">
                         @error('name')
                             <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
@@ -42,10 +42,10 @@
                     <!-- Email -->
                     <div>
                         <label for="email" class="block text-sm font-medium text-gray-700 mb-2">
-                            Email Address <span class="text-red-500">*</span>
+                            {{ __('trans.email_address') }} <span class="text-red-500">*</span>
                         </label>
                         <input type="email" id="email" name="email" value="{{ old('email') }}" required
-                               placeholder="Enter mentor's email address"
+                               placeholder="{{ __('trans.enter_mentor_email') }}"
                                class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent @error('email') border-red-500 @enderror">
                         @error('email')
                             <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
@@ -57,17 +57,17 @@
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mt-6">
                     <div>
                         <label for="password" class="block text-sm font-medium text-gray-700 mb-2">
-                            Password <span class="text-red-500">*</span>
+                            {{ __('trans.password') }} <span class="text-red-500">*</span>
                         </label>
                         <div class="relative">
                             <input type="password" id="password" name="password" required
-                                   placeholder="Enter password (min 8 characters)"
+                                   placeholder="{{ __('trans.enter_password_min_8') }}"
                                    class="w-full px-4 py-3 pr-10 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent @error('password') border-red-500 @enderror">
                             <button type="button" onclick="togglePassword('password')" class="absolute inset-y-0 right-0 pr-3 flex items-center">
                                 <i class="fa-solid fa-eye text-gray-400 hover:text-gray-600"></i>
                             </button>
                         </div>
-                        <p class="mt-1 text-xs text-gray-500">Must contain 1 uppercase letter, 1 number, min. 8 characters</p>
+                        <p class="mt-1 text-xs text-gray-500">{{ __('trans.password_requirements') }}</p>
                         @error('password')
                             <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
                         @enderror
@@ -75,11 +75,11 @@
 
                     <div>
                         <label for="password_confirmation" class="block text-sm font-medium text-gray-700 mb-2">
-                            Confirm Password <span class="text-red-500">*</span>
+                            {{ __('trans.confirm_password') }} <span class="text-red-500">*</span>
                         </label>
                         <div class="relative">
                             <input type="password" id="password_confirmation" name="password_confirmation" required
-                                   placeholder="Confirm password"
+                                   placeholder="{{ __('trans.confirm_password_placeholder') }}"
                                    class="w-full px-4 py-3 pr-10 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent">
                             <button type="button" onclick="togglePassword('password_confirmation')" class="absolute inset-y-0 right-0 pr-3 flex items-center">
                                 <i class="fa-solid fa-eye text-gray-400 hover:text-gray-600"></i>
@@ -91,11 +91,11 @@
 
             <!-- Contact Information -->
             <div class="border-b border-gray-200 pb-6">
-                <h3 class="text-lg font-medium text-gray-900 mb-4">Contact Information</h3>
+                <h3 class="text-lg font-medium text-gray-900 mb-4">{{ __('trans.contact_information') }}</h3>
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
                     <!-- Phone -->
                     <div>
-                        <label for="phone" class="block text-sm font-medium text-gray-700 mb-2">Phone Number</label>
+                        <label for="phone" class="block text-sm font-medium text-gray-700 mb-2">{{ __('trans.phone_number') }}</label>
                         <input type="tel" 
                                id="phone" 
                                name="phone" 
@@ -111,12 +111,12 @@
 
             <!-- Mentor Profile -->
             <div class="border-b border-gray-200 pb-6">
-                <h3 class="text-lg font-medium text-gray-900 mb-4">Mentor Profile</h3>
+                <h3 class="text-lg font-medium text-gray-900 mb-4">{{ __('trans.mentor_profile') }}</h3>
                 
                 <!-- Profile Photo -->
                 <div class="mb-6">
                     <label for="photo" class="block text-sm font-medium text-gray-700 mb-2">
-                        Profile Photo
+                        {{ __('trans.profile_photo') }}
                     </label>
                     <div class="flex items-center space-x-4">
                         <div class="flex-shrink-0">
@@ -127,7 +127,7 @@
                         <div class="flex-1">
                             <input type="file" id="photo" name="photo" accept="image/*" onchange="previewPhoto(this)"
                                    class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent @error('photo') border-red-500 @enderror">
-                            <p class="mt-1 text-xs text-gray-500">300×300 recommended, max 2MB (JPEG, PNG, JPG, GIF)</p>
+                            <p class="mt-1 text-xs text-gray-500">{{ __('trans.photo_recommendations') }}</p>
                         </div>
                     </div>
                     @error('photo')
@@ -139,10 +139,10 @@
                     <!-- Work Experience -->
                     <div>
                         <label for="work_experience" class="block text-sm font-medium text-gray-700 mb-2">
-                            Work Experience
+                            {{ __('trans.work_experience') }}
                         </label>
                         <input type="text" id="work_experience" name="work_experience" value="{{ old('work_experience') }}"
-                               placeholder="e.g., 5 years in software development"
+                               placeholder="{{ __('trans.work_experience_placeholder') }}"
                                class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent @error('work_experience') border-red-500 @enderror">
                         @error('work_experience')
                             <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
@@ -153,10 +153,10 @@
                 <!-- Bio -->
                 <div class="mt-6">
                     <label for="bio" class="block text-sm font-medium text-gray-700 mb-2">
-                        Bio/Work Experience
+                        {{ __('trans.bio_work_experience') }}
                     </label>
                     <textarea id="bio" name="bio" rows="4"
-                              placeholder="Enter mentor's bio and background"
+                              placeholder="{{ __('trans.enter_mentor_bio') }}"
                               class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent @error('bio') border-red-500 @enderror">{{ old('bio') }}</textarea>
                     <div class="flex justify-between items-center mt-1">
                         <div>
@@ -171,13 +171,13 @@
 
             <!-- Mentor Settings -->
             <div class="pb-6">
-                <h3 class="text-lg font-medium text-gray-900 mb-4">Mentor Settings</h3>
+                <h3 class="text-lg font-medium text-gray-900 mb-4">{{ __('trans.mentor_settings') }}</h3>
                 
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
                 
                     <!-- Availability -->
                     <div>
-                        <label class="block text-sm font-medium text-gray-700 mb-2">Availability *</label>
+                        <label class="block text-sm font-medium text-gray-700 mb-2">{{ __('trans.availability') }} *</label>
                         <div class="flex items-center space-x-4">
                             <label class="flex items-center">
                                 <input type="radio" 
@@ -185,7 +185,7 @@
                                        value="available" 
                                        {{ old('availability', 'available') == 'available' ? 'checked' : '' }}
                                        class="mr-2 text-purple-600 focus:ring-purple-500">
-                                <span class="text-sm text-gray-700">Available</span>
+                                <span class="text-sm text-gray-700">{{ __('trans.available') }}</span>
                             </label>
                             <label class="flex items-center">
                                 <input type="radio" 
@@ -193,7 +193,7 @@
                                        value="unavailable" 
                                        {{ old('availability', 'available') == 'unavailable' ? 'checked' : '' }}
                                        class="mr-2 text-purple-600 focus:ring-purple-500">
-                                <span class="text-sm text-gray-700">Unavailable</span>
+                                <span class="text-sm text-gray-700">{{ __('trans.unavailable') }}</span>
                             </label>
                         </div>
                         @error('availability')
@@ -209,7 +209,7 @@
                                    value="1"
                                    {{ old('verified') ? 'checked' : '' }}
                                    class="mr-2 text-purple-600 focus:ring-purple-500">
-                            <span class="text-sm text-gray-700">Verified Mentor</span>
+                            <span class="text-sm text-gray-700">{{ __('trans.verified_mentor') }}</span>
                         </label>
                         @error('verified')
                             <p class="text-red-500 text-sm mt-1">{{ $message }}</p>
@@ -217,7 +217,7 @@
                     </div>
                                     <!-- Type -->
                 <div>
-                    <label class="block text-sm font-medium text-gray-700 mb-2">Mentor Type *</label>
+                    <label class="block text-sm font-medium text-gray-700 mb-2">{{ __('trans.mentor_type') }} *</label>
                     <div class="flex items-center space-x-4">
                         <label class="flex items-center">
                             <input type="radio" 
@@ -226,7 +226,7 @@
                                    {{ old('type', 'online') == 'online' ? 'checked' : '' }}
                                    class="mr-2 text-purple-600 focus:ring-purple-500"
                                    onchange="toggleLocationField()">
-                            <span class="text-sm text-gray-700">Online</span>
+                            <span class="text-sm text-gray-700">{{ __('trans.online') }}</span>
                         </label>
                         <label class="flex items-center">
                             <input type="radio" 
@@ -235,7 +235,7 @@
                                    {{ old('type', 'online') == 'in-person' ? 'checked' : '' }}
                                    class="mr-2 text-purple-600 focus:ring-purple-500"
                                    onchange="toggleLocationField()">
-                            <span class="text-sm text-gray-700">In-Person</span>
+                            <span class="text-sm text-gray-700">{{ __('trans.in_person') }}</span>
                         </label>
                     </div>
                     @error('type')
@@ -245,14 +245,14 @@
 
                 <!-- Location (conditional) -->
                 <div id="location-field" style="display: none;">
-                    <label for="address" class="block text-sm font-medium text-gray-700 mb-2">Location <span class="text-red-500">*</span></label>
+                    <label for="address" class="block text-sm font-medium text-gray-700 mb-2">{{ __('trans.location') }} <span class="text-red-500">*</span></label>
                     <input type="text" 
                            id="address" 
                            name="address" 
                            value="{{ old('address') }}"
                            class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent @error('address') border-red-500 @enderror"
-                           placeholder="City, Country">
-                    <p class="text-sm text-gray-500 mt-1">Required for in-person mentors</p>
+                           placeholder="{{ __('trans.location_placeholder') }}">
+                    <p class="text-sm text-gray-500 mt-1">{{ __('trans.location_required_in_person') }}</p>
                     @error('address')
                         <p class="text-red-500 text-sm mt-1">{{ $message }}</p>
                     @enderror
@@ -264,12 +264,12 @@
             <div class="flex items-center justify-end gap-4 pt-6 border-t border-gray-200">
                 <a href="{{ route('admin.mentors.index') }}" 
                    class="px-6 py-3 bg-gray-100 text-gray-700 rounded-lg hover:bg-gray-200 transition-colors duration-200">
-                    Cancel
+                    {{ __('trans.cancel') }}
                 </a>
                 <button type="submit" 
                         class="px-6 py-3 bg-purple-600 text-white rounded-lg hover:bg-purple-700 transition-colors duration-200">
                     <i class="fa-solid fa-plus mr-2"></i>
-                    Create Mentor
+                    {{ __('trans.create_mentor_button') }}
                 </button>
             </div>
         </form>
@@ -299,7 +299,7 @@ function previewPhoto(input) {
     if (file) {
         // Validate file size (2MB max)
         if (file.size > 2 * 1024 * 1024) {
-            alert('File size must be less than 2MB');
+            alert('{{ __('trans.file_size_must_be_less') }}');
             input.value = '';
             return;
         }
@@ -307,7 +307,7 @@ function previewPhoto(input) {
         // Validate file type
         const allowedTypes = ['image/jpeg', 'image/png', 'image/jpg', 'image/gif'];
         if (!allowedTypes.includes(file.type)) {
-            alert('Please select a valid image file (JPEG, PNG, JPG, GIF)');
+            alert('{{ __('trans.please_select_valid_image') }}');
             input.value = '';
             return;
         }
@@ -354,7 +354,7 @@ document.getElementById('phone').addEventListener('input', function() {
         const validationDiv = document.createElement('p');
         validationDiv.id = 'phone-validation';
         validationDiv.className = 'mt-1 text-sm text-red-600';
-        validationDiv.textContent = 'Please enter a valid phone number (e.g., +1234567890)';
+        validationDiv.textContent = '{{ __('trans.please_enter_valid_phone') }}';
         
         this.parentNode.appendChild(validationDiv);
     }
@@ -386,12 +386,12 @@ document.getElementById('password').addEventListener('input', function() {
     }
     
     if (password.length > 0 && !validation.isValid) {
-        let message = 'Password must contain:';
+        let message = '{{ __('trans.password_must_contain') }}';
         const requirements = [];
         
-        if (!validation.minLength) requirements.push('at least 8 characters');
-        if (!validation.hasUppercase) requirements.push('1 uppercase letter');
-        if (!validation.hasNumber) requirements.push('1 number');
+        if (!validation.minLength) requirements.push('{{ __('trans.at_least_8_characters') }}');
+        if (!validation.hasUppercase) requirements.push('{{ __('trans.1_uppercase_letter') }}');
+        if (!validation.hasNumber) requirements.push('{{ __('trans.1_number') }}');
         
         message += ' ' + requirements.join(', ');
         
@@ -415,42 +415,42 @@ document.querySelector('form').addEventListener('submit', function(e) {
     
     if (!name) {
         e.preventDefault();
-        alert('Please enter mentor name.');
+        alert('{{ __('trans.please_enter_mentor_name') }}');
         document.getElementById('name').focus();
         return;
     }
     
     if (!email) {
         e.preventDefault();
-        alert('Please enter mentor email.');
+        alert('{{ __('trans.please_enter_mentor_email') }}');
         document.getElementById('email').focus();
         return;
     }
     
     if (!password) {
         e.preventDefault();
-        alert('Please enter password.');
+        alert('{{ __('trans.please_enter_password') }}');
         document.getElementById('password').focus();
         return;
     }
     
     if (password !== passwordConfirmation) {
         e.preventDefault();
-        alert('Passwords do not match.');
+        alert('{{ __('trans.passwords_do_not_match') }}');
         document.getElementById('password_confirmation').focus();
         return;
     }
     
     if (!availability) {
         e.preventDefault();
-        alert('Please select availability.');
+        alert('{{ __('trans.please_select_availability') }}');
         document.getElementById('availability').focus();
         return;
     }
     
     if (!type) {
         e.preventDefault();
-        alert('Please select mentor type.');
+        alert('{{ __('trans.please_select_mentor_type') }}');
         document.getElementById('type').focus();
         return;
     }
@@ -458,7 +458,7 @@ document.querySelector('form').addEventListener('submit', function(e) {
     // Additional validation for in-person mentors
     if (type === 'in-person' && !document.getElementById('address').value.trim()) {
         e.preventDefault();
-        alert('Location is required for in-person mentors.');
+        alert('{{ __('trans.location_required_in_person_mentors') }}');
         document.getElementById('address').focus();
         return;
     }

@@ -14,7 +14,8 @@
             <div class="flex-shrink-0">
                 <a href="{{ route('home') }}" class="flex items-center">
                     <span class="text-xl font-bold drop-shadow-sm">
-                        <img style="height:36px; width"112px;" src="{{ asset('assets/images/logo.png') }}" alt="logo">
+                        <img src="{{ asset('assets/images/logo.png') }}" alt="logo" class="h-7 w-20 md:h-9 md:w-28 lg:h-10 lg:w-32 object-contain"/>
+
                     </span>
                 </a>
             </div>

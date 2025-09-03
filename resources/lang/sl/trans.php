@@ -691,7 +691,7 @@ return [
        'learn_remotely' => 'Učite se na daljavo od koderkoli',
 
        // Footer Onboarding
-       'copyright_skillio' => '© 2025 Skillio Course',
+       'copyright_skillio' => '© 2025 Skillio',
        'language_selector' => 'Jezik',
        'english_short' => 'ENG',
        'croatian_short' => 'HR',

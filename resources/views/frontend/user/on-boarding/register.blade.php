@@ -164,8 +164,19 @@
         </div>
 
         <!-- Right Panel -->
-        <div class="hidden md:flex w-full h-full items-center justify-center p-2">
-            <img src="{{ asset('assets/images/login-image-cloud.png') }}" alt="Registration background" class="max-w-full max-h-full object-contain" />
+        <div class="hidden md:flex w-full h-full items-center justify-center p-2 relative overflow-hidden">
+            <!-- Background Video -->
+            <video 
+                autoplay 
+                muted 
+                loop 
+                playsinline
+                class="absolute inset-0 w-full h-full object-cover"
+            >
+                <source src="{{ asset('assets/video/user-login-register.mp4') }}" type="video/mp4">
+                <!-- Fallback image if video doesn't load -->
+                <img src="{{ asset('assets/images/login-image-cloud.png') }}" alt="Login background" class="max-w-full max-h-full object-contain" />
+            </video>
         </div>
     </div>
 @endsection

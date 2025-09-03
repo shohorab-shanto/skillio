@@ -144,8 +144,21 @@
         </div>
 
         <!-- Right Panel -->
-        <div class="hidden md:flex w-full p-2 bg-amber-200">
-            {{-- nothing will be add here --}}
+        <div class="hidden md:flex w-full h-full items-center justify-center p-2 relative overflow-hidden">
+            <!-- Background Video -->
+            <video 
+                autoplay 
+                muted 
+                loop 
+                playsinline
+                class="absolute inset-0 w-full h-full object-cover"
+            >
+                <source src="{{ asset('assets/video/mentor-login-register.mp4') }}" type="video/mp4">
+                <!-- Fallback content if video doesn't load -->
+                <div class="w-full h-full bg-amber-200 flex items-center justify-center">
+                    <p class="text-gray-600">Video not available</p>
+                </div>
+            </video>
         </div>
     </div>
 @endsection

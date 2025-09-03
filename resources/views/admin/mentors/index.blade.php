@@ -8,6 +8,15 @@
 
 @section('content')
 <div class="mx-auto space-y-6">
+    <!-- Page Header -->
+    <div class="flex justify-end items-center gap-3 mb-6">
+        <a href="{{ route('admin.mentors.create') }}" 
+           class="px-4 py-2 bg-purple-600 text-white rounded-lg hover:bg-purple-700 transition-colors duration-200">
+            <i class="fa-solid fa-plus mr-2"></i>
+            Create Mentor
+        </a>
+    </div>
+
     <!-- Filters Section -->
     <div class="bg-white rounded-xl shadow-lg p-6">
         <form method="GET" action="{{ route('admin.mentors.index') }}" class="space-y-4">
@@ -180,11 +189,23 @@
                             @endif
                         </td>
                         <td class="px-6 py-4 whitespace-nowrap text-sm font-medium">
-                            <a href="{{ route('admin.mentors.show', $mentor->id) }}" 
-                               class="px-3 py-1 text-xs bg-blue-100 text-blue-700 rounded-lg hover:bg-blue-200 transition-colors duration-200">
-                                <i class="fa-solid fa-eye mr-1"></i>
-                                Details
-                            </a>
+                            <div class="flex items-center gap-2">
+                                <a href="{{ route('admin.mentors.show', $mentor->id) }}" 
+                                   class="px-3 py-1 text-xs bg-blue-100 text-blue-700 rounded-lg hover:bg-blue-200 transition-colors duration-200">
+                                    <i class="fa-solid fa-eye mr-1"></i>
+                                    View
+                                </a>
+                                <a href="{{ route('admin.mentors.edit', $mentor->id) }}" 
+                                   class="px-3 py-1 text-xs bg-green-100 text-green-700 rounded-lg hover:bg-green-200 transition-colors duration-200">
+                                    <i class="fa-solid fa-edit mr-1"></i>
+                                    Edit
+                                </a>
+                                <button onclick="deleteMentor({{ $mentor->id }}, '{{ $mentor->name }}')" 
+                                        class="px-3 py-1 text-xs bg-red-100 text-red-700 rounded-lg hover:bg-red-200 transition-colors duration-200">
+                                    <i class="fa-solid fa-trash mr-1"></i>
+                                    Delete
+                                </button>
+                            </div>
                         </td>
                     </tr>
                     @empty

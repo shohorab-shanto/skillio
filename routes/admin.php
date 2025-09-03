@@ -39,7 +39,12 @@ Route::middleware(['admin_auth', 'set_locale'])->group(function () {
     
     // Mentors Management
     Route::get('/mentors', [AdminMentorController::class, 'index'])->name('admin.mentors.index');
+    Route::get('/mentors/create', [AdminMentorController::class, 'create'])->name('admin.mentors.create');
+    Route::post('/mentors', [AdminMentorController::class, 'store'])->name('admin.mentors.store');
     Route::get('/mentors/{user}', [AdminMentorController::class, 'show'])->name('admin.mentors.show');
+    Route::get('/mentors/{user}/edit', [AdminMentorController::class, 'edit'])->name('admin.mentors.edit');
+    Route::put('/mentors/{user}', [AdminMentorController::class, 'update'])->name('admin.mentors.update');
+    Route::delete('/mentors/{user}', [AdminMentorController::class, 'destroy'])->name('admin.mentors.destroy');
     Route::get('/mentors/{user}/courses', [AdminMentorController::class, 'courses'])->name('admin.mentors.courses');
     Route::get('/mentors/{user}/sessions', [AdminMentorController::class, 'sessions'])->name('admin.mentors.sessions');
     Route::patch('/mentors/{user}/toggle-verification', [AdminMentorController::class, 'toggleVerification'])->name('admin.mentors.toggle-verification');

@@ -6,6 +6,8 @@ use App\Http\Controllers\Controller;
 use App\Models\User;
 use App\Models\Mentor;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Storage;
 
 class AdminMentorController extends Controller
 {
@@ -56,6 +58,63 @@ class AdminMentorController extends Controller
         return view('admin.mentors.index', compact('mentors'));
     }
 
+    public function create()
+    {
+        return view('admin.mentors.create');
+    }
+
+    public function store(Request $request)
+    {
+        $request->validate([
+            'name' => 'required|string|max:255',
+            'email' => 'required|string|email|max:255|unique:users',
+            'password' => 'required|string|min:8|confirmed',
+            'address' => 'nullable|string|max:255',
+            'phone' => 'nullable|string|max:20|regex:/^[\+]?[1-9][\d]{0,15}$/',
+            'bio' => 'nullable|string|max:1000',
+            'work_experience' => 'nullable|string|max:255',
+            'availability' => 'required|in:available,unavailable',
+            'type' => 'required|in:online,in-person',
+            'photo' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
+            'verified' => 'boolean'
+        ], [
+            'phone.regex' => 'Please enter a valid phone number format (e.g., +1234567890).',
+        ]);
+
+        // Create user account
+        $user = User::create([
+            'name' => $request->name,
+            'email' => $request->email,
+            'password' => Hash::make($request->password),
+            'role' => 'mentor',
+            'email_verified_at' => now(),
+            'address' => $request->address,
+            'phone' => $request->phone,
+        ]);
+
+        // Prepare mentor data
+        $mentorData = [
+            'user_id' => $user->id,
+            'bio' => $request->bio,
+            'work_experience' => $request->work_experience,
+            'availability' => $request->availability,
+            'type' => $request->type,
+            'verified' => $request->has('verified') ? true : false,
+        ];
+
+        // Handle photo upload
+        if ($request->hasFile('photo')) {
+            $photoPath = $request->file('photo')->store('mentors', 'public');
+            $mentorData['photo'] = $photoPath;
+        }
+
+        // Create mentor profile
+        Mentor::create($mentorData);
+
+        return redirect()->route('admin.mentors.index')
+            ->with('success', 'Mentor created successfully!');
+    }
+
     public function show(User $user)
     {
         if ($user->role != 'mentor') {
@@ -68,6 +127,124 @@ class AdminMentorController extends Controller
         }
 
         return view('admin.mentors.show', compact('user', 'mentor'));
+    }
+
+    public function edit(User $user)
+    {
+        if ($user->role != 'mentor') {
+            return redirect()->back()->with('error', 'Invalid user type');
+        }
+
+        $mentor = $user->mentor;
+        if (!$mentor) {
+            return redirect()->back()->with('error', 'Mentor profile not found');
+        }
+
+        return view('admin.mentors.edit', compact('user', 'mentor'));
+    }
+
+    public function update(Request $request, User $user)
+    {
+        if ($user->role != 'mentor') {
+            return redirect()->back()->with('error', 'Invalid user type');
+        }
+
+        $mentor = $user->mentor;
+        if (!$mentor) {
+            return redirect()->back()->with('error', 'Mentor profile not found');
+        }
+
+        $request->validate([
+            'name' => 'required|string|max:255',
+            'email' => 'required|string|email|max:255|unique:users,email,' . $user->id,
+            'password' => 'nullable|string|min:8|confirmed',
+            'address' => 'nullable|string|max:255',
+            'phone' => 'nullable|string|max:20|regex:/^[\+]?[1-9][\d]{0,15}$/',
+            'bio' => 'nullable|string|max:1000',
+            'work_experience' => 'nullable|string|max:255',
+            'availability' => 'required|in:available,unavailable',
+            'type' => 'required|in:online,in-person',
+            'photo' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
+            'verified' => 'boolean'
+        ], [
+            'phone.regex' => 'Please enter a valid phone number format (e.g., +1234567890).',
+        ]);
+
+        // Update user account
+        $userData = [
+            'name' => $request->name,
+            'email' => $request->email,
+            'address' => $request->address,
+            'phone' => $request->phone,
+        ];
+
+        if ($request->filled('password')) {
+            $userData['password'] = Hash::make($request->password);
+        }
+
+        $user->update($userData);
+
+        // Prepare mentor data
+        $mentorData = [
+            'bio' => $request->bio,
+            'work_experience' => $request->work_experience,
+            'availability' => $request->availability,
+            'type' => $request->type,
+            'verified' => $request->has('verified') ? true : false,
+        ];
+
+        // Handle photo upload
+        if ($request->hasFile('photo')) {
+            // Delete old photo if exists
+            if ($mentor->photo) {
+                Storage::disk('public')->delete($mentor->photo);
+            }
+            $photoPath = $request->file('photo')->store('mentors', 'public');
+            $mentorData['photo'] = $photoPath;
+        }
+
+        // Update mentor profile
+        $mentor->update($mentorData);
+
+        return redirect()->route('admin.mentors.index')
+            ->with('success', 'Mentor updated successfully!');
+    }
+
+    public function destroy(User $user)
+    {
+        if ($user->role != 'mentor') {
+            return response()->json(['success' => false, 'message' => 'Invalid user type']);
+        }
+
+        $mentor = $user->mentor;
+        if (!$mentor) {
+            return response()->json(['success' => false, 'message' => 'Mentor profile not found']);
+        }
+
+        // Check if mentor has courses or session bookings
+        $coursesCount = $mentor->courses()->count();
+        $sessionsCount = $mentor->sessionBookings()->count();
+
+        if ($coursesCount > 0 || $sessionsCount > 0) {
+            return response()->json([
+                'success' => false, 
+                'message' => "Cannot delete mentor. They have {$coursesCount} courses and {$sessionsCount} session bookings."
+            ]);
+        }
+
+        // Delete mentor photo if exists
+        if ($mentor->photo) {
+            Storage::disk('public')->delete($mentor->photo);
+        }
+
+        // Delete mentor profile and user account
+        $mentor->delete();
+        $user->delete();
+
+        return response()->json([
+            'success' => true, 
+            'message' => 'Mentor deleted successfully'
+        ]);
     }
 
     public function courses(User $user)
@@ -132,7 +309,7 @@ class AdminMentorController extends Controller
         }
 
         $request->validate([
-            'availability' => 'required|in:available,unavailable,busy'
+            'availability' => 'required|in:available,unavailable'
         ]);
 
         $mentor->update(['availability' => $request->availability]);

@@ -76,15 +76,6 @@
                                 </path>
                             </svg>
                         </a>
-                        <!-- Twitter -->
-                        <a href="#" aria-label="Twitter" class="hover:text-gray-300">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor"
-                                viewBox="0 0 24 24">
-                                <path
-                                    d="M22.46 6c-.77.35-1.6.58-2.46.69a4.25 4.25 0 0 0 1.87-2.35 8.49 8.49 0 0 1-2.7 1.03 4.24 4.24 0 0 0-7.22 3.87 12.01 12.01 0 0 1-8.72-4.42 4.24 4.24 0 0 0 1.31 5.66c-.67-.02-1.3-.2-1.85-.5v.05c0 2 1.43 3.66 3.32 4.04-.65.17-1.33.2-1.99.07a4.25 4.25 0 0 0 3.96 2.94A8.52 8.52 0 0 1 2 19.54a12 12 0 0 0 6.29 1.84c7.55 0 11.68-6.25 11.68-11.67 0-.18-.01-.36-.02-.54A8.25 8.25 0 0 0 22.46 6Z">
-                                </path>
-                            </svg>
-                        </a>
                         <!-- YouTube -->
                         <a href="https://www.youtube.com/@skillio.official" aria-label="YouTube" class="hover:text-gray-300" target="_blank" rel="noopener noreferrer">
                             <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor"

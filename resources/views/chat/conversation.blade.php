@@ -462,7 +462,7 @@ document.getElementById('message-form').addEventListener('submit', async functio
             if (response.status === 403) {
                 showErrorModal('{{ __("trans.conversation_expired") }}', '{{ __("trans.conversation_no_longer_active") }}', 'warning');
             } else {
-                showErrorModal('{{ __("trans.error") }}', '{{ __("trans.failed_to_send_message") }}'.replace('{{status}}', response.status), 'error');
+                showErrorModal('{{ __("trans.error") }}', '{{ __("trans.failed_to_send_message") }}'.replace('{status}', response.status), 'error');
             }
         }
     } catch (error) {

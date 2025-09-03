@@ -96,6 +96,7 @@ return [
     'mentor' => 'Mentor',
     'reviews' => 'reviews',
     'by' => 'by',
+    'results' => 'results',
 
     // Footer
     'contact_us' => 'Contact Us',

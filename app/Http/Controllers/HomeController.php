@@ -115,7 +115,7 @@ class HomeController extends Controller
                         // Calculate hourly rate: (fee / duration_in_minutes) * 60
                         $hourlyRate = ($session->fee / $session->duration_in_minutes) * 60;
                         
-                        if ($lowestHourlyRate === null || $hourlyRate < $lowestHourlyRate) {
+                        if ($lowestHourlyRate == null || $hourlyRate < $lowestHourlyRate) {
                             $lowestHourlyRate = $hourlyRate;
                         }
                     }

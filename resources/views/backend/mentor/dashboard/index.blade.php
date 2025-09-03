@@ -386,7 +386,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 // Preserve other query parameters
                 const urlParams = new URLSearchParams(window.location.search);
                 urlParams.forEach((value, key) => {
-                    if (key !== 'search') {
+                    if (key != 'search') {
                         const param = document.createElement('input');
                         param.type = 'hidden';
                         param.name = key;

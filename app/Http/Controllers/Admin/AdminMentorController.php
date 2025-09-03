@@ -82,7 +82,7 @@ class AdminMentorController extends Controller
         ]);
 
         // Additional validation: address is required for in-person mentors
-        if ($request->type === 'in-person' && empty($request->address)) {
+        if ($request->type == 'in-person' && empty($request->address)) {
             return back()->withErrors(['address' => 'Location is required for in-person mentors.'])->withInput();
         }
 
@@ -176,7 +176,7 @@ class AdminMentorController extends Controller
         ]);
 
         // Additional validation: address is required for in-person mentors
-        if ($request->type === 'in-person' && empty($request->address)) {
+        if ($request->type == 'in-person' && empty($request->address)) {
             return back()->withErrors(['address' => 'Location is required for in-person mentors.'])->withInput();
         }
 

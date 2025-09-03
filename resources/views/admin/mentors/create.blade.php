@@ -434,7 +434,7 @@ document.querySelector('form').addEventListener('submit', function(e) {
         return;
     }
     
-    if (password !== passwordConfirmation) {
+    if (password != passwordConfirmation) {
         e.preventDefault();
         alert('{{ __('trans.passwords_do_not_match') }}');
         document.getElementById('password_confirmation').focus();
@@ -456,7 +456,7 @@ document.querySelector('form').addEventListener('submit', function(e) {
     }
 
     // Additional validation for in-person mentors
-    if (type === 'in-person' && !document.getElementById('address').value.trim()) {
+    if (type == 'in-person' && !document.getElementById('address').value.trim()) {
         e.preventDefault();
         alert('{{ __('trans.location_required_in_person_mentors') }}');
         document.getElementById('address').focus();

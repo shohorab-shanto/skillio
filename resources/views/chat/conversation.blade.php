@@ -459,7 +459,7 @@ document.getElementById('message-form').addEventListener('submit', async functio
             const errorText = await response.text();
             console.error('Error response:', response.status, errorText);
             
-            if (response.status === 403) {
+            if (response.status == 403) {
                 showErrorModal('{{ __("trans.conversation_expired") }}', '{{ __("trans.conversation_no_longer_active") }}', 'warning');
             } else {
                 showErrorModal('{{ __("trans.error") }}', '{{ __("trans.failed_to_send_message") }}'.replace('{status}', response.status), 'error');
@@ -495,7 +495,7 @@ function showErrorModal(title, message, type = 'error') {
     const messageElement = document.getElementById('error-message');
     
     // Set icon and colors based on type
-    if (type === 'warning') {
+    if (type == 'warning') {
         icon.className = 'w-10 h-10 rounded-full flex items-center justify-center bg-amber-100';
         iconClass.className = 'fa-solid fa-exclamation-triangle text-amber-600 text-xl';
     } else {

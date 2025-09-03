@@ -72,7 +72,7 @@
             @php
                 // Filter out conversations without enrollment_id first
                 $validConversations = $list_conversations->filter(function($conversation) {
-                    return $conversation->enrollment_id !== null;
+                    return $conversation->enrollment_id != null;
                 });
                 
                 // Separate conversations into active and archived
@@ -414,7 +414,7 @@ window.addEventListener('resize', function() {
         document.getElementById('mobile-back-btn').classList.add('hidden');
     } else {
         // Mobile view - show conversation list by default if no conversation is selected
-        if (!window.location.pathname.includes('/chat/') || window.location.pathname === '/chat') {
+        if (!window.location.pathname.includes('/chat/') || window.location.pathname == '/chat') {
             showConversationList();
         }
     }
@@ -424,7 +424,7 @@ window.addEventListener('resize', function() {
 document.addEventListener('DOMContentLoaded', function() {
     if (window.innerWidth < 1024) {
         // Mobile view
-        if (window.location.pathname.includes('/chat/') && window.location.pathname !== '/chat') {
+        if (window.location.pathname.includes('/chat/') && window.location.pathname != '/chat') {
             // We're in a conversation, show chat area
             showChatArea();
         } else {
@@ -585,7 +585,7 @@ document.getElementById('archive-tab').addEventListener('click', function() {
 
 // Function to activate a specific tab
 function activateTab(tabName) {
-    if (tabName === 'active') {
+    if (tabName == 'active') {
         document.getElementById('active-tab').classList.add('text-white', 'bg-purple-600');
         document.getElementById('active-tab').classList.remove('text-gray-600');
         document.getElementById('archive-tab').classList.remove('text-white', 'bg-purple-600');

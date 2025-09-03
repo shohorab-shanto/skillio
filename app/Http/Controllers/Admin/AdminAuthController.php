@@ -63,4 +63,38 @@ class AdminAuthController extends Controller
         
         return redirect()->route('admin.login')->with('success', 'Logged out successfully.');
     }
+
+    /**
+     * Show admin password update form
+     */
+    public function showPasswordUpdateForm()
+    {
+        return view('admin.auth.update-password');
+    }
+
+    /**
+     * Handle admin password update
+     */
+    public function updatePassword(Request $request)
+    {
+        $request->validate([
+            'current_password' => 'required',
+            'password' => 'required|min:8|confirmed',
+        ]);
+
+        $user = Auth::user();
+
+        // Verify current password
+        if (!password_verify($request->current_password, $user->password)) {
+            return back()->withErrors([
+                'current_password' => 'The current password is incorrect.',
+            ]);
+        }
+
+        // Update password
+        $user->password = bcrypt($request->password);
+        $user->save();
+
+        return redirect()->route('admin.password.update')->with('success', 'Password updated successfully.');
+    }
 }

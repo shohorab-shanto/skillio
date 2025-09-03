@@ -32,6 +32,10 @@ Route::middleware(['admin_auth', 'set_locale'])->group(function () {
     Route::get('/dashboard', [AdminDashboardController::class, 'index'])->name('admin.dashboard');
     Route::post('/logout', [AdminAuthController::class, 'logout'])->name('admin.logout');
     
+    // Admin Password Update
+    Route::get('/password/update', [AdminAuthController::class, 'showPasswordUpdateForm'])->name('admin.password.update');
+    Route::post('/password/update', [AdminAuthController::class, 'updatePassword'])->name('admin.password.update');
+    
     // Users Management
     Route::get('/users', [AdminUserController::class, 'index'])->name('admin.users.index');
     Route::get('/users/{user}/enrollments', [AdminUserController::class, 'enrollments'])->name('admin.users.enrollments');

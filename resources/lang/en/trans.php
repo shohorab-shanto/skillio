@@ -2161,6 +2161,17 @@ return [
     'current_password' => 'Current Password',
     'new_password' => 'New Password',
     'confirm_password' => 'Confirm Password',
+    
+    // Admin Password Update
+    'update_password_description' => 'Update your admin account password to keep your account secure.',
+    'enter_current_password' => 'Enter your current password',
+    'enter_new_password' => 'Enter your new password',
+    'confirm_new_password' => 'Confirm your new password',
+    'security_notice' => 'Security Notice',
+    'password_security_tip_1' => 'Use a strong, unique password',
+    'password_security_tip_2' => 'Avoid using personal information',
+    'password_security_tip_3' => 'Consider using a password manager',
+    'back_to_dashboard' => 'Back to Dashboard',
     'save' => 'Save',
     'saved' => 'Saved.',
     

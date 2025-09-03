@@ -35,7 +35,12 @@
             <span class="sidebar-label">{{ __('trans.transactions') }}</span>
         </a>
         
-
+        <div style="border-top: 1px solid #f3f4f6; margin: 16px 8px;"></div>
+        
+        <a href="{{ route('admin.password.update') }}" class="sidebar-item {{ request()->routeIs('admin.password*') ? 'active' : '' }}">
+            <i class="fa-solid fa-lock"></i>
+            <span class="sidebar-label">{{ __('trans.update_password') }}</span>
+        </a>
         
         <div style="border-top: 1px solid #f3f4f6; margin: 16px 8px;"></div>
         

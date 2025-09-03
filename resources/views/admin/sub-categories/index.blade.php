@@ -9,11 +9,11 @@
 @section('content')
 <div class="mx-auto space-y-6">
     <!-- Page Header -->
-    <div class="flex justify-end items-center gap-3">
-        <a href="{{ route('admin.sub-categories.index') }}" 
-           class="px-4 py-2 bg-gray-100 text-gray-700 rounded-lg hover:bg-gray-200 transition-colors duration-200">
-            <i class="fa-solid fa-arrow-left mr-2"></i>
-            Back to Sub-Categories
+    <div class="flex items-center gap-3 justify-end">
+        <a href="{{ route('admin.sub-categories.create') }}" 
+           class="px-4 py-2 bg-purple-600 text-white rounded-lg hover:bg-purple-700 transition-colors duration-200">
+            <i class="fa-solid fa-plus mr-2"></i>
+            Create Sub-Category
         </a>
     </div>
 

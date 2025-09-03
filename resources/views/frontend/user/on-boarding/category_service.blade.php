@@ -10,43 +10,44 @@
     <div class="absolute inset-0 pointer-events-none hidden md:block">
         <div class="absolute top-0 left-0 w-full h-full">
             <!-- Vertical Line 1 -->
-            <div class="absolute top-0 left-[5%] w-px h-full bg-gradient-to-br from-purple-100 to-transparent"></div>
+            <div class="absolute top-0 left-[5%] w-px h-full bg-gradient-to-br from-purple-100/80 via-transparent via-25% via-75% to-orange-100/80"></div>
             <!-- Vertical Line 2 -->
-            <div class="absolute top-0 left-[10%] w-px h-full bg-gradient-to-br from-purple-100 to-transparent"></div>
+            <div class="absolute top-0 left-[10%] w-px h-full bg-gradient-to-br from-purple-100/80 via-transparent via-25% via-75% to-orange-100/80"></div>
             <!-- Vertical Line 3 -->
-            <div class="absolute top-0 left-[15%] w-px h-full bg-gradient-to-br from-purple-100 to-transparent"></div>
+            <div class="absolute top-0 left-[15%] w-px h-full bg-gradient-to-br from-purple-100/80 via-transparent via-25% via-75% to-orange-100/80"></div>
             <!-- Vertical Line 4 -->
-            <div class="absolute top-0 left-[20%] w-px h-full bg-gradient-to-br from-purple-100 to-transparent"></div>
+            <div class="absolute top-0 left-[20%] w-px h-full bg-gradient-to-br from-purple-100/80 via-transparent via-25% via-75% to-orange-100/80"></div>
             <!-- Vertical Line 5 -->
-            <div class="absolute top-0 left-[25%] w-px h-full bg-gradient-to-br from-purple-100 to-transparent"></div>
+            <div class="absolute top-0 left-[25%] w-px h-full bg-gradient-to-br from-purple-100/80 via-transparent via-25% via-75% to-orange-100/80"></div>
             <!-- Vertical Line 6 -->
-            <div class="absolute top-0 left-[30%] w-px h-full bg-gradient-to-br from-purple-100 to-transparent"></div>
+            <div class="absolute top-0 left-[30%] w-px h-full bg-gradient-to-br from-purple-100/80 via-transparent via-25% via-75% to-orange-100/80"></div>
             <!-- Vertical Line 7 -->
-            <div class="absolute top-0 left-[35%] w-px h-full bg-gradient-to-br from-purple-100 to-transparent"></div>
+            <div class="absolute top-0 left-[35%] w-px h-full bg-gradient-to-br from-purple-100/80 via-transparent via-25% via-75% to-orange-100/80"></div>
             <!-- Vertical Line 8 -->
-            <div class="absolute top-0 left-[40%] w-px h-full bg-gradient-to-br from-purple-100 to-transparent"></div>
+            <div class="absolute top-0 left-[40%] w-px h-full bg-gradient-to-br from-purple-100/80 via-transparent via-25% via-75% to-orange-100/80"></div>
             <!-- Vertical Line 9 -->
-            <div class="absolute top-0 left-[45%] w-px h-full bg-gradient-to-br from-purple-100 to-transparent"></div>
+            <div class="absolute top-0 left-[45%] w-px h-full bg-gradient-to-br from-purple-100/80 via-transparent via-25% via-75% to-orange-100/80"></div>
             <!-- Vertical Line 10 -->
-            <div class="absolute top-0 left-[50%] w-px h-full bg-gradient-to-br from-purple-100 to-transparent"></div>
+            <div class="absolute top-0 left-[50%] w-px h-full bg-gradient-to-br from-purple-100/80 via-transparent via-25% via-75% to-orange-100/80"></div>
             <!-- Vertical Line 11 -->
-            <div class="absolute top-0 left-[55%] w-px h-full bg-gradient-to-br from-purple-100 to-transparent"></div>
+            <div class="absolute top-0 left-[55%] w-px h-full bg-gradient-to-br from-purple-100/80 via-transparent via-25% via-75% to-orange-100/80"></div>
             <!-- Vertical Line 12 -->
-            <div class="absolute top-0 left-[60%] w-px h-full bg-gradient-to-br from-purple-100 to-transparent"></div>
+            <div class="absolute top-0 left-[60%] w-px h-full bg-gradient-to-br from-purple-100/80 via-transparent via-25% via-75% to-orange-100/80"></div>
             <!-- Vertical Line 13 -->
-            <div class="absolute top-0 left-[65%] w-px h-full bg-gradient-to-br from-purple-100 to-transparent"></div>
+            <div class="absolute top-0 left-[65%] w-px h-full bg-gradient-to-br from-purple-100/80 via-transparent via-25% via-75% to-orange-100/80"></div>
             <!-- Vertical Line 14 -->
-            <div class="absolute top-0 left-[70%] w-px h-full bg-gradient-to-br from-purple-100 to-transparent"></div>
+            <div class="absolute top-0 left-[70%] w-px h-full bg-gradient-to-br from-purple-100/80 via-transparent via-25% via-75% to-orange-100/80"></div>
             <!-- Vertical Line 15 -->
-            <div class="absolute top-0 left-[75%] w-px h-full bg-gradient-to-br from-purple-100 to-transparent"></div>
+            <div class="absolute top-0 left-[75%] w-px h-full bg-gradient-to-br from-purple-100/80 via-transparent via-25% via-75% to-orange-100/80"></div>
+            <div class="absolute top-0 left-[75%] w-px h-full bg-gradient-to-br from-purple-100/20 via-transparent via-25% via-75% to-orange-100/20"></div>
             <!-- Vertical Line 16 -->
-            <div class="absolute top-0 left-[80%] w-px h-full bg-gradient-to-br from-purple-100 to-transparent"></div>
+            <div class="absolute top-0 left-[80%] w-px h-full bg-gradient-to-br from-purple-100/80 via-transparent via-25% via-75% to-orange-100/80"></div>
             <!-- Vertical Line 17 -->
-            <div class="absolute top-0 left-[85%] w-px h-full bg-gradient-to-br from-purple-100 to-transparent"></div>
+            <div class="absolute top-0 left-[85%] w-px h-full bg-gradient-to-br from-purple-100/80 via-transparent via-25% via-75% to-orange-100/80"></div>
             <!-- Vertical Line 18 -->
-            <div class="absolute top-0 left-[90%] w-px h-full bg-gradient-to-br from-purple-100 to-transparent"></div>
+            <div class="absolute top-0 left-[90%] w-px h-full bg-gradient-to-br from-purple-100/80 via-transparent via-25% via-75% to-orange-100/80"></div>
             <!-- Vertical Line 19 -->
-            <div class="absolute top-0 left-[95%] w-px h-full bg-gradient-to-br from-purple-100 to-transparent"></div>
+            <div class="absolute top-0 left-[95%] w-px h-full bg-gradient-to-br from-purple-100/80 via-transparent via-25% via-75% to-orange-100/80"></div>
         </div>
     </div>
 

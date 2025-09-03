@@ -5,8 +5,52 @@
 @section('meta_keywords', __('trans.in_person_or_online_keywords'))
 
 @section('content')
-<div class="min-h-screen flex flex-col justify-between bg-gradient-to-br from-pink-50 via-white to-purple-100 px-2 md:px-0">
-    <div class="flex-1 flex flex-col items-center justify-center">
+<div class="min-h-screen flex flex-col justify-between bg-gradient-to-br from-orange-100 via-white to-purple-100 px-2 md:px-0 relative overflow-hidden">
+    <!-- Vertical Lines Background -->
+    <div class="absolute inset-0 pointer-events-none hidden md:block">
+        <div class="absolute top-0 left-0 w-full h-full">
+            <!-- Vertical Line 1 -->
+            <div class="absolute top-0 left-[5%] w-px h-full bg-gradient-to-br from-purple-100/80 via-transparent via-25% via-75% to-orange-100/80"></div>
+            <!-- Vertical Line 2 -->
+            <div class="absolute top-0 left-[10%] w-px h-full bg-gradient-to-br from-purple-100/80 via-transparent via-25% via-75% to-orange-100/80"></div>
+            <!-- Vertical Line 3 -->
+            <div class="absolute top-0 left-[15%] w-px h-full bg-gradient-to-br from-purple-100/80 via-transparent via-25% via-75% to-orange-100/80"></div>
+            <!-- Vertical Line 4 -->
+            <div class="absolute top-0 left-[20%] w-px h-full bg-gradient-to-br from-purple-100/80 via-transparent via-25% via-75% to-orange-100/80"></div>
+            <!-- Vertical Line 5 -->
+            <div class="absolute top-0 left-[25%] w-px h-full bg-gradient-to-br from-purple-100/80 via-transparent via-25% via-75% to-orange-100/80"></div>
+            <!-- Vertical Line 6 -->
+            <div class="absolute top-0 left-[30%] w-px h-full bg-gradient-to-br from-purple-100/80 via-transparent via-25% via-75% to-orange-100/80"></div>
+            <!-- Vertical Line 7 -->
+            <div class="absolute top-0 left-[35%] w-px h-full bg-gradient-to-br from-purple-100/80 via-transparent via-25% via-75% to-orange-100/80"></div>
+            <!-- Vertical Line 8 -->
+            <div class="absolute top-0 left-[40%] w-px h-full bg-gradient-to-br from-purple-100/80 via-transparent via-25% via-75% to-orange-100/80"></div>
+            <!-- Vertical Line 9 -->
+            <div class="absolute top-0 left-[45%] w-px h-full bg-gradient-to-br from-purple-100/80 via-transparent via-25% via-75% to-orange-100/80"></div>
+            <!-- Vertical Line 10 -->
+            <div class="absolute top-0 left-[50%] w-px h-full bg-gradient-to-br from-purple-100/80 via-transparent via-25% via-75% to-orange-100/80"></div>
+            <!-- Vertical Line 11 -->
+            <div class="absolute top-0 left-[55%] w-px h-full bg-gradient-to-br from-purple-100/80 via-transparent via-25% via-75% to-orange-100/80"></div>
+            <!-- Vertical Line 12 -->
+            <div class="absolute top-0 left-[60%] w-px h-full bg-gradient-to-br from-purple-100/80 via-transparent via-25% via-75% to-orange-100/80"></div>
+            <!-- Vertical Line 13 -->
+            <div class="absolute top-0 left-[65%] w-px h-full bg-gradient-to-br from-purple-100/80 via-transparent via-25% via-75% to-orange-100/80"></div>
+            <!-- Vertical Line 14 -->
+            <div class="absolute top-0 left-[70%] w-px h-full bg-gradient-to-br from-purple-100/80 via-transparent via-25% via-75% to-orange-100/80"></div>
+            <!-- Vertical Line 15 -->
+            <div class="absolute top-0 left-[75%] w-px h-full bg-gradient-to-br from-purple-100/80 via-transparent via-25% via-75% to-orange-100/80"></div>
+            <!-- Vertical Line 16 -->
+            <div class="absolute top-0 left-[80%] w-px h-full bg-gradient-to-br from-purple-100/80 via-transparent via-25% via-75% to-orange-100/80"></div>
+            <!-- Vertical Line 17 -->
+            <div class="absolute top-0 left-[85%] w-px h-full bg-gradient-to-br from-purple-100/80 via-transparent via-25% via-75% to-orange-100/80"></div>
+            <!-- Vertical Line 18 -->
+            <div class="absolute top-0 left-[90%] w-px h-full bg-gradient-to-br from-purple-100/80 via-transparent via-25% via-75% to-orange-100/80"></div>
+            <!-- Vertical Line 19 -->
+            <div class="absolute top-0 left-[95%] w-px h-full bg-gradient-to-br from-purple-100/80 via-transparent via-25% via-75% to-orange-100/80"></div>
+        </div>
+    </div>
+
+    <div class="flex-1 flex flex-col items-center justify-center relative z-10">
         <!-- Logo and Title -->
         <a href="/" class="mt-8 mb-8">
             <img style="height:36px; width"112px;" src="{{ asset('assets/images/logo.png') }}" alt="" class="mx-auto mt-20">

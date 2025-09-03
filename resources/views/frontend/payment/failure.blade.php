@@ -3,7 +3,7 @@
 @section('title', __('trans.payment_failed_title'))
 
 @section('content')
-<div class="min-h-screen bg-gray-50 pt-32">
+<div class="min-h-screen bg-gray-50 pt-32 mb-12">
     <div class="max-w-4xl mx-auto px-6">
         <!-- Header -->
         <div class="text-center mb-8">
@@ -173,16 +173,6 @@
                 </svg>
                 {{ __('trans.go_to_dashboard') }}
             </a>
-        </div>
-
-        <!-- Support Contact -->
-        <div class="text-center mt-8">
-            <p class="text-gray-600">
-                {{ __('trans.need_help') }} 
-                <a href="mailto:support@skillio.com" class="text-purple-600 hover:text-purple-700 font-medium">support@skillio.com</a>
-                {{ __('trans.or_call_us_at') }} 
-                <a href="tel:+1234567890" class="text-purple-600 hover:text-purple-700 font-medium">+1 (234) 567-8900</a>
-            </p>
         </div>
     </div>
 </div>

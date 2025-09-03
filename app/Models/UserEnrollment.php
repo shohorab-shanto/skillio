@@ -66,7 +66,7 @@ class UserEnrollment extends Model
      */
     public function conversation()
     {
-        return $this->hasOne(Conversation::class);
+        return $this->hasOne(Conversation::class, 'enrollment_id');
     }
 
     /**

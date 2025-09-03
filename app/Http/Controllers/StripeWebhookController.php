@@ -109,6 +109,16 @@ class StripeWebhookController extends Controller
                         ]);
                     }
                 }
+
+                // Create conversation for this enrollment if it doesn't exist
+                if (!$enrollment->conversation) {
+                    try {
+                        $conversation = $enrollment->createConversation();
+                        Log::info('Conversation created for enrollment: ' . $enrollment->id . ', Conversation ID: ' . $conversation->id);
+                    } catch (\Exception $e) {
+                        Log::error('Failed to create conversation for enrollment: ' . $enrollment->id . ', Error: ' . $e->getMessage());
+                    }
+                }
             }
 
             // Log successful payment

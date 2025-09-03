@@ -3,11 +3,19 @@
         <div class="flex flex-col lg:flex-row items-center gap-12">
             <!-- Left Side - Centered Image -->
             <div class="lg:w-1/2 relative">
-                <div class="relative w-fit mx-auto max-w-lg"> <!-- Changed mr-auto to mx-auto for center alignment -->
-                    <div class="mt-10 bg-gradient-to-t from-purple-50 to-purple-100 rounded-4xl">
-                        <img src="{{ asset('assets/images/boy-bag.png') }}" alt="Professional with bag" class="w-full h-auto">
+                <div class="relative w-full max-w-none sm:max-w-sm md:max-w-md lg:max-w-lg mx-auto">
+                    <div class="mt-6 sm:mt-8 md:mt-10 bg-gradient-to-t from-purple-50 to-purple-100 rounded-3xl sm:rounded-4xl w-full">
+                        <img 
+                            src="{{ asset('assets/images/boy-bag.png') }}" 
+                            alt="Professional with bag" 
+                            class="w-full h-auto mx-auto max-w-full"
+                        >
                     </div>
-                    <img src="{{ asset('assets/images/group.png') }}" alt="Group illustration" class="absolute top-2 left-2 z-10 w-24 h-24">
+                    <img 
+                        src="{{ asset('assets/images/group.png') }}" 
+                        alt="Group illustration" 
+                        class="absolute top-1 left-1 z-10 w-12 h-12 sm:w-20 sm:h-20 md:w-24 md:h-24"
+                    >
                 </div>
             </div>
 

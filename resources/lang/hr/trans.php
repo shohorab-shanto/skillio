@@ -13,6 +13,7 @@ return [
     'how_it_works_title' => 'Kako Skillio funkcionira',
     'how_it_works_subtitle' => 'Skillio je osmišljen da bude jednostavan i funkcionalan za korištenje',
     'for_learners' => 'Za polaznike',
+    'for_members' => 'Za članove',
     'for_mentors' => 'Za mentore',
     'card_1_title' => 'Registrirajte se i verificirajte',
     'card_1_description' => 'Riješite naš personalizirani kviz kako biste pronašli tečajeve i mentore koji odgovaraju vašim ciljevima i stilu učenja.',

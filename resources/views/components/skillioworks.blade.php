@@ -4,10 +4,10 @@
                     <x-section-header title="{{ __('trans.how_skillio_works') }}"
             subtitle="{{ __('trans.skillio_structured_simple') }}" />
         
-                    <button class="btn btn-active border-t-cyan-100">
-                        {{ __('trans.for_learners') }}
+                    <button class="btn btn-normal-case btn-active border-t-cyan-100" style="text-transform: none !important;">
+                        {{ __('trans.for_members') }}
                     </button>
-                    <button class="btn btn-active btn-primary">{{ __('trans.for_mentors') }}</button>
+                    <button class="btn btn-normal-case btn-active btn-primary" style="text-transform: none !important;">{{ __('trans.for_mentors') }}</button>
                 </div>
                 <div class="w-[1200px] mx-auto grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3  gap-y-8 gap-x-6.5 justify-between  pt-5">
                     <!-- Card Items 01 -->

@@ -13,6 +13,7 @@ return [
     'how_it_works_title' => 'How Skillio Works',
     'how_it_works_subtitle' => 'Skillio is structured to be simple and functional to use',
     'for_learners' => 'For Learners',
+    'for_members' => 'For Members',
     'for_mentors' => 'For Mentors',
     'card_1_title' => 'Register & Get Verified',
     'card_1_description' => 'Take our personalized quiz to find courses and mentors that match your goals and learning style.',

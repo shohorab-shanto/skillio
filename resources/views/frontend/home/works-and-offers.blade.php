@@ -1,22 +1,29 @@
+
 <section class="px-6">
+
     <section id="how-it-works" class="container mx-auto">
+    
         <div class="skillio-work-head text-center mb-12">
+       
             <x-section-header title="{{ __('trans.how_it_works_title') }}"
                 subtitle="{{ __('trans.how_it_works_subtitle') }}" />
+                 
         
             <div class="inline-flex gap-4 justify-center mb-6">
                 <button
                     id="learners-btn"
                     type="button"
-                    class="btn border-t-cyan-100 tab-btn"
+                    class="btn btn-normal-case border-t-cyan-100 tab-btn"
+                    style="text-transform: none !important;"
                     onclick="showTab('for_learners', this)"
                 >
-                    {{ __('trans.for_learners') }}
+                    {{ __('trans.for_members') }}
                 </button>
                 <button
                     id="mentors-btn"
                     type="button"
-                    class="btn btn-primary tab-btn"
+                    class="btn btn-normal-case btn-primary tab-btn"
+                    style="text-transform: none !important;"
                     onclick="showTab('for_mentors', this)"
                 >
                     {{ __('trans.for_mentors') }}
@@ -47,6 +54,12 @@
                 // Set initial state
                 document.addEventListener('DOMContentLoaded', function() {
                     showTab('for_learners', document.getElementById('learners-btn'));
+                    
+                    // Force text transform for all buttons
+                    const buttons = document.querySelectorAll('.btn');
+                    buttons.forEach(button => {
+                        button.style.textTransform = 'none';
+                    });
                 });
             </script>
         </div>

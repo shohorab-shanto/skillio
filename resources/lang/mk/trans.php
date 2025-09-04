@@ -12,8 +12,9 @@ return [
     // How It Works Section
     'how_it_works_title' => 'Како Функционира Skillio',
     'how_it_works_subtitle' => 'Skillio е структуриран да биде едноставен и функционален за користење',
-    'for_learners' => 'За Ученици',
-    'for_mentors' => 'За Ментори',
+    'for_learners' => 'За ученици',
+    'for_members' => 'За членови',
+    'for_mentors' => 'За ментори',
     'card_1_title' => 'Регистрирај се и Верифицирај се',
     'card_1_description' => 'Пополни го нашиот персонализиран квиз за да најдеш курсеви и ментори кои се совпаѓаат со твоите цели и стил на учење.',
     'card_2_title_line1' => 'Објави Курсеви / Постави',
@@ -67,7 +68,7 @@ return [
     'view_all_courses' => 'Види ги Сите Курсеви',
 
     // Navigation Bar
-    'about_us' => 'За Нас',
+    'about_us' => 'За нас',
     'how_it_works_nav' => 'Како Функционира',
     'what_we_offer_nav' => 'Што Нудиме',
     'why_we_are_different_nav' => 'Зошто Сме Различни',
@@ -104,7 +105,7 @@ return [
     'enter_your_email' => 'Внеси ја твојата е-пошта',
     'subscribe' => 'Претплати се',
     'social_media' => 'Социјални Мрежи',
-    'about_us_footer' => 'За Нас',
+    'about_us_footer' => 'За нас',
     'how_it_works_footer' => 'Како функционира',
     'benefits' => 'Предности',
     'mentors_footer' => 'Ментори',

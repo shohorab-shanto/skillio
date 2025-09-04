@@ -59,7 +59,7 @@
                     <input type="search" id="desktop-search" placeholder="{{ __('trans.search_placeholder') }}" class="navbar-search h-10 w-48 pl-8 pr-3 text-sm border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent outline-none transition-all duration-300">
                     
                     <!-- Search Results Dropdown -->
-                    <div id="desktop-search-results" class="absolute top-full left-0 mt-2 bg-white border border-gray-200 rounded-lg shadow-lg z-50 hidden max-h-96 overflow-y-auto w-96">
+                    <div id="desktop-search-results" class="absolute top-full left-0 mt-2 bg-white border border-gray-200 rounded-lg shadow-lg z-[100] hidden max-h-96 overflow-y-auto w-96">
                         <!-- Results will be populated here -->
                     </div>
                 </div>
@@ -240,7 +240,7 @@
                         <input type="search" id="mobile-search" placeholder="{{ __('trans.search_placeholder') }}" class="w-full pl-10 pr-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent outline-none">
                         
                         <!-- Mobile Search Results -->
-                        <div id="mobile-search-results" class="absolute top-full left-0 right-0 mt-2 bg-white border border-gray-200 rounded-lg shadow-lg z-50 hidden max-h-96 overflow-y-auto w-full">
+                        <div id="mobile-search-results" class="absolute top-full left-0 right-0 mt-2 bg-white border border-gray-200 rounded-lg shadow-lg z-[100] hidden max-h-96 overflow-y-auto w-full">
                             <!-- Results will be populated here -->
                         </div>
                     </div>
@@ -610,6 +610,12 @@ document.addEventListener('keydown', function(event) {
 let searchTimeout;
 const searchInputs = ['desktop-search', 'mobile-search'];
 const searchResults = ['desktop-search-results', 'mobile-search-results'];
+
+// Translation helper function
+const translations = JSON.parse(document.getElementById('navbar').getAttribute('data-translations'));
+function t(key, fallback = '') {
+    return translations[key] || fallback;
+}
 
 searchInputs.forEach((inputId, index) => {
     const input = document.getElementById(inputId);

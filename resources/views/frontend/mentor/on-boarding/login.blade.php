@@ -10,7 +10,11 @@
         <!-- Left Panel -->
         <div class="grid content-between px-8 py-12 md:px-24 bg-gradient-to-b from-pink-50 to-white">
             <!-- Logo header -->
-            <a href="/"><img style="height:36px; width"112px;" src="{{ asset('assets/images/logo.png') }}" alt=""></a>
+            <div class="flex justify-center md:justify-start">
+                <a href="/" class="flex items-center">
+                    <img src="{{ asset('assets/images/logo.png') }}" alt="logo" class="h-7 w-20 md:h-9 md:w-28 lg:h-10 lg:w-32 object-contain"/>
+                </a>
+            </div>
             {{-- center --}}
             <div>
                 <div class="max-w-md w-full mx-auto space-y-6">

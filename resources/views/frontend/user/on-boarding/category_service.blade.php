@@ -53,9 +53,11 @@
 
     <div class="flex-1 flex flex-col items-center justify-center relative z-10">
         <!-- Logo -->
-        <a href="/" class="mt-8 mb-8">
-            <img style="height:36px; width"112px;" src="{{ asset('assets/images/logo.png') }}" alt="" class="mx-auto mt-20">
-        </a>
+        <div class="mt-8 mb-8 flex justify-center">
+            <a href="/" class="flex items-center">
+                <img src="{{ asset('assets/images/logo.png') }}" alt="logo" class="h-7 w-20 md:h-9 md:w-28 lg:h-10 lg:w-32 object-contain mt-20">
+            </a>
+        </div>
         <h2 class="text-2xl md:text-3xl font-semibold text-center mb-4 mt-2">{{ __('trans.category_service_heading') }}</h2>
         <p class="text-center mb-6 text-[#605C6D]">
             {{ __('trans.choose_your_skill') }}

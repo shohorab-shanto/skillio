@@ -53,7 +53,7 @@
     <div class="flex-1 flex flex-col items-center justify-center relative z-10">
         <!-- Logo and Title -->
         <a href="/" class="mt-8 mb-8">
-            <img src="{{ asset('assets/images/logo.png') }}" alt="logo" class="h-7 w-20 md:h-9 md:w-28 lg:h-10 lg:w-32 object-contain mx-auto mt-20">
+            <img src="{{ asset('assets/images/logo.png') }}" alt="logo" class="h-10 w-24 md:h-9 md:w-28 lg:h-10 lg:w-32 object-contain mx-auto mt-20 mb-6">
         </a>
         <h2 class="text-2xl md:text-3xl font-semibold text-center mb-8 mt-2">{{ __('trans.in_person_education_location') }}</h2>
 

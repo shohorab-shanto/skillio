@@ -55,7 +55,7 @@
         <!-- Logo -->
         <div class="mt-8 mb-8 flex justify-center">
             <a href="/" class="flex items-center">
-                <img src="{{ asset('assets/images/logo.png') }}" alt="logo" class="h-7 w-20 md:h-9 md:w-28 lg:h-10 lg:w-32 object-contain mt-20">
+                <img src="{{ asset('assets/images/logo.png') }}" alt="logo" class="h-10 w-24 md:h-9 md:w-28 lg:h-10 lg:w-32 object-contain mt-20 mb-6">
             </a>
         </div>
         <h2 class="text-2xl md:text-3xl font-semibold text-center mb-4 mt-2">{{ __('trans.category_service_heading') }}</h2>

@@ -10,9 +10,9 @@
         <!-- Left Panel -->
         <div class="flex flex-col justify-between px-8 py-12 md:px-24 bg-gradient-to-b from-pink-50 to-white">
             <!-- Logo header -->
-            <div class="flex justify-center md:justify-start">
+            <div class="flex justify-center md:justify-start mb-6">
                 <a href="/" class="flex items-center">
-                    <img src="{{ asset('assets/images/logo.png') }}" alt="logo" class="h-7 w-20 md:h-9 md:w-28 lg:h-10 lg:w-32 object-contain"/>
+                    <img src="{{ asset('assets/images/logo.png') }}" alt="logo" class="h-10 w-24 md:h-9 md:w-28 lg:h-10 lg:w-32 object-contain"/>
                 </a>
             </div>
             {{-- center --}}

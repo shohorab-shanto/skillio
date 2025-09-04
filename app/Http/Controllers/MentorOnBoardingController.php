@@ -14,20 +14,20 @@ class MentorOnBoardingController extends Controller
     /**
      * Display the login view.
      *
-     * @return \Illuminate\View\View
+     * @return \Illuminate\Http\Response
      */
     public function login()
     {
-        return view('frontend.mentor.on-boarding.login');
+        abort(404);
     }
     /**
      * Display the registration view.
      *
-     * @return \Illuminate\View\View
+     * @return \Illuminate\Http\Response
      */
     public function register()
     {
-        return view('frontend.mentor.on-boarding.register');
+        abort(404);
     }
 
 }

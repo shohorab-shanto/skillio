@@ -23,6 +23,6 @@ class MentorAuth
         }
 
         // Redirect to login or show unauthorized
-        return redirect()->route('mentor.onboarding.login')->with('error', 'Unauthorized access.');
+        return redirect()->route('user.onboarding.login')->with('error', 'Unauthorized access.');
     }
 }

@@ -65,12 +65,8 @@ class NewPasswordController extends Controller
             $user = User::where('email', $request->email)->first();
             
             if ($user) {
-                if ($user->role == 'mentor') {
-                    return redirect()->route('mentor.onboarding.login')->with('status', __($status));
-                } else {
-                    // For regular users, redirect to main login
-                    return redirect()->route('login')->with('status', __($status));
-                }
+                // Redirect all users to main login page
+                return redirect()->route('user.onboarding.login')->with('status', __($status));
             }
             
             // Fallback to main login

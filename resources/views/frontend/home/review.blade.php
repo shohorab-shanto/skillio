@@ -273,7 +273,9 @@ document.addEventListener('DOMContentLoaded', function() {
     const totalGroups = groups.length;
     let isDragging = false;
     let startX = 0;
+    let startY = 0;
     let currentX = 0;
+    let currentY = 0;
     let initialTransform = 0;
     let autoScrollInterval = null;
     const autoScrollDelay = 5000; // 5 seconds
@@ -321,13 +323,17 @@ document.addEventListener('DOMContentLoaded', function() {
         isDragging = true;
         stopAutoScroll(); // Stop auto scroll when user starts dragging
         startX = e.type === 'mousedown' ? e.clientX : e.touches[0].clientX;
+        startY = e.type === 'mousedown' ? e.clientY : e.touches[0].clientY;
         currentX = startX;
+        currentY = startY;
         initialTransform = -currentGroup * 100;
         container.style.transition = 'none';
         wrapper.style.cursor = 'grabbing';
         
-        // Prevent text selection during drag
-        e.preventDefault();
+        // Only prevent default for mouse events, not touch events
+        if (e.type === 'mousedown') {
+            e.preventDefault();
+        }
     }
     
     // Handle drag move
@@ -335,16 +341,25 @@ document.addEventListener('DOMContentLoaded', function() {
         if (!isDragging) return;
         
         currentX = e.type === 'mousemove' ? e.clientX : e.touches[0].clientX;
+        currentY = e.type === 'mousemove' ? e.clientY : e.touches[0].clientY;
         const deltaX = currentX - startX;
-        const sensitivity = 0.3; // Adjust sensitivity (lower = more sensitive)
-        const translateX = initialTransform + (deltaX * sensitivity);
+        const deltaY = currentY - startY;
         
-        // Apply transform with boundaries
-        const maxTranslate = 0;
-        const minTranslate = -(totalGroups - 1) * 100;
-        const constrainedTranslate = Math.max(minTranslate, Math.min(maxTranslate, translateX));
+        // Only prevent default and handle horizontal drag if the movement is more horizontal than vertical
+        const isHorizontalDrag = Math.abs(deltaX) > Math.abs(deltaY);
         
-        container.style.transform = `translateX(${constrainedTranslate}%)`;
+        if (isHorizontalDrag) {
+            e.preventDefault(); // Only prevent default for horizontal drags
+            const sensitivity = 0.3; // Adjust sensitivity (lower = more sensitive)
+            const translateX = initialTransform + (deltaX * sensitivity);
+            
+            // Apply transform with boundaries
+            const maxTranslate = 0;
+            const minTranslate = -(totalGroups - 1) * 100;
+            const constrainedTranslate = Math.max(minTranslate, Math.min(maxTranslate, translateX));
+            
+            container.style.transform = `translateX(${constrainedTranslate}%)`;
+        }
     }
     
     // Handle drag end
@@ -356,9 +371,13 @@ document.addEventListener('DOMContentLoaded', function() {
         wrapper.style.cursor = 'grab';
         
         const deltaX = currentX - startX;
+        const deltaY = currentY - startY;
         const threshold = 50; // Minimum drag distance to trigger navigation
         
-        if (Math.abs(deltaX) > threshold) {
+        // Only handle navigation if it was a horizontal drag
+        const isHorizontalDrag = Math.abs(deltaX) > Math.abs(deltaY);
+        
+        if (isHorizontalDrag && Math.abs(deltaX) > threshold) {
             if (deltaX > 0 && currentGroup > 0) {
                 // Dragged right - go to previous group
                 goToGroup(currentGroup - 1);
@@ -369,8 +388,8 @@ document.addEventListener('DOMContentLoaded', function() {
                 // Snap back to current group
                 goToGroup(currentGroup);
             }
-        } else {
-            // Snap back to current group
+        } else if (isHorizontalDrag) {
+            // Snap back to current group for small horizontal movements
             goToGroup(currentGroup);
         }
         
@@ -387,11 +406,10 @@ document.addEventListener('DOMContentLoaded', function() {
     
     // Touch events for mobile
     wrapper.addEventListener('touchstart', function(e) {
-        e.preventDefault();
         handleDragStart(e);
         stopAutoScroll();
-    }, { passive: false });
-    document.addEventListener('touchmove', handleDragMove, { passive: false });
+    }, { passive: true });
+    document.addEventListener('touchmove', handleDragMove, { passive: true });
     document.addEventListener('touchend', handleDragEnd);
     
     // Touch events to pause auto scroll on mobile

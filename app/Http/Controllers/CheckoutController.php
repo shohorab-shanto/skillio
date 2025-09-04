@@ -75,7 +75,7 @@ class CheckoutController extends Controller
         return view('frontend.checkout.index', [
             'type' => 'course',
             'item' => $course,
-            'amount' => $course->price,
+            'amount' => $course->discounted_price,
             'title' => $course->title
         ]);
     }
@@ -122,7 +122,7 @@ class CheckoutController extends Controller
             Stripe::setApiKey($stripeKey);
 
             // Calculate amounts for revenue sharing
-            $grossAmount = $type == 'session' ? $item->fee : $item->price;
+            $grossAmount = $type == 'session' ? $item->fee : $item->discounted_price;
             $stripeFee = $this->calculateStripeFee($grossAmount);
             $netAmount = $grossAmount - $stripeFee;
             $mentorAmount = $netAmount * 0.80; // 80% for mentor

@@ -70,12 +70,12 @@
                     @endphp
                     <label class="flex-1 cursor-pointer group w-full" style="max-width:100%">
                         <input type="radio" name="category_id" value="{{ $category->id }}" class="peer sr-only category-radio" {{ $isSelected ? 'checked' : '' }}>
-                        <div class="flex flex-col bg-white w-full min-h-[130px] max-h-[130px] min-w-[220px] max-w-[320px] p-5 rounded-xl border-2 border-transparent peer-checked:border-purple-600 transition-all duration-200 shadow-sm peer-checked:shadow-lg hover:border-purple-400" onclick="selectCategory(this, {{ $category->id }})">
-                            <div class="flex items-center mb-2">
+                        <div class="flex flex-col justify-center bg-white w-full min-h-[130px] max-h-[130px] min-w-[220px] max-w-[320px] p-5 rounded-xl border-2 border-transparent peer-checked:border-purple-600 transition-all duration-200 shadow-sm peer-checked:shadow-lg hover:border-purple-400" onclick="selectCategory(this, {{ $category->id }})">
+                            <div class="flex items-center">
                                 @if(!empty($category->image))
-                                    <img src="{{ asset($category->image) }}" alt="{{ $category->name }}" class="w-12 h-12 mr-4">
+                                    <img src="{{ asset($category->image) }}" alt="{{ $category->name }}" class="w-12 h-12 mr-4 object-contain flex-shrink-0">
                                 @else
-                                    <img src="{{ asset('assets/images/Layer_1.png') }}" alt="" class="w-12 h-12 mr-4">
+                                    <img src="{{ asset('assets/images/Layer_1.png') }}" alt="" class="w-12 h-12 mr-4 object-contain flex-shrink-0">
                                 @endif
                                 <div>
                                     <h1 class="font-bold text-base text-gray-900 mb-1">{{ $category->name }}</h1>
@@ -91,7 +91,14 @@
                                         </div>
                                     @else
                                         <p class="text-sm text-gray-500">
-                                            {{ $category->subCategories->pluck('name')->implode(', ') }}
+                                            @php
+                                                $subCategoriesText = $category->subCategories->pluck('name')->implode(', ');
+                                                $maxLength = 55;
+                                                if (strlen($subCategoriesText) > $maxLength) {
+                                                    $subCategoriesText = substr($subCategoriesText, 0, $maxLength) . '...';
+                                                }
+                                            @endphp
+                                            {{ $subCategoriesText }}
                                         </p>
                                     @endif
                                 </div>

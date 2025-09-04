@@ -142,134 +142,136 @@
                         <button onclick="toggleMobileMenu()" class="text-gray-500 hover:text-gray-700 transition-colors">
                             <i class="fa-solid fa-bars text-lg"></i>
                         </button>
-                        <img class="h-8 w-auto" src="{{ asset('assets/images/logo.png') }}" alt="Skillio" />
                         
-                        <!-- Language Switcher -->
-                        <div class="relative inline-block text-left mr-2">
-                            <form method="POST" action="{{ route('lang.switch') }}">
-                                @csrf
-                                <button type="button" onclick="this.nextElementSibling.classList.toggle('hidden')" class="flex items-center space-x-2 px-2 py-2 text-gray-700 hover:text-purple-700 transition-colors duration-200 focus:outline-none border border-gray-300 rounded-lg hover:border-purple-500">
-                                    @if(app()->getLocale() == 'en')
-                                        <span class="text-sm">🇺🇸</span>
-                                    @elseif(app()->getLocale() == 'hr')
-                                        <span class="text-sm">🇭🇷</span>
-                                    @elseif(app()->getLocale() == 'sr')
-                                        <span class="text-sm">🇷🇸</span>
-                                    @elseif(app()->getLocale() == 'sl')
-                                        <span class="text-sm">🇸🇮</span>
-                                    @elseif(app()->getLocale() == 'mk')
-                                        <span class="text-sm">🇲🇰</span>
-                                    @else
-                                        <svg class="w-4 h-4 text-gray-700" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
-                                            <circle cx="12" cy="12" r="10" stroke-width="2" />
-                                            <path stroke-width="2" d="M2 12h20M12 2a15.3 15.3 0 010 20M12 2a15.3 15.3 0 000 20" />
-                                        </svg>
-                                    @endif
-                                    <span class="text-xs font-medium">{{ strtoupper(app()->getLocale()) }}</span>
-                                </button>
-                                <div class="absolute top-full right-0 mt-2 w-40 bg-white border border-gray-200 rounded-lg shadow-lg z-50 hidden">
-                                    <div class="py-2">
-                                        <button type="submit" name="lang" value="en" class="block w-full text-left px-3 py-2 text-sm text-gray-700 hover:bg-gray-100 hover:text-purple-700 transition-colors duration-200 {{ app()->getLocale() == 'en' ? 'bg-purple-50 text-purple-700' : '' }}">
-                                            <span class="flex items-center space-x-2">
-                                                <span class="text-sm">🇺🇸</span>
-                                                <span>{{ __('trans.english') }}</span>
-                                                @if(app()->getLocale() == 'en')
-                                                    <svg class="w-4 h-4 text-purple-600 ml-auto" fill="currentColor" viewBox="0 0 20 20">
-                                                        <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/>
-                                                    </svg>
-                                                @endif
-                                            </span>
-                                        </button>
-                                        <button type="submit" name="lang" value="hr" class="block w-full text-left px-3 py-2 text-sm text-gray-700 hover:bg-gray-100 hover:text-purple-700 transition-colors duration-200 {{ app()->getLocale() == 'hr' ? 'bg-purple-50 text-purple-700' : '' }}">
-                                            <span class="flex items-center space-x-2">
-                                                <span class="text-sm">🇭🇷</span>
-                                                <span>{{ __('trans.hrvatski') }}</span>
-                                                @if(app()->getLocale() == 'hr')
-                                                    <svg class="w-4 h-4 text-purple-600 ml-auto" fill="currentColor" viewBox="0 0 20 20">
-                                                        <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/>
-                                                    </svg>
-                                                @endif
-                                            </span>
-                                        </button>
-                                        <button type="submit" name="lang" value="sr" class="block w-full text-left px-3 py-2 text-sm text-gray-700 hover:bg-gray-100 hover:text-purple-700 transition-colors duration-200 {{ app()->getLocale() == 'sr' ? 'bg-purple-50 text-purple-700' : '' }}">
-                                            <span class="flex items-center space-x-2">
-                                                <span class="text-sm">🇷🇸</span>
-                                                <span>{{ __('trans.srpski') }}</span>
-                                                @if(app()->getLocale() == 'sr')
-                                                    <svg class="w-4 h-4 text-purple-600 ml-auto" fill="currentColor" viewBox="0 0 20 20">
-                                                        <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/>
-                                                    </svg>
-                                                @endif
-                                            </span>
-                                        </button>
-                                        <button type="submit" name="lang" value="sl" class="block w-full text-left px-3 py-2 text-sm text-gray-700 hover:bg-gray-100 hover:text-purple-700 transition-colors duration-200 {{ app()->getLocale() == 'sl' ? 'bg-purple-50 text-purple-700' : '' }}">
-                                            <span class="flex items-center space-x-2">
-                                                <span class="text-sm">🇸🇮</span>
-                                                <span>{{ __('trans.slovenscina') }}</span>
-                                                @if(app()->getLocale() == 'sl')
-                                                    <svg class="w-4 h-4 text-purple-600 ml-auto" fill="currentColor" viewBox="0 0 20 20">
-                                                        <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/>
-                                                    </svg>
-                                                @endif
-                                            </span>
-                                        </button>
-                                        <button type="submit" name="lang" value="mk" class="block w-full text-left px-3 py-2 text-sm text-gray-700 hover:bg-gray-100 hover:text-purple-700 transition-colors duration-200 {{ app()->getLocale() == 'mk' ? 'bg-purple-50 text-purple-700' : '' }}">
-                                            <span class="flex items-center space-x-2">
-                                                <span class="text-sm">🇲🇰</span>
-                                                <span>{{ __('trans.makedonski') }}</span>
-                                                @if(app()->getLocale() == 'mk')
-                                                    <svg class="w-4 h-4 text-purple-600 ml-auto" fill="currentColor" viewBox="0 0 20 20">
-                                                        <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/>
-                                                    </svg>
-                                                @endif
-                                            </span>
-                                        </button>
-                                    </div>
-                                </div>
-                            </form>
-                        </div>
-                        
-                        <!-- Notification Icon -->
-                        <div class="relative">
-                            <button onclick="toggleNotifications()" class="relative text-gray-500 hover:text-gray-700 transition-colors p-2">
-                                <i class="fa-solid fa-bell text-lg"></i>
-                                <!-- Notification Badge -->
-                                <span id="notification-badge" class="absolute -top-1 -right-1 bg-red-500 text-white rounded-full text-xs w-5 h-5 flex items-center justify-center hidden">3</span>
-                            </button>
-                            
-                            <!-- Notification Dropdown -->
-                            <div id="notification-dropdown" class="absolute right-0 mt-2 w-80 bg-white rounded-xl shadow-lg border border-gray-200 hidden z-50">
-                                <div class="p-4 border-b border-gray-100">
-                                    <h3 class="font-semibold text-gray-900">{{ __('trans.notifications') }}</h3>
-                                </div>
-                                <div class="max-h-96 overflow-y-auto">
-                                    <!-- Dynamic Notifications -->
-                                    <div id="notification-list">
-                                        <!-- Notifications will be loaded here -->
-                                    </div>
-                                    
-                                    <!-- Empty State -->
-                                    <div id="no-notifications" class="p-8 text-center hidden">
-                                        <div class="w-16 h-16 bg-gray-100 rounded-full flex items-center justify-center mx-auto mb-4">
-                                            <i class="fa-solid fa-bell-slash text-gray-400 text-xl"></i>
-                                        </div>
-                                        <p class="text-gray-500 text-sm">{{ __('trans.no_notifications_yet') }}</p>
-                                    </div>
-                                    
-                                    <!-- Loading State -->
-                                    <div id="notification-loading" class="p-8 text-center">
-                                        <div class="w-16 h-16 bg-gray-100 rounded-full flex items-center justify-center mx-auto mb-4">
-                                            <i class="fa-solid fa-spinner fa-spin text-gray-400 text-xl"></i>
-                                        </div>
-                                        <p class="text-gray-500 text-sm">{{ __('trans.loading_notifications') }}</p>
-                                    </div>
-                                </div>
-                                
-                                <!-- Footer -->
-                                <div class="p-4 border-t border-gray-100">
-                                    <button onclick="markAllAsRead()" class="w-full text-center text-sm text-purple-600 hover:text-purple-700 font-medium">
-                                        {{ __('trans.mark_all_as_read') }}
+                        <!-- Right side: Language Switcher + Notification Icon -->
+                        <div class="flex items-center space-x-3">
+                            <!-- Language Switcher -->
+                            <div class="relative inline-block text-left">
+                                <form method="POST" action="{{ route('lang.switch') }}">
+                                    @csrf
+                                    <button type="button" onclick="this.nextElementSibling.classList.toggle('hidden')" class="flex items-center space-x-2 px-2 py-2 text-gray-700 hover:text-purple-700 transition-colors duration-200 focus:outline-none border border-gray-300 rounded-lg hover:border-purple-500">
+                                        @if(app()->getLocale() == 'en')
+                                            <span class="text-sm">🇺🇸</span>
+                                        @elseif(app()->getLocale() == 'hr')
+                                            <span class="text-sm">🇭🇷</span>
+                                        @elseif(app()->getLocale() == 'sr')
+                                            <span class="text-sm">🇷🇸</span>
+                                        @elseif(app()->getLocale() == 'sl')
+                                            <span class="text-sm">🇸🇮</span>
+                                        @elseif(app()->getLocale() == 'mk')
+                                            <span class="text-sm">🇲🇰</span>
+                                        @else
+                                            <svg class="w-4 h-4 text-gray-700" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+                                                <circle cx="12" cy="12" r="10" stroke-width="2" />
+                                                <path stroke-width="2" d="M2 12h20M12 2a15.3 15.3 0 010 20M12 2a15.3 15.3 0 000 20" />
+                                            </svg>
+                                        @endif
+                                        <span class="text-xs font-medium">{{ strtoupper(app()->getLocale()) }}</span>
                                     </button>
+                                    <div class="absolute top-full right-0 mt-2 w-40 bg-white border border-gray-200 rounded-lg shadow-lg z-50 hidden">
+                                        <div class="py-2">
+                                            <button type="submit" name="lang" value="en" class="block w-full text-left px-3 py-2 text-sm text-gray-700 hover:bg-gray-100 hover:text-purple-700 transition-colors duration-200 {{ app()->getLocale() == 'en' ? 'bg-purple-50 text-purple-700' : '' }}">
+                                                <span class="flex items-center space-x-2">
+                                                    <span class="text-sm">🇺🇸</span>
+                                                    <span>{{ __('trans.english') }}</span>
+                                                    @if(app()->getLocale() == 'en')
+                                                        <svg class="w-4 h-4 text-purple-600 ml-auto" fill="currentColor" viewBox="0 0 20 20">
+                                                            <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/>
+                                                        </svg>
+                                                    @endif
+                                                </span>
+                                            </button>
+                                            <button type="submit" name="lang" value="hr" class="block w-full text-left px-3 py-2 text-sm text-gray-700 hover:bg-gray-100 hover:text-purple-700 transition-colors duration-200 {{ app()->getLocale() == 'hr' ? 'bg-purple-50 text-purple-700' : '' }}">
+                                                <span class="flex items-center space-x-2">
+                                                    <span class="text-sm">🇭🇷</span>
+                                                    <span>{{ __('trans.hrvatski') }}</span>
+                                                    @if(app()->getLocale() == 'hr')
+                                                        <svg class="w-4 h-4 text-purple-600 ml-auto" fill="currentColor" viewBox="0 0 20 20">
+                                                            <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/>
+                                                        </svg>
+                                                    @endif
+                                                </span>
+                                            </button>
+                                            <button type="submit" name="lang" value="sr" class="block w-full text-left px-3 py-2 text-sm text-gray-700 hover:bg-gray-100 hover:text-purple-700 transition-colors duration-200 {{ app()->getLocale() == 'sr' ? 'bg-purple-50 text-purple-700' : '' }}">
+                                                <span class="flex items-center space-x-2">
+                                                    <span class="text-sm">🇷🇸</span>
+                                                    <span>{{ __('trans.srpski') }}</span>
+                                                    @if(app()->getLocale() == 'sr')
+                                                        <svg class="w-4 h-4 text-purple-600 ml-auto" fill="currentColor" viewBox="0 0 20 20">
+                                                            <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/>
+                                                        </svg>
+                                                    @endif
+                                                </span>
+                                            </button>
+                                            <button type="submit" name="lang" value="sl" class="block w-full text-left px-3 py-2 text-sm text-gray-700 hover:bg-gray-100 hover:text-purple-700 transition-colors duration-200 {{ app()->getLocale() == 'sl' ? 'bg-purple-50 text-purple-700' : '' }}">
+                                                <span class="flex items-center space-x-2">
+                                                    <span class="text-sm">🇸🇮</span>
+                                                    <span>{{ __('trans.slovenscina') }}</span>
+                                                    @if(app()->getLocale() == 'sl')
+                                                        <svg class="w-4 h-4 text-purple-600 ml-auto" fill="currentColor" viewBox="0 0 20 20">
+                                                            <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/>
+                                                        </svg>
+                                                    @endif
+                                                </span>
+                                            </button>
+                                            <button type="submit" name="lang" value="mk" class="block w-full text-left px-3 py-2 text-sm text-gray-700 hover:bg-gray-100 hover:text-purple-700 transition-colors duration-200 {{ app()->getLocale() == 'mk' ? 'bg-purple-50 text-purple-700' : '' }}">
+                                                <span class="flex items-center space-x-2">
+                                                    <span class="text-sm">🇲🇰</span>
+                                                    <span>{{ __('trans.makedonski') }}</span>
+                                                    @if(app()->getLocale() == 'mk')
+                                                        <svg class="w-4 h-4 text-purple-600 ml-auto" fill="currentColor" viewBox="0 0 20 20">
+                                                            <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/>
+                                                        </svg>
+                                                    @endif
+                                                </span>
+                                            </button>
+                                        </div>
+                                    </div>
+                                </form>
+                            </div>
+                            
+                            <!-- Notification Icon -->
+                            <div class="relative">
+                                <button onclick="toggleNotifications()" class="relative text-gray-500 hover:text-gray-700 transition-colors p-2">
+                                    <i class="fa-solid fa-bell text-lg"></i>
+                                    <!-- Notification Badge -->
+                                    <span id="notification-badge" class="absolute -top-1 -right-1 bg-red-500 text-white rounded-full text-xs w-5 h-5 flex items-center justify-center hidden">3</span>
+                                </button>
+                                
+                                <!-- Notification Dropdown -->
+                                <div id="notification-dropdown" class="absolute right-0 mt-2 w-80 bg-white rounded-xl shadow-lg border border-gray-200 hidden z-50">
+                                    <div class="p-4 border-b border-gray-100">
+                                        <h3 class="font-semibold text-gray-900">{{ __('trans.notifications') }}</h3>
+                                    </div>
+                                    <div class="max-h-96 overflow-y-auto">
+                                        <!-- Dynamic Notifications -->
+                                        <div id="notification-list">
+                                            <!-- Notifications will be loaded here -->
+                                        </div>
+                                        
+                                        <!-- Empty State -->
+                                        <div id="no-notifications" class="p-8 text-center hidden">
+                                            <div class="w-16 h-16 bg-gray-100 rounded-full flex items-center justify-center mx-auto mb-4">
+                                                <i class="fa-solid fa-bell-slash text-gray-400 text-xl"></i>
+                                            </div>
+                                            <p class="text-gray-500 text-sm">{{ __('trans.no_notifications_yet') }}</p>
+                                        </div>
+                                        
+                                        <!-- Loading State -->
+                                        <div id="notification-loading" class="p-8 text-center">
+                                            <div class="w-16 h-16 bg-gray-100 rounded-full flex items-center justify-center mx-auto mb-4">
+                                                <i class="fa-solid fa-spinner fa-spin text-gray-400 text-xl"></i>
+                                            </div>
+                                            <p class="text-gray-500 text-sm">{{ __('trans.loading_notifications') }}</p>
+                                        </div>
+                                    </div>
+                                    
+                                    <!-- Footer -->
+                                    <div class="p-4 border-t border-gray-100">
+                                        <button onclick="markAllAsRead()" class="w-full text-center text-sm text-purple-600 hover:text-purple-700 font-medium">
+                                            {{ __('trans.mark_all_as_read') }}
+                                        </button>
+                                    </div>
                                 </div>
                             </div>
                         </div>

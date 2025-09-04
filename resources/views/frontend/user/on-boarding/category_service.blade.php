@@ -74,10 +74,10 @@
                         <input type="radio" name="category_id" value="{{ $category->id }}" class="peer sr-only category-radio" {{ $isSelected ? 'checked' : '' }}>
                         <div class="flex flex-col justify-center bg-white w-full min-h-[130px] max-h-[130px] min-w-[220px] max-w-[320px] p-5 rounded-xl border-2 border-transparent peer-checked:border-purple-600 transition-all duration-200 shadow-sm peer-checked:shadow-lg hover:border-purple-400" onclick="selectCategory(this, {{ $category->id }})">
                             <div class="flex items-center">
-                                @if(!empty($category->image))
-                                    <img src="{{ asset($category->image) }}" alt="{{ $category->name }}" class="w-12 h-12 mr-4 object-contain flex-shrink-0">
+                                @if($category->hasValidImage())
+                                    <img src="{{ $category->image_url }}" alt="{{ $category->name }}" class="w-12 h-12 mr-4 object-cover flex-shrink-0 rounded-full">
                                 @else
-                                    <img src="{{ asset('assets/images/Layer_1.png') }}" alt="" class="w-12 h-12 mr-4 object-contain flex-shrink-0">
+                                    <img src="{{ asset('assets/images/Layer_1.png') }}" alt="" class="w-12 h-12 mr-4 object-cover flex-shrink-0 rounded-full">
                                 @endif
                                 <div>
                                     <h1 class="font-bold text-base text-gray-900 mb-1">{{ $category->name }}</h1>

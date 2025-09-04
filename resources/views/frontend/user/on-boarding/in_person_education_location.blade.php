@@ -55,7 +55,7 @@
         <a href="/" class="mt-8 mb-8">
             <img style="height:36px; width"112px;" src="{{ asset('assets/images/logo.png') }}" alt="" class="mx-auto mt-20">
         </a>
-        <h2 class="text-2xl md:text-3xl font-semibold text-center mb-8 mt-2">{{ __('trans.in_person_education_location_heading') }}</h2>
+        <h2 class="text-2xl md:text-3xl font-semibold text-center mb-8 mt-2">{{ __('trans.in_person_education_location') }}</h2>
 
         <!-- Form Section -->
         <form class="w-full max-w-md flex flex-col items-center" method="POST" action="{{ route('user.onboarding.in_person_education_location.submit') }}">

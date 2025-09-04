@@ -94,7 +94,7 @@ return [
     'untitled_course' => 'Untitled Course',
     'unknown_mentor' => 'Unknown Mentor',
     'mentor' => 'Mentor',
-    'reviews' => 'reviews',
+    'reviews' => 'Reviews',
     'by' => 'by',
     'results' => 'results',
 

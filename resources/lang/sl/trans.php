@@ -647,7 +647,7 @@ return [
     'mentor_login_title' => 'Prijava mentorja - Skillio',
     'mentor_login_meta_description' => 'Prijavite se v svoj Skillio mentor račun za dostop do nadzorne plošče, upravljanje tečajev in povezovanje s študenti.',
     'mentor_login_meta_keywords' => 'prijava mentorja, vpis, skillio, nadzorna plošča mentorja, upravljanje tečajev, povezava s študenti',
-    'mentor_login_heading' => 'Dobrodošli nazaj, mentor',
+    'mentor_login_heading' => 'Veselimo se, da ste se vrnili, mentor',
     'mentor_login_subheading' => 'Prijavite se za dostop do nadzorne plošče mentorja',
     'password_placeholder' => 'Vnesite geslo',
     'remember_me' => 'Zapomni si me',
@@ -2188,5 +2188,8 @@ return [
     'hour_session' => 'urna seja',
     'minute_session' => 'minutna seja',
     'book_now' => 'Rezerviraj zdaj',
-    'not_available' => 'Ni na voljo'
+    'not_available' => 'Ni na voljo',
+    'drag_to_navigate' => 'Povlecite za navigacijo mnenj',
+    'auto_scroll' => 'Samodejno drsenje',
+    'toggle_auto_scroll' => 'Vklopi/izklopi samodejno drsenje'
 ];

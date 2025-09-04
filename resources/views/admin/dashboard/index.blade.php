@@ -99,7 +99,7 @@
             <div class="bg-white rounded-xl shadow-lg p-6">
                 <div class="flex items-center justify-between mb-6">
                     <h3 class="text-lg font-semibold text-gray-900">{{ __('trans.recent_users') }} (10)</h3>
-                    <a href="#" class="text-sm text-purple-600 hover:text-purple-700 font-medium">{{ __('trans.view_all') }}</a>
+                    <a href="{{ route('admin.users.index') }}" class="text-sm text-purple-600 hover:text-purple-700 font-medium">{{ __('trans.view_all') }}</a>
                 </div>
                 <div class="space-y-3 max-h-96 overflow-y-auto">
                     @forelse($recentUsers as $user)
@@ -126,7 +126,7 @@
             <div class="bg-white rounded-xl shadow-lg p-6">
                 <div class="flex items-center justify-between mb-6">
                     <h3 class="text-lg font-semibold text-gray-900">{{ __('trans.recent_courses') }} (10)</h3>
-                    <a href="#" class="text-sm text-purple-600 hover:text-purple-700 font-medium">{{ __('trans.view_all') }}</a>
+                    <a href="{{ route('admin.courses.index') }}" class="text-sm text-purple-600 hover:text-purple-700 font-medium">{{ __('trans.view_all') }}</a>
                 </div>
                 <div class="space-y-3 max-h-96 overflow-y-auto">
                     @forelse($recentCourses as $course)

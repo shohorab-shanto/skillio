@@ -647,7 +647,7 @@ return [
     'mentor_login_title' => 'Најава за ментори - Skillio',
     'mentor_login_meta_description' => 'Најавете се на вашиот Skillio ментор профил за пристап до таблата, управување со курсеви и комуникација со студенти.',
     'mentor_login_meta_keywords' => 'најава ментор, влез, skillio, ментор табла, управување со курсеви, студенти',
-    'mentor_login_heading' => 'Добредојдовте назад, менторе',
+    'mentor_login_heading' => 'Среќни сме што се вративте, менторе',
     'mentor_login_subheading' => 'Најавете се за пристап до вашата ментор табла',
     'password_placeholder' => 'Внесете ја вашата лозинка',
     'remember_me' => 'Запомни ме',
@@ -2188,5 +2188,8 @@ return [
     'hour_session' => 'часовна сесија',
     'minute_session' => 'минутна сесија',
     'book_now' => 'Резервирај сега',
-    'not_available' => 'Недостапно'
+    'not_available' => 'Недостапно',
+    'drag_to_navigate' => 'Повлечете за навигација на рецензии',
+    'auto_scroll' => 'Автоматско лизгање',
+    'toggle_auto_scroll' => 'Вклучи/исклучи автоматско лизгање'
 ];

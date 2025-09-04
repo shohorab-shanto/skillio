@@ -112,23 +112,10 @@
 
         <section class="pb-16 mb-4 bg-gray-50">
             <div class="max-w-[1400px] mx-auto px-6">
-                <!-- Testimonials Container with Navigation -->
+                <!-- Testimonials Container with Drag Support -->
                 <div class="relative">
-                    <!-- Navigation Arrows -->
-                    <button id="prev-reviews" class="absolute -left-12 top-1/2 transform -translate-y-1/2 z-10 w-12 h-12 bg-gray-200 hover:bg-gray-300 rounded-full flex items-center justify-center transition-colors duration-200 shadow-lg">
-                        <svg class="w-6 h-6 text-gray-700" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"></path>
-                        </svg>
-                    </button>
-                    
-                    <button id="next-reviews" class="absolute -right-12 top-1/2 transform -translate-y-1/2 z-10 w-12 h-12 bg-gray-800 hover:bg-gray-900 rounded-full flex items-center justify-center transition-colors duration-200 shadow-lg">
-                        <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
-                        </svg>
-                    </button>
-
                     <!-- Reviews Grid Container -->
-                    <div class="overflow-hidden">
+                    <div class="overflow-hidden cursor-grab active:cursor-grabbing" id="reviews-wrapper">
                         <div id="reviews-container" class="flex transition-transform duration-300 ease-in-out">
                             @forelse($topReviews->chunk(4) as $index => $reviewGroup)
                                 <div class="grid grid-cols-1 md:grid-cols-2 gap-8 w-full flex-shrink-0" data-group="{{ $index }}">
@@ -390,53 +377,161 @@
     <script>
     document.addEventListener('DOMContentLoaded', function() {
         const container = document.getElementById('reviews-container');
-        const prevBtn = document.getElementById('prev-reviews');
-        const nextBtn = document.getElementById('next-reviews');
+        const wrapper = document.getElementById('reviews-wrapper');
         const groups = container.querySelectorAll('[data-group]');
         
         let currentGroup = 0;
         const totalGroups = groups.length;
+        let isDragging = false;
+        let startX = 0;
+        let currentX = 0;
+        let initialTransform = 0;
+        let autoScrollInterval = null;
+        const autoScrollDelay = 5000; // 5 seconds
         
-        // Hide navigation if only one group
+        // Return early if only one group
         if (totalGroups <= 1) {
-            prevBtn.style.display = 'none';
-            nextBtn.style.display = 'none';
             return;
-        }
-        
-        // Update navigation button states
-        function updateNavigation() {
-            prevBtn.disabled = currentGroup == 0;
-            nextBtn.disabled = currentGroup == totalGroups - 1;
-            
-            prevBtn.style.opacity = currentGroup == 0 ? '0.5' : '1';
-            nextBtn.style.opacity = currentGroup == totalGroups - 1 ? '0.5' : '1';
         }
         
         // Navigate to specific group
         function goToGroup(groupIndex) {
-            currentGroup = groupIndex;
-            const translateX = -groupIndex * 100;
+            currentGroup = Math.max(0, Math.min(groupIndex, totalGroups - 1));
+            const translateX = -currentGroup * 100;
             container.style.transform = `translateX(${translateX}%)`;
-            updateNavigation();
         }
         
-        // Previous button click
-        prevBtn.addEventListener('click', function() {
-            if (currentGroup > 0) {
-                goToGroup(currentGroup - 1);
-            }
-        });
-        
-        // Next button click
-        nextBtn.addEventListener('click', function() {
+        // Auto scroll to next group
+        function autoScrollNext() {
+            if (isDragging) return;
+            
             if (currentGroup < totalGroups - 1) {
                 goToGroup(currentGroup + 1);
+            } else {
+                // Loop back to first group
+                goToGroup(0);
+            }
+        }
+        
+        // Start auto scroll
+        function startAutoScroll() {
+            if (autoScrollInterval) return;
+            autoScrollInterval = setInterval(autoScrollNext, autoScrollDelay);
+        }
+        
+        // Stop auto scroll
+        function stopAutoScroll() {
+            if (autoScrollInterval) {
+                clearInterval(autoScrollInterval);
+                autoScrollInterval = null;
+            }
+        }
+        
+        // Handle drag start
+        function handleDragStart(e) {
+            isDragging = true;
+            stopAutoScroll(); // Stop auto scroll when user starts dragging
+            startX = e.type === 'mousedown' ? e.clientX : e.touches[0].clientX;
+            currentX = startX;
+            initialTransform = -currentGroup * 100;
+            container.style.transition = 'none';
+            wrapper.style.cursor = 'grabbing';
+            
+            // Prevent text selection during drag
+            e.preventDefault();
+        }
+        
+        // Handle drag move
+        function handleDragMove(e) {
+            if (!isDragging) return;
+            
+            currentX = e.type === 'mousemove' ? e.clientX : e.touches[0].clientX;
+            const deltaX = currentX - startX;
+            const sensitivity = 0.3; // Adjust sensitivity (lower = more sensitive)
+            const translateX = initialTransform + (deltaX * sensitivity);
+            
+            // Apply transform with boundaries
+            const maxTranslate = 0;
+            const minTranslate = -(totalGroups - 1) * 100;
+            const constrainedTranslate = Math.max(minTranslate, Math.min(maxTranslate, translateX));
+            
+            container.style.transform = `translateX(${constrainedTranslate}%)`;
+        }
+        
+        // Handle drag end
+        function handleDragEnd(e) {
+            if (!isDragging) return;
+            
+            isDragging = false;
+            container.style.transition = 'transform 0.3s ease-in-out';
+            wrapper.style.cursor = 'grab';
+            
+            const deltaX = currentX - startX;
+            const threshold = 50; // Minimum drag distance to trigger navigation
+            
+            if (Math.abs(deltaX) > threshold) {
+                if (deltaX > 0 && currentGroup > 0) {
+                    // Dragged right - go to previous group
+                    goToGroup(currentGroup - 1);
+                } else if (deltaX < 0 && currentGroup < totalGroups - 1) {
+                    // Dragged left - go to next group
+                    goToGroup(currentGroup + 1);
+                } else {
+                    // Snap back to current group
+                    goToGroup(currentGroup);
+                }
+            } else {
+                // Snap back to current group
+                goToGroup(currentGroup);
+            }
+            
+            // Restart auto scroll after a short delay
+            setTimeout(() => {
+                startAutoScroll();
+            }, 1000);
+        }
+        
+        // Mouse events
+        wrapper.addEventListener('mousedown', handleDragStart);
+        document.addEventListener('mousemove', handleDragMove);
+        document.addEventListener('mouseup', handleDragEnd);
+        
+        // Touch events for mobile
+        wrapper.addEventListener('touchstart', function(e) {
+            e.preventDefault();
+            handleDragStart(e);
+            stopAutoScroll();
+        }, { passive: false });
+        document.addEventListener('touchmove', handleDragMove, { passive: false });
+        document.addEventListener('touchend', handleDragEnd);
+        
+        // Touch events to pause auto scroll on mobile
+        wrapper.addEventListener('touchend', function() {
+            setTimeout(() => {
+                startAutoScroll();
+            }, 2000); // Longer delay on mobile
+        });
+        
+        // Keyboard navigation (optional)
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'ArrowLeft' && currentGroup > 0) {
+                stopAutoScroll();
+                goToGroup(currentGroup - 1);
+                setTimeout(() => {
+                    startAutoScroll();
+                }, 1000);
+            } else if (e.key === 'ArrowRight' && currentGroup < totalGroups - 1) {
+                stopAutoScroll();
+                goToGroup(currentGroup + 1);
+                setTimeout(() => {
+                    startAutoScroll();
+                }, 1000);
             }
         });
         
-        // Initialize navigation state
-        updateNavigation();
+        // Initialize
+        goToGroup(0);
+        startAutoScroll(); // Start auto scrolling
     });
     </script>
 @endsection

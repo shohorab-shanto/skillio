@@ -10,7 +10,7 @@
             <p class="max-w-md text-base md:text-xl tracking-wide text-gray-500">
                 {{ __('trans.hero_subtitle') }}
             </p>
-            <a href="{{ route('mentor.dashboard') }}" class="mt-5 inline-block bg-gradient-to-r from-[#8a45ec] to-[#5b19f9] text-white px-6 py-3 rounded-xl text-sm md:text-base text-center">
+            <a href="{{ route('user.dashboard') }}" class="mt-5 inline-block bg-gradient-to-r from-[#8a45ec] to-[#5b19f9] text-white px-6 py-3 rounded-xl text-sm md:text-base text-center">
                 {{ __('trans.hero_cta_button') }}
             </a>
 

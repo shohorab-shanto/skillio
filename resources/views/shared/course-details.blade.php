@@ -9,10 +9,10 @@
         <!-- Course Image -->
         <div class="p-3">
             @if($course->cover_photo)
-                <img src="{{ asset('storage/' . $course->cover_photo) }}" alt="{{ $course->title }}" class="w-full h-[500px] object-cover rounded-xl">
+                <img src="{{ asset('storage/' . $course->cover_photo) }}" alt="{{ $course->title }}" class="w-full h-48 sm:h-64 md:h-80 lg:h-96 xl:h-[500px] object-cover rounded-xl">
             @else
-                <div class="w-full h-[500px] bg-gradient-to-br from-purple-600 via-fuchsia-500 to-pink-500 flex items-center justify-center rounded-xl">
-                    <svg class="w-32 h-32 text-white/50" fill="currentColor" viewBox="0 0 24 24">
+                <div class="w-full h-48 sm:h-64 md:h-80 lg:h-96 xl:h-[500px] bg-gradient-to-br from-purple-600 via-fuchsia-500 to-pink-500 flex items-center justify-center rounded-xl">
+                    <svg class="w-16 h-16 sm:w-20 sm:h-20 md:w-24 md:h-24 lg:w-28 lg:h-28 xl:w-32 xl:h-32 text-white/50" fill="currentColor" viewBox="0 0 24 24">
                         <path d="M12 3L1 9l4 2.18v6L12 21l7-3.82v-6l2-1.09V17h2V9L12 3zm6.82 6L12 12.72 5.18 9 12 5.28 18.82 9zM17 15.99l-5 2.73-5-2.73v-3.72L12 15l5-2.73v3.72z"/>
                     </svg>
                 </div>

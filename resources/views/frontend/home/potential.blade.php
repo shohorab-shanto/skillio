@@ -2,9 +2,9 @@
     <div class="max-w-[1400px] mx-auto px-6">
         <div class="flex flex-col lg:flex-row items-center gap-12">
             <!-- Left Side - Centered Image -->
-            <div class="lg:w-1/2 relative">
+            <div class="lg:w-1/2 relative order-2 lg:order-1">
                 <div class="relative w-full max-w-none sm:max-w-sm md:max-w-md lg:max-w-lg mx-auto">
-                    <div class="mt-6 sm:mt-8 md:mt-10 bg-gradient-to-t from-purple-50 to-purple-100 rounded-3xl sm:rounded-4xl w-full">
+                    <div class="mt-0 sm:mt-2 md:mt-10 mb-0 sm:mb-0 bg-gradient-to-t from-purple-50 to-purple-100 rounded-3xl sm:rounded-4xl w-full">
                         <img 
                             src="{{ asset('assets/images/boy-bag.png') }}" 
                             alt="Professional with bag" 
@@ -20,7 +20,7 @@
             </div>
 
             <!-- Right Side - Previous Content -->
-            <div class="lg:w-1/2 flex-1 flex flex-col items-start justify-center pt-0 lg:pt-0 space-y-5 mb-20">
+            <div class="lg:w-1/2 flex-1 flex flex-col items-start justify-center pt-0 lg:pt-0 space-y-5 mb-2 lg:mb-20 order-1 lg:order-2">
                 <x-uplash-section-header 
                     title="{{ __('trans.unleash_potential_title') }}"
                     subtitle="{{ __('trans.unleash_potential_subtitle') }}"

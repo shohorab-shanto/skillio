@@ -131,7 +131,7 @@
             $isMyMessage = $message->sender_id == auth()->id();
         @endphp
         
-        <div class="flex {{ $isMyMessage ? 'justify-end' : 'justify-start' }}">
+        <div class="flex {{ $isMyMessage ? 'justify-end' : 'justify-start' }}" data-message-id="{{ $message->id }}">
             <div class="flex items-start space-x-2 max-w-xs lg:max-w-md">
                 @if(!$isMyMessage)
                     <!-- Other user's avatar -->
@@ -149,7 +149,7 @@
                 
                 <div class="flex flex-col {{ $isMyMessage ? 'items-end' : 'items-start' }}">
                     <!-- Message Bubble -->
-                    <div class="relative {{ $isMyMessage ? 'bg-purple-600 text-white' : 'bg-white text-gray-900' }} rounded-2xl px-4 py-2 shadow-sm">
+                    <div class="relative group {{ $isMyMessage ? 'bg-purple-600 text-white' : 'bg-white text-gray-900' }} rounded-2xl px-4 py-2 shadow-sm">
                         @if($message->type == 'image')
                             <div class="mb-2">
                                 <img src="{{ $message->getFileUrl() }}" alt="{{ __('trans.shared_image') }}" 
@@ -177,6 +177,15 @@
                             @endif
                         @else
                             <p class="text-sm">{{ $message->content }}</p>
+                        @endif
+                        
+                        <!-- Delete Button (only for own messages) -->
+                        @if($isMyMessage)
+                            <button onclick="deleteMessage({{ $message->id }})" 
+                                    class="absolute -top-2 -right-2 w-6 h-6 bg-red-500 hover:bg-red-600 text-white rounded-full flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-200 shadow-lg"
+                                    title="{{ __('trans.delete_message') }}">
+                                <i class="fa-solid fa-times text-xs"></i>
+                            </button>
                         @endif
                     </div>
                     
@@ -314,6 +323,38 @@
                 <button onclick="closeErrorModal()" 
                         class="px-4 py-2 bg-gray-600 text-white rounded-lg hover:bg-gray-700 transition-colors">
                     {{ __('trans.ok') }}
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Delete Confirmation Modal -->
+<div id="delete-confirm-modal" class="hidden fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
+    <div class="bg-white rounded-xl shadow-xl max-w-md w-full mx-4">
+        <div class="p-6">
+            <div class="flex items-center justify-between mb-4">
+                <div class="flex items-center space-x-3">
+                    <div class="w-10 h-10 rounded-full flex items-center justify-center bg-red-100">
+                        <i class="fa-solid fa-exclamation-triangle text-red-600 text-xl"></i>
+                    </div>
+                    <h3 class="text-lg font-semibold text-gray-900">{{ __('trans.delete_message') }}</h3>
+                </div>
+                <button onclick="closeDeleteConfirmModal()" class="text-gray-400 hover:text-gray-600">
+                    <i class="fa-solid fa-times"></i>
+                </button>
+            </div>
+            <p class="text-gray-600 mb-2">{{ __('trans.delete_message_confirm') }}</p>
+            <p class="text-sm text-gray-500 mb-6">{{ __('trans.delete_message_confirm_description') }}</p>
+            <input type="hidden" id="delete-message-id" value="">
+            <div class="flex justify-end space-x-3">
+                <button onclick="closeDeleteConfirmModal()" 
+                        class="px-4 py-2 text-gray-600 border border-gray-300 rounded-lg hover:bg-gray-50 transition-colors">
+                    {{ __('trans.cancel') }}
+                </button>
+                <button id="confirm-delete-btn" onclick="confirmDeleteMessage()" 
+                        class="px-4 py-2 bg-red-600 text-white rounded-lg hover:bg-red-700 transition-colors">
+                    {{ __('trans.delete') }}
                 </button>
             </div>
         </div>
@@ -554,6 +595,19 @@ function setupRealtimeMessaging() {
                 console.log('Ignoring own message to avoid duplicate');
             }
         });
+        
+        // Listen for message deletion events
+        channel.listen('.message.deleted', (e) => {
+            console.log('Message deleted via Echo:', e);
+            if (e.message_id) {
+                // Remove the deleted message from UI
+                const messageElement = document.querySelector(`[data-message-id="${e.message_id}"]`);
+                if (messageElement) {
+                    messageElement.remove();
+                    console.log('Message removed from UI:', e.message_id);
+                }
+            }
+        });
             
         // Test if Echo connection is working
         window.Echo.connector.pusher.connection.bind('connected', function() {
@@ -677,8 +731,15 @@ function createMessageHtml(messageData, isMyMessage) {
                 ${!isMyMessage ? `<div class="flex-shrink-0">${avatarHtml}</div>` : ''}
                 
                 <div class="flex flex-col ${isMyMessage ? 'items-end' : 'items-start'}">
-                    <div class="relative ${isMyMessage ? 'bg-purple-600 text-white' : 'bg-white text-gray-900'} rounded-2xl px-4 py-2 shadow-sm">
+                    <div class="relative group ${isMyMessage ? 'bg-purple-600 text-white' : 'bg-white text-gray-900'} rounded-2xl px-4 py-2 shadow-sm">
                         ${messageContentHtml}
+                        ${isMyMessage ? `
+                            <button onclick="deleteMessage(${messageData.id})" 
+                                    class="absolute -top-2 -right-2 w-6 h-6 bg-red-500 hover:bg-red-600 text-white rounded-full flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-200 shadow-lg"
+                                    title="{{ __('trans.delete_message') }}">
+                                <i class="fa-solid fa-times text-xs"></i>
+                            </button>
+                        ` : ''}
                     </div>
                     
                     <div class="flex items-center mt-1 space-x-1">
@@ -702,6 +763,68 @@ function scrollToBottom() {
 // Mobile navigation
 function goBackToConversations() {
     window.location.href = '/chat';
+}
+
+// Delete message functionality
+function deleteMessage(messageId) {
+    showDeleteConfirmModal(messageId);
+}
+
+function showDeleteConfirmModal(messageId) {
+    const modal = document.getElementById('delete-confirm-modal');
+    const messageIdInput = document.getElementById('delete-message-id');
+    messageIdInput.value = messageId;
+    modal.classList.remove('hidden');
+}
+
+function closeDeleteConfirmModal() {
+    document.getElementById('delete-confirm-modal').classList.add('hidden');
+}
+
+async function confirmDeleteMessage() {
+    const messageId = document.getElementById('delete-message-id').value;
+    const deleteButton = document.getElementById('confirm-delete-btn');
+    
+    // Disable button and show loading
+    deleteButton.disabled = true;
+    deleteButton.innerHTML = '<i class="fa-solid fa-spinner fa-spin mr-2"></i>{{ __("trans.deleting") }}...';
+    
+    try {
+        const response = await fetch(`/chat/{{ $conversation->unique_code }}/message/${messageId}`, {
+            method: 'DELETE',
+            headers: {
+                'Content-Type': 'application/json',
+                'Accept': 'application/json',
+                'X-CSRF-TOKEN': document.querySelector('input[name="_token"]').value
+            }
+        });
+        
+        if (response.ok) {
+            const result = await response.json();
+            
+            // Remove message from UI immediately
+            const messageElement = document.querySelector(`[data-message-id="${messageId}"]`);
+            if (messageElement) {
+                messageElement.remove();
+            }
+            
+            // Close modal
+            closeDeleteConfirmModal();
+            
+            // Show success message
+            showNotification('{{ __("trans.message_deleted_successfully") }}', 'success');
+        } else {
+            const error = await response.json();
+            showErrorModal('{{ __("trans.error") }}', error.message || '{{ __("trans.failed_to_delete_message") }}', 'error');
+        }
+    } catch (error) {
+        console.error('Error deleting message:', error);
+        showErrorModal('{{ __("trans.error") }}', '{{ __("trans.failed_to_delete_message") }}', 'error');
+    }
+    
+    // Re-enable button
+    deleteButton.disabled = false;
+    deleteButton.innerHTML = '{{ __("trans.delete") }}';
 }
 
 // Mark messages as read (you can implement this with an API call)

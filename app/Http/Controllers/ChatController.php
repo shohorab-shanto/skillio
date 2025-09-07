@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Events\MessageSent;
+use App\Events\MessageDeleted;
 use App\Models\Conversation;
 use App\Models\Message;
 use App\Models\User;
@@ -495,5 +496,83 @@ class ChatController extends Controller
         }
 
         return response()->json($users);
+    }
+
+    /**
+     * Delete a message.
+     */
+    public function deleteMessage(Request $request, $code, $messageId)
+    {
+        $conversation = Conversation::findByCode($code);
+        
+        if (!$conversation) {
+            if ($request->expectsJson()) {
+                return response()->json([
+                    'success' => false,
+                    'message' => 'Conversation not found.',
+                ], 404);
+            }
+            abort(404, 'Conversation not found.');
+        }
+        
+        $user = Auth::user();
+        
+        // Check if user can access this conversation
+        if (!$conversation->canAccess($user->id)) {
+            if ($request->expectsJson()) {
+                return response()->json([
+                    'success' => false,
+                    'message' => 'You do not have permission to delete messages in this conversation.',
+                ], 403);
+            }
+            return redirect()->route('chat.index')->with('error', 'You do not have permission to delete messages in this conversation.');
+        }
+
+        // Find the message
+        $message = Message::where('id', $messageId)
+            ->where('conversation_id', $conversation->id)
+            ->first();
+            
+        if (!$message) {
+            if ($request->expectsJson()) {
+                return response()->json([
+                    'success' => false,
+                    'message' => 'Message not found.',
+                ], 404);
+            }
+            return redirect()->back()->with('error', 'Message not found.');
+        }
+
+        // Check if user can delete this message (only sender can delete their own messages)
+        if ($message->sender_id != $user->id) {
+            if ($request->expectsJson()) {
+                return response()->json([
+                    'success' => false,
+                    'message' => 'You can only delete your own messages.',
+                ], 403);
+            }
+            return redirect()->back()->with('error', 'You can only delete your own messages.');
+        }
+
+        // Delete associated file if exists
+        if ($message->file_path && Storage::exists($message->file_path)) {
+            Storage::delete($message->file_path);
+        }
+
+        // Delete the message
+        $message->delete();
+
+        // Broadcast message deletion event for real-time updates
+        broadcast(new MessageDeleted($conversation, $messageId));
+
+        if ($request->expectsJson()) {
+            return response()->json([
+                'success' => true,
+                'message' => 'Message deleted successfully.',
+                'message_id' => $messageId
+            ]);
+        }
+        
+        return redirect()->back()->with('success', 'Message deleted successfully.');
     }
 }

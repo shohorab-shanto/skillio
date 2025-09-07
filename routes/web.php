@@ -104,6 +104,7 @@ Route::middleware(['auth', 'set_locale'])->group(function () {
     Route::get('/chat', [ChatController::class, 'index'])->name('chat.index');
     Route::get('/chat/{code}', [ChatController::class, 'show'])->name('chat.show');
     Route::post('/chat/{code}/send', [ChatController::class, 'sendMessage'])->name('chat.send');
+    Route::delete('/chat/{code}/message/{messageId}', [ChatController::class, 'deleteMessage'])->name('chat.delete.message');
     Route::post('/chat/create', [ChatController::class, 'getOrCreateConversation'])->name('chat.create');
     
     // API route for user search

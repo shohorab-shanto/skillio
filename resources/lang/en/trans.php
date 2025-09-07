@@ -2210,5 +2210,16 @@ return [
     'not_available' => 'Not Available',
     'drag_to_navigate' => 'Drag to navigate reviews',
     'auto_scroll' => 'Auto scroll',
-    'toggle_auto_scroll' => 'Toggle auto scroll'
+    'toggle_auto_scroll' => 'Toggle auto scroll',
+    
+    // Message Deletion
+    'delete_message' => 'Delete Message',
+    'delete_message_confirm' => 'Are you sure you want to delete this message?',
+    'delete_message_confirm_description' => 'This action cannot be undone.',
+    'message_deleted_successfully' => 'Message deleted successfully',
+    'failed_to_delete_message' => 'Failed to delete message',
+    'cannot_delete_others_messages' => 'You can only delete your own messages',
+    'message_not_found' => 'Message not found',
+    'deleting' => 'Deleting',
+    'delete' => 'Delete'
 ];

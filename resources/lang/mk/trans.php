@@ -2192,5 +2192,16 @@ return [
     'not_available' => 'Недостапно',
     'drag_to_navigate' => 'Повлечете за навигација на рецензии',
     'auto_scroll' => 'Автоматско лизгање',
-    'toggle_auto_scroll' => 'Вклучи/исклучи автоматско лизгање'
+    'toggle_auto_scroll' => 'Вклучи/исклучи автоматско лизгање',
+    
+    // Message Deletion
+    'delete_message' => 'Избриши порака',
+    'delete_message_confirm' => 'Дали сте сигурни дека сакате да ја избришете оваа порака?',
+    'delete_message_confirm_description' => 'Оваа акција не може да се поништи.',
+    'message_deleted_successfully' => 'Пораката е успешно избришана',
+    'failed_to_delete_message' => 'Неуспешно бришење на порака',
+    'cannot_delete_others_messages' => 'Можете да ги бришете само вашите пораки',
+    'message_not_found' => 'Пораката не е пронајдена',
+    'deleting' => 'Бришење',
+    'delete' => 'Избриши'
 ];

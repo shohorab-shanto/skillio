@@ -2193,6 +2193,16 @@ return [
     'not_available' => 'Nije dostupno',
     'drag_to_navigate' => 'Povucite za navigaciju recenzijama',
     'auto_scroll' => 'Automatsko pomicanje',
-    'toggle_auto_scroll' => 'Uključi/isključi automatsko pomicanje'
-
+    'toggle_auto_scroll' => 'Uključi/isključi automatsko pomicanje',
+    
+    // Message Deletion
+    'delete_message' => 'Obriši poruku',
+    'delete_message_confirm' => 'Jeste li sigurni da želite obrisati ovu poruku?',
+    'delete_message_confirm_description' => 'Ova radnja se ne može poništiti.',
+    'message_deleted_successfully' => 'Poruka je uspješno obrisana',
+    'failed_to_delete_message' => 'Neuspješno brisanje poruke',
+    'cannot_delete_others_messages' => 'Možete obrisati samo svoje poruke',
+    'message_not_found' => 'Poruka nije pronađena',
+    'deleting' => 'Brisanje',
+    'delete' => 'Obriši'
 ];

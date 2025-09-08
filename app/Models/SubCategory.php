@@ -16,6 +16,8 @@ class SubCategory extends Model
         'name',
         'description',
         'image',
+        'created_by_user_id',
+        'is_custom',
     ];
 
     /**
@@ -40,5 +42,37 @@ class SubCategory extends Model
     public function sessionBookings(): BelongsToMany
     {
         return $this->belongsToMany(SessionBooking::class, 'session_bookings_sub_categories');
+    }
+
+    /**
+     * Get the user who created this sub-category (if custom).
+     */
+    public function createdByUser(): BelongsTo
+    {
+        return $this->belongsTo(User::class, 'created_by_user_id');
+    }
+
+    /**
+     * Scope to get only custom subcategories created by users.
+     */
+    public function scopeCustom($query)
+    {
+        return $query->where('is_custom', true);
+    }
+
+    /**
+     * Scope to get only system-created subcategories.
+     */
+    public function scopeSystem($query)
+    {
+        return $query->where('is_custom', false);
+    }
+
+    /**
+     * Scope to get subcategories created by a specific user.
+     */
+    public function scopeCreatedByUser($query, $userId)
+    {
+        return $query->where('created_by_user_id', $userId);
     }
 }

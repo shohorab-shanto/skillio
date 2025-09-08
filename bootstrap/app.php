@@ -12,8 +12,38 @@ return Application::configure(basePath: dirname(__DIR__))
         health: '/up',
     )
     ->withMiddleware(function (Middleware $middleware): void {
-        //
+        $middleware->alias([
+            'api.auth' => \App\Http\Middleware\ApiAuth::class,
+        ]);
     })
     ->withExceptions(function (Exceptions $exceptions): void {
-        //
+        $exceptions->render(function (Illuminate\Auth\AuthenticationException $e, $request) {
+            if ($request->is('api/*')) {
+                return response()->json([
+                    'success' => false,
+                    'message' => 'Unauthenticated',
+                    'errors' => ['auth' => 'Authentication required']
+                ], 401);
+            }
+        });
+
+        $exceptions->render(function (Illuminate\Auth\Access\AuthorizationException $e, $request) {
+            if ($request->is('api/*')) {
+                return response()->json([
+                    'success' => false,
+                    'message' => 'Forbidden',
+                    'errors' => ['auth' => 'Insufficient permissions']
+                ], 403);
+            }
+        });
+
+        $exceptions->render(function (Illuminate\Validation\ValidationException $e, $request) {
+            if ($request->is('api/*')) {
+                return response()->json([
+                    'success' => false,
+                    'message' => 'Validation failed',
+                    'errors' => $e->errors()
+                ], 422);
+            }
+        });
     })->create();

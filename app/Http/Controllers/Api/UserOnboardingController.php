@@ -298,7 +298,7 @@ class UserOnboardingController extends Controller
     {
         try {
             $user = Auth::user();
-            $preference = UserPreference::where('user_id', $user->id)->first();
+            $preference = UserPreference::where('user_id', $user->id)->latest()->first();
 
             $status = [
                 'category_selected' => !is_null($preference?->category_id),
@@ -317,11 +317,12 @@ class UserOnboardingController extends Controller
                 'data' => [
                     'status' => $status,
                     'is_complete' => $isComplete,
-                    'next_step' => $this->getNextStep($status),
+                    'next_step' => $this->getNextStep($status, $preference),
                 ],
             ]);
 
         } catch (\Exception $e) {
+            \Log::error('Onboarding status error: ' . $e->getMessage());
             return response()->json([
                 'success' => false,
                 'message' => 'Failed to retrieve onboarding status',
@@ -339,6 +340,7 @@ class UserOnboardingController extends Controller
             $user = Auth::user();
             $preference = UserPreference::where('user_id', $user->id)
                 ->with(['category', 'subCategory'])
+                ->latest()
                 ->first();
 
             if (!$preference) {
@@ -376,6 +378,7 @@ class UserOnboardingController extends Controller
             ]);
 
         } catch (\Exception $e) {
+            \Log::error('User preferences error: ' . $e->getMessage());
             return response()->json([
                 'success' => false,
                 'message' => 'Failed to retrieve user preferences',
@@ -473,7 +476,7 @@ class UserOnboardingController extends Controller
     /**
      * Determine next step in onboarding
      */
-    private function getNextStep(array $status): ?string
+    private function getNextStep(array $status, $preference): ?string
     {
         if (!$status['category_selected']) {
             return 'category_selection';
@@ -481,10 +484,10 @@ class UserOnboardingController extends Controller
         if (!$status['education_type_selected']) {
             return 'education_type';
         }
-        if ($status['education_type_selected'] && $status['education_type'] == 'in-person' && !$status['location_selected']) {
+        if ($status['education_type_selected'] && $preference?->education_type == 'in-person' && !$status['location_selected']) {
             return 'location';
         }
-        if ($status['education_type_selected'] && $status['education_type'] == 'online' && !$status['online_options_selected']) {
+        if ($status['education_type_selected'] && $preference?->education_type == 'online' && !$status['online_options_selected']) {
             return 'online_options';
         }
         return null; // Onboarding complete

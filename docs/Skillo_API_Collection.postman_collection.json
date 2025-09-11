@@ -2,7 +2,7 @@
 	"info": {
 		"_postman_id": "skillo-api-collection",
 		"name": "Skillo Mobile API",
-		"description": "Complete API collection for Skillo mobile application including authentication and user onboarding",
+		"description": "Complete API collection for Skillo mobile application including authentication, user onboarding, home page dynamic content with personalization and category filtering, comprehensive course details, mentor details, and review management",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
 	},
 	"item": [
@@ -575,6 +575,888 @@
 				}
 			],
 			"description": "Protected onboarding endpoints that require authentication"
+		},
+		{
+			"name": "Home Page Data",
+			"item": [
+				{
+					"name": "Get Top Mentors",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							},
+							{
+								"key": "Authorization",
+								"value": "Bearer {{auth_token}}",
+								"description": "Optional - for personalized results"
+							}
+						],
+						"url": {
+							"raw": "{{base_url}}/api/v1/home/top-mentors?category_id=1",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"home",
+								"top-mentors"
+							],
+							"query": [
+								{
+									"key": "category_id",
+									"value": "1",
+									"description": "Filter mentors by category ID (optional)"
+								}
+							]
+						},
+						"description": "Retrieve top-rated mentors with preference matching for logged-in users"
+					},
+					"response": []
+				},
+				{
+					"name": "Get Popular Courses",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							},
+							{
+								"key": "Authorization",
+								"value": "Bearer {{auth_token}}",
+								"description": "Optional - for personalized results"
+							}
+						],
+						"url": {
+							"raw": "{{base_url}}/api/v1/home/popular-courses?category_id=1",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"home",
+								"popular-courses"
+							],
+							"query": [
+								{
+									"key": "category_id",
+									"value": "1",
+									"description": "Filter courses by category ID (optional)"
+								}
+							]
+						},
+						"description": "Retrieve popular courses based on ratings and reviews, with preference matching for logged-in users"
+					},
+					"response": []
+				},
+				{
+					"name": "Get New Courses",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							},
+							{
+								"key": "Authorization",
+								"value": "Bearer {{auth_token}}",
+								"description": "Optional - for personalized results"
+							}
+						],
+						"url": {
+							"raw": "{{base_url}}/api/v1/home/new-courses?category_id=1",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"home",
+								"new-courses"
+							],
+							"query": [
+								{
+									"key": "category_id",
+									"value": "1",
+									"description": "Filter courses by category ID (optional)"
+								}
+							]
+						},
+						"description": "Retrieve newest courses ordered by creation date, with preference matching for logged-in users"
+					},
+					"response": []
+				},
+				{
+					"name": "Get Featured Courses",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"url": {
+							"raw": "{{base_url}}/api/v1/home/featured-courses?category_id=1",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"home",
+								"featured-courses"
+							],
+							"query": [
+								{
+									"key": "category_id",
+									"value": "1",
+									"description": "Filter courses by category ID (optional)"
+								}
+							]
+						},
+						"description": "Retrieve manually selected featured courses"
+					},
+					"response": []
+				},
+				{
+					"name": "Get Top Reviews",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"url": {
+							"raw": "{{base_url}}/api/v1/home/top-reviews",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"home",
+								"top-reviews"
+							]
+						},
+						"description": "Retrieve top-rated reviews (4+ stars) for testimonials section"
+					},
+					"response": []
+				},
+				{
+					"name": "Get All Home Data",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							},
+							{
+								"key": "Authorization",
+								"value": "Bearer {{auth_token}}",
+								"description": "Optional - for personalized results"
+							}
+						],
+						"url": {
+							"raw": "{{base_url}}/api/v1/home/all-data?category_id=1",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"home",
+								"all-data"
+							],
+							"query": [
+								{
+									"key": "category_id",
+									"value": "1",
+									"description": "Filter all data by category ID (optional)"
+								}
+							]
+						},
+						"description": "Retrieve all home page data in a single request for better performance"
+					},
+					"response": []
+				}
+			],
+			"description": "Home page dynamic content endpoints with personalization for logged-in users"
+		},
+		{
+			"name": "Course Details",
+			"item": [
+				{
+					"name": "Get Course Details",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							},
+							{
+								"key": "Authorization",
+								"value": "Bearer {{auth_token}}",
+								"description": "Optional - for enrollment status and review permissions"
+							}
+						],
+						"url": {
+							"raw": "{{base_url}}/api/v1/courses/18/details",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"courses",
+								"18",
+								"details"
+							]
+						},
+						"description": "Retrieve comprehensive course information including statistics, mentor details, reviews, and enrollment status"
+					},
+					"response": []
+				},
+				{
+					"name": "Get Course Reviews",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"url": {
+							"raw": "{{base_url}}/api/v1/courses/18/reviews?per_page=10&page=1",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"courses",
+								"18",
+								"reviews"
+							],
+							"query": [
+								{
+									"key": "per_page",
+									"value": "10",
+									"description": "Number of reviews per page"
+								},
+								{
+									"key": "page",
+									"value": "1",
+									"description": "Page number"
+								}
+							]
+						},
+						"description": "Retrieve paginated course reviews"
+					},
+					"response": []
+				},
+				{
+					"name": "Get Enrolled Students",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							},
+							{
+								"key": "Authorization",
+								"value": "Bearer {{auth_token}}",
+								"description": "Required - mentor/admin only"
+							}
+						],
+						"url": {
+							"raw": "{{base_url}}/api/v1/courses/18/enrolled-students?per_page=10&page=1&status=all",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"courses",
+								"18",
+								"enrolled-students"
+							],
+							"query": [
+								{
+									"key": "per_page",
+									"value": "10",
+									"description": "Number of students per page"
+								},
+								{
+									"key": "page",
+									"value": "1",
+									"description": "Page number"
+								},
+								{
+									"key": "status",
+									"value": "all",
+									"description": "Filter by status: all, active, inactive"
+								}
+							]
+						},
+						"description": "Retrieve enrolled students for a course (mentor/admin only)"
+					},
+					"response": []
+				},
+				{
+					"name": "Get Course Statistics",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							},
+							{
+								"key": "Authorization",
+								"value": "Bearer {{auth_token}}",
+								"description": "Required - mentor/admin only"
+							}
+						],
+						"url": {
+							"raw": "{{base_url}}/api/v1/courses/18/statistics",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"courses",
+								"18",
+								"statistics"
+							]
+						},
+						"description": "Retrieve course statistics and analytics (mentor/admin only)"
+					},
+					"response": []
+				}
+			],
+			"description": "Course details endpoints for comprehensive course information, reviews, and statistics"
+		},
+		{
+			"name": "Mentor Details",
+			"item": [
+				{
+					"name": "Get Mentor Details",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							},
+							{
+								"key": "Authorization",
+								"value": "Bearer {{auth_token}}",
+								"description": "Optional - for review permissions"
+							}
+						],
+						"url": {
+							"raw": "{{base_url}}/api/v1/mentors/1/details",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"mentors",
+								"1",
+								"details"
+							]
+						},
+						"description": "Retrieve comprehensive mentor information including statistics, reviews, courses, and sessions"
+					},
+					"response": []
+				},
+				{
+					"name": "Get Mentor Sessions",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"url": {
+							"raw": "{{base_url}}/api/v1/mentors/1/sessions?per_page=9&page=1&start_date=2025-01-01&end_date=2025-12-31",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"mentors",
+								"1",
+								"sessions"
+							],
+							"query": [
+								{
+									"key": "per_page",
+									"value": "9",
+									"description": "Number of sessions per page"
+								},
+								{
+									"key": "page",
+									"value": "1",
+									"description": "Page number"
+								},
+								{
+									"key": "start_date",
+									"value": "2025-01-01",
+									"description": "Filter sessions from this date"
+								},
+								{
+									"key": "end_date",
+									"value": "2025-12-31",
+									"description": "Filter sessions to this date"
+								}
+							]
+						},
+						"description": "Retrieve mentor's available sessions with pagination and date filtering"
+					},
+					"response": []
+				},
+				{
+					"name": "Get Mentor Reviews",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"url": {
+							"raw": "{{base_url}}/api/v1/mentors/1/reviews?per_page=10&page=1",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"mentors",
+								"1",
+								"reviews"
+							],
+							"query": [
+								{
+									"key": "per_page",
+									"value": "10",
+									"description": "Number of reviews per page"
+								},
+								{
+									"key": "page",
+									"value": "1",
+									"description": "Page number"
+								}
+							]
+						},
+						"description": "Retrieve paginated mentor reviews"
+					},
+					"response": []
+				},
+				{
+					"name": "Get Mentor Courses",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"url": {
+							"raw": "{{base_url}}/api/v1/mentors/1/courses?per_page=10&page=1&status=all",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"mentors",
+								"1",
+								"courses"
+							],
+							"query": [
+								{
+									"key": "per_page",
+									"value": "10",
+									"description": "Number of courses per page"
+								},
+								{
+									"key": "page",
+									"value": "1",
+									"description": "Page number"
+								},
+								{
+									"key": "status",
+									"value": "all",
+									"description": "Filter by status: all, approved, pending, rejected"
+								}
+							]
+						},
+						"description": "Retrieve mentor's courses with pagination and status filtering"
+					},
+					"response": []
+				},
+				{
+					"name": "Get Mentor Statistics",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							},
+							{
+								"key": "Authorization",
+								"value": "Bearer {{auth_token}}",
+								"description": "Required - mentor/admin only"
+							}
+						],
+						"url": {
+							"raw": "{{base_url}}/api/v1/mentors/1/statistics",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"mentors",
+								"1",
+								"statistics"
+							]
+						},
+						"description": "Retrieve mentor statistics and analytics (mentor/admin only)"
+					},
+					"response": []
+				}
+			],
+			"description": "Mentor details endpoints for comprehensive mentor information, sessions, reviews, and statistics"
+		},
+		{
+			"name": "Review Management",
+			"item": [
+				{
+					"name": "Create Review",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							},
+							{
+								"key": "Authorization",
+								"value": "Bearer {{auth_token}}",
+								"description": "Required"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"rating\": 5,\n  \"comment\": \"Excellent course with great content and clear explanations\",\n  \"course_id\": 18\n}"
+						},
+						"url": {
+							"raw": "{{base_url}}/api/v1/reviews",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"reviews"
+							]
+						},
+						"description": "Create a new review for a course or mentor. Use course_id for course reviews or mentor_id for mentor reviews."
+					}
+				},
+				{
+					"name": "Get User Reviews",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							},
+							{
+								"key": "Authorization",
+								"value": "Bearer {{auth_token}}",
+								"description": "Required"
+							}
+						],
+						"url": {
+							"raw": "{{base_url}}/api/v1/reviews?per_page=10&page=1&type=all",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"reviews"
+							],
+							"query": [
+								{
+									"key": "per_page",
+									"value": "10",
+									"description": "Number of reviews per page"
+								},
+								{
+									"key": "page",
+									"value": "1",
+									"description": "Page number"
+								},
+								{
+									"key": "type",
+									"value": "all",
+									"description": "Filter by type: all, course, mentor"
+								}
+							]
+						},
+						"description": "Retrieve paginated list of user's reviews with optional filtering by type."
+					}
+				},
+				{
+					"name": "Get Review Details",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							},
+							{
+								"key": "Authorization",
+								"value": "Bearer {{auth_token}}",
+								"description": "Required"
+							}
+						],
+						"url": {
+							"raw": "{{base_url}}/api/v1/reviews/1",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"reviews",
+								"1"
+							]
+						},
+						"description": "Retrieve details of a specific review."
+					}
+				},
+				{
+					"name": "Update Review",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							},
+							{
+								"key": "Authorization",
+								"value": "Bearer {{auth_token}}",
+								"description": "Required"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"rating\": 4,\n  \"comment\": \"Updated review comment with more details\"\n}"
+						},
+						"url": {
+							"raw": "{{base_url}}/api/v1/reviews/1",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"reviews",
+								"1"
+							]
+						},
+						"description": "Update an existing review. Users can only update their own reviews."
+					}
+				},
+				{
+					"name": "Delete Review",
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							},
+							{
+								"key": "Authorization",
+								"value": "Bearer {{auth_token}}",
+								"description": "Required"
+							}
+						],
+						"url": {
+							"raw": "{{base_url}}/api/v1/reviews/1",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"reviews",
+								"1"
+							]
+						},
+						"description": "Delete a review. Users can only delete their own reviews."
+					}
+				},
+				{
+					"name": "Check Review Eligibility",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							},
+							{
+								"key": "Authorization",
+								"value": "Bearer {{auth_token}}",
+								"description": "Required"
+							}
+						],
+						"url": {
+							"raw": "{{base_url}}/api/v1/reviews/can-review?course_id=18",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"reviews",
+								"can-review"
+							],
+							"query": [
+								{
+									"key": "course_id",
+									"value": "18",
+									"description": "Course ID to check eligibility"
+								},
+								{
+									"key": "mentor_id",
+									"value": "1",
+									"description": "Mentor ID to check eligibility (use either course_id or mentor_id)"
+								}
+							]
+						},
+						"description": "Check if user can review a specific course or mentor before attempting to create a review."
+					}
+				}
+			],
+			"description": "Review management endpoints for creating, reading, updating, and deleting reviews for courses and mentors"
 		}
 	],
 	"event": [

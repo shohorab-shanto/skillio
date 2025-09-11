@@ -4,6 +4,10 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Api\AuthController;
 use App\Http\Controllers\Api\UserOnboardingController;
+use App\Http\Controllers\Api\HomeApiController;
+use App\Http\Controllers\Api\CourseDetailsApiController;
+use App\Http\Controllers\Api\MentorDetailsApiController;
+use App\Http\Controllers\Api\ReviewApiController;
 
 /*
 |--------------------------------------------------------------------------
@@ -31,6 +35,37 @@ Route::prefix('v1')->group(function () {
     // Public onboarding data
     Route::get('onboarding/categories', [UserOnboardingController::class, 'getCategories']);
     Route::get('onboarding/countries', [UserOnboardingController::class, 'getCountries']);
+
+// Home page data endpoints
+Route::prefix('home')->group(function () {
+    Route::get('top-mentors', [HomeApiController::class, 'getTopMentors']);
+    Route::get('popular-courses', [HomeApiController::class, 'getPopularCourses']);
+    Route::get('new-courses', [HomeApiController::class, 'getNewCourses']);
+    Route::get('featured-courses', [HomeApiController::class, 'getFeaturedCourses']);
+    Route::get('top-reviews', [HomeApiController::class, 'getTopReviews']);
+    Route::get('all-data', [HomeApiController::class, 'getAllHomeData']);
+});
+
+// Course details endpoints
+Route::prefix('courses')->group(function () {
+    Route::get('{course}/details', [CourseDetailsApiController::class, 'getCourseDetails']);
+    Route::get('{course}/reviews', [CourseDetailsApiController::class, 'getCourseReviews']);
+    Route::middleware('auth:sanctum')->group(function () {
+        Route::get('{course}/enrolled-students', [CourseDetailsApiController::class, 'getEnrolledStudents']);
+        Route::get('{course}/statistics', [CourseDetailsApiController::class, 'getCourseStatistics']);
+    });
+});
+
+// Mentor details endpoints
+Route::prefix('mentors')->group(function () {
+    Route::get('{mentor}/details', [MentorDetailsApiController::class, 'getMentorDetails']);
+    Route::get('{mentor}/sessions', [MentorDetailsApiController::class, 'getMentorSessions']);
+    Route::get('{mentor}/reviews', [MentorDetailsApiController::class, 'getMentorReviews']);
+    Route::get('{mentor}/courses', [MentorDetailsApiController::class, 'getMentorCourses']);
+    Route::middleware('auth:sanctum')->group(function () {
+        Route::get('{mentor}/statistics', [MentorDetailsApiController::class, 'getMentorStatistics']);
+    });
+});
 });
 
 // Protected routes
@@ -51,5 +86,15 @@ Route::middleware('auth:sanctum')->prefix('v1')->group(function () {
         Route::get('status', [UserOnboardingController::class, 'getOnboardingStatus']);
         Route::get('preferences', [UserOnboardingController::class, 'getUserPreferences']);
         Route::get('my-custom-subcategories', [UserOnboardingController::class, 'getMyCustomSubCategories']);
+    });
+
+    // Review endpoints
+    Route::prefix('reviews')->group(function () {
+        Route::post('/', [ReviewApiController::class, 'store']);
+        Route::get('/', [ReviewApiController::class, 'getUserReviews']);
+        Route::get('can-review', [ReviewApiController::class, 'canReview']);
+        Route::get('{review}', [ReviewApiController::class, 'show']);
+        Route::put('{review}', [ReviewApiController::class, 'update']);
+        Route::delete('{review}', [ReviewApiController::class, 'destroy']);
     });
 });

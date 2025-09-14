@@ -33,6 +33,24 @@ All API responses follow this standard format:
 - `422` - Validation Error
 - `500` - Internal Server Error
 
+## Payment Methods
+
+The API uses **Stripe** for secure payment processing with the following features:
+
+### Supported Payment Methods
+- **Credit/Debit Cards**: Visa, Mastercard, American Express, Discover
+- **Security**: 3D Secure authentication when required
+- **Integration**: Stripe Elements for secure card input
+
+### Payment Processing Details
+- **Fees**: 2.9% + $0.30 per transaction (handled automatically)
+- **Revenue Sharing**: 80% to mentor, 20% to platform
+- **Currency**: USD
+- **Payment Status**: `pending`, `paid`, `failed`, `refunded`
+
+### Payment Method ID
+When making payments, you need to provide a `payment_method_id` obtained from Stripe's frontend integration. This ID represents the customer's payment method and is created securely on the client side.
+
 ---
 
 ## Table of Contents
@@ -42,8 +60,10 @@ All API responses follow this standard format:
 4. [Course Details Endpoints](#course-details-endpoints)
 5. [Mentor Details Endpoints](#mentor-details-endpoints)
 6. [Review Endpoints](#review-endpoints)
-7. [Error Responses](#error-responses)
-8. [Personalization Logic](#personalization-logic)
+7. [Course Enrollment Endpoints](#course-enrollment-endpoints)
+8. [Session Booking Endpoints](#session-booking-endpoints)
+9. [Error Responses](#error-responses)
+10. [Personalization Logic](#personalization-logic)
 
 ---
 
@@ -1658,6 +1678,791 @@ For logged-in users, the API applies personalization based on their onboarding p
 
 ---
 
+## Course Enrollment Endpoints
+
+### 1. Get Course Enrollment Information
+
+**Endpoint:** `GET /api/v1/enrollments/courses/{course}/info`
+
+**Description:** Get course enrollment information and checkout details for a specific course.
+
+**Headers:**
+```
+Authorization: Bearer {token}
+Accept: application/json
+Content-Type: application/json
+```
+
+**Parameters:**
+- `course` (path, required): Course ID
+
+**Response:**
+```json
+{
+  "success": true,
+  "message": "Course enrollment information retrieved successfully",
+  "data": {
+    "is_enrolled": false,
+    "course": {
+      "id": 1,
+      "title": "Advanced Web Development",
+      "description": "Learn advanced web development techniques",
+      "thumbnail": "https://example.com/storage/courses/thumbnails/course1.jpg",
+      "cover_photo": "https://example.com/storage/courses/covers/course1.jpg",
+      "mentor": {
+        "id": 1,
+        "name": "John Doe",
+        "photo": "https://example.com/storage/mentors/photos/mentor1.jpg",
+        "rating": 4.8,
+        "total_reviews": 150
+      },
+      "category": {
+        "id": 1,
+        "name": "Technology"
+      },
+      "sub_categories": [
+        {
+          "id": 1,
+          "name": "Web Development"
+        }
+      ],
+      "duration_days": 30,
+      "created_at": "2024-01-15T00:00:00.000000Z",
+      "enrollment_count": 45
+    },
+    "pricing": {
+      "original_price": 299.99,
+      "discounted_price": 199.99,
+      "discount_percentage": 33.00,
+      "final_price": 199.99,
+      "stripe_fee": 6.10,
+      "net_amount": 193.89,
+      "currency": "USD"
+    },
+    "eligibility": {
+      "can_enroll": true,
+      "reason": null
+    }
+  }
+}
+```
+
+### 2. Enroll in Course
+
+**Endpoint:** `POST /api/v1/enrollments/courses/{course}/enroll`
+
+**Description:** Enroll in a course with payment processing using Stripe.
+
+**Headers:**
+```
+Authorization: Bearer {token}
+Accept: application/json
+Content-Type: application/json
+```
+
+**Parameters:**
+- `course` (path, required): Course ID
+
+**Request Body:**
+```json
+{
+  "payment_method_id": "pm_1234567890",
+  "cardholder_name": "John Doe"
+}
+```
+
+**Response:**
+```json
+{
+  "success": true,
+  "message": "Successfully enrolled in course",
+  "data": {
+    "enrollment": {
+      "id": 1,
+      "status": "active",
+      "payment_status": "paid",
+      "enrolled_at": "2024-01-15T10:30:00.000000Z",
+      "amount": 199.99,
+      "currency": "USD"
+    },
+    "transaction": {
+      "id": 1,
+      "transaction_id": "TXN_1234567890",
+      "status": "completed",
+      "amount": 199.99,
+      "currency": "USD"
+    },
+    "course": {
+      "id": 1,
+      "title": "Advanced Web Development",
+      "thumbnail": "https://example.com/storage/courses/thumbnails/course1.jpg"
+    }
+  }
+}
+```
+
+### 3. Get User Enrollments
+
+**Endpoint:** `GET /api/v1/enrollments/my-enrollments`
+
+**Description:** Get all course enrollments for the authenticated user.
+
+**Headers:**
+```
+Authorization: Bearer {token}
+Accept: application/json
+Content-Type: application/json
+```
+
+**Query Parameters:**
+- `per_page` (optional): Number of items per page (default: 10)
+- `page` (optional): Page number (default: 1)
+- `status` (optional): Filter by enrollment status (`all`, `pending`, `active`, `completed`, `cancelled`, `refunded`)
+
+**Response:**
+```json
+{
+  "success": true,
+  "message": "User enrollments retrieved successfully",
+  "data": {
+    "enrollments": [
+      {
+        "id": 1,
+        "enrollment_status": "active",
+        "payment_status": "paid",
+        "enrolled_at": "2024-01-15T10:30:00.000000Z",
+        "started_at": null,
+        "completed_at": null,
+        "progress_percentage": 0.00,
+        "amount": 199.99,
+        "currency": "USD",
+        "course": {
+          "id": 1,
+          "title": "Advanced Web Development",
+          "description": "Learn advanced web development techniques",
+          "thumbnail": "https://example.com/storage/courses/thumbnails/course1.jpg",
+          "cover_photo": "https://example.com/storage/courses/covers/course1.jpg",
+          "duration_days": 30,
+          "created_at": "2024-01-15T00:00:00.000000Z",
+          "mentor": {
+            "id": 1,
+            "name": "John Doe",
+            "photo": "https://example.com/storage/mentors/photos/mentor1.jpg"
+          },
+          "category": {
+            "id": 1,
+            "name": "Technology"
+          }
+        },
+        "transaction": {
+          "id": 1,
+          "transaction_id": "TXN_1234567890",
+          "status": "completed",
+          "amount": 199.99,
+          "currency": "USD"
+        }
+      }
+    ],
+    "pagination": {
+      "current_page": 1,
+      "last_page": 1,
+      "per_page": 10,
+      "total": 1,
+      "has_more_pages": false
+    }
+  }
+}
+```
+
+### 4. Get Enrollment Details
+
+**Endpoint:** `GET /api/v1/enrollments/{enrollment}`
+
+**Description:** Get detailed information about a specific enrollment.
+
+**Headers:**
+```
+Authorization: Bearer {token}
+Accept: application/json
+Content-Type: application/json
+```
+
+**Parameters:**
+- `enrollment` (path, required): Enrollment ID
+
+**Response:**
+```json
+{
+  "success": true,
+  "message": "Enrollment details retrieved successfully",
+  "data": {
+    "enrollment": {
+      "id": 1,
+      "enrollment_status": "active",
+      "payment_status": "paid",
+      "enrolled_at": "2024-01-15T10:30:00.000000Z",
+      "started_at": null,
+      "completed_at": null,
+      "cancelled_at": null,
+      "progress_percentage": 0.00,
+      "last_accessed_at": null,
+      "amount": 199.99,
+      "currency": "USD",
+      "notes": null
+    },
+    "course": {
+      "id": 1,
+      "title": "Advanced Web Development",
+      "description": "Learn advanced web development techniques",
+      "thumbnail": "https://example.com/storage/courses/thumbnails/course1.jpg",
+      "cover_photo": "https://example.com/storage/courses/covers/course1.jpg",
+        "duration_days": 30,
+        "created_at": "2024-01-15T00:00:00.000000Z",
+      "mentor": {
+        "id": 1,
+        "name": "John Doe",
+        "photo": "https://example.com/storage/mentors/photos/mentor1.jpg",
+        "rating": 4.8,
+        "total_reviews": 150
+      },
+      "category": {
+        "id": 1,
+        "name": "Technology"
+      },
+      "sub_categories": [
+        {
+          "id": 1,
+          "name": "Web Development"
+        }
+      ]
+    },
+    "transaction": {
+      "id": 1,
+      "transaction_id": "TXN_1234567890",
+      "status": "completed",
+      "amount": 199.99,
+      "currency": "USD",
+      "payment_method_type": "card",
+      "created_at": "2024-01-15T10:30:00.000000Z"
+    },
+    "conversation": {
+      "id": 1,
+      "status": "active"
+    }
+  }
+}
+```
+
+### 5. Cancel Enrollment - DISABLED
+
+**Endpoint:** `POST /api/v1/enrollments/{enrollment}/cancel`
+
+**Description:** Course enrollments cannot be cancelled after payment. All enrollments are final once payment is completed.
+
+**Headers:**
+```
+Authorization: Bearer {token}
+Accept: application/json
+Content-Type: application/json
+```
+
+**Parameters:**
+- `enrollment` (path, required): Enrollment ID
+
+**Response:**
+```json
+{
+  "success": false,
+  "message": "Cancellation not allowed",
+  "error": "Course enrollments cannot be cancelled after payment. No refunds are available.",
+  "policy": "All course enrollments are final once payment is completed"
+}
+```
+
+---
+
+## Session Booking Endpoints
+
+### 1. Get Available Sessions
+
+**Endpoint:** `GET /api/v1/sessions/available`
+
+**Description:** Get available session bookings with optional filtering by mentor, category, and date.
+
+**Headers:**
+```
+Authorization: Bearer {token}
+Accept: application/json
+Content-Type: application/json
+```
+
+**Query Parameters:**
+- `mentor_id` (optional): Filter by specific mentor
+- `category_id` (optional): Filter by category
+- `date` (optional): Filter by specific date (YYYY-MM-DD format)
+- `per_page` (optional): Number of items per page (default: 10)
+- `page` (optional): Page number (default: 1)
+
+**Response:**
+```json
+{
+  "success": true,
+  "message": "Available sessions retrieved successfully",
+  "data": {
+    "sessions": [
+      {
+        "id": 14,
+        "date": "2025-09-21",
+        "start_time": "10:00",
+        "end_time": "11:00",
+        "duration_minutes": 60,
+        "formatted_time_slot": "10:00 - 11:00",
+        "fee": "50.00",
+        "currency": "USD",
+        "mentor": {
+          "id": 1,
+          "name": "John Doe",
+          "photo": "https://example.com/storage/mentors/photos/mentor1.jpg",
+          "rating": 4.8,
+          "total_reviews": 150
+        },
+        "category": {
+          "id": 1,
+          "name": "Technology"
+        },
+        "sub_categories": [
+          {
+            "id": 1,
+            "name": "Web Development"
+          }
+        ],
+        "is_available": true,
+        "has_not_started": true
+      }
+    ],
+    "pagination": {
+      "current_page": 1,
+      "last_page": 1,
+      "per_page": 10,
+      "total": 1,
+      "has_more_pages": false
+    }
+  }
+}
+```
+
+### 2. Get Session Booking Information
+
+**Endpoint:** `GET /api/v1/sessions/{session}/info`
+
+**Description:** Get session booking information and checkout details for a specific session.
+
+**Headers:**
+```
+Authorization: Bearer {token}
+Accept: application/json
+Content-Type: application/json
+```
+
+**Parameters:**
+- `session` (path, required): Session ID
+
+**Response:**
+```json
+{
+  "success": true,
+  "message": "Session booking information retrieved successfully",
+  "data": {
+    "is_booked": false,
+    "session": {
+      "id": 14,
+      "date": "2025-09-21",
+      "start_time": "10:00",
+      "end_time": "11:00",
+      "duration_minutes": 60,
+      "formatted_time_slot": "10:00 - 11:00",
+      "mentor": {
+        "id": 1,
+        "name": "John Doe",
+        "photo": "https://example.com/storage/mentors/photos/mentor1.jpg",
+        "rating": 4.8,
+        "total_reviews": 150
+      },
+      "category": {
+        "id": 1,
+        "name": "Technology"
+      },
+      "sub_categories": [
+        {
+          "id": 1,
+          "name": "Web Development"
+        }
+      ],
+      "is_available": true,
+      "has_not_started": true
+    },
+    "pricing": {
+      "fee": "50.00",
+      "stripe_fee": 1.75,
+      "net_amount": 48.25,
+      "currency": "USD"
+    },
+    "eligibility": {
+      "can_book": true,
+      "reason": null
+    }
+  }
+}
+```
+
+### 3. Book Session
+
+**Endpoint:** `POST /api/v1/sessions/{session}/book`
+
+**Description:** Book a session with payment processing using Stripe.
+
+**Headers:**
+```
+Authorization: Bearer {token}
+Accept: application/json
+Content-Type: application/json
+```
+
+**Parameters:**
+- `session` (path, required): Session ID
+
+**Request Body:**
+```json
+{
+  "payment_method_id": "pm_1234567890",
+  "cardholder_name": "John Doe"
+}
+```
+
+**Response:**
+```json
+{
+  "success": true,
+  "message": "Successfully booked session",
+  "data": {
+    "enrollment": {
+      "id": 1,
+      "status": "active",
+      "payment_status": "paid",
+      "enrolled_at": "2024-01-15T10:30:00.000000Z",
+      "amount": 50.00,
+      "currency": "USD"
+    },
+    "transaction": {
+      "id": 1,
+      "transaction_id": "TXN_1234567890",
+      "status": "completed",
+      "amount": 50.00,
+      "currency": "USD"
+    },
+    "session": {
+      "id": 14,
+      "date": "2025-09-21",
+      "start_time": "10:00",
+      "end_time": "11:00",
+      "mentor_name": "John Doe"
+    }
+  }
+}
+```
+
+### 4. Get User Session Bookings
+
+**Endpoint:** `GET /api/v1/sessions/my-bookings`
+
+**Description:** Get all session bookings for the authenticated user.
+
+**Headers:**
+```
+Authorization: Bearer {token}
+Accept: application/json
+Content-Type: application/json
+```
+
+**Query Parameters:**
+- `per_page` (optional): Number of items per page (default: 10)
+- `page` (optional): Page number (default: 1)
+- `status` (optional): Filter by enrollment status (`all`, `pending`, `active`, `completed`, `cancelled`, `refunded`)
+
+**Response:**
+```json
+{
+  "success": true,
+  "message": "User session bookings retrieved successfully",
+  "data": {
+    "bookings": [
+      {
+        "id": 1,
+        "enrollment_status": "active",
+        "payment_status": "paid",
+        "enrolled_at": "2024-01-15T10:30:00.000000Z",
+        "started_at": null,
+        "completed_at": null,
+        "amount": 50.00,
+        "currency": "USD",
+        "session": {
+          "id": 14,
+          "date": "2025-09-21",
+          "start_time": "10:00",
+          "end_time": "11:00",
+          "duration_minutes": 60,
+          "formatted_time_slot": "10:00 - 11:00",
+          "fee": "50.00",
+          "status": "booked",
+          "mentor": {
+            "id": 1,
+            "name": "John Doe",
+            "photo": "https://example.com/storage/mentors/photos/mentor1.jpg"
+          },
+          "category": {
+            "id": 1,
+            "name": "Technology"
+          }
+        },
+        "transaction": {
+          "id": 1,
+          "transaction_id": "TXN_1234567890",
+          "status": "completed",
+          "amount": 50.00,
+          "currency": "USD"
+        }
+      }
+    ],
+    "pagination": {
+      "current_page": 1,
+      "last_page": 1,
+      "per_page": 10,
+      "total": 1,
+      "has_more_pages": false
+    }
+  }
+}
+```
+
+### 5. Get Booking Details
+
+**Endpoint:** `GET /api/v1/sessions/bookings/{enrollment}`
+
+**Description:** Get detailed information about a specific session booking.
+
+**Headers:**
+```
+Authorization: Bearer {token}
+Accept: application/json
+Content-Type: application/json
+```
+
+**Parameters:**
+- `enrollment` (path, required): Enrollment ID
+
+**Response:**
+```json
+{
+  "success": true,
+  "message": "Booking details retrieved successfully",
+  "data": {
+    "enrollment": {
+      "id": 1,
+      "enrollment_status": "active",
+      "payment_status": "paid",
+      "enrolled_at": "2024-01-15T10:30:00.000000Z",
+      "started_at": null,
+      "completed_at": null,
+      "cancelled_at": null,
+      "amount": 50.00,
+      "currency": "USD",
+      "notes": null
+    },
+    "session": {
+      "id": 14,
+      "date": "2025-09-21",
+      "start_time": "10:00",
+      "end_time": "11:00",
+      "duration_minutes": 60,
+      "formatted_time_slot": "10:00 - 11:00",
+      "fee": "50.00",
+      "status": "booked",
+      "has_not_started": true,
+      "mentor": {
+        "id": 1,
+        "name": "John Doe",
+        "photo": "https://example.com/storage/mentors/photos/mentor1.jpg",
+        "rating": 4.8,
+        "total_reviews": 150
+      },
+      "category": {
+        "id": 1,
+        "name": "Technology"
+      },
+      "sub_categories": [
+        {
+          "id": 1,
+          "name": "Web Development"
+        }
+      ]
+    },
+    "transaction": {
+      "id": 1,
+      "transaction_id": "TXN_1234567890",
+      "status": "completed",
+      "amount": 50.00,
+      "currency": "USD",
+      "payment_method_type": "card",
+      "created_at": "2024-01-15T10:30:00.000000Z"
+    },
+    "conversation": {
+      "id": 1,
+      "status": "active"
+    }
+  }
+}
+```
+
+### 6. Cancel Session Booking - DISABLED
+
+**Endpoint:** `POST /api/v1/sessions/bookings/{enrollment}/cancel`
+
+**Description:** Session bookings cannot be cancelled after payment. Users can only switch to another available session with the same mentor and price.
+
+**Headers:**
+```
+Authorization: Bearer {token}
+Accept: application/json
+Content-Type: application/json
+```
+
+**Parameters:**
+- `enrollment` (path, required): Enrollment ID
+
+**Response:**
+```json
+{
+  "success": false,
+  "message": "Cancellation not allowed",
+  "error": "Session bookings cannot be cancelled after payment. You can switch to another available session with the same mentor and price.",
+  "suggestion": "Use the switch session endpoint to change your booking"
+}
+```
+
+### 7. Get Switchable Sessions
+
+**Endpoint:** `GET /api/v1/sessions/bookings/{enrollment}/switchable`
+
+**Description:** Get available sessions for switching (same mentor, same price).
+
+**Headers:**
+```
+Authorization: Bearer {token}
+Accept: application/json
+```
+
+**Parameters:**
+- `enrollment` (path, required): Enrollment ID
+- `per_page` (query, optional): Number of sessions per page (default: 10)
+
+**Response:**
+```json
+{
+  "success": true,
+  "message": "Switchable sessions retrieved successfully",
+  "data": {
+    "current_session": {
+      "id": 14,
+      "date": "2025-09-21",
+      "start_time": "10:00",
+      "end_time": "11:00"
+    },
+    "available_sessions": [
+      {
+        "id": 15,
+        "date": "2025-09-22",
+        "start_time": "14:00",
+        "end_time": "15:00",
+        "duration": 60,
+        "type": "online",
+        "fee": 50.00,
+        "mentor": {
+          "id": 1,
+          "name": "John Doe",
+          "photo": "https://example.com/storage/mentors/photos/mentor1.jpg"
+        },
+        "category": {
+          "id": 1,
+          "name": "Technology"
+        },
+        "sub_categories": [
+          {
+            "id": 1,
+            "name": "Web Development"
+          }
+        ],
+        "is_available": true
+      }
+    ],
+    "pagination": {
+      "current_page": 1,
+      "last_page": 1,
+      "per_page": 10,
+      "total": 1
+    }
+  }
+}
+```
+
+### 8. Switch Session
+
+**Endpoint:** `POST /api/v1/sessions/bookings/{enrollment}/switch`
+
+**Description:** Switch to a different session with same mentor and price.
+
+**Headers:**
+```
+Authorization: Bearer {token}
+Accept: application/json
+Content-Type: application/json
+```
+
+**Parameters:**
+- `enrollment` (path, required): Enrollment ID
+
+**Request Body:**
+```json
+{
+  "new_session_id": 15
+}
+```
+
+**Response:**
+```json
+{
+  "success": true,
+  "message": "Session switched successfully",
+  "data": {
+    "enrollment_id": 1,
+    "old_session": {
+      "id": 14,
+      "date": "2025-09-21",
+      "start_time": "10:00",
+      "end_time": "11:00"
+    },
+    "new_session": {
+      "id": 15,
+      "date": "2025-09-22",
+      "start_time": "14:00",
+      "end_time": "15:00"
+    },
+    "switched_at": "2024-01-16T14:30:00.000000Z"
+  }
+}
+```
+
+---
+
 ## Notes
 
 - All timestamps are in ISO 8601 format
@@ -1669,3 +2474,13 @@ For logged-in users, the API applies personalization based on their onboarding p
 - Pagination is available for list endpoints with `per_page` and `page` parameters
 - Protected endpoints require valid authentication token
 - Category filtering is optional and works across all home page endpoints
+- Course enrollment requires valid Stripe payment method
+- Session booking requires valid Stripe payment method
+- Enrollment statuses: `pending`, `active`, `completed`, `cancelled`, `refunded`
+- Payment statuses: `pending`, `paid`, `failed`, `refunded`
+- Stripe fees are calculated as 2.9% + $0.30 per transaction
+- Session statuses: `active`, `booked`, `completed`, `cancelled`
+- Session bookings are automatically marked as booked when payment succeeds
+- **Cancellation Policy**: Course enrollments and session bookings cannot be cancelled after payment
+- **Session Switching**: Users can switch session bookings to another available session with the same mentor and price
+- **No Refunds**: All payments are final once completed

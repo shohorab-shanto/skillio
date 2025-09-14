@@ -8,6 +8,8 @@ use App\Http\Controllers\Api\HomeApiController;
 use App\Http\Controllers\Api\CourseDetailsApiController;
 use App\Http\Controllers\Api\MentorDetailsApiController;
 use App\Http\Controllers\Api\ReviewApiController;
+use App\Http\Controllers\Api\CourseEnrollmentApiController;
+use App\Http\Controllers\Api\SessionBookingApiController;
 
 /*
 |--------------------------------------------------------------------------
@@ -96,5 +98,26 @@ Route::middleware('auth:sanctum')->prefix('v1')->group(function () {
         Route::get('{review}', [ReviewApiController::class, 'show']);
         Route::put('{review}', [ReviewApiController::class, 'update']);
         Route::delete('{review}', [ReviewApiController::class, 'destroy']);
+    });
+
+    // Course enrollment endpoints
+    Route::prefix('enrollments')->group(function () {
+        Route::get('courses/{course}/info', [CourseEnrollmentApiController::class, 'getEnrollmentInfo']);
+        Route::post('courses/{course}/enroll', [CourseEnrollmentApiController::class, 'enroll']);
+        Route::get('my-enrollments', [CourseEnrollmentApiController::class, 'getUserEnrollments']);
+        Route::get('{enrollment}', [CourseEnrollmentApiController::class, 'getEnrollmentDetails']);
+        Route::post('{enrollment}/cancel', [CourseEnrollmentApiController::class, 'cancelEnrollment']);
+    });
+
+    // Session booking endpoints
+    Route::prefix('sessions')->group(function () {
+        Route::get('available', [SessionBookingApiController::class, 'getAvailableSessions']);
+        Route::get('{session}/info', [SessionBookingApiController::class, 'getBookingInfo']);
+        Route::post('{session}/book', [SessionBookingApiController::class, 'bookSession']);
+        Route::get('my-bookings', [SessionBookingApiController::class, 'getUserBookings']);
+        Route::get('bookings/{enrollment}', [SessionBookingApiController::class, 'getBookingDetails']);
+        Route::post('bookings/{enrollment}/cancel', [SessionBookingApiController::class, 'cancelBooking']);
+        Route::get('bookings/{enrollment}/switchable', [SessionBookingApiController::class, 'getSwitchableSessions']);
+        Route::post('bookings/{enrollment}/switch', [SessionBookingApiController::class, 'switchSession']);
     });
 });

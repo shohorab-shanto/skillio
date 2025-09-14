@@ -2,7 +2,7 @@
 	"info": {
 		"_postman_id": "skillo-api-collection",
 		"name": "Skillo Mobile API",
-		"description": "Complete API collection for Skillo mobile application including authentication, user onboarding, home page dynamic content with personalization and category filtering, comprehensive course details, mentor details, and review management",
+		"description": "Complete API collection for Skillo mobile application including authentication, user onboarding, home page dynamic content with personalization and category filtering, comprehensive course details, mentor details, review management, course enrollment, and session booking with Stripe payment integration (Visa, Mastercard, Amex, Discover)",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
 	},
 	"item": [
@@ -1457,6 +1457,555 @@
 				}
 			],
 			"description": "Review management endpoints for creating, reading, updating, and deleting reviews for courses and mentors"
+		},
+		{
+			"name": "Course Enrollment",
+			"item": [
+				{
+					"name": "Get Course Enrollment Info",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							},
+							{
+								"key": "Authorization",
+								"value": "Bearer {{auth_token}}",
+								"description": "Required"
+							}
+						],
+						"url": {
+							"raw": "{{base_url}}/api/v1/enrollments/courses/18/info",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"enrollments",
+								"courses",
+								"18",
+								"info"
+							]
+						},
+						"description": "Get course enrollment information and checkout details for a specific course. Returns pricing, eligibility, and course details."
+					}
+				},
+				{
+					"name": "Enroll in Course",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							},
+							{
+								"key": "Authorization",
+								"value": "Bearer {{auth_token}}",
+								"description": "Required"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"payment_method_id\": \"pm_1234567890\",\n  \"cardholder_name\": \"John Doe\"\n}"
+						},
+						"url": {
+							"raw": "{{base_url}}/api/v1/enrollments/courses/18/enroll",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"enrollments",
+								"courses",
+								"18",
+								"enroll"
+							]
+						},
+						"description": "Enroll in a course with payment processing using Stripe. Supports Visa, Mastercard, American Express, and Discover cards. Requires valid payment method ID from Stripe Elements."
+					}
+				},
+				{
+					"name": "Get User Enrollments",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							},
+							{
+								"key": "Authorization",
+								"value": "Bearer {{auth_token}}",
+								"description": "Required"
+							}
+						],
+						"url": {
+							"raw": "{{base_url}}/api/v1/enrollments/my-enrollments?per_page=10&page=1&status=all",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"enrollments",
+								"my-enrollments"
+							],
+							"query": [
+								{
+									"key": "per_page",
+									"value": "10",
+									"description": "Number of items per page (default: 10)"
+								},
+								{
+									"key": "page",
+									"value": "1",
+									"description": "Page number (default: 1)"
+								},
+								{
+									"key": "status",
+									"value": "all",
+									"description": "Filter by enrollment status (all, pending, active, completed, cancelled, refunded)"
+								}
+							]
+						},
+						"description": "Get all course enrollments for the authenticated user with pagination and status filtering."
+					}
+				},
+				{
+					"name": "Get Enrollment Details",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							},
+							{
+								"key": "Authorization",
+								"value": "Bearer {{auth_token}}",
+								"description": "Required"
+							}
+						],
+						"url": {
+							"raw": "{{base_url}}/api/v1/enrollments/1",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"enrollments",
+								"1"
+							]
+						},
+						"description": "Get detailed information about a specific enrollment including course details, transaction info, and conversation status."
+					}
+				},
+				{
+					"name": "Cancel Enrollment - DISABLED",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							},
+							{
+								"key": "Authorization",
+								"value": "Bearer {{auth_token}}",
+								"description": "Required"
+							}
+						],
+						"url": {
+							"raw": "{{base_url}}/api/v1/enrollments/1/cancel",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"enrollments",
+								"1",
+								"cancel"
+							]
+						},
+						"description": "Course enrollments cannot be cancelled after payment. All enrollments are final once payment is completed."
+					}
+				}
+			],
+			"description": "Course enrollment endpoints for enrolling in courses with Stripe payment integration (Visa, Mastercard, Amex, Discover), managing enrollments, and tracking progress"
+		},
+		{
+			"name": "Session Booking",
+			"item": [
+				{
+					"name": "Get Available Sessions",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							},
+							{
+								"key": "Authorization",
+								"value": "Bearer {{auth_token}}",
+								"description": "Required"
+							}
+						],
+						"url": {
+							"raw": "{{base_url}}/api/v1/sessions/available?mentor_id=1&category_id=1&date=2025-09-21&per_page=10&page=1",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"sessions",
+								"available"
+							],
+							"query": [
+								{
+									"key": "mentor_id",
+									"value": "1",
+									"description": "Filter by specific mentor (optional)"
+								},
+								{
+									"key": "category_id",
+									"value": "1",
+									"description": "Filter by category (optional)"
+								},
+								{
+									"key": "date",
+									"value": "2025-09-21",
+									"description": "Filter by specific date (optional)"
+								},
+								{
+									"key": "per_page",
+									"value": "10",
+									"description": "Number of items per page (default: 10)"
+								},
+								{
+									"key": "page",
+									"value": "1",
+									"description": "Page number (default: 1)"
+								}
+							]
+						},
+						"description": "Get available session bookings with optional filtering by mentor, category, and date."
+					}
+				},
+				{
+					"name": "Get Session Booking Info",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							},
+							{
+								"key": "Authorization",
+								"value": "Bearer {{auth_token}}",
+								"description": "Required"
+							}
+						],
+						"url": {
+							"raw": "{{base_url}}/api/v1/sessions/14/info",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"sessions",
+								"14",
+								"info"
+							]
+						},
+						"description": "Get session booking information and checkout details for a specific session. Returns pricing, eligibility, and session details."
+					}
+				},
+				{
+					"name": "Book Session",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							},
+							{
+								"key": "Authorization",
+								"value": "Bearer {{auth_token}}",
+								"description": "Required"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"payment_method_id\": \"pm_1234567890\",\n  \"cardholder_name\": \"John Doe\"\n}"
+						},
+						"url": {
+							"raw": "{{base_url}}/api/v1/sessions/14/book",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"sessions",
+								"14",
+								"book"
+							]
+						},
+						"description": "Book a session with payment processing using Stripe. Supports Visa, Mastercard, American Express, and Discover cards. Requires valid payment method ID from Stripe Elements."
+					}
+				},
+				{
+					"name": "Get User Session Bookings",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							},
+							{
+								"key": "Authorization",
+								"value": "Bearer {{auth_token}}",
+								"description": "Required"
+							}
+						],
+						"url": {
+							"raw": "{{base_url}}/api/v1/sessions/my-bookings?per_page=10&page=1&status=all",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"sessions",
+								"my-bookings"
+							],
+							"query": [
+								{
+									"key": "per_page",
+									"value": "10",
+									"description": "Number of items per page (default: 10)"
+								},
+								{
+									"key": "page",
+									"value": "1",
+									"description": "Page number (default: 1)"
+								},
+								{
+									"key": "status",
+									"value": "all",
+									"description": "Filter by enrollment status (all, pending, active, completed, cancelled, refunded)"
+								}
+							]
+						},
+						"description": "Get all session bookings for the authenticated user with pagination and status filtering."
+					}
+				},
+				{
+					"name": "Get Booking Details",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							},
+							{
+								"key": "Authorization",
+								"value": "Bearer {{auth_token}}",
+								"description": "Required"
+							}
+						],
+						"url": {
+							"raw": "{{base_url}}/api/v1/sessions/bookings/1",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"sessions",
+								"bookings",
+								"1"
+							]
+						},
+						"description": "Get detailed information about a specific session booking including session details, transaction info, and conversation status."
+					}
+				},
+				{
+					"name": "Cancel Session Booking - DISABLED",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							},
+							{
+								"key": "Authorization",
+								"value": "Bearer {{auth_token}}",
+								"description": "Required"
+							}
+						],
+						"url": {
+							"raw": "{{base_url}}/api/v1/sessions/bookings/1/cancel",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"sessions",
+								"bookings",
+								"1",
+								"cancel"
+							]
+						},
+						"description": "Session bookings cannot be cancelled after payment. Users can only switch to another available session with the same mentor and price."
+					}
+				},
+				{
+					"name": "Get Switchable Sessions",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json"
+							},
+							{
+								"key": "Authorization",
+								"value": "Bearer {{auth_token}}",
+								"description": "Required"
+							}
+						],
+						"url": {
+							"raw": "{{base_url}}/api/v1/sessions/bookings/1/switchable?per_page=10",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"sessions",
+								"bookings",
+								"1",
+								"switchable"
+							],
+							"query": [
+								{
+									"key": "per_page",
+									"value": "10",
+									"description": "Number of sessions per page"
+								}
+							]
+						},
+						"description": "Get available sessions for switching (same mentor, same price). Only shows future sessions with the same mentor and price as the current booking."
+					}
+				},
+				{
+					"name": "Switch Session",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							},
+							{
+								"key": "Authorization",
+								"value": "Bearer {{auth_token}}",
+								"description": "Required"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"new_session_id\": 15\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base_url}}/api/v1/sessions/bookings/1/switch",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"sessions",
+								"bookings",
+								"1",
+								"switch"
+							]
+						},
+						"description": "Switch to a different session with same mentor and price. The new session must be available and have the same mentor and price as the current booking."
+					}
+				}
+			],
+			"description": "Session booking endpoints for browsing available sessions, booking sessions with Stripe payment integration (Visa, Mastercard, Amex, Discover), managing bookings, and tracking session progress"
 		}
 	],
 	"event": [

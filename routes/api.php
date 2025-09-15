@@ -10,6 +10,13 @@ use App\Http\Controllers\Api\MentorDetailsApiController;
 use App\Http\Controllers\Api\ReviewApiController;
 use App\Http\Controllers\Api\CourseEnrollmentApiController;
 use App\Http\Controllers\Api\SessionBookingApiController;
+use App\Http\Controllers\Api\UserDashboardApiController;
+use App\Http\Controllers\Api\UserCoursesApiController;
+use App\Http\Controllers\Api\UserSessionsApiController;
+use App\Http\Controllers\Api\UserPaymentsApiController;
+use App\Http\Controllers\Api\UserProfileApiController;
+use App\Http\Controllers\Api\UserConversationsApiController;
+use App\Http\Controllers\Api\UserNotificationsApiController;
 
 /*
 |--------------------------------------------------------------------------
@@ -119,5 +126,65 @@ Route::middleware('auth:sanctum')->prefix('v1')->group(function () {
         Route::post('bookings/{enrollment}/cancel', [SessionBookingApiController::class, 'cancelBooking']);
         Route::get('bookings/{enrollment}/switchable', [SessionBookingApiController::class, 'getSwitchableSessions']);
         Route::post('bookings/{enrollment}/switch', [SessionBookingApiController::class, 'switchSession']);
+    });
+
+    // User Dashboard endpoints
+    Route::prefix('user')->group(function () {
+        // Dashboard overview
+        Route::get('dashboard', [UserDashboardApiController::class, 'index']);
+        Route::get('dashboard/statistics', [UserDashboardApiController::class, 'statistics']);
+        
+        // User courses management
+        Route::prefix('courses')->group(function () {
+            Route::get('/', [UserCoursesApiController::class, 'index']);
+            Route::get('{enrollment}', [UserCoursesApiController::class, 'show']);
+            Route::get('statistics', [UserCoursesApiController::class, 'statistics']);
+        });
+        
+        // User sessions management
+        Route::prefix('sessions')->group(function () {
+            Route::get('/', [UserSessionsApiController::class, 'index']);
+            Route::get('{enrollment}', [UserSessionsApiController::class, 'show']);
+            Route::get('{enrollment}/available-slots', [UserSessionsApiController::class, 'getAvailableSlots']);
+            Route::post('{enrollment}/switch', [UserSessionsApiController::class, 'switchSession']);
+            Route::get('statistics', [UserSessionsApiController::class, 'statistics']);
+        });
+        
+        // Payment history
+        Route::prefix('payments')->group(function () {
+            Route::get('/', [UserPaymentsApiController::class, 'index']);
+            Route::get('{payment}', [UserPaymentsApiController::class, 'show']);
+            Route::get('statistics', [UserPaymentsApiController::class, 'statistics']);
+        });
+        
+        // User profile management
+        Route::prefix('profile')->group(function () {
+            Route::get('/', [UserProfileApiController::class, 'show']);
+            Route::put('/', [UserProfileApiController::class, 'update']);
+            Route::put('password', [UserProfileApiController::class, 'updatePassword']);
+            Route::get('preferences', [UserProfileApiController::class, 'getPreferences']);
+            Route::put('preferences', [UserProfileApiController::class, 'updatePreferences']);
+            Route::get('onboarding-status', [UserProfileApiController::class, 'getOnboardingStatus']);
+        });
+        
+        // Chat/Conversation management
+        Route::prefix('conversations')->group(function () {
+            Route::get('/', [UserConversationsApiController::class, 'index']);
+            Route::get('{code}', [UserConversationsApiController::class, 'show']);
+            Route::get('{code}/messages', [UserConversationsApiController::class, 'getMessages']);
+            Route::post('{code}/messages', [UserConversationsApiController::class, 'sendMessage']);
+            Route::get('{code}/chat-status', [UserConversationsApiController::class, 'getChatStatus']);
+        });
+        
+        // Notifications management
+        Route::prefix('notifications')->group(function () {
+            Route::get('/', [UserNotificationsApiController::class, 'index']);
+            Route::get('recent', [UserNotificationsApiController::class, 'getRecent']);
+            Route::get('unread-count', [UserNotificationsApiController::class, 'getUnreadCount']);
+            Route::put('{notification}/read', [UserNotificationsApiController::class, 'markAsRead']);
+            Route::put('read-all', [UserNotificationsApiController::class, 'markAllAsRead']);
+            Route::delete('{notification}', [UserNotificationsApiController::class, 'destroy']);
+            Route::delete('all', [UserNotificationsApiController::class, 'destroyAll']);
+        });
     });
 });

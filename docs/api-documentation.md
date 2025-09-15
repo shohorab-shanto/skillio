@@ -62,8 +62,15 @@ When making payments, you need to provide a `payment_method_id` obtained from St
 6. [Review Endpoints](#review-endpoints)
 7. [Course Enrollment Endpoints](#course-enrollment-endpoints)
 8. [Session Booking Endpoints](#session-booking-endpoints)
-9. [Error Responses](#error-responses)
-10. [Personalization Logic](#personalization-logic)
+9. [User Dashboard Endpoints](#user-dashboard-endpoints)
+10. [User Courses Management](#user-courses-management)
+11. [User Sessions Management](#user-sessions-management)
+12. [User Payment History](#user-payment-history)
+13. [User Profile Management](#user-profile-management)
+14. [User Conversations/Chat](#user-conversationschat)
+15. [User Notifications](#user-notifications)
+16. [Error Responses](#error-responses)
+17. [Personalization Logic](#personalization-logic)
 
 ---
 
@@ -2484,3 +2491,1400 @@ Content-Type: application/json
 - **Cancellation Policy**: Course enrollments and session bookings cannot be cancelled after payment
 - **Session Switching**: Users can switch session bookings to another available session with the same mentor and price
 - **No Refunds**: All payments are final once completed
+
+---
+
+## User Dashboard Endpoints
+
+### 1. Get Dashboard Overview
+
+**Endpoint:** `GET /api/v1/user/dashboard`
+
+**Description:** Get user dashboard with statistics and recent activity.
+
+**Headers:**
+```
+Authorization: Bearer {token}
+Accept: application/json
+```
+
+**Parameters:**
+- `search` (query, optional): Search term for filtering courses
+
+**Response:**
+```json
+{
+  "success": true,
+  "data": {
+    "statistics": {
+      "active_courses": 3,
+      "completed_courses": 1,
+      "upcoming_sessions": 2,
+      "learning_hours": 6
+    },
+    "current_courses": [
+      {
+        "id": 1,
+        "course": {
+          "id": 5,
+          "title": "Advanced React Development",
+          "thumbnail": "https://yourdomain.com/storage/courses/thumbnails/thumb_123.jpg",
+          "average_rating": 4.8,
+          "start_date": "2024-01-15",
+          "duration": "2 Months, 15 Days"
+        },
+        "mentor": {
+          "id": 2,
+          "name": "John Smith",
+          "photo": "https://yourdomain.com/storage/mentors/photos/photo_123.jpg"
+        },
+        "enrollment_status": "active",
+        "progress_percentage": 65.50,
+        "enrolled_at": "2024-01-10 10:30:00"
+      }
+    ],
+    "upcoming_sessions": [
+      {
+        "id": 2,
+        "session": {
+          "id": 8,
+          "date": "2024-01-20",
+          "start_time": "14:00:00",
+          "formatted_time_slot": "2:00 PM - 3:00 PM",
+          "sub_categories": ["Web Development", "React"]
+        },
+        "mentor": {
+          "id": 2,
+          "name": "John Smith",
+          "photo": "https://yourdomain.com/storage/mentors/photos/photo_123.jpg"
+        },
+        "enrollment_status": "active",
+        "enrolled_at": "2024-01-15 09:15:00"
+      }
+    ],
+    "search": ""
+  }
+}
+```
+
+### 2. Get Dashboard Statistics
+
+**Endpoint:** `GET /api/v1/user/dashboard/statistics`
+
+**Description:** Get detailed dashboard statistics including monthly learning hours.
+
+**Headers:**
+```
+Authorization: Bearer {token}
+Accept: application/json
+```
+
+**Response:**
+```json
+{
+  "success": true,
+  "data": {
+    "course_statistics": {
+      "total_courses": 4,
+      "active_courses": 3,
+      "completed_courses": 1,
+      "total_spent_courses": 299.97
+    },
+    "session_statistics": {
+      "total_sessions": 5,
+      "upcoming_sessions": 2,
+      "completed_sessions": 3,
+      "total_spent": 199.50
+    },
+    "learning_hours_by_month": [
+      {
+        "month": "Aug 2024",
+        "hours": 4
+      },
+      {
+        "month": "Sep 2024",
+        "hours": 6
+      },
+      {
+        "month": "Oct 2024",
+        "hours": 8
+      }
+    ],
+    "total_learning_hours": 18
+  }
+}
+```
+
+---
+
+## User Courses Management
+
+### 1. Get User Courses
+
+**Endpoint:** `GET /api/v1/user/courses`
+
+**Description:** Get user's enrolled courses with filtering and pagination.
+
+**Headers:**
+```
+Authorization: Bearer {token}
+Accept: application/json
+```
+
+**Parameters:**
+- `category` (query, optional): Filter by category ID
+- `status` (query, optional): Filter by status (active, completed)
+- `search` (query, optional): Search in course title or description
+- `per_page` (query, optional): Items per page (default: 9)
+
+**Response:**
+```json
+{
+  "success": true,
+  "data": {
+    "enrollments": [
+      {
+        "id": 1,
+        "course": {
+          "id": 5,
+          "title": "Advanced React Development",
+          "description": "Learn advanced React concepts...",
+          "thumbnail": "https://yourdomain.com/storage/courses/thumbnails/thumb_123.jpg",
+          "cover_photo": "https://yourdomain.com/storage/courses/covers/cover_123.jpg",
+          "price": 99.99,
+          "discount": 20.00,
+          "final_price": 79.99,
+          "average_rating": 4.8,
+          "reviews_count": 25,
+          "enrolled_students_count": 150,
+          "category": {
+            "id": 1,
+            "name": "Technology"
+          },
+          "sub_categories": [
+            {
+              "id": 1,
+              "name": "Web Development"
+            }
+          ],
+          "duration_days": 60,
+          "start_date": "2024-01-15",
+          "end_date": "2024-03-15"
+        },
+        "mentor": {
+          "id": 2,
+          "name": "John Smith",
+          "photo": "https://yourdomain.com/storage/mentors/photos/photo_123.jpg"
+        },
+        "enrollment": {
+          "status": "active",
+          "progress_percentage": 65.50,
+          "enrolled_at": "2024-01-10 10:30:00",
+          "started_at": "2024-01-15 09:00:00",
+          "completed_at": null,
+          "last_accessed_at": "2024-01-18 14:30:00",
+          "amount": 79.99,
+          "currency": "USD",
+          "payment_status": "paid"
+        },
+        "conversation": {
+          "id": 3,
+          "unique_code": "conv_abc123"
+        }
+      }
+    ],
+    "pagination": {
+      "current_page": 1,
+      "last_page": 1,
+      "per_page": 9,
+      "total": 1
+    },
+    "statistics": {
+      "total_courses": 4,
+      "active_courses": 3,
+      "completed_courses": 1,
+      "total_spent_courses": 299.97
+    },
+    "categories": [
+      {
+        "id": 1,
+        "name": "Technology"
+      }
+    ]
+  }
+}
+```
+
+### 2. Get Course Details
+
+**Endpoint:** `GET /api/v1/user/courses/{enrollment}`
+
+**Description:** Get detailed information about a specific enrolled course.
+
+**Headers:**
+```
+Authorization: Bearer {token}
+Accept: application/json
+```
+
+**Parameters:**
+- `enrollment` (path, required): Enrollment ID
+
+**Response:**
+```json
+{
+  "success": true,
+  "data": {
+    "id": 1,
+    "course": {
+      "id": 5,
+      "title": "Advanced React Development",
+      "description": "Learn advanced React concepts...",
+      "thumbnail": "https://yourdomain.com/storage/courses/thumbnails/thumb_123.jpg",
+      "cover_photo": "https://yourdomain.com/storage/courses/covers/cover_123.jpg",
+      "price": 99.99,
+      "discount": 20.00,
+      "final_price": 79.99,
+      "average_rating": 4.8,
+      "reviews_count": 25,
+      "enrolled_students_count": 150,
+      "category": {
+        "id": 1,
+        "name": "Technology"
+      },
+      "sub_categories": [
+        {
+          "id": 1,
+          "name": "Web Development"
+        }
+      ],
+      "duration_days": 60,
+      "start_date": "2024-01-15",
+      "end_date": "2024-03-15",
+      "reviews": [
+        {
+          "id": 1,
+          "rating": 5,
+          "comment": "Excellent course!",
+          "user": {
+            "id": 3,
+            "name": "Jane Doe"
+          },
+          "created_at": "2024-01-20 10:30:00"
+        }
+      ]
+    },
+    "mentor": {
+      "id": 2,
+      "name": "John Smith",
+      "photo": "https://yourdomain.com/storage/mentors/photos/photo_123.jpg"
+    },
+    "enrollment": {
+      "status": "active",
+      "progress_percentage": 65.50,
+      "enrolled_at": "2024-01-10 10:30:00",
+      "started_at": "2024-01-15 09:00:00",
+      "completed_at": null,
+      "last_accessed_at": "2024-01-18 14:30:00",
+      "amount": 79.99,
+      "currency": "USD",
+      "payment_status": "paid"
+    },
+    "conversation": {
+      "id": 3,
+      "unique_code": "conv_abc123"
+    }
+  }
+}
+```
+
+### 3. Get Course Statistics
+
+**Endpoint:** `GET /api/v1/user/courses/statistics`
+
+**Description:** Get course-related statistics for the user.
+
+**Headers:**
+```
+Authorization: Bearer {token}
+Accept: application/json
+```
+
+**Response:**
+```json
+{
+  "success": true,
+  "data": {
+    "total_courses": 4,
+    "active_courses": 3,
+    "completed_courses": 1,
+    "total_spent_courses": 299.97
+  }
+}
+```
+
+---
+
+## User Sessions Management
+
+### 1. Get User Sessions
+
+**Endpoint:** `GET /api/v1/user/sessions`
+
+**Description:** Get user's booked sessions with filtering and pagination.
+
+**Headers:**
+```
+Authorization: Bearer {token}
+Accept: application/json
+```
+
+**Parameters:**
+- `date_from` (query, optional): Filter sessions from date (YYYY-MM-DD)
+- `date_to` (query, optional): Filter sessions to date (YYYY-MM-DD)
+- `status` (query, optional): Filter by status (upcoming, completed, past)
+- `mentor` (query, optional): Filter by mentor name
+- `per_page` (query, optional): Items per page (default: 9)
+
+**Response:**
+```json
+{
+  "success": true,
+  "data": {
+    "enrollments": [
+      {
+        "id": 2,
+        "session": {
+          "id": 8,
+          "date": "2024-01-20",
+          "start_time": "14:00:00",
+          "end_time": "15:00:00",
+          "formatted_time_slot": "2:00 PM - 3:00 PM",
+          "fee": 50.00,
+          "type": "online",
+          "status": "booked",
+          "category": {
+            "id": 1,
+            "name": "Technology"
+          },
+          "sub_categories": [
+            {
+              "id": 1,
+              "name": "Web Development"
+            }
+          ]
+        },
+        "mentor": {
+          "id": 2,
+          "name": "John Smith",
+          "photo": "https://yourdomain.com/storage/mentors/photos/photo_123.jpg"
+        },
+        "enrollment": {
+          "status": "active",
+          "enrolled_at": "2024-01-15 09:15:00",
+          "amount": 50.00,
+          "currency": "USD",
+          "payment_status": "paid",
+          "switched_at": null
+        },
+        "conversation": {
+          "id": 3,
+          "unique_code": "conv_abc123"
+        }
+      }
+    ],
+    "pagination": {
+      "current_page": 1,
+      "last_page": 1,
+      "per_page": 9,
+      "total": 1
+    },
+    "statistics": {
+      "total_sessions": 5,
+      "upcoming_sessions": 2,
+      "completed_sessions": 3,
+      "total_spent": 199.50
+    }
+  }
+}
+```
+
+### 2. Get Session Details
+
+**Endpoint:** `GET /api/v1/user/sessions/{enrollment}`
+
+**Description:** Get detailed information about a specific booked session.
+
+**Headers:**
+```
+Authorization: Bearer {token}
+Accept: application/json
+```
+
+**Parameters:**
+- `enrollment` (path, required): Enrollment ID
+
+**Response:**
+```json
+{
+  "success": true,
+  "data": {
+    "id": 2,
+    "session": {
+      "id": 8,
+      "date": "2024-01-20",
+      "start_time": "14:00:00",
+      "end_time": "15:00:00",
+      "formatted_time_slot": "2:00 PM - 3:00 PM",
+      "fee": 50.00,
+      "type": "online",
+      "status": "booked",
+      "category": {
+        "id": 1,
+        "name": "Technology"
+      },
+      "sub_categories": [
+        {
+          "id": 1,
+          "name": "Web Development"
+        }
+      ]
+    },
+    "mentor": {
+      "id": 2,
+      "name": "John Smith",
+      "photo": "https://yourdomain.com/storage/mentors/photos/photo_123.jpg"
+    },
+    "enrollment": {
+      "status": "active",
+      "enrolled_at": "2024-01-15 09:15:00",
+      "amount": 50.00,
+      "currency": "USD",
+      "payment_status": "paid",
+      "switched_at": null
+    },
+    "conversation": {
+      "id": 3,
+      "unique_code": "conv_abc123"
+    }
+  }
+}
+```
+
+### 3. Get Available Slots for Switching
+
+**Endpoint:** `GET /api/v1/user/sessions/{enrollment}/available-slots`
+
+**Description:** Get available session slots for switching to a different time.
+
+**Headers:**
+```
+Authorization: Bearer {token}
+Accept: application/json
+```
+
+**Parameters:**
+- `enrollment` (path, required): Enrollment ID
+
+**Response:**
+```json
+{
+  "success": true,
+  "data": {
+    "current_session": {
+      "id": 8,
+      "date": "Jan 20, 2024",
+      "time_slot": "2:00 PM - 3:00 PM"
+    },
+    "available_sessions": [
+      {
+        "id": 15,
+        "date": "Jan 22, 2024",
+        "time_slot": "10:00 AM - 11:00 AM",
+        "fee": 50.00
+      },
+      {
+        "id": 16,
+        "date": "Jan 25, 2024",
+        "time_slot": "3:00 PM - 4:00 PM",
+        "fee": 50.00
+      }
+    ]
+  }
+}
+```
+
+### 4. Switch Session
+
+**Endpoint:** `POST /api/v1/user/sessions/{enrollment}/switch`
+
+**Description:** Switch to a different session time with the same mentor and price.
+
+**Headers:**
+```
+Authorization: Bearer {token}
+Accept: application/json
+Content-Type: application/json
+```
+
+**Parameters:**
+- `enrollment` (path, required): Enrollment ID
+
+**Request Body:**
+```json
+{
+  "new_session_id": 15
+}
+```
+
+**Response:**
+```json
+{
+  "success": true,
+  "message": "Session time switched successfully",
+  "data": {
+    "new_session": {
+      "id": 15,
+      "date": "Jan 22, 2024",
+      "time_slot": "10:00 AM - 11:00 AM"
+    }
+  }
+}
+```
+
+### 5. Get Session Statistics
+
+**Endpoint:** `GET /api/v1/user/sessions/statistics`
+
+**Description:** Get session-related statistics for the user.
+
+**Headers:**
+```
+Authorization: Bearer {token}
+Accept: application/json
+```
+
+**Response:**
+```json
+{
+  "success": true,
+  "data": {
+    "total_sessions": 5,
+    "upcoming_sessions": 2,
+    "completed_sessions": 3,
+    "total_spent": 199.50
+  }
+}
+```
+
+---
+
+## User Payment History
+
+### 1. Get Payment History
+
+**Endpoint:** `GET /api/v1/user/payments`
+
+**Description:** Get user's payment transactions with search and pagination.
+
+**Headers:**
+```
+Authorization: Bearer {token}
+Accept: application/json
+```
+
+**Parameters:**
+- `search` (query, optional): Search by transaction ID or date
+- `per_page` (query, optional): Items per page (default: 10)
+
+**Response:**
+```json
+{
+  "success": true,
+  "data": {
+    "payments": [
+      {
+        "id": 1,
+        "transaction_id": "txn_1234567890",
+        "created_at": "2024-01-15 10:30:00",
+        "service_type": "Course",
+        "title": "Advanced React Development",
+        "mentor_name": "John Smith",
+        "gross_amount": 79.99,
+        "platform_fee": 2.62,
+        "mentor_amount": 77.37,
+        "currency": "USD",
+        "status": "paid",
+        "description": "Course: Advanced React Development - John Smith",
+        "enrollment": {
+          "id": 1,
+          "enrollment_status": "active",
+          "amount": 79.99,
+          "payment_status": "paid"
+        }
+      }
+    ],
+    "pagination": {
+      "current_page": 1,
+      "last_page": 1,
+      "per_page": 10,
+      "total": 1
+    }
+  }
+}
+```
+
+### 2. Get Payment Details
+
+**Endpoint:** `GET /api/v1/user/payments/{payment}`
+
+**Description:** Get detailed information about a specific payment transaction.
+
+**Headers:**
+```
+Authorization: Bearer {token}
+Accept: application/json
+```
+
+**Parameters:**
+- `payment` (path, required): Payment transaction ID
+
+**Response:**
+```json
+{
+  "success": true,
+  "data": {
+    "id": 1,
+    "transaction_id": "txn_1234567890",
+    "created_at": "2024-01-15 10:30:00",
+    "service_type": "Course",
+    "title": "Advanced React Development",
+    "mentor_name": "John Smith",
+    "gross_amount": 79.99,
+    "platform_fee": 2.62,
+    "mentor_amount": 77.37,
+    "currency": "USD",
+    "status": "paid",
+    "description": "Course: Advanced React Development - John Smith",
+    "metadata": {
+      "course_id": 5,
+      "mentor_id": 2
+    },
+    "enrollment": {
+      "id": 1,
+      "enrollment_status": "active",
+      "amount": 79.99,
+      "payment_status": "paid",
+      "enrolled_at": "2024-01-15 10:30:00"
+    }
+  }
+}
+```
+
+### 3. Get Payment Statistics
+
+**Endpoint:** `GET /api/v1/user/payments/statistics`
+
+**Description:** Get payment-related statistics for the user.
+
+**Headers:**
+```
+Authorization: Bearer {token}
+Accept: application/json
+```
+
+**Response:**
+```json
+{
+  "success": true,
+  "data": {
+    "total_transactions": 5,
+    "total_spent": 299.97,
+    "total_platform_fees": 9.90,
+    "this_month_spent": 79.99,
+    "last_month_spent": 199.98,
+    "average_transaction": 59.99,
+    "monthly_spending": [
+      {
+        "month": "Aug 2024",
+        "amount": 50.00
+      },
+      {
+        "month": "Sep 2024",
+        "amount": 99.99
+      },
+      {
+        "month": "Oct 2024",
+        "amount": 149.98
+      }
+    ]
+  }
+}
+```
+
+---
+
+## User Profile Management
+
+### 1. Get User Profile
+
+**Endpoint:** `GET /api/v1/user/profile`
+
+**Description:** Get user's profile information.
+
+**Headers:**
+```
+Authorization: Bearer {token}
+Accept: application/json
+```
+
+**Response:**
+```json
+{
+  "success": true,
+  "data": {
+    "id": 1,
+    "name": "John Doe",
+    "email": "john@example.com",
+    "phone": "+1234567890",
+    "address": "123 Main St, City, State",
+    "role": "user",
+    "status": "active",
+    "photo": "https://yourdomain.com/storage/users/photos/photo_123.jpg",
+    "email_verified_at": "2024-01-10 10:30:00",
+    "created_at": "2024-01-01 10:00:00",
+    "updated_at": "2024-01-15 14:30:00"
+  }
+}
+```
+
+### 2. Update User Profile
+
+**Endpoint:** `PUT /api/v1/user/profile`
+
+**Description:** Update user's profile information.
+
+**Headers:**
+```
+Authorization: Bearer {token}
+Accept: application/json
+Content-Type: application/json
+```
+
+**Request Body:**
+```json
+{
+  "address": "456 New St, City, State",
+  "phone": "+1987654321"
+}
+```
+
+**Response:**
+```json
+{
+  "success": true,
+  "message": "Profile updated successfully!",
+  "data": {
+    "id": 1,
+    "name": "John Doe",
+    "email": "john@example.com",
+    "phone": "+1987654321",
+    "address": "456 New St, City, State",
+    "updated_at": "2024-01-15 15:30:00"
+  }
+}
+```
+
+### 3. Update Password
+
+**Endpoint:** `PUT /api/v1/user/password`
+
+**Description:** Update user's password.
+
+**Headers:**
+```
+Authorization: Bearer {token}
+Accept: application/json
+Content-Type: application/json
+```
+
+**Request Body:**
+```json
+{
+  "current_password": "oldpassword123",
+  "password": "NewPassword123",
+  "password_confirmation": "NewPassword123"
+}
+```
+
+**Response:**
+```json
+{
+  "success": true,
+  "message": "Password updated successfully!",
+  "data": {
+    "id": 1,
+    "updated_at": "2024-01-15 15:30:00"
+  }
+}
+```
+
+### 4. Get User Preferences
+
+**Endpoint:** `GET /api/v1/user/profile/preferences`
+
+**Description:** Get user's preferences and settings.
+
+**Headers:**
+```
+Authorization: Bearer {token}
+Accept: application/json
+```
+
+**Response:**
+```json
+{
+  "success": true,
+  "data": {
+    "education_type": "online",
+    "category_id": 1,
+    "sub_category_id": 1,
+    "country": "United States",
+    "city": "New York",
+    "wants_courses": true,
+    "wants_mentoring": true,
+    "created_at": "2024-01-01 10:00:00",
+    "updated_at": "2024-01-15 14:30:00"
+  }
+}
+```
+
+### 5. Update User Preferences
+
+**Endpoint:** `PUT /api/v1/user/profile/preferences`
+
+**Description:** Update user's preferences and settings.
+
+**Headers:**
+```
+Authorization: Bearer {token}
+Accept: application/json
+Content-Type: application/json
+```
+
+**Request Body:**
+```json
+{
+  "education_type": "both",
+  "category_id": 2,
+  "sub_category_id": 3,
+  "country": "Canada",
+  "city": "Toronto",
+  "wants_courses": true,
+  "wants_mentoring": false
+}
+```
+
+**Response:**
+```json
+{
+  "success": true,
+  "message": "Preferences updated successfully!",
+  "data": {
+    "education_type": "both",
+    "category_id": 2,
+    "sub_category_id": 3,
+    "country": "Canada",
+    "city": "Toronto",
+    "wants_courses": true,
+    "wants_mentoring": false,
+    "updated_at": "2024-01-15 15:30:00"
+  }
+}
+```
+
+### 6. Get Onboarding Status
+
+**Endpoint:** `GET /api/v1/user/profile/onboarding-status`
+
+**Description:** Check if user has completed onboarding process.
+
+**Headers:**
+```
+Authorization: Bearer {token}
+Accept: application/json
+```
+
+**Response:**
+```json
+{
+  "success": true,
+  "data": {
+    "is_complete": true,
+    "missing_steps": [],
+    "next_step": null
+  }
+}
+```
+
+---
+
+## User Conversations/Chat
+
+### 1. Get User Conversations
+
+**Endpoint:** `GET /api/v1/user/conversations`
+
+**Description:** Get user's conversations with mentors.
+
+**Headers:**
+```
+Authorization: Bearer {token}
+Accept: application/json
+```
+
+**Response:**
+```json
+{
+  "success": true,
+  "data": [
+    {
+      "id": 1,
+      "unique_code": "conv_abc123",
+      "other_user": {
+        "id": 2,
+        "name": "John Smith",
+        "photo": "https://yourdomain.com/storage/mentors/photos/photo_123.jpg",
+        "role": "mentor"
+      },
+      "is_active": true,
+      "last_message": {
+        "id": 15,
+        "content": "Thanks for the clarification!",
+        "type": "text",
+        "sender_id": 1,
+        "is_from_me": true,
+        "created_at": "2024-01-15 14:30:00"
+      },
+      "last_message_at": "2024-01-15 14:30:00",
+      "enrollment": {
+        "id": 1,
+        "enrollable_type": "Course",
+        "enrollable_id": 5
+      }
+    }
+  ]
+}
+```
+
+### 2. Get Conversation Details
+
+**Endpoint:** `GET /api/v1/user/conversations/{code}`
+
+**Description:** Get detailed conversation with messages and chat status.
+
+**Headers:**
+```
+Authorization: Bearer {token}
+Accept: application/json
+```
+
+**Parameters:**
+- `code` (path, required): Conversation unique code
+- `per_page` (query, optional): Messages per page (default: 20)
+
+**Response:**
+```json
+{
+  "success": true,
+  "data": {
+    "conversation": {
+      "id": 1,
+      "unique_code": "conv_abc123",
+      "other_user": {
+        "id": 2,
+        "name": "John Smith",
+        "photo": "https://yourdomain.com/storage/mentors/photos/photo_123.jpg",
+        "role": "mentor"
+      },
+      "is_active": true,
+      "last_message_at": "2024-01-15 14:30:00"
+    },
+    "messages": [
+      {
+        "id": 15,
+        "content": "Thanks for the clarification!",
+        "type": "text",
+        "file_path": null,
+        "file_name": null,
+        "file_size": null,
+        "file_type": null,
+        "sender": {
+          "id": 1,
+          "name": "John Doe",
+          "photo": "https://yourdomain.com/storage/users/photos/photo_123.jpg"
+        },
+        "is_from_me": true,
+        "read_at": "2024-01-15 14:30:00",
+        "created_at": "2024-01-15 14:30:00"
+      }
+    ],
+    "pagination": {
+      "current_page": 1,
+      "last_page": 1,
+      "per_page": 20,
+      "total": 1
+    },
+    "chat_status": {
+      "can_chat": true,
+      "reason": "Active course enrollment",
+      "type": "course",
+      "details": "You can chat with this mentor because you have an active course enrollment.",
+      "session_end_time": null,
+      "course_end_date": "2024-03-15"
+    }
+  }
+}
+```
+
+### 3. Get Conversation Messages
+
+**Endpoint:** `GET /api/v1/user/conversations/{code}/messages`
+
+**Description:** Get paginated messages for a conversation.
+
+**Headers:**
+```
+Authorization: Bearer {token}
+Accept: application/json
+```
+
+**Parameters:**
+- `code` (path, required): Conversation unique code
+- `per_page` (query, optional): Messages per page (default: 20)
+
+**Response:**
+```json
+{
+  "success": true,
+  "data": {
+    "messages": [
+      {
+        "id": 15,
+        "content": "Thanks for the clarification!",
+        "type": "text",
+        "file_path": null,
+        "file_name": null,
+        "file_size": null,
+        "file_type": null,
+        "sender": {
+          "id": 1,
+          "name": "John Doe",
+          "photo": "https://yourdomain.com/storage/users/photos/photo_123.jpg"
+        },
+        "is_from_me": true,
+        "read_at": "2024-01-15 14:30:00",
+        "created_at": "2024-01-15 14:30:00"
+      }
+    ],
+    "pagination": {
+      "current_page": 1,
+      "last_page": 1,
+      "per_page": 20,
+      "total": 1
+    }
+  }
+}
+```
+
+### 4. Send Message
+
+**Endpoint:** `POST /api/v1/user/conversations/{code}/messages`
+
+**Description:** Send a message in a conversation.
+
+**Headers:**
+```
+Authorization: Bearer {token}
+Accept: application/json
+Content-Type: application/json
+```
+
+**Parameters:**
+- `code` (path, required): Conversation unique code
+
+**Request Body:**
+```json
+{
+  "content": "Hello, I have a question about the course material.",
+  "file": null
+}
+```
+
+**Response:**
+```json
+{
+  "success": true,
+  "message": "Message sent successfully",
+  "data": {
+    "id": 16,
+    "content": "Hello, I have a question about the course material.",
+    "type": "text",
+    "file_path": null,
+    "file_name": null,
+    "file_size": null,
+    "file_type": null,
+    "sender": {
+      "id": 1,
+      "name": "John Doe",
+      "photo": "https://yourdomain.com/storage/users/photos/photo_123.jpg"
+    },
+    "is_from_me": true,
+    "created_at": "2024-01-15 15:00:00"
+  }
+}
+```
+
+### 5. Get Chat Status
+
+**Endpoint:** `GET /api/v1/user/conversations/{code}/chat-status`
+
+**Description:** Check if user can chat with the mentor.
+
+**Headers:**
+```
+Authorization: Bearer {token}
+Accept: application/json
+```
+
+**Parameters:**
+- `code` (path, required): Conversation unique code
+
+**Response:**
+```json
+{
+  "success": true,
+  "data": {
+    "can_chat": true,
+    "reason": "Active course enrollment",
+    "type": "course",
+    "details": "You can chat with this mentor because you have an active course enrollment.",
+    "session_end_time": null,
+    "course_end_date": "2024-03-15"
+  }
+}
+```
+
+---
+
+## User Notifications
+
+### 1. Get User Notifications
+
+**Endpoint:** `GET /api/v1/user/notifications`
+
+**Description:** Get user's notifications with pagination.
+
+**Headers:**
+```
+Authorization: Bearer {token}
+Accept: application/json
+```
+
+**Parameters:**
+- `per_page` (query, optional): Items per page (default: 20)
+
+**Response:**
+```json
+{
+  "success": true,
+  "data": {
+    "notifications": [
+      {
+        "id": "uuid-123",
+        "type": "course_enrollment",
+        "title": "New Course Enrollment",
+        "message": "John Doe enrolled in your course 'Advanced React Development'",
+        "icon_class": "fa-graduation-cap",
+        "icon_color_class": "text-blue-500",
+        "redirect_url": "/courses/5",
+        "created_at": "2024-01-15 10:30:00",
+        "time_ago": "2 hours ago",
+        "is_read": false,
+        "read_at": null,
+        "data": {
+          "user_name": "John Doe",
+          "course_title": "Advanced React Development",
+          "course_id": 5
+        }
+      }
+    ],
+    "unread_count": 3,
+    "pagination": {
+      "current_page": 1,
+      "last_page": 1,
+      "per_page": 20,
+      "total": 1
+    }
+  }
+}
+```
+
+### 2. Get Recent Notifications
+
+**Endpoint:** `GET /api/v1/user/notifications/recent`
+
+**Description:** Get recent notifications (last 10).
+
+**Headers:**
+```
+Authorization: Bearer {token}
+Accept: application/json
+```
+
+**Response:**
+```json
+{
+  "success": true,
+  "data": {
+    "notifications": [
+      {
+        "id": "uuid-123",
+        "type": "course_enrollment",
+        "title": "New Course Enrollment",
+        "message": "John Doe enrolled in your course 'Advanced React Development'",
+        "icon_class": "fa-graduation-cap",
+        "icon_color_class": "text-blue-500",
+        "redirect_url": "/courses/5",
+        "created_at": "2024-01-15 10:30:00",
+        "time_ago": "2 hours ago",
+        "is_read": false,
+        "read_at": null
+      }
+    ],
+    "unread_count": 3
+  }
+}
+```
+
+### 3. Get Unread Count
+
+**Endpoint:** `GET /api/v1/user/notifications/unread-count`
+
+**Description:** Get unread notifications count.
+
+**Headers:**
+```
+Authorization: Bearer {token}
+Accept: application/json
+```
+
+**Response:**
+```json
+{
+  "success": true,
+  "data": {
+    "unread_count": 3
+  }
+}
+```
+
+### 4. Mark Notification as Read
+
+**Endpoint:** `PUT /api/v1/user/notifications/{notification}/read`
+
+**Description:** Mark a specific notification as read.
+
+**Headers:**
+```
+Authorization: Bearer {token}
+Accept: application/json
+```
+
+**Parameters:**
+- `notification` (path, required): Notification ID
+
+**Response:**
+```json
+{
+  "success": true,
+  "message": "Notification marked as read",
+  "data": {
+    "unread_count": 2
+  }
+}
+```
+
+### 5. Mark All Notifications as Read
+
+**Endpoint:** `PUT /api/v1/user/notifications/read-all`
+
+**Description:** Mark all notifications as read for the user.
+
+**Headers:**
+```
+Authorization: Bearer {token}
+Accept: application/json
+```
+
+**Response:**
+```json
+{
+  "success": true,
+  "message": "Marked 3 notifications as read",
+  "data": {
+    "updated_count": 3,
+    "unread_count": 0
+  }
+}
+```
+
+### 6. Delete Notification
+
+**Endpoint:** `DELETE /api/v1/user/notifications/{notification}`
+
+**Description:** Delete a specific notification.
+
+**Headers:**
+```
+Authorization: Bearer {token}
+Accept: application/json
+```
+
+**Parameters:**
+- `notification` (path, required): Notification ID
+
+**Response:**
+```json
+{
+  "success": true,
+  "message": "Notification deleted successfully",
+  "data": {
+    "unread_count": 2
+  }
+}
+```
+
+### 7. Delete All Notifications
+
+**Endpoint:** `DELETE /api/v1/user/notifications/all`
+
+**Description:** Delete all notifications for the user.
+
+**Headers:**
+```
+Authorization: Bearer {token}
+Accept: application/json
+```
+
+**Response:**
+```json
+{
+  "success": true,
+  "message": "Deleted 5 notifications",
+  "data": {
+    "deleted_count": 5,
+    "unread_count": 0
+  }
+}
+```

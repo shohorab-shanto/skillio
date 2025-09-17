@@ -97,8 +97,11 @@ class MentorDetailsApiController extends Controller
             // Check if user can review this mentor
             $canReview = false;
             $existingReview = null;
-            if (Auth::check()) {
-                $userHasBookedSession = \App\Models\UserEnrollment::where('user_id', Auth::id())
+            
+            // Check if request has authentication token
+            $token = request()->bearerToken();
+            if ($token && Auth::guard('sanctum')->check()) {
+                $userHasBookedSession = \App\Models\UserEnrollment::where('user_id', Auth::guard('sanctum')->id())
                     ->where('enrollable_type', SessionBooking::class)
                     ->whereHas('enrollable', function($query) use ($mentor) {
                         $query->where('mentor_id', $mentor->id);
@@ -106,7 +109,7 @@ class MentorDetailsApiController extends Controller
                     ->exists();
                 
                 $canReview = $userHasBookedSession;
-                $existingReview = Auth::user()->reviews()->where('mentor_id', $mentor->id)->first();
+                $existingReview = Auth::guard('sanctum')->user()->reviews()->where('mentor_id', $mentor->id)->first();
             }
 
             // Format existing review if user has one

@@ -25,6 +25,22 @@ Route::middleware(['set_locale'])->group(function () {
     Route::get('/privacy-policy', function () {
         return view('frontend.privacy-policy');
     })->name('privacy-policy');
+
+    Route::get('/cookie-policy', function () {
+        return view('frontend.cookie-policy');
+    })->name('cookie-policy');
+
+    Route::get('/disclaimer', function () {
+        return view('frontend.disclaimer');
+    })->name('disclaimer');
+
+    Route::get('/refund-policy', function () {
+        return view('frontend.refund-policy');
+    })->name('refund-policy');
+
+    Route::get('/security-capabilities', function () {
+        return view('frontend.security-capabilities');
+    })->name('security-capabilities');
 });
 
 // Search Routes

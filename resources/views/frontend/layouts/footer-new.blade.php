@@ -10,13 +10,15 @@
                     <div class="space-y-2">
                         <h3 class="text-base font-semibold">Contact Us</h3>
                         <div class="space-y-1">
+                            <div class="text-xs text-white/90">SKILLIO LLC, 30 N Gould St Sheridan</div>
+                            <div class="text-xs text-white/90">WY 82801 United States</div>
                             <a href="mailto:info@skillio.pro" 
                                class="block text-white/90 hover:text-white transition-colors duration-200 hover:underline text-sm">
                                 info@skillio.pro
                             </a>
-                            <a href="tel:+1234567890" 
+                            <a href="tel:+13072634887" 
                                class="block text-white/90 hover:text-white transition-colors duration-200 hover:underline text-sm">
-                                +1 (234) 567-890
+                                +1 (307) 263-4887
                             </a>
                         </div>
                     </div>
@@ -113,10 +115,13 @@
                     
                     <!-- Legal Links -->
                     <div class="text-center md:text-right">
-                        <div class="space-y-1 text-xs">
-                            <a href="#" class="block text-white/90 hover:text-white transition-colors duration-200 hover:underline">Terms & Conditions</a>
-                            <a href="#" class="block text-white/90 hover:text-white transition-colors duration-200 hover:underline">Privacy Policy</a>
-                            <a href="#" class="block text-white/90 hover:text-white transition-colors duration-200 hover:underline">Cookie Policy</a>
+                        <div class="grid grid-cols-2 gap-x-4 gap-y-1 text-xs">
+                            <a href="{{ route('terms-and-conditions') }}" class="block text-white/90 hover:text-white transition-colors duration-200 hover:underline">Terms & Conditions</a>
+                            <a href="{{ route('privacy-policy') }}" class="block text-white/90 hover:text-white transition-colors duration-200 hover:underline">Privacy Policy</a>
+                            <a href="{{ route('cookie-policy') }}" class="block text-white/90 hover:text-white transition-colors duration-200 hover:underline">Cookie Policy</a>
+                            <a href="{{ route('disclaimer') }}" class="block text-white/90 hover:text-white transition-colors duration-200 hover:underline">Disclaimer</a>
+                            <a href="{{ route('refund-policy') }}" class="block text-white/90 hover:text-white transition-colors duration-200 hover:underline">Refund Policy</a>
+                            <a href="{{ route('security-capabilities') }}" class="block text-white/90 hover:text-white transition-colors duration-200 hover:underline">Security</a>
                         </div>
                     </div>
                 </div>

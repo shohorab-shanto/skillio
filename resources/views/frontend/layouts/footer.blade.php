@@ -8,9 +8,16 @@
             <div class="flex items-center h-auto md:h-48">
                 <div class="flex flex-col items-center justify-center space-y-0 md:space-y-2 md:pr-20 w-full ml-0 md:ml-[50px]">
                     <p class="text-base text-center w-full mb-1 md:mb-0">{{ __('trans.contact_us') }}</p>
-                    <a href="mailto:info@skillio.pro" class="text-base cursor-pointer hover:underline text-center w-full">
-                        info@skillio.pro
-                    </a>
+                    <div class="text-center space-y-1">
+                        <div class="text-xs text-white/90">SKILLIO LLC, 30 N Gould St Sheridan</div>
+                        <div class="text-xs text-white/90">WY 82801 United States</div>
+                        <a href="mailto:info@skillio.pro" class="text-sm cursor-pointer hover:underline block">
+                            info@skillio.pro
+                        </a>
+                        <a href="tel:+13072634887" class="text-sm cursor-pointer hover:underline block">
+                            +1 (307) 263-4887
+                        </a>
+                    </div>
                 </div>
                 <div class="h-auto md:h-48 md:border-r border-white/30 min-h-[80px] md:min-h-[120px]"></div>
             </div>
@@ -106,9 +113,17 @@
                     <a href="{{ url('/#faq') }}" class="hover:underline">{{ __('trans.faq_footer') }}</a>
                 </div>
                                  <!-- Part 2: Right Aligned Links -->
-                 <div class="flex flex-wrap justify-center md:justify-end items-center gap-6 text-sm font-medium mt-4 md:mt-0 md:ml-8">
-                     <a href="{{ route('terms-and-conditions') }}" class="hover:underline">{{ __('trans.terms_conditions') }}</a>
-                     <a href="{{ route('privacy-policy') }}" class="hover:underline">{{ __('trans.privacy_policy') }}</a>
+                 <div class="flex flex-col items-center md:items-end gap-2 mt-4 md:mt-0 md:ml-8">
+                     <div class="flex flex-wrap justify-center md:justify-end items-center gap-4 text-sm font-medium">
+                         <a href="{{ route('terms-and-conditions') }}" class="hover:underline">{{ __('trans.terms_conditions') }}</a>
+                         <a href="{{ route('privacy-policy') }}" class="hover:underline">{{ __('trans.privacy_policy') }}</a>
+                         <a href="{{ route('cookie-policy') }}" class="hover:underline">Cookie Policy</a>
+                     </div>
+                     <div class="flex flex-wrap justify-center md:justify-end items-center gap-4 text-sm font-medium">
+                         <a href="{{ route('disclaimer') }}" class="hover:underline">Disclaimer</a>
+                         <a href="{{ route('refund-policy') }}" class="hover:underline">Refund Policy</a>
+                         <a href="{{ route('security-capabilities') }}" class="hover:underline">Security</a>
+                     </div>
                  </div>
             </div>
         </div>

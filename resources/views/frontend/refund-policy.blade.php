@@ -8,13 +8,9 @@
         <!-- Header -->
         <div class="text-center mb-12">
             <h1 class="text-4xl md:text-5xl font-bold text-gray-900 mb-4">Refund & Return Policy</h1>
-            <div class="flex flex-col sm:flex-row justify-center items-center gap-4 text-sm text-gray-600">
+            <div class="flex justify-center items-center gap-4 text-sm text-gray-600">
                 <div class="flex items-center gap-2">
                     <span class="font-medium">Effective Date:</span>
-                    <span>September 10, 2025</span>
-                </div>
-                <div class="flex items-center gap-2">
-                    <span class="font-medium">Last Updated:</span>
                     <span>September 10, 2025</span>
                 </div>
             </div>

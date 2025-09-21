@@ -2,7 +2,7 @@
 	"info": {
 		"_postman_id": "skillo-api-collection",
 		"name": "Skillo Mobile API",
-		"description": "Complete API collection for Skillo mobile application including authentication, user onboarding, home page dynamic content with personalization and category filtering, comprehensive course details, mentor details, review management, course enrollment, and session booking with Stripe payment integration (Visa, Mastercard, Amex, Discover)",
+		"description": "Complete API collection for Skillo mobile application including authentication, user onboarding, home page dynamic content with personalization and category filtering, comprehensive course details, mentor details, review management, course enrollment, session booking with Stripe payment integration (Visa, Mastercard, Amex, Discover), and unified conversation system for both students and mentors",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
 	},
 	"item": [
@@ -2737,10 +2737,10 @@
 			"description": "User profile management endpoints for profile information, preferences, and settings"
 		},
 		{
-			"name": "User Conversations/Chat",
+			"name": "User/Mentor Conversations/Chat",
 			"item": [
 				{
-					"name": "Get User Conversations",
+					"name": "Get Conversations",
 					"request": {
 						"method": "GET",
 						"header": [
@@ -2766,7 +2766,7 @@
 								"conversations"
 							]
 						},
-						"description": "Get user's conversations with mentors"
+						"description": "Get conversations for authenticated user. For students: shows conversations with mentors. For mentors: shows conversations with students. The system automatically determines user role and returns appropriate conversations."
 					}
 				},
 				{
@@ -2809,7 +2809,7 @@
 								}
 							]
 						},
-						"description": "Get detailed conversation with messages and chat status"
+						"description": "Get detailed conversation with messages and chat status (works for both students and mentors)"
 					}
 				},
 				{
@@ -2853,7 +2853,7 @@
 								}
 							]
 						},
-						"description": "Get paginated messages for a conversation"
+						"description": "Get paginated messages for a conversation (works for both students and mentors)"
 					}
 				},
 				{
@@ -2893,7 +2893,7 @@
 								"messages"
 							]
 						},
-						"description": "Send a message in a conversation"
+						"description": "Send a message in a conversation (works for both students and mentors)"
 					}
 				},
 				{
@@ -2925,11 +2925,11 @@
 								"chat-status"
 							]
 						},
-						"description": "Check if user can chat with the mentor"
+						"description": "Check chat permission status (works for both students and mentors)"
 					}
 				}
 			],
-			"description": "User conversations/chat endpoints for messaging with mentors"
+			"description": "User/Mentor conversations/chat endpoints for messaging between students and mentors (works for both roles)"
 		},
 		{
 			"name": "Mentor Dashboard",

@@ -2932,6 +2932,1301 @@
 			"description": "User conversations/chat endpoints for messaging with mentors"
 		},
 		{
+			"name": "Mentor Dashboard",
+			"item": [
+				{
+					"name": "Get Dashboard Overview",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json"
+							},
+							{
+								"key": "Authorization",
+								"value": "Bearer {{auth_token}}",
+								"description": "Required"
+							}
+						],
+						"url": {
+							"raw": "{{base_url}}/api/v1/mentor/dashboard",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"mentor",
+								"dashboard"
+							]
+						},
+						"description": "Get mentor dashboard with statistics and recent activity summary"
+					}
+				},
+				{
+					"name": "Get Dashboard Statistics",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json"
+							},
+							{
+								"key": "Authorization",
+								"value": "Bearer {{auth_token}}",
+								"description": "Required"
+							}
+						],
+						"url": {
+							"raw": "{{base_url}}/api/v1/mentor/dashboard/statistics",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"mentor",
+								"dashboard",
+								"statistics"
+							]
+						},
+						"description": "Get detailed dashboard statistics with charts data"
+					}
+				}
+			],
+			"description": "Mentor dashboard endpoints for overview and statistics"
+		},
+		{
+			"name": "Mentor Courses Management",
+			"item": [
+				{
+					"name": "Get Mentor Courses",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json"
+							},
+							{
+								"key": "Authorization",
+								"value": "Bearer {{auth_token}}",
+								"description": "Required"
+							}
+						],
+						"url": {
+							"raw": "{{base_url}}/api/v1/mentor/courses?status=&search=&per_page=12&page=1",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"mentor",
+								"courses"
+							],
+							"query": [
+								{
+									"key": "status",
+									"value": "",
+									"description": "Filter by status: approved, pending, rejected (optional)"
+								},
+								{
+									"key": "search",
+									"value": "",
+									"description": "Search in course title or description (optional)"
+								},
+								{
+									"key": "per_page",
+									"value": "12",
+									"description": "Items per page (default: 12)"
+								},
+								{
+									"key": "page",
+									"value": "1",
+									"description": "Page number"
+								}
+							]
+						},
+						"description": "Get mentor's courses with filtering and pagination"
+					}
+				},
+				{
+					"name": "Create Course",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json"
+							},
+							{
+								"key": "Authorization",
+								"value": "Bearer {{auth_token}}",
+								"description": "Required"
+							}
+						],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "title",
+									"value": "Advanced Web Development",
+									"type": "text"
+								},
+								{
+									"key": "description",
+									"value": "Learn advanced web development concepts including React, Node.js, and modern JavaScript frameworks.",
+									"type": "text"
+								},
+								{
+									"key": "category_id",
+									"value": "1",
+									"type": "text"
+								},
+								{
+									"key": "sub_category_ids[]",
+									"value": "1",
+									"type": "text"
+								},
+								{
+									"key": "sub_category_ids[]",
+									"value": "2",
+									"type": "text"
+								},
+								{
+									"key": "price",
+									"value": "199.99",
+									"type": "text"
+								},
+								{
+									"key": "discount",
+									"value": "10",
+									"type": "text"
+								},
+								{
+									"key": "duration_days",
+									"value": "30",
+									"type": "text"
+								},
+								{
+									"key": "course_image",
+									"type": "file",
+									"description": "Course image file (optional)"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{base_url}}/api/v1/mentor/courses",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"mentor",
+								"courses"
+							]
+						},
+						"description": "Create a new course"
+					}
+				},
+				{
+					"name": "Get Course Details",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json"
+							},
+							{
+								"key": "Authorization",
+								"value": "Bearer {{auth_token}}",
+								"description": "Required"
+							}
+						],
+						"url": {
+							"raw": "{{base_url}}/api/v1/mentor/courses/1",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"mentor",
+								"courses",
+								"1"
+							]
+						},
+						"description": "Get detailed information about a specific course"
+					}
+				},
+				{
+					"name": "Update Course",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json"
+							},
+							{
+								"key": "Authorization",
+								"value": "Bearer {{auth_token}}",
+								"description": "Required"
+							}
+						],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "title",
+									"value": "Updated Advanced Web Development",
+									"type": "text"
+								},
+								{
+									"key": "description",
+									"value": "Updated description for advanced web development course.",
+									"type": "text"
+								},
+								{
+									"key": "category_id",
+									"value": "1",
+									"type": "text"
+								},
+								{
+									"key": "sub_category_ids[]",
+									"value": "1",
+									"type": "text"
+								},
+								{
+									"key": "price",
+									"value": "249.99",
+									"type": "text"
+								},
+								{
+									"key": "discount",
+									"value": "15",
+									"type": "text"
+								},
+								{
+									"key": "duration_days",
+									"value": "45",
+									"type": "text"
+								},
+								{
+									"key": "course_image",
+									"type": "file",
+									"description": "New course image file (optional)"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{base_url}}/api/v1/mentor/courses/1",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"mentor",
+								"courses",
+								"1"
+							]
+						},
+						"description": "Update an existing course"
+					}
+				},
+				{
+					"name": "Delete Course",
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json"
+							},
+							{
+								"key": "Authorization",
+								"value": "Bearer {{auth_token}}",
+								"description": "Required"
+							}
+						],
+						"url": {
+							"raw": "{{base_url}}/api/v1/mentor/courses/1",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"mentor",
+								"courses",
+								"1"
+							]
+						},
+						"description": "Delete a course"
+					}
+				},
+				{
+					"name": "Get Course Form Data",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json"
+							},
+							{
+								"key": "Authorization",
+								"value": "Bearer {{auth_token}}",
+								"description": "Required"
+							}
+						],
+						"url": {
+							"raw": "{{base_url}}/api/v1/mentor/courses/form-data",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"mentor",
+								"courses",
+								"form-data"
+							]
+						},
+						"description": "Get categories and subcategories for course creation/editing"
+					}
+				},
+				{
+					"name": "Get Course Statistics",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json"
+							},
+							{
+								"key": "Authorization",
+								"value": "Bearer {{auth_token}}",
+								"description": "Required"
+							}
+						],
+						"url": {
+							"raw": "{{base_url}}/api/v1/mentor/courses/statistics",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"mentor",
+								"courses",
+								"statistics"
+							]
+						},
+						"description": "Get course-related statistics for the mentor"
+					}
+				}
+			],
+			"description": "Mentor courses management endpoints for CRUD operations"
+		},
+		{
+			"name": "Mentor Time Slots Management",
+			"item": [
+				{
+					"name": "Get Time Slots",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json"
+							},
+							{
+								"key": "Authorization",
+								"value": "Bearer {{auth_token}}",
+								"description": "Required"
+							}
+						],
+						"url": {
+							"raw": "{{base_url}}/api/v1/mentor/time-slots?date_from=&date_to=&status=&per_page=12&page=1",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"mentor",
+								"time-slots"
+							],
+							"query": [
+								{
+									"key": "date_from",
+									"value": "",
+									"description": "Filter slots from date (YYYY-MM-DD) (optional)"
+								},
+								{
+									"key": "date_to",
+									"value": "",
+									"description": "Filter slots to date (YYYY-MM-DD) (optional)"
+								},
+								{
+									"key": "status",
+									"value": "",
+									"description": "Filter by status: available, booked (optional)"
+								},
+								{
+									"key": "per_page",
+									"value": "12",
+									"description": "Items per page (default: 12)"
+								},
+								{
+									"key": "page",
+									"value": "1",
+									"description": "Page number"
+								}
+							]
+						},
+						"description": "Get mentor's time slots with filtering and pagination"
+					}
+				},
+				{
+					"name": "Create Time Slot",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							},
+							{
+								"key": "Authorization",
+								"value": "Bearer {{auth_token}}",
+								"description": "Required"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"category_id\": 1,\n  \"sub_category_id\": 2,\n  \"date\": \"2025-09-25\",\n  \"start_time\": \"14:00\",\n  \"end_time\": \"15:00\",\n  \"fee\": 50.00\n}"
+						},
+						"url": {
+							"raw": "{{base_url}}/api/v1/mentor/time-slots",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"mentor",
+								"time-slots"
+							]
+						},
+						"description": "Create a new time slot"
+					}
+				},
+				{
+					"name": "Get Time Slot Details",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json"
+							},
+							{
+								"key": "Authorization",
+								"value": "Bearer {{auth_token}}",
+								"description": "Required"
+							}
+						],
+						"url": {
+							"raw": "{{base_url}}/api/v1/mentor/time-slots/1",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"mentor",
+								"time-slots",
+								"1"
+							]
+						},
+						"description": "Get detailed information about a specific time slot"
+					}
+				},
+				{
+					"name": "Update Time Slot",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							},
+							{
+								"key": "Authorization",
+								"value": "Bearer {{auth_token}}",
+								"description": "Required"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"category_id\": 1,\n  \"sub_category_id\": 3,\n  \"date\": \"2025-09-26\",\n  \"start_time\": \"15:00\",\n  \"end_time\": \"16:00\",\n  \"fee\": 60.00\n}"
+						},
+						"url": {
+							"raw": "{{base_url}}/api/v1/mentor/time-slots/1",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"mentor",
+								"time-slots",
+								"1"
+							]
+						},
+						"description": "Update an existing time slot"
+					}
+				},
+				{
+					"name": "Delete Time Slot",
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json"
+							},
+							{
+								"key": "Authorization",
+								"value": "Bearer {{auth_token}}",
+								"description": "Required"
+							}
+						],
+						"url": {
+							"raw": "{{base_url}}/api/v1/mentor/time-slots/1",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"mentor",
+								"time-slots",
+								"1"
+							]
+						},
+						"description": "Delete a time slot (only if not booked)"
+					}
+				},
+				{
+					"name": "Get Time Slot Form Data",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json"
+							},
+							{
+								"key": "Authorization",
+								"value": "Bearer {{auth_token}}",
+								"description": "Required"
+							}
+						],
+						"url": {
+							"raw": "{{base_url}}/api/v1/mentor/time-slots/form-data",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"mentor",
+								"time-slots",
+								"form-data"
+							]
+						},
+						"description": "Get categories and subcategories for time slot creation/editing"
+					}
+				},
+				{
+					"name": "Get Time Slot Statistics",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json"
+							},
+							{
+								"key": "Authorization",
+								"value": "Bearer {{auth_token}}",
+								"description": "Required"
+							}
+						],
+						"url": {
+							"raw": "{{base_url}}/api/v1/mentor/time-slots/statistics",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"mentor",
+								"time-slots",
+								"statistics"
+							]
+						},
+						"description": "Get time slot-related statistics for the mentor"
+					}
+				}
+			],
+			"description": "Mentor time slots management endpoints for session booking management"
+		},
+		{
+			"name": "Mentor Earnings History",
+			"item": [
+				{
+					"name": "Get Earnings History",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json"
+							},
+							{
+								"key": "Authorization",
+								"value": "Bearer {{auth_token}}",
+								"description": "Required"
+							}
+						],
+						"url": {
+							"raw": "{{base_url}}/api/v1/mentor/earnings?search=&start_date=&end_date=&per_page=10&page=1",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"mentor",
+								"earnings"
+							],
+							"query": [
+								{
+									"key": "search",
+									"value": "",
+									"description": "Search by transaction ID or date (optional)"
+								},
+								{
+									"key": "start_date",
+									"value": "",
+									"description": "Filter from date (YYYY-MM-DD) (optional)"
+								},
+								{
+									"key": "end_date",
+									"value": "",
+									"description": "Filter to date (YYYY-MM-DD) (optional)"
+								},
+								{
+									"key": "per_page",
+									"value": "10",
+									"description": "Items per page (default: 10)"
+								},
+								{
+									"key": "page",
+									"value": "1",
+									"description": "Page number"
+								}
+							]
+						},
+						"description": "Get mentor's earning transactions with search and filtering"
+					}
+				},
+				{
+					"name": "Get Earnings Statistics",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json"
+							},
+							{
+								"key": "Authorization",
+								"value": "Bearer {{auth_token}}",
+								"description": "Required"
+							}
+						],
+						"url": {
+							"raw": "{{base_url}}/api/v1/mentor/earnings/statistics?start_date=&end_date=",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"mentor",
+								"earnings",
+								"statistics"
+							],
+							"query": [
+								{
+									"key": "start_date",
+									"value": "",
+									"description": "Filter from date (YYYY-MM-DD) (optional)"
+								},
+								{
+									"key": "end_date",
+									"value": "",
+									"description": "Filter to date (YYYY-MM-DD) (optional)"
+								}
+							]
+						},
+						"description": "Get earning statistics with monthly and weekly breakdowns"
+					}
+				},
+				{
+					"name": "Get Payment Details",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json"
+							},
+							{
+								"key": "Authorization",
+								"value": "Bearer {{auth_token}}",
+								"description": "Required"
+							}
+						],
+						"url": {
+							"raw": "{{base_url}}/api/v1/mentor/earnings/1",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"mentor",
+								"earnings",
+								"1"
+							]
+						},
+						"description": "Get detailed information about a specific payment transaction"
+					}
+				}
+			],
+			"description": "Mentor earnings history endpoints for payment transactions and statistics"
+		},
+		{
+			"name": "Mentor Profile Management",
+			"item": [
+				{
+					"name": "Get Mentor Profile",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json"
+							},
+							{
+								"key": "Authorization",
+								"value": "Bearer {{auth_token}}",
+								"description": "Required"
+							}
+						],
+						"url": {
+							"raw": "{{base_url}}/api/v1/mentor/profile",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"mentor",
+								"profile"
+							]
+						},
+						"description": "Get mentor's profile information"
+					}
+				},
+				{
+					"name": "Update Mentor Profile",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json"
+							},
+							{
+								"key": "Authorization",
+								"value": "Bearer {{auth_token}}",
+								"description": "Required"
+							}
+						],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "address",
+									"value": "123 Main St, City, State",
+									"type": "text"
+								},
+								{
+									"key": "phone",
+									"value": "+1234567890",
+									"type": "text"
+								},
+								{
+									"key": "work_experience",
+									"value": "5 years in web development",
+									"type": "text"
+								},
+								{
+									"key": "bio",
+									"value": "Experienced web developer specializing in React and Node.js",
+									"type": "text"
+								},
+								{
+									"key": "photo",
+									"type": "file",
+									"description": "Profile photo (optional)"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{base_url}}/api/v1/mentor/profile",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"mentor",
+								"profile"
+							]
+						},
+						"description": "Update mentor's profile information"
+					}
+				},
+				{
+					"name": "Update Password",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							},
+							{
+								"key": "Authorization",
+								"value": "Bearer {{auth_token}}",
+								"description": "Required"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"current_password\": \"currentpassword123\",\n  \"password\": \"NewPassword123\",\n  \"password_confirmation\": \"NewPassword123\"\n}"
+						},
+						"url": {
+							"raw": "{{base_url}}/api/v1/mentor/profile/password",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"mentor",
+								"profile",
+								"password"
+							]
+						},
+						"description": "Update mentor's password"
+					}
+				},
+				{
+					"name": "Update Online Status",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							},
+							{
+								"key": "Authorization",
+								"value": "Bearer {{auth_token}}",
+								"description": "Required"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"online\": true\n}"
+						},
+						"url": {
+							"raw": "{{base_url}}/api/v1/mentor/profile/status",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"mentor",
+								"profile",
+								"status"
+							]
+						},
+						"description": "Update mentor's online/offline status"
+					}
+				},
+				{
+					"name": "Get Profile Statistics",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json"
+							},
+							{
+								"key": "Authorization",
+								"value": "Bearer {{auth_token}}",
+								"description": "Required"
+							}
+						],
+						"url": {
+							"raw": "{{base_url}}/api/v1/mentor/profile/statistics",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"mentor",
+								"profile",
+								"statistics"
+							]
+						},
+						"description": "Get mentor statistics for profile overview"
+					}
+				}
+			],
+			"description": "Mentor profile management endpoints for profile information and settings"
+		},
+		{
+			"name": "Mentor Reviews Management",
+			"item": [
+				{
+					"name": "Get Mentor Reviews",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json"
+							},
+							{
+								"key": "Authorization",
+								"value": "Bearer {{auth_token}}",
+								"description": "Required"
+							}
+						],
+						"url": {
+							"raw": "{{base_url}}/api/v1/mentor/reviews?rating=&search=&per_page=10&page=1",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"mentor",
+								"reviews"
+							],
+							"query": [
+								{
+									"key": "rating",
+									"value": "",
+									"description": "Filter by rating (1-5) (optional)"
+								},
+								{
+									"key": "search",
+									"value": "",
+									"description": "Search in comment or user name (optional)"
+								},
+								{
+									"key": "per_page",
+									"value": "10",
+									"description": "Items per page (default: 10)"
+								},
+								{
+									"key": "page",
+									"value": "1",
+									"description": "Page number"
+								}
+							]
+						},
+						"description": "Get mentor's reviews with filtering and pagination"
+					}
+				},
+				{
+					"name": "Get Review Details",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json"
+							},
+							{
+								"key": "Authorization",
+								"value": "Bearer {{auth_token}}",
+								"description": "Required"
+							}
+						],
+						"url": {
+							"raw": "{{base_url}}/api/v1/mentor/reviews/1",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"mentor",
+								"reviews",
+								"1"
+							]
+						},
+						"description": "Get detailed information about a specific review"
+					}
+				},
+				{
+					"name": "Get Reviews Statistics",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json"
+							},
+							{
+								"key": "Authorization",
+								"value": "Bearer {{auth_token}}",
+								"description": "Required"
+							}
+						],
+						"url": {
+							"raw": "{{base_url}}/api/v1/mentor/reviews/statistics",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"mentor",
+								"reviews",
+								"statistics"
+							]
+						},
+						"description": "Get review statistics and rating distribution"
+					}
+				},
+				{
+					"name": "Get Reviews by Rating",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json"
+							},
+							{
+								"key": "Authorization",
+								"value": "Bearer {{auth_token}}",
+								"description": "Required"
+							}
+						],
+						"url": {
+							"raw": "{{base_url}}/api/v1/mentor/reviews/rating/5?per_page=10&page=1",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"mentor",
+								"reviews",
+								"rating",
+								"5"
+							],
+							"query": [
+								{
+									"key": "per_page",
+									"value": "10",
+									"description": "Items per page (default: 10)"
+								},
+								{
+									"key": "page",
+									"value": "1",
+									"description": "Page number"
+								}
+							]
+						},
+						"description": "Get reviews filtered by specific rating (1-5 stars)"
+					}
+				}
+			],
+			"description": "Mentor reviews management endpoints for viewing and managing reviews"
+		},
+		{
+			"name": "Mentor Students Management",
+			"item": [
+				{
+					"name": "Get Students List",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json"
+							},
+							{
+								"key": "Authorization",
+								"value": "Bearer {{auth_token}}",
+								"description": "Required"
+							}
+						],
+						"url": {
+							"raw": "{{base_url}}/api/v1/mentor/students?search=&status=&per_page=10&page=1",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"mentor",
+								"students"
+							],
+							"query": [
+								{
+									"key": "search",
+									"value": "",
+									"description": "Search students by name, email, or service (optional)"
+								},
+								{
+									"key": "status",
+									"value": "",
+									"description": "Filter students by status: all, active, inactive (optional)"
+								},
+								{
+									"key": "per_page",
+									"value": "10",
+									"description": "Items per page (default: 10)"
+								},
+								{
+									"key": "page",
+									"value": "1",
+									"description": "Page number"
+								}
+							]
+						},
+						"description": "Get mentor's students/users list with detailed enrollment information"
+					}
+				},
+				{
+					"name": "Get Student Details",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json"
+							},
+							{
+								"key": "Authorization",
+								"value": "Bearer {{auth_token}}",
+								"description": "Required"
+							}
+						],
+						"url": {
+							"raw": "{{base_url}}/api/v1/mentor/students/1",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"mentor",
+								"students",
+								"1"
+							]
+						},
+						"description": "Get detailed information about a specific student including all enrollments and conversation"
+					}
+				},
+				{
+					"name": "Get Students Statistics",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json"
+							},
+							{
+								"key": "Authorization",
+								"value": "Bearer {{auth_token}}",
+								"description": "Required"
+							}
+						],
+						"url": {
+							"raw": "{{base_url}}/api/v1/mentor/students/statistics",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"mentor",
+								"students",
+								"statistics"
+							]
+						},
+						"description": "Get comprehensive student statistics including retention rate and monthly trends"
+					}
+				}
+			],
+			"description": "Mentor students management endpoints for viewing and managing student relationships"
+		},
+		{
 			"name": "User Notifications",
 			"item": [
 				{

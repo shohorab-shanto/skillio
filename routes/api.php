@@ -17,6 +17,13 @@ use App\Http\Controllers\Api\UserPaymentsApiController;
 use App\Http\Controllers\Api\UserProfileApiController;
 use App\Http\Controllers\Api\UserConversationsApiController;
 use App\Http\Controllers\Api\UserNotificationsApiController;
+use App\Http\Controllers\Api\MentorDashboardApiController;
+use App\Http\Controllers\Api\MentorCoursesApiController;
+use App\Http\Controllers\Api\MentorTimeSlotsApiController;
+use App\Http\Controllers\Api\MentorEarningsApiController;
+use App\Http\Controllers\Api\MentorProfileApiController;
+use App\Http\Controllers\Api\MentorReviewsApiController;
+use App\Http\Controllers\Api\MentorStudentsApiController;
 
 /*
 |--------------------------------------------------------------------------
@@ -185,6 +192,66 @@ Route::middleware('auth:sanctum')->prefix('v1')->group(function () {
             Route::put('read-all', [UserNotificationsApiController::class, 'markAllAsRead']);
             Route::delete('{notification}', [UserNotificationsApiController::class, 'destroy']);
             Route::delete('all', [UserNotificationsApiController::class, 'destroyAll']);
+        });
+    });
+
+    // Mentor Dashboard endpoints
+    Route::prefix('mentor')->group(function () {
+        // Dashboard overview
+        Route::get('dashboard', [MentorDashboardApiController::class, 'index']);
+        Route::get('dashboard/statistics', [MentorDashboardApiController::class, 'statistics']);
+        
+        // Mentor courses management
+        Route::prefix('courses')->group(function () {
+            Route::get('/', [MentorCoursesApiController::class, 'index']);
+            Route::post('/', [MentorCoursesApiController::class, 'store']);
+            Route::get('form-data', [MentorCoursesApiController::class, 'getFormData']);
+            Route::get('statistics', [MentorCoursesApiController::class, 'statistics']);
+            Route::get('{course}', [MentorCoursesApiController::class, 'show']);
+            Route::put('{course}', [MentorCoursesApiController::class, 'update']);
+            Route::delete('{course}', [MentorCoursesApiController::class, 'destroy']);
+        });
+        
+        // Mentor time slots management
+        Route::prefix('time-slots')->group(function () {
+            Route::get('/', [MentorTimeSlotsApiController::class, 'index']);
+            Route::post('/', [MentorTimeSlotsApiController::class, 'store']);
+            Route::get('form-data', [MentorTimeSlotsApiController::class, 'getFormData']);
+            Route::get('statistics', [MentorTimeSlotsApiController::class, 'statistics']);
+            Route::get('{time_slot}', [MentorTimeSlotsApiController::class, 'show']);
+            Route::put('{time_slot}', [MentorTimeSlotsApiController::class, 'update']);
+            Route::delete('{time_slot}', [MentorTimeSlotsApiController::class, 'destroy']);
+        });
+        
+        // Mentor earnings history
+        Route::prefix('earnings')->group(function () {
+            Route::get('/', [MentorEarningsApiController::class, 'index']);
+            Route::get('statistics', [MentorEarningsApiController::class, 'statistics']);
+            Route::get('{payment}', [MentorEarningsApiController::class, 'show']);
+        });
+        
+        // Mentor profile management
+        Route::prefix('profile')->group(function () {
+            Route::get('/', [MentorProfileApiController::class, 'show']);
+            Route::put('/', [MentorProfileApiController::class, 'update']);
+            Route::put('password', [MentorProfileApiController::class, 'updatePassword']);
+            Route::put('status', [MentorProfileApiController::class, 'updateStatus']);
+            Route::get('statistics', [MentorProfileApiController::class, 'getStatistics']);
+        });
+        
+        // Mentor reviews management
+        Route::prefix('reviews')->group(function () {
+            Route::get('/', [MentorReviewsApiController::class, 'index']);
+            Route::get('statistics', [MentorReviewsApiController::class, 'statistics']);
+            Route::get('rating/{rating}', [MentorReviewsApiController::class, 'getByRating']);
+            Route::get('{review}', [MentorReviewsApiController::class, 'show']);
+        });
+        
+        // Mentor students management
+        Route::prefix('students')->group(function () {
+            Route::get('/', [MentorStudentsApiController::class, 'index']);
+            Route::get('statistics', [MentorStudentsApiController::class, 'statistics']);
+            Route::get('{student}', [MentorStudentsApiController::class, 'show']);
         });
     });
 });

@@ -152,17 +152,17 @@ Route::middleware('auth:sanctum')->prefix('v1')->group(function () {
         // User courses management
         Route::prefix('courses')->group(function () {
             Route::get('/', [UserCoursesApiController::class, 'index']);
-            Route::get('{enrollment}', [UserCoursesApiController::class, 'show']);
             Route::get('statistics', [UserCoursesApiController::class, 'statistics']);
+            Route::get('{enrollment}', [UserCoursesApiController::class, 'show']);
         });
         
         // User sessions management
         Route::prefix('sessions')->group(function () {
             Route::get('/', [UserSessionsApiController::class, 'index']);
+            Route::get('statistics', [UserSessionsApiController::class, 'statistics']);
             Route::get('{enrollment}', [UserSessionsApiController::class, 'show']);
             Route::get('{enrollment}/available-slots', [UserSessionsApiController::class, 'getAvailableSlots']);
             Route::post('{enrollment}/switch', [UserSessionsApiController::class, 'switchSession']);
-            Route::get('statistics', [UserSessionsApiController::class, 'statistics']);
         });
         
         // Payment history

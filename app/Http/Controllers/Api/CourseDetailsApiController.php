@@ -143,6 +143,7 @@ class CourseDetailsApiController extends Controller
                 'end_date' => $course->end_date ? $course->end_date->toDateString() : null,
                 'status' => $course->status,
                 'featured' => $course->featured,
+                'type' => 'Online',
                 'created_at' => $course->created_at->toISOString(),
                 'updated_at' => $course->updated_at->toISOString(),
                 
@@ -177,6 +178,12 @@ class CourseDetailsApiController extends Controller
                         'name' => $subCategory->name,
                     ];
                 }),
+
+                // Key points - Categories and Subcategories
+                'key_points' => array_merge(
+                    [$course->category->name],
+                    $course->subCategories->pluck('name')->toArray()
+                ),
 
                 // User enrollment status
                 'is_enrolled' => $isEnrolled,

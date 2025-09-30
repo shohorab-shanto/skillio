@@ -24,6 +24,8 @@ use App\Http\Controllers\Api\MentorEarningsApiController;
 use App\Http\Controllers\Api\MentorProfileApiController;
 use App\Http\Controllers\Api\MentorReviewsApiController;
 use App\Http\Controllers\Api\MentorStudentsApiController;
+use App\Http\Controllers\Api\CourseApiController;
+use App\Http\Controllers\Api\MentorApiController;
 
 /*
 |--------------------------------------------------------------------------
@@ -51,6 +53,12 @@ Route::prefix('v1')->group(function () {
     // Public onboarding data
     Route::get('onboarding/categories', [UserOnboardingController::class, 'getCategories']);
     Route::get('onboarding/countries', [UserOnboardingController::class, 'getCountries']);
+
+// All courses and mentors endpoints
+Route::get('courses', [CourseApiController::class, 'getAllCourses']);
+Route::get('courses/filter-options', [CourseApiController::class, 'getFilterOptions']);
+Route::get('mentors', [MentorApiController::class, 'getAllMentors']);
+Route::get('mentors/filter-options', [MentorApiController::class, 'getFilterOptions']);
 
 // Home page data endpoints
 Route::prefix('home')->group(function () {

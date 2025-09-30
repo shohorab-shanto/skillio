@@ -164,15 +164,32 @@ class MentorApiController extends Controller
     {
         try {
             $categories = Category::all();
-            $ratingRange = Mentor::selectRaw('MIN(reviews_avg_rating) as min_rating, MAX(reviews_avg_rating) as max_rating')
+            $ratingRange = Mentor::with('reviews')
                 ->whereHas('reviews')
-                ->first();
-            
-            $courseCountRange = Mentor::selectRaw('MIN(approved_courses_count) as min_courses, MAX(approved_courses_count) as max_courses')
-                ->whereHas('courses', function($query) {
-                    $query->where('status', 'approved');
+                ->get()
+                ->map(function ($mentor) {
+                    return $mentor->averageRating();
                 })
-                ->first();
+                ->filter()
+                ->pipe(function ($ratings) {
+                    return (object) [
+                        'min_rating' => $ratings->min(),
+                        'max_rating' => $ratings->max()
+                    ];
+                });
+            
+            $courseCountRange = Mentor::withCount(['courses' => function($query) {
+                    $query->where('status', 'approved');
+                }])
+                ->having('courses_count', '>', 0)
+                ->get()
+                ->pipe(function ($mentors) {
+                    $counts = $mentors->pluck('courses_count');
+                    return (object) [
+                        'min_courses' => $counts->min(),
+                        'max_courses' => $counts->max()
+                    ];
+                });
 
             return response()->json([
                 'success' => true,

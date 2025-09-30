@@ -168,8 +168,8 @@ Route::middleware('auth:sanctum')->prefix('v1')->group(function () {
         // Payment history
         Route::prefix('payments')->group(function () {
             Route::get('/', [UserPaymentsApiController::class, 'index']);
-            Route::get('{payment}', [UserPaymentsApiController::class, 'show']);
             Route::get('statistics', [UserPaymentsApiController::class, 'statistics']);
+            Route::get('{payment}', [UserPaymentsApiController::class, 'show']);
         });
         
         // User profile management

@@ -190,6 +190,8 @@ class MentorDetailsApiController extends Controller
             $page = $request->get('page', 1);
             $startDate = $request->get('start_date');
             $endDate = $request->get('end_date');
+            $categoryId = $request->get('category_id');
+            $subCategoryId = $request->get('sub_category_id');
 
             // Build query for active session bookings
             $sessionsQuery = $mentor->sessionBookings()
@@ -199,6 +201,18 @@ class MentorDetailsApiController extends Controller
             // Apply date range filter if provided
             if ($startDate && $endDate) {
                 $sessionsQuery->whereBetween('date', [$startDate, $endDate]);
+            }
+
+            // Apply category filter if provided
+            if ($categoryId) {
+                $sessionsQuery->where('category_id', $categoryId);
+            }
+
+            // Apply subcategory filter if provided
+            if ($subCategoryId) {
+                $sessionsQuery->whereHas('subCategories', function($query) use ($subCategoryId) {
+                    $query->where('sub_categories.id', $subCategoryId);
+                });
             }
 
             // Get paginated results
@@ -327,11 +341,25 @@ class MentorDetailsApiController extends Controller
             $perPage = $request->get('per_page', 10);
             $page = $request->get('page', 1);
             $status = $request->get('status', 'all'); // all, approved, pending, rejected
+            $categoryId = $request->get('category_id');
+            $subCategoryId = $request->get('sub_category_id');
 
             $query = $mentor->courses()->with(['category', 'subCategories']);
 
             if ($status !== 'all') {
                 $query->where('status', $status);
+            }
+
+            // Apply category filter if provided
+            if ($categoryId) {
+                $query->where('category_id', $categoryId);
+            }
+
+            // Apply subcategory filter if provided
+            if ($subCategoryId) {
+                $query->whereHas('subCategories', function($query) use ($subCategoryId) {
+                    $query->where('sub_categories.id', $subCategoryId);
+                });
             }
 
             $courses = $query->orderBy('created_at', 'desc')

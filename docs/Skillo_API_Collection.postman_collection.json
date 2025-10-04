@@ -1100,10 +1100,22 @@
 									"key": "end_date",
 									"value": "2025-12-31",
 									"description": "Filter sessions to this date"
+								},
+								{
+									"key": "category_id",
+									"value": "",
+									"description": "Filter sessions by category ID",
+									"disabled": true
+								},
+								{
+									"key": "sub_category_id",
+									"value": "",
+									"description": "Filter sessions by subcategory ID",
+									"disabled": true
 								}
 							]
 						},
-						"description": "Retrieve mentor's available sessions with pagination and date filtering"
+						"description": "Retrieve mentor's available sessions with pagination, date filtering, and category/subcategory filtering"
 					},
 					"response": []
 				},
@@ -1191,10 +1203,22 @@
 									"key": "status",
 									"value": "all",
 									"description": "Filter by status: all, approved, pending, rejected"
+								},
+								{
+									"key": "category_id",
+									"value": "",
+									"description": "Filter courses by category ID",
+									"disabled": true
+								},
+								{
+									"key": "sub_category_id",
+									"value": "",
+									"description": "Filter courses by subcategory ID",
+									"disabled": true
 								}
 							]
 						},
-						"description": "Retrieve mentor's courses with pagination and status filtering"
+						"description": "Retrieve mentor's courses with pagination, status filtering, and category/subcategory filtering"
 					},
 					"response": []
 				},

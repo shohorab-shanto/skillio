@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\Course;
 use App\Models\UserEnrollment;
 use App\Models\Review;
+use App\Models\Conversation;
 use Illuminate\Http\Request;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Support\Facades\Auth;
@@ -40,14 +41,47 @@ class CourseDetailsApiController extends Controller
                 }
             ]);
 
-            // Check if current user is enrolled
+            // Check if current user is enrolled and get enrollment details
             $isEnrolled = false;
-            if (Auth::check()) {
-                $isEnrolled = UserEnrollment::where('user_id', Auth::id())
+            $enrollmentDetails = null;
+            $conversationDetails = null;
+            
+            $user = Auth::guard('sanctum')->user();
+            if ($user) {
+                $enrollment = UserEnrollment::where('user_id', $user->id)
                     ->where('enrollable_type', Course::class)
                     ->where('enrollable_id', $course->id)
                     ->whereIn('enrollment_status', ['active', 'completed'])
-                    ->exists();
+                    ->first();
+                
+                if ($enrollment) {
+                    $isEnrolled = true;
+                    
+                    // Get enrollment details
+                    $enrollmentDetails = [
+                        'id' => $enrollment->id,
+                        'enrollment_status' => $enrollment->enrollment_status,
+                        'enrolled_at' => $enrollment->enrolled_at ? $enrollment->enrolled_at->format('Y-m-d H:i:s') : null,
+                        'started_at' => $enrollment->started_at ? $enrollment->started_at->format('Y-m-d H:i:s') : null,
+                        'completed_at' => $enrollment->completed_at ? $enrollment->completed_at->format('Y-m-d H:i:s') : null,
+                        'progress_percentage' => round($enrollment->progress_percentage ?? 0, 2),
+                        'amount' => round($enrollment->amount, 2),
+                        'currency' => $enrollment->currency,
+                        'payment_status' => $enrollment->payment_status,
+                    ];
+                    
+                    // Get or create conversation with mentor
+                    $conversation = Conversation::where('enrollment_id', $enrollment->id)
+                        ->first();
+                    
+                    if ($conversation) {
+                        $conversationDetails = [
+                            'id' => $conversation->id,
+                            'unique_code' => $conversation->unique_code,
+                            'last_message_at' => $conversation->last_message_at ? $conversation->last_message_at->format('Y-m-d H:i:s') : null,
+                        ];
+                    }
+                }
             }
 
             // Get course statistics
@@ -113,8 +147,8 @@ class CourseDetailsApiController extends Controller
             // Check if user can review (is enrolled and hasn't reviewed yet)
             $canReview = false;
             $existingReview = null;
-            if (Auth::check() && $isEnrolled) {
-                $existingReview = Auth::user()->reviews()->where('course_id', $course->id)->first();
+            if ($user && $isEnrolled) {
+                $existingReview = $user->reviews()->where('course_id', $course->id)->first();
                 $canReview = !$existingReview;
             }
 
@@ -187,6 +221,8 @@ class CourseDetailsApiController extends Controller
 
                 // User enrollment status
                 'is_enrolled' => $isEnrolled,
+                'enrollment_details' => $enrollmentDetails,
+                'conversation' => $conversationDetails,
                 'can_review' => $canReview,
                 'existing_review' => $existingReview,
 
@@ -396,7 +432,7 @@ class CourseDetailsApiController extends Controller
     {
         try {
             // Check if user is mentor of this course or admin
-            if (Auth::check()) {
+            if (Auth::ch===k()) {
                 $user = Auth::user();
                 $isMentor = $user->mentor && $user->mentor->id == $course->mentor_id;
                 $isAdmin = $user->isAdmin();

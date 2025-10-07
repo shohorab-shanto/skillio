@@ -360,7 +360,7 @@ class CourseDetailsApiController extends Controller
                 ->where('enrollable_id', $course->id)
                 ->with('user');
 
-            if ($status !== 'all') {
+            if ($status != 'all') {
                 $query->where('enrollment_status', $status);
             }
 
@@ -432,7 +432,7 @@ class CourseDetailsApiController extends Controller
     {
         try {
             // Check if user is mentor of this course or admin
-            if (Auth::ch===k()) {
+            if (Auth::check()) {
                 $user = Auth::user();
                 $isMentor = $user->mentor && $user->mentor->id == $course->mentor_id;
                 $isAdmin = $user->isAdmin();

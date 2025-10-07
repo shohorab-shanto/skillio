@@ -346,7 +346,7 @@ class MentorDetailsApiController extends Controller
 
             $query = $mentor->courses()->with(['category', 'subCategories']);
 
-            if ($status !== 'all') {
+            if ($status != 'all') {
                 $query->where('status', $status);
             }
 

@@ -22,13 +22,13 @@ class MentorApiController extends Controller
                 ->withCount('approvedCourses');
 
             // Apply filters
-            if ($request->has('verified') && $request->verified !== null) {
+            if ($request->has('verified') && $request->verified != null) {
                 if ($request->verified) {
                     $query->verified();
                 }
             }
 
-            if ($request->has('available') && $request->available !== null) {
+            if ($request->has('available') && $request->available != null) {
                 if ($request->available) {
                     $query->available();
                 }

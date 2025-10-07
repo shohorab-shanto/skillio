@@ -624,7 +624,7 @@ class CourseEnrollmentApiController extends Controller
             }
 
             // Check if payment method is a card
-            if ($paymentMethod->type !== 'card') {
+            if ($paymentMethod->type != 'card') {
                 return [
                     'success' => false,
                     'message' => 'Invalid payment method type',
@@ -639,7 +639,7 @@ class CourseEnrollmentApiController extends Controller
 
             // Verify cardholder name matches (case insensitive)
             if (!empty($billingName) && !empty($cardholderName)) {
-                if (strtolower(trim($billingName)) !== strtolower(trim($cardholderName))) {
+                if (strtolower(trim($billingName)) != strtolower(trim($cardholderName))) {
                     return [
                         'success' => false,
                         'message' => 'Cardholder name mismatch',

@@ -3311,7 +3311,7 @@
 								}
 							]
 						},
-						"description": "Get enrolled students list for a specific course with search and filtering options. Returns student details, enrollment information, payment data, and course statistics."
+						"description": "Get enrolled students list for a specific course with search and filtering options. Returns student details, enrollment information, payment data, conversation ID and unique code, and course statistics."
 					}
 				},
 				{

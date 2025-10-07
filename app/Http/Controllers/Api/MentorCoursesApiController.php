@@ -336,7 +336,7 @@ class MentorCoursesApiController extends Controller
         // Get enrolled students with search and filter options
         $query = \App\Models\UserEnrollment::where('enrollable_type', 'App\Models\Course')
             ->where('enrollable_id', $course->id)
-            ->with(['user', 'paymentTransaction']);
+            ->with(['user', 'paymentTransaction', 'conversation']);
 
         // Apply search filter
         if ($request->filled('search')) {
@@ -394,8 +394,14 @@ class MentorCoursesApiController extends Controller
                     'transaction_status' => $enrollment->paymentTransaction->transaction_status,
                     'paid_at' => $enrollment->paymentTransaction->created_at->format('Y-m-d H:i:s'),
                 ] : null,
-                'conversation' => [
+                'conversation' => $enrollment->conversation ? [
+                    'id' => $enrollment->conversation->id,
+                    'unique_code' => $enrollment->conversation->unique_code,
                     'can_chat' => true,
+                ] : [
+                    'id' => null,
+                    'unique_code' => null,
+                    'can_chat' => false,
                 ],
             ];
         });

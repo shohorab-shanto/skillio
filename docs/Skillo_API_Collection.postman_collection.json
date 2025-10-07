@@ -2666,7 +2666,7 @@
 							"raw": "{\n  \"current_password\": \"oldpassword123\",\n  \"password\": \"NewPassword123\",\n  \"password_confirmation\": \"NewPassword123\"\n}"
 						},
 						"url": {
-							"raw": "{{base_url}}/api/v1/user/password",
+							"raw": "{{base_url}}/api/v1/user/profile/password",
 							"host": [
 								"{{base_url}}"
 							],
@@ -2674,6 +2674,7 @@
 								"api",
 								"v1",
 								"user",
+								"profile",
 								"password"
 							]
 						},

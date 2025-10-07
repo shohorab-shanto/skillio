@@ -214,6 +214,7 @@ Route::middleware('auth:sanctum')->prefix('v1')->group(function () {
             Route::get('/', [MentorCoursesApiController::class, 'index']);
             Route::post('/', [MentorCoursesApiController::class, 'store']);
             Route::get('form-data', [MentorCoursesApiController::class, 'getFormData']);
+            Route::get('filter-options', [MentorCoursesApiController::class, 'getFilterOptions']);
             Route::get('statistics', [MentorCoursesApiController::class, 'statistics']);
             Route::get('{course}', [MentorCoursesApiController::class, 'show']);
             Route::get('{course}/students', [MentorCoursesApiController::class, 'getCourseStudents']);

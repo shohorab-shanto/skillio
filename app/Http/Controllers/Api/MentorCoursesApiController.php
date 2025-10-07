@@ -40,6 +40,18 @@ class MentorCoursesApiController extends Controller
                       ->orWhere('description', 'like', "%{$request->search}%");
                 });
             })
+            ->when($request->filled('category_id'), function ($query) use ($request) {
+                return $query->where('category_id', $request->category_id);
+            })
+            ->when($request->filled('sub_category_ids'), function ($query) use ($request) {
+                $subCategoryIds = is_array($request->sub_category_ids) 
+                    ? $request->sub_category_ids 
+                    : explode(',', $request->sub_category_ids);
+                
+                return $query->whereHas('subCategories', function ($q) use ($subCategoryIds) {
+                    $q->whereIn('sub_categories.id', $subCategoryIds);
+                });
+            })
             ->orderBy('created_at', 'desc');
 
         $perPage = $request->get('per_page', 12);
@@ -682,6 +694,58 @@ class MentorCoursesApiController extends Controller
         return response()->json([
             'success' => true,
             'data' => $stats
+        ]);
+    }
+
+    /**
+     * Get filter options for mentor courses
+     */
+    public function getFilterOptions()
+    {
+        $user = Auth::user();
+        $mentor = $user->mentor;
+
+        if (!$mentor) {
+            return response()->json([
+                'success' => false,
+                'message' => 'Mentor profile not found.'
+            ], 404);
+        }
+
+        // Get categories used by this mentor's courses
+        $categories = Category::whereHas('courses', function($query) use ($mentor) {
+            $query->where('mentor_id', $mentor->id);
+        })->with(['subCategories' => function($query) use ($mentor) {
+            $query->whereHas('courses', function($q) use ($mentor) {
+                $q->where('mentor_id', $mentor->id);
+            });
+        }])->get()->map(function($category) {
+            return [
+                'id' => $category->id,
+                'name' => $category->name,
+                'sub_categories' => $category->subCategories->map(function($subCategory) {
+                    return [
+                        'id' => $subCategory->id,
+                        'name' => $subCategory->name,
+                    ];
+                }),
+            ];
+        });
+
+        // Get status options
+        $statusOptions = [
+            ['value' => 'all', 'label' => 'All Courses'],
+            ['value' => 'approved', 'label' => 'Approved'],
+            ['value' => 'pending', 'label' => 'Pending'],
+            ['value' => 'rejected', 'label' => 'Rejected'],
+        ];
+
+        return response()->json([
+            'success' => true,
+            'data' => [
+                'categories' => $categories,
+                'status_options' => $statusOptions,
+            ]
         ]);
     }
 }

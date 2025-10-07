@@ -3066,7 +3066,7 @@
 							}
 						],
 						"url": {
-							"raw": "{{base_url}}/api/v1/mentor/courses?status=&search=&per_page=12&page=1",
+							"raw": "{{base_url}}/api/v1/mentor/courses?status=&search=&category_id=&sub_category_ids=&per_page=12&page=1",
 							"host": [
 								"{{base_url}}"
 							],
@@ -3088,6 +3088,16 @@
 									"description": "Search in course title or description (optional)"
 								},
 								{
+									"key": "category_id",
+									"value": "",
+									"description": "Filter by category ID (optional)"
+								},
+								{
+									"key": "sub_category_ids",
+									"value": "",
+									"description": "Filter by sub-category IDs - comma-separated (e.g., 1,2,3) (optional)"
+								},
+								{
 									"key": "per_page",
 									"value": "12",
 									"description": "Items per page (default: 12)"
@@ -3099,8 +3109,40 @@
 								}
 							]
 						},
-						"description": "Get mentor's courses with filtering and pagination"
+						"description": "Get mentor's courses with filtering and pagination. Supports filtering by status, search term, category, and sub-categories."
 					}
+				},
+				{
+					"name": "Get Filter Options",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json"
+							},
+							{
+								"key": "Authorization",
+								"value": "Bearer {{auth_token}}",
+								"description": "Required"
+							}
+						],
+						"url": {
+							"raw": "{{base_url}}/api/v1/mentor/courses/filter-options",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"mentor",
+								"courses",
+								"filter-options"
+							]
+						},
+						"description": "Get available filter options for mentor courses including categories, sub-categories (only those used by the mentor's courses), and status options."
+					},
+					"response": []
 				},
 				{
 					"name": "Create Course",

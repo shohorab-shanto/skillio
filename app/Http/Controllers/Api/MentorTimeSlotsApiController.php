@@ -180,10 +180,17 @@ class MentorTimeSlotsApiController extends Controller
     {
         $mentor = Mentor::where('user_id', Auth::id())->first();
         
+        if (!$mentor) {
+            return response()->json([
+                'success' => false,
+                'message' => 'Access denied. This endpoint is only available for mentors.'
+            ], 403);
+        }
+        
         if ($time_slot->mentor_id != $mentor->id) {
             return response()->json([
                 'success' => false,
-                'message' => 'Unauthorized access to time slot.'
+                'message' => 'Unauthorized access. You can only view your own time slots.'
             ], 403);
         }
 
@@ -230,10 +237,17 @@ class MentorTimeSlotsApiController extends Controller
     {
         $mentor = Mentor::where('user_id', Auth::id())->first();
         
+        if (!$mentor) {
+            return response()->json([
+                'success' => false,
+                'message' => 'Access denied. This endpoint is only available for mentors.'
+            ], 403);
+        }
+        
         if ($time_slot->mentor_id != $mentor->id) {
             return response()->json([
                 'success' => false,
-                'message' => 'Unauthorized access to time slot.'
+                'message' => 'Unauthorized access. You can only update your own time slots.'
             ], 403);
         }
 
@@ -303,10 +317,17 @@ class MentorTimeSlotsApiController extends Controller
     {
         $mentor = Mentor::where('user_id', Auth::id())->first();
         
+        if (!$mentor) {
+            return response()->json([
+                'success' => false,
+                'message' => 'Access denied. This endpoint is only available for mentors.'
+            ], 403);
+        }
+        
         if ($time_slot->mentor_id != $mentor->id) {
             return response()->json([
                 'success' => false,
-                'message' => 'Unauthorized access to time slot.'
+                'message' => 'Unauthorized access. You can only delete your own time slots.'
             ], 403);
         }
 

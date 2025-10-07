@@ -96,6 +96,13 @@ class MentorReviewsApiController extends Controller
         $user = Auth::user();
         $mentor = $user->mentor;
 
+        if (!$mentor) {
+            return response()->json([
+                'success' => false,
+                'message' => 'Access denied. This endpoint is only available for mentors.'
+            ], 403);
+        }
+
         // Check if the review belongs to the current mentor
         if ($review->reviewable_type != 'App\Models\Mentor' || $review->reviewable_id != $mentor->id) {
             return response()->json([

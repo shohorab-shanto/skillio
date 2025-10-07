@@ -219,6 +219,13 @@ class MentorEarningsApiController extends Controller
     {
         $mentor = Auth::user()->mentor;
         
+        if (!$mentor) {
+            return response()->json([
+                'success' => false,
+                'message' => 'Access denied. This endpoint is only available for mentors.'
+            ], 403);
+        }
+        
         // Ensure this payment belongs to the current mentor
         $enrollment = $payment->enrollments()->whereHas('enrollable', function($q) use ($mentor) {
             $q->where('mentor_id', $mentor->id);

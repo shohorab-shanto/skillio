@@ -212,59 +212,225 @@ class MentorCoursesApiController extends Controller
         $user = Auth::user();
         $mentor = $user->mentor;
 
+        if (!$mentor) {
+            return response()->json([
+                'success' => false,
+                'message' => 'Access denied. This endpoint is only available for mentors.'
+            ], 403);
+        }
+
         // Check if the course belongs to the current mentor
         if ($course->mentor_id != $mentor->id) {
             return response()->json([
                 'success' => false,
-                'message' => 'Unauthorized access to course.'
+                'message' => 'Unauthorized access. You can only view your own courses.'
             ], 403);
         }
 
         // Load relationships
         $course->load(['category', 'subCategories', 'reviews.user']);
 
+        // Get earning statistics for this course
+        $currentlyEnrolled = \App\Models\UserEnrollment::where('enrollable_type', 'App\Models\Course')
+            ->where('enrollable_id', $course->id)
+            ->where('enrollment_status', 'active')->count();
+            
+        $totalEnrolled = \App\Models\UserEnrollment::where('enrollable_type', 'App\Models\Course')
+            ->where('enrollable_id', $course->id)->count();
+        
+        // Calculate total income from this course
+        $totalIncome = \App\Models\PaymentTransaction::whereHas('enrollments', function($query) use ($course) {
+            $query->where('enrollable_type', 'App\Models\Course')
+                  ->where('enrollable_id', $course->id);
+        })->where('transaction_status', 'completed')->sum('mentor_amount');
+
         return response()->json([
             'success' => true,
             'data' => [
-                'id' => $course->id,
-                'title' => $course->title,
-                'description' => $course->description,
-                'thumbnail' => $course->thumbnail ? asset('storage/' . $course->thumbnail) : null,
-                'cover_photo' => $course->cover_photo ? asset('storage/' . $course->cover_photo) : null,
-                'price' => round($course->price, 2),
-                'discount' => round($course->discount, 2),
-                'final_price' => round($course->finalPrice, 2),
-                'duration_days' => $course->duration_days,
-                'status' => $course->status,
-                'needs_reapproval' => $course->needs_reapproval,
-                'type' => 'Online',
-                'average_rating' => round($course->averageRating(), 1),
-                'reviews_count' => $course->reviews->count(),
-                'enrolled_students_count' => $course->enrolledStudentsCount(),
-                'category' => [
-                    'id' => $course->category->id,
-                    'name' => $course->category->name,
+                'course' => [
+                    'id' => $course->id,
+                    'title' => $course->title,
+                    'description' => $course->description,
+                    'thumbnail' => $course->thumbnail ? asset('storage/' . $course->thumbnail) : null,
+                    'cover_photo' => $course->cover_photo ? asset('storage/' . $course->cover_photo) : null,
+                    'price' => round($course->price, 2),
+                    'discount' => round($course->discount, 2),
+                    'final_price' => round($course->finalPrice, 2),
+                    'duration_days' => $course->duration_days,
+                    'status' => $course->status,
+                    'needs_reapproval' => $course->needs_reapproval,
+                    'type' => 'Online',
+                    'average_rating' => round($course->averageRating(), 1),
+                    'reviews_count' => $course->reviews->count(),
+                    'enrolled_students_count' => $course->enrolledStudentsCount(),
+                    'category' => [
+                        'id' => $course->category->id,
+                        'name' => $course->category->name,
+                    ],
+                    'sub_categories' => $course->subCategories->map(function($subCategory) {
+                        return [
+                            'id' => $subCategory->id,
+                            'name' => $subCategory->name,
+                        ];
+                    }),
+                    'reviews' => $course->reviews->map(function($review) {
+                        return [
+                            'id' => $review->id,
+                            'rating' => $review->rating,
+                            'comment' => $review->comment,
+                            'user' => [
+                                'id' => $review->user->id,
+                                'name' => $review->user->name,
+                            ],
+                            'created_at' => $review->created_at->format('Y-m-d H:i:s'),
+                        ];
+                    }),
+                    'created_at' => $course->created_at->format('Y-m-d H:i:s'),
+                    'updated_at' => $course->updated_at->format('Y-m-d H:i:s'),
                 ],
-                'sub_categories' => $course->subCategories->map(function($subCategory) {
-                    return [
-                        'id' => $subCategory->id,
-                        'name' => $subCategory->name,
-                    ];
-                }),
-                'reviews' => $course->reviews->map(function($review) {
-                    return [
-                        'id' => $review->id,
-                        'rating' => $review->rating,
-                        'comment' => $review->comment,
-                        'user' => [
-                            'id' => $review->user->id,
-                            'name' => $review->user->name,
-                        ],
-                        'created_at' => $review->created_at->format('Y-m-d H:i:s'),
-                    ];
-                }),
-                'created_at' => $course->created_at->format('Y-m-d H:i:s'),
-                'updated_at' => $course->updated_at->format('Y-m-d H:i:s'),
+                'earning_statistics' => [
+                    'currently_enrolled' => $currentlyEnrolled,
+                    'total_enrolled' => $totalEnrolled,
+                    'total_income' => round($totalIncome, 2),
+                    'course_price' => round($course->price, 2),
+                ],
+            ]
+        ]);
+    }
+
+    /**
+     * Get enrolled students for a specific course
+     */
+    public function getCourseStudents(Request $request, Course $course)
+    {
+        $user = Auth::user();
+        $mentor = $user->mentor;
+
+        if (!$mentor) {
+            return response()->json([
+                'success' => false,
+                'message' => 'Access denied. This endpoint is only available for mentors.'
+            ], 403);
+        }
+
+        // Check if the course belongs to the current mentor
+        if ($course->mentor_id != $mentor->id) {
+            return response()->json([
+                'success' => false,
+                'message' => 'Unauthorized access. You can only view students of your own courses.'
+            ], 403);
+        }
+
+        // Get enrolled students with search and filter options
+        $query = \App\Models\UserEnrollment::where('enrollable_type', 'App\Models\Course')
+            ->where('enrollable_id', $course->id)
+            ->with(['user', 'paymentTransaction']);
+
+        // Apply search filter
+        if ($request->filled('search')) {
+            $search = $request->search;
+            $query->whereHas('user', function($userQuery) use ($search) {
+                $userQuery->where('name', 'like', "%{$search}%")
+                        ->orWhere('email', 'like', "%{$search}%");
+            });
+        }
+
+        // Apply status filter
+        if ($request->filled('status') && $request->status != 'all') {
+            $query->where('enrollment_status', $request->status);
+        }
+
+        // Apply payment status filter
+        if ($request->filled('payment_status') && $request->payment_status != 'all') {
+            $query->where('payment_status', $request->payment_status);
+        }
+
+        $perPage = $request->get('per_page', 10);
+        $students = $query->orderBy('created_at', 'desc')->paginate($perPage);
+
+        // Transform students for API response
+        $students->getCollection()->transform(function ($enrollment) {
+            $student = $enrollment->user;
+            return [
+                'id' => $enrollment->id,
+                'student' => [
+                    'id' => $student->id,
+                    'name' => $student->name,
+                    'email' => $student->email,
+                    'phone' => $student->phone,
+                    'photo' => $student->photo ? asset('storage/' . $student->photo) : null,
+                    'student_id' => 'Student-ID-' . str_pad($student->id, 6, '0', STR_PAD_LEFT),
+                    'status' => $student->status,
+                ],
+                'service' => [
+                    'id' => $enrollment->enrollable->id,
+                    'title' => $enrollment->enrollable->title ?? 'Course',
+                    'type' => 'Course',
+                    'price' => round($enrollment->enrollable->price, 2),
+                ],
+                'enrollment' => [
+                    'status' => $enrollment->enrollment_status,
+                    'enrolled_at' => $enrollment->created_at->format('Y-m-d H:i:s'),
+                    'amount' => round($enrollment->amount, 2),
+                    'currency' => $enrollment->currency,
+                    'payment_status' => $enrollment->payment_status,
+                ],
+                'payment' => $enrollment->paymentTransaction ? [
+                    'transaction_id' => $enrollment->paymentTransaction->transaction_id,
+                    'gross_amount' => round($enrollment->paymentTransaction->gross_amount, 2),
+                    'mentor_amount' => round($enrollment->paymentTransaction->mentor_amount, 2),
+                    'transaction_status' => $enrollment->paymentTransaction->transaction_status,
+                    'paid_at' => $enrollment->paymentTransaction->created_at->format('Y-m-d H:i:s'),
+                ] : null,
+                'conversation' => [
+                    'can_chat' => true,
+                ],
+            ];
+        });
+
+        // Get course statistics
+        $totalEnrolled = \App\Models\UserEnrollment::where('enrollable_type', 'App\Models\Course')
+            ->where('enrollable_id', $course->id)->count();
+        
+        $activeEnrolled = \App\Models\UserEnrollment::where('enrollable_type', 'App\Models\Course')
+            ->where('enrollable_id', $course->id)
+            ->where('enrollment_status', 'active')->count();
+
+        $completedEnrolled = \App\Models\UserEnrollment::where('enrollable_type', 'App\Models\Course')
+            ->where('enrollable_id', $course->id)
+            ->where('enrollment_status', 'completed')->count();
+
+        $totalIncome = \App\Models\PaymentTransaction::whereHas('enrollments', function($query) use ($course) {
+            $query->where('enrollable_type', 'App\Models\Course')
+                  ->where('enrollable_id', $course->id);
+        })->where('transaction_status', 'completed')->sum('mentor_amount');
+
+        return response()->json([
+            'success' => true,
+            'data' => [
+                'course' => [
+                    'id' => $course->id,
+                    'title' => $course->title,
+                    'price' => round($course->price, 2),
+                ],
+                'students' => $students->items(),
+                'pagination' => [
+                    'current_page' => $students->currentPage(),
+                    'last_page' => $students->lastPage(),
+                    'per_page' => $students->perPage(),
+                    'total' => $students->total(),
+                ],
+                'statistics' => [
+                    'total_enrolled' => $totalEnrolled,
+                    'active_enrolled' => $activeEnrolled,
+                    'completed_enrolled' => $completedEnrolled,
+                    'total_income' => round($totalIncome, 2),
+                ],
+                'filters' => [
+                    'search' => $request->get('search', ''),
+                    'status' => $request->get('status', 'all'),
+                    'payment_status' => $request->get('payment_status', 'all'),
+                ],
             ]
         ]);
     }
@@ -277,11 +443,18 @@ class MentorCoursesApiController extends Controller
         $user = Auth::user();
         $mentor = $user->mentor;
 
+        if (!$mentor) {
+            return response()->json([
+                'success' => false,
+                'message' => 'Access denied. This endpoint is only available for mentors.'
+            ], 403);
+        }
+
         // Check if the course belongs to the current mentor
         if ($course->mentor_id != $mentor->id) {
             return response()->json([
                 'success' => false,
-                'message' => 'Unauthorized access to course.'
+                'message' => 'Unauthorized access. You can only update your own courses.'
             ], 403);
         }
 
@@ -425,11 +598,18 @@ class MentorCoursesApiController extends Controller
         $user = Auth::user();
         $mentor = $user->mentor;
 
+        if (!$mentor) {
+            return response()->json([
+                'success' => false,
+                'message' => 'Access denied. This endpoint is only available for mentors.'
+            ], 403);
+        }
+
         // Check if the course belongs to the current mentor
         if ($course->mentor_id != $mentor->id) {
             return response()->json([
                 'success' => false,
-                'message' => 'Unauthorized access to course.'
+                'message' => 'Unauthorized access. You can only delete your own courses.'
             ], 403);
         }
 

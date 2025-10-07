@@ -3210,7 +3210,66 @@
 								"1"
 							]
 						},
-						"description": "Get detailed information about a specific course"
+						"description": "Get detailed information about a specific course with earning statistics"
+					}
+				},
+				{
+					"name": "Get Course Enrolled Students",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json"
+							},
+							{
+								"key": "Authorization",
+								"value": "Bearer {{auth_token}}",
+								"description": "Required"
+							}
+						],
+						"url": {
+							"raw": "{{base_url}}/api/v1/mentor/courses/18/students?search=&status=all&payment_status=all&per_page=10&page=1",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"mentor",
+								"courses",
+								"18",
+								"students"
+							],
+							"query": [
+								{
+									"key": "search",
+									"value": "",
+									"description": "Search by student name or email (optional)"
+								},
+								{
+									"key": "status",
+									"value": "all",
+									"description": "Filter by enrollment status: active, completed, cancelled, all (default: all)"
+								},
+								{
+									"key": "payment_status",
+									"value": "all",
+									"description": "Filter by payment status: pending, completed, failed, all (default: all)"
+								},
+								{
+									"key": "per_page",
+									"value": "10",
+									"description": "Items per page (default: 10)"
+								},
+								{
+									"key": "page",
+									"value": "1",
+									"description": "Page number"
+								}
+							]
+						},
+						"description": "Get enrolled students list for a specific course with search and filtering options. Returns student details, enrollment information, payment data, and course statistics."
 					}
 				},
 				{

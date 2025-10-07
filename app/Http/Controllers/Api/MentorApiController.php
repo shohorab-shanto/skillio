@@ -125,7 +125,7 @@ class MentorApiController extends Controller
                 }
 
                 return [
-                    'id' => $mentor->user_id,
+                    'id' => $mentor->id,
                     'name' => $mentor->user->name,
                     'email' => $mentor->user->email,
                     'bio' => $mentor->bio,

@@ -16,7 +16,7 @@ class MentorApiController extends Controller
     public function getAllMentors(Request $request): JsonResponse
     {
         try {
-            $query = Mentor::with(['user'])
+            $query = Mentor::with(['user', 'sessionBookings.category', 'sessionBookings.subCategories'])
                 ->withCount('reviews')
                 ->withAvg('reviews', 'rating')
                 ->withCount('approvedCourses');
@@ -101,6 +101,29 @@ class MentorApiController extends Controller
 
             // Transform the data
             $mentors->getCollection()->transform(function ($mentor) {
+                // Calculate lowest session rate (hourly rate)
+                $lowestHourlyRate = null;
+                if ($mentor->sessionBookings && $mentor->sessionBookings->isNotEmpty()) {
+                    foreach ($mentor->sessionBookings as $session) {
+                        if ($session->fee > 0 && $session->duration_in_minutes > 0) {
+                            $hourlyRate = ($session->fee / $session->duration_in_minutes) * 60;
+                            if ($lowestHourlyRate == null || $hourlyRate < $lowestHourlyRate) {
+                                $lowestHourlyRate = $hourlyRate;
+                            }
+                        }
+                    }
+                }
+
+                // Get skills from session bookings (categories and subcategories)
+                $skills = collect();
+                if ($mentor->sessionBookings && $mentor->sessionBookings->isNotEmpty()) {
+                    $skills = $mentor->sessionBookings->pluck('category.name')
+                        ->merge($mentor->sessionBookings->pluck('subCategories.*.name')->flatten())
+                        ->unique()
+                        ->values()
+                        ->take(4);
+                }
+
                 return [
                     'id' => $mentor->user_id,
                     'name' => $mentor->user->name,
@@ -116,6 +139,8 @@ class MentorApiController extends Controller
                     'average_rating' => round($mentor->reviews_avg_rating ?? 0, 1),
                     'total_reviews' => $mentor->reviews_count,
                     'total_courses' => $mentor->approved_courses_count,
+                    'lowest_session_rate' => $lowestHourlyRate ? number_format($lowestHourlyRate, 2) : '0',
+                    'skills' => $skills,
                     'star_rating' => $this->getStarRating($mentor->reviews_avg_rating ?? 0),
                     'five_star_percentage' => $this->getFiveStarPercentage($mentor),
                     'has_excellent_reviews' => ($mentor->reviews_avg_rating ?? 0) >= 4.0,
@@ -127,7 +152,7 @@ class MentorApiController extends Controller
                         'total_reviews' => $mentor->reviews_count,
                         'average_rating' => round($mentor->reviews_avg_rating ?? 0, 1),
                     ],
-                    'created_at' => $mentor->created_at->format('Y-m-d H:i:s'),
+                    'created_at' => $mentor->created_at ? $mentor->created_at->format('Y-m-d H:i:s') : null,
                 ];
             });
 

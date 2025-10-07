@@ -451,7 +451,7 @@ class CourseDetailsApiController extends Controller
         $reviews = $course->reviews;
         $totalReviews = $reviews->count();
         
-        if ($totalReviews === 0) {
+        if ($totalReviews == 0) {
             return [
                 'average_rating' => 0,
                 'total_reviews' => 0,

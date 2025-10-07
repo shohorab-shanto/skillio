@@ -307,9 +307,9 @@ class ReviewApiController extends Controller
             $query = Review::where('user_id', $user->id)
                 ->with(['user', 'course.mentor.user', 'mentor.user']);
 
-            if ($type === 'course') {
+            if ($type == 'course') {
                 $query->whereNotNull('course_id');
-            } elseif ($type === 'mentor') {
+            } elseif ($type == 'mentor') {
                 $query->whereNotNull('mentor_id');
             }
 

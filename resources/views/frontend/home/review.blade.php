@@ -322,8 +322,8 @@ document.addEventListener('DOMContentLoaded', function() {
     function handleDragStart(e) {
         isDragging = true;
         stopAutoScroll(); // Stop auto scroll when user starts dragging
-        startX = e.type === 'mousedown' ? e.clientX : e.touches[0].clientX;
-        startY = e.type === 'mousedown' ? e.clientY : e.touches[0].clientY;
+        startX = e.type == 'mousedown' ? e.clientX : e.touches[0].clientX;
+        startY = e.type == 'mousedown' ? e.clientY : e.touches[0].clientY;
         currentX = startX;
         currentY = startY;
         initialTransform = -currentGroup * 100;
@@ -331,7 +331,7 @@ document.addEventListener('DOMContentLoaded', function() {
         wrapper.style.cursor = 'grabbing';
         
         // Only prevent default for mouse events, not touch events
-        if (e.type === 'mousedown') {
+        if (e.type == 'mousedown') {
             e.preventDefault();
         }
     }
@@ -340,8 +340,8 @@ document.addEventListener('DOMContentLoaded', function() {
     function handleDragMove(e) {
         if (!isDragging) return;
         
-        currentX = e.type === 'mousemove' ? e.clientX : e.touches[0].clientX;
-        currentY = e.type === 'mousemove' ? e.clientY : e.touches[0].clientY;
+        currentX = e.type == 'mousemove' ? e.clientX : e.touches[0].clientX;
+        currentY = e.type == 'mousemove' ? e.clientY : e.touches[0].clientY;
         const deltaX = currentX - startX;
         const deltaY = currentY - startY;
         
@@ -421,13 +421,13 @@ document.addEventListener('DOMContentLoaded', function() {
     
     // Keyboard navigation (optional)
     document.addEventListener('keydown', function(e) {
-        if (e.key === 'ArrowLeft' && currentGroup > 0) {
+        if (e.key == 'ArrowLeft' && currentGroup > 0) {
             stopAutoScroll();
             goToGroup(currentGroup - 1);
             setTimeout(() => {
                 startAutoScroll();
             }, 1000);
-        } else if (e.key === 'ArrowRight' && currentGroup < totalGroups - 1) {
+        } else if (e.key == 'ArrowRight' && currentGroup < totalGroups - 1) {
             stopAutoScroll();
             goToGroup(currentGroup + 1);
             setTimeout(() => {

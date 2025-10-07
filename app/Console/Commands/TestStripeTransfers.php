@@ -16,7 +16,7 @@ class TestStripeTransfers extends Command
     public function handle()
     {
         $this->info('🧪 Testing Stripe Connect Transfer Functionality');
-        $this->info('======================');
+        $this->info('===============');
         $this->newLine();
 
         // 1. Check mentors with Stripe Connect accounts

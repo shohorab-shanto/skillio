@@ -43,6 +43,7 @@ class CourseDetailsApiController extends Controller
 
             // Check if current user is enrolled and get enrollment details
             $isEnrolled = false;
+            $enrollmentStatus = null;
             $enrollmentDetails = null;
             $conversationDetails = null;
             
@@ -57,6 +58,32 @@ class CourseDetailsApiController extends Controller
                 if ($enrollment) {
                     $isEnrolled = true;
                     
+                    // Determine enrollment status based on course duration and enrolled_at date
+                    $enrolledAt = $enrollment->enrolled_at ?: $enrollment->created_at;
+                    $courseDurationDays = $course->duration_days ?? 30; // Default 30 days if not set
+                    $courseEndDate = $enrolledAt->copy()->addDays($courseDurationDays);
+                    
+                    // Check if course duration has passed
+                    if (now()->greaterThan($courseEndDate)) {
+                        $enrollmentStatus = 'completed';
+                    } else {
+                        $enrollmentStatus = 'inprogress';
+                    }
+                    
+                    // Calculate remaining time in days, hours, and minutes
+                    $totalMinutesRemaining = max(0, now()->diffInMinutes($courseEndDate, false));
+                    $daysRemaining = floor($totalMinutesRemaining / (24 * 60));
+                    $hoursRemaining = floor(($totalMinutesRemaining % (24 * 60)) / 60);
+                    $minutesRemaining = $totalMinutesRemaining % 60;
+                    
+                    // Format time remaining string
+                    $timeRemainingParts = [];
+                    if ($daysRemaining > 0) $timeRemainingParts[] = $daysRemaining . ' day' . ($daysRemaining > 1 ? 's' : '');
+                    if ($hoursRemaining > 0) $timeRemainingParts[] = $hoursRemaining . ' hour' . ($hoursRemaining > 1 ? 's' : '');
+                    if ($minutesRemaining > 0) $timeRemainingParts[] = $minutesRemaining . ' minute' . ($minutesRemaining > 1 ? 's' : '');
+                    
+                    $timeRemainingText = !empty($timeRemainingParts) ? implode(' ', $timeRemainingParts) : 'Expired';
+                    
                     // Get enrollment details
                     $enrollmentDetails = [
                         'id' => $enrollment->id,
@@ -68,6 +95,14 @@ class CourseDetailsApiController extends Controller
                         'amount' => round($enrollment->amount, 2),
                         'currency' => $enrollment->currency,
                         'payment_status' => $enrollment->payment_status,
+                        'course_end_date' => $courseEndDate->format('Y-m-d H:i:s'),
+                        'days_remaining' => $timeRemainingText,
+                        'time_remaining_breakdown' => [
+                            'days' => (int)$daysRemaining,
+                            'hours' => (int)$hoursRemaining,
+                            'minutes' => (int)$minutesRemaining,
+                            'total_minutes' => (int)$totalMinutesRemaining,
+                        ],
                     ];
                     
                     // Get or create conversation with mentor
@@ -221,6 +256,7 @@ class CourseDetailsApiController extends Controller
 
                 // User enrollment status
                 'is_enrolled' => $isEnrolled,
+                'enrollment_status' => $enrollmentStatus,
                 'enrollment_details' => $enrollmentDetails,
                 'conversation' => $conversationDetails,
                 'can_review' => $canReview,

@@ -178,6 +178,7 @@ class MentorDetailsApiController extends Controller
 
     /**
      * Get mentor sessions with pagination and filtering
+     * Returns only upcoming sessions (sessions that haven't started yet based on current date/time)
      *
      * @param Mentor $mentor
      * @param Request $request
@@ -197,6 +198,15 @@ class MentorDetailsApiController extends Controller
             $sessionsQuery = $mentor->sessionBookings()
                 ->with(['category', 'subCategories', 'mentor.user'])
                 ->where('status', 'active');
+
+            // Filter only upcoming sessions (not started yet)
+            $sessionsQuery->where(function($query) {
+                $query->where('date', '>', now()->toDateString())
+                      ->orWhere(function($q) {
+                          $q->where('date', '=', now()->toDateString())
+                            ->where('start_time', '>', now()->toTimeString());
+                      });
+            });
 
             // Apply date range filter if provided
             if ($startDate && $endDate) {

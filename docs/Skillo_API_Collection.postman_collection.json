@@ -2307,8 +2307,38 @@
 								}
 							]
 						},
-						"description": "Get user dashboard with statistics and recent activity"
-					}
+						"description": "Get user dashboard with statistics and recent activity. Includes conversation details for each course and session."
+					},
+					"response": [
+						{
+							"name": "Dashboard Overview Response",
+							"originalRequest": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "Bearer {{auth_token}}"
+									}
+								],
+								"url": {
+									"raw": "{{base_url}}/api/v1/user/dashboard",
+									"host": ["{{base_url}}"],
+									"path": ["api", "v1", "user", "dashboard"]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								}
+							],
+							"cookie": [],
+							"body": "{\n  \"success\": true,\n  \"data\": {\n    \"statistics\": {\n      \"active_courses\": 5,\n      \"completed_courses\": 3,\n      \"upcoming_sessions\": 2,\n      \"learning_hours\": 10\n    },\n    \"current_courses\": [\n      {\n        \"id\": 123,\n        \"course\": {\n          \"id\": 18,\n          \"title\": \"Advanced JavaScript Course\",\n          \"thumbnail\": \"https://example.com/thumbnail.jpg\",\n          \"average_rating\": 4.5,\n          \"start_date\": \"Jan 15, 2025\",\n          \"duration\": \"2 Months\"\n        },\n        \"mentor\": {\n          \"id\": 5,\n          \"name\": \"John Doe\",\n          \"photo\": \"https://example.com/mentor.jpg\"\n        },\n        \"enrollment_status\": \"active\",\n        \"progress_percentage\": 45.50,\n        \"enrolled_at\": \"2024-10-01 10:00:00\",\n        \"conversation\": {\n          \"id\": 45,\n          \"unique_code\": \"CONV-123ABC\"\n        }\n      }\n    ],\n    \"upcoming_sessions\": [\n      {\n        \"id\": 456,\n        \"session\": {\n          \"id\": 89,\n          \"date\": \"Oct 15, 2025\",\n          \"start_time\": \"2:00 PM\",\n          \"formatted_time_slot\": \"2:00 PM - 3:00 PM\",\n          \"sub_categories\": [\"JavaScript\", \"Frontend\"]\n        },\n        \"mentor\": {\n          \"id\": 7,\n          \"name\": \"Jane Smith\",\n          \"photo\": \"https://example.com/mentor2.jpg\"\n        },\n        \"enrollment_status\": \"active\",\n        \"enrolled_at\": \"2024-10-05 14:30:00\",\n        \"conversation\": {\n          \"id\": 67,\n          \"unique_code\": \"CONV-456DEF\"\n        }\n      }\n    ],\n    \"search\": \"\"\n  }\n}"
+						}
+					]
 				},
 				{
 					"name": "Get Dashboard Statistics",

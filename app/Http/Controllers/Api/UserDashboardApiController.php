@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use App\Models\UserEnrollment;
 use App\Models\Course;
 use App\Models\SessionBooking;
+use App\Models\Conversation;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
@@ -76,9 +77,14 @@ class UserDashboardApiController extends Controller
         $currentCourses = $enrollments->where('enrollable_type', Course::class)
             ->take(3)
             ->values()
-            ->map(function($enrollment) {
+            ->map(function($enrollment) use ($user) {
                 $course = $enrollment->enrollable;
                 $mentor = $course->mentor->user;
+                
+                // Get conversation with mentor
+                $conversation = Conversation::where('mentor_id', $course->mentor->id)
+                    ->where('user_id', $user->id)
+                    ->first();
                 
                 return [
                     'id' => $enrollment->id,
@@ -98,14 +104,23 @@ class UserDashboardApiController extends Controller
                     'enrollment_status' => $enrollment->enrollment_status,
                     'progress_percentage' => round($enrollment->progress_percentage, 2),
                     'enrolled_at' => $enrollment->enrolled_at ? $enrollment->enrolled_at->format('Y-m-d H:i:s') : null,
+                    'conversation' => $conversation ? [
+                        'id' => $conversation->id,
+                        'unique_code' => $conversation->unique_code,
+                    ] : null,
                 ];
             });
         
         // Get upcoming sessions for display
         $upcomingSessionsDisplay = $upcomingSessions->take(3)->values()
-            ->map(function($enrollment) {
+            ->map(function($enrollment) use ($user) {
                 $session = $enrollment->enrollable;
                 $mentor = $session->mentor->user;
+                
+                // Get conversation with mentor
+                $conversation = Conversation::where('mentor_id', $session->mentor->id)
+                    ->where('user_id', $user->id)
+                    ->first();
                 
                 return [
                     'id' => $enrollment->id,
@@ -123,6 +138,10 @@ class UserDashboardApiController extends Controller
                     ],
                     'enrollment_status' => $enrollment->enrollment_status,
                     'enrolled_at' => $enrollment->enrolled_at ? $enrollment->enrolled_at->format('Y-m-d H:i:s') : null,
+                    'conversation' => $conversation ? [
+                        'id' => $conversation->id,
+                        'unique_code' => $conversation->unique_code,
+                    ] : null,
                 ];
             });
         

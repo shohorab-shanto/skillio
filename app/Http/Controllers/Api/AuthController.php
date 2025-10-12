@@ -195,16 +195,94 @@ class AuthController extends Controller
     }
 
     /**
-     * Google OAuth (placeholder - implement based on your OAuth setup)
+     * Google OAuth - Authenticate user with Google ID token from mobile app
      */
     public function googleAuth(Request $request): JsonResponse
     {
-        // This would integrate with your existing Google OAuth implementation
-        return response()->json([
-            'success' => false,
-            'message' => 'Google OAuth not implemented yet',
-            'errors' => ['oauth' => 'Google OAuth integration pending'],
-        ], 501);
+        $validator = Validator::make($request->all(), [
+            'id_token' => ['required', 'string'],
+            'name' => ['nullable', 'string'],
+            'email' => ['nullable', 'email'],
+        ]);
+
+        if ($validator->fails()) {
+            return response()->json([
+                'success' => false,
+                'message' => 'Validation failed',
+                'errors' => $validator->errors(),
+            ], 422);
+        }
+
+        try {
+            // Verify the ID token with Google
+            $googleUser = $this->verifyGoogleToken($request->id_token);
+            
+            if (!$googleUser) {
+                return response()->json([
+                    'success' => false,
+                    'message' => 'Invalid Google token',
+                    'errors' => ['id_token' => 'The provided Google token is invalid or expired'],
+                ], 401);
+            }
+
+            // Extract user information from Google response
+            $googleId = $googleUser['sub'] ?? $googleUser['id'] ?? null;
+            $email = $googleUser['email'] ?? $request->email;
+            $name = $googleUser['name'] ?? $request->name;
+            $emailVerified = $googleUser['email_verified'] ?? false;
+
+            if (!$googleId || !$email) {
+                return response()->json([
+                    'success' => false,
+                    'message' => 'Unable to retrieve user information from Google',
+                    'errors' => ['google' => 'Missing required user information'],
+                ], 400);
+            }
+
+            // Check if user already exists
+            $existingUser = User::where('email', $email)->first();
+            
+            // Create or update user
+            $user = User::updateOrCreate(
+                ['email' => $email],
+                [
+                    'name' => $name ?? 'Google User',
+                    'google_id' => $googleId,
+                    'password' => $existingUser && $existingUser->password ? $existingUser->password : Hash::make(Str::random(32)),
+                    'status' => 'active',
+                    'role' => $existingUser && $existingUser->role ? $existingUser->role : 'user',
+                    'gdpr_consent' => true,
+                    'email_verified_at' => $emailVerified ? now() : null,
+                ]
+            );
+
+            // Generate Sanctum token
+            $token = $user->createToken('google_auth_token')->plainTextToken;
+
+            return response()->json([
+                'success' => true,
+                'message' => 'Google authentication successful',
+                'data' => [
+                    'user' => [
+                        'id' => $user->id,
+                        'name' => $user->name,
+                        'email' => $user->email,
+                        'role' => $user->role,
+                        'status' => $user->status,
+                        'email_verified_at' => $user->email_verified_at,
+                    ],
+                    'token' => $token,
+                    'token_type' => 'Bearer',
+                ],
+            ], 200);
+
+        } catch (\Exception $e) {
+            return response()->json([
+                'success' => false,
+                'message' => 'Google authentication failed',
+                'errors' => ['server' => 'An error occurred during Google authentication: ' . $e->getMessage()],
+            ], 500);
+        }
     }
 
     /**
@@ -304,5 +382,47 @@ class AuthController extends Controller
             'message' => 'Password reset failed',
             'errors' => ['email' => __($status)],
         ], 400);
+    }
+
+    /**
+     * Verify Google ID token with Google's servers
+     * 
+     * @param string $idToken
+     * @return array|null
+     */
+    private function verifyGoogleToken(string $idToken): ?array
+    {
+        try {
+            // Google's token verification endpoint
+            $url = 'https://oauth2.googleapis.com/tokeninfo?id_token=' . urlencode($idToken);
+            
+            // Make request to Google
+            $ch = curl_init();
+            curl_setopt($ch, CURLOPT_URL, $url);
+            curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+            curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, true);
+            curl_setopt($ch, CURLOPT_TIMEOUT, 10);
+            
+            $response = curl_exec($ch);
+            $httpCode = curl_getinfo($ch, CURLINFO_HTTP_CODE);
+            curl_close($ch);
+            
+            if ($httpCode != 200 || !$response) {
+                return null;
+            }
+            
+            $data = json_decode($response, true);
+            
+            // Verify the token is for our app (if GOOGLE_CLIENT_ID is set)
+            $googleClientId = config('services.google.client_id');
+            if ($googleClientId && isset($data['aud']) && $data['aud'] != $googleClientId) {
+                return null;
+            }
+            
+            return $data;
+            
+        } catch (\Exception $e) {
+            return null;
+        }
     }
 }

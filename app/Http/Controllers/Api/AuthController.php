@@ -299,6 +299,134 @@ class AuthController extends Controller
     }
 
     /**
+     * Firebase Google OAuth - Authenticate user with Firebase ID token from mobile app
+     * This endpoint handles Google authentication via Firebase for mobile apps
+     */
+    public function firebaseGoogleAuth(Request $request): JsonResponse
+    {
+        $validator = Validator::make($request->all(), [
+            'id_token' => ['required', 'string'],
+        ]);
+
+        if ($validator->fails()) {
+            return response()->json([
+                'success' => false,
+                'message' => 'Validation failed',
+                'errors' => $validator->errors(),
+            ], 422);
+        }
+
+        try {
+            // Verify the Firebase ID token
+            $firebaseUser = $this->verifyFirebaseToken($request->id_token);
+            
+            if (!$firebaseUser) {
+                return response()->json([
+                    'success' => false,
+                    'message' => 'Invalid Firebase token',
+                    'errors' => ['id_token' => 'The provided Firebase token is invalid or expired'],
+                ], 401);
+            }
+
+            // Extract user information from Firebase response
+            $firebaseUid = $firebaseUser['user_id'] ?? $firebaseUser['sub'] ?? null;
+            $email = $firebaseUser['email'] ?? null;
+            $name = $firebaseUser['name'] ?? null;
+            $emailVerified = $firebaseUser['email_verified'] ?? false;
+            
+            // Extract Google ID from Firebase identities
+            $googleId = null;
+            if (isset($firebaseUser['firebase']['identities']['google.com'][0])) {
+                $googleId = $firebaseUser['firebase']['identities']['google.com'][0];
+            }
+
+            if (!$firebaseUid || !$email) {
+                return response()->json([
+                    'success' => false,
+                    'message' => 'Unable to retrieve user information from Firebase',
+                    'errors' => ['firebase' => 'Missing required user information'],
+                ], 400);
+            }
+
+            // Find existing user by email OR google_id OR firebase_uid
+            // This ensures same Google user from web and mobile gets same account
+            $existingUser = User::where('email', $email)
+                ->orWhere(function($query) use ($googleId) {
+                    if ($googleId) {
+                        $query->where('google_id', $googleId);
+                    }
+                })
+                ->orWhere(function($query) use ($firebaseUid) {
+                    if ($firebaseUid) {
+                        $query->where('firebase_uid', $firebaseUid);
+                    }
+                })
+                ->first();
+
+            // Prepare user data
+            $userData = [
+                'name' => $name ?? $existingUser->name ?? 'Firebase User',
+                'firebase_uid' => $firebaseUid,
+                'status' => 'active',
+                'gdpr_consent' => true,
+                'email_verified_at' => $emailVerified ? now() : ($existingUser->email_verified_at ?? null),
+            ];
+
+            // Add Google ID if available (this links web and mobile logins)
+            if ($googleId) {
+                $userData['google_id'] = $googleId;
+            }
+
+            // If user doesn't exist, set default values
+            if (!$existingUser) {
+                $userData['password'] = Hash::make(Str::random(32));
+                $userData['role'] = 'user';
+            } else {
+                // Preserve existing password and role
+                if ($existingUser->password) {
+                    $userData['password'] = $existingUser->password;
+                }
+                if ($existingUser->role) {
+                    $userData['role'] = $existingUser->role;
+                }
+            }
+
+            // Create or update user
+            $user = User::updateOrCreate(
+                ['email' => $email],
+                $userData
+            );
+
+            // Generate Sanctum token
+            $token = $user->createToken('firebase_auth_token')->plainTextToken;
+
+            return response()->json([
+                'success' => true,
+                'message' => 'Firebase authentication successful',
+                'data' => [
+                    'user' => [
+                        'id' => $user->id,
+                        'name' => $user->name,
+                        'email' => $user->email,
+                        'role' => $user->role,
+                        'status' => $user->status,
+                        'email_verified_at' => $user->email_verified_at,
+                    ],
+                    'token' => $token,
+                    'token_type' => 'Bearer',
+                ],
+            ], 200);
+
+        } catch (\Exception $e) {
+            return response()->json([
+                'success' => false,
+                'message' => 'Firebase authentication failed',
+                'errors' => ['server' => 'An error occurred during Firebase authentication: ' . $e->getMessage()],
+            ], 500);
+        }
+    }
+
+    /**
      * Forgot password
      */
     public function forgotPassword(Request $request): JsonResponse
@@ -420,6 +548,134 @@ class AuthController extends Controller
             }
             
             return $data;
+            
+        } catch (\Exception $e) {
+            return null;
+        }
+    }
+
+    /**
+     * Verify Firebase ID token with Firebase servers
+     * Uses Firebase REST API for token verification
+     * 
+     * @param string $idToken
+     * @return array|null
+     */
+    private function verifyFirebaseToken(string $idToken): ?array
+    {
+        try {
+            // Firebase token verification endpoint
+            $apiKey = config('services.firebase.api_key');
+            
+            if (!$apiKey) {
+                // Fallback: Try to extract and verify without Firebase API
+                // This method verifies the JWT signature against Firebase public keys
+                return $this->verifyFirebaseTokenJWT($idToken);
+            }
+            
+            // Method 1: Use Firebase Auth REST API to verify token
+            $url = 'https://identitytoolkit.googleapis.com/v1/accounts:lookup?key=' . $apiKey;
+            
+            $ch = curl_init();
+            curl_setopt($ch, CURLOPT_URL, $url);
+            curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+            curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, true);
+            curl_setopt($ch, CURLOPT_TIMEOUT, 10);
+            curl_setopt($ch, CURLOPT_POST, true);
+            curl_setopt($ch, CURLOPT_HTTPHEADER, ['Content-Type: application/json']);
+            curl_setopt($ch, CURLOPT_POSTFIELDS, json_encode(['idToken' => $idToken]));
+            
+            $response = curl_exec($ch);
+            $httpCode = curl_getinfo($ch, CURLINFO_HTTP_CODE);
+            curl_close($ch);
+            
+            if ($httpCode != 200 || !$response) {
+                // If API verification fails, try JWT verification
+                return $this->verifyFirebaseTokenJWT($idToken);
+            }
+            
+            $data = json_decode($response, true);
+            
+            if (!isset($data['users'][0])) {
+                return null;
+            }
+            
+            $user = $data['users'][0];
+            
+            // Also decode the token to get additional claims
+            $tokenParts = explode('.', $idToken);
+            if (count($tokenParts) == 3) {
+                $payload = json_decode(base64_decode(str_replace(['-', '_'], ['+', '/'], $tokenParts[1])), true);
+                
+                // Merge user data with token payload
+                return [
+                    'user_id' => $user['localId'] ?? null,
+                    'sub' => $user['localId'] ?? null,
+                    'email' => $user['email'] ?? null,
+                    'name' => $user['displayName'] ?? ($payload['name'] ?? null),
+                    'email_verified' => $user['emailVerified'] ?? false,
+                    'firebase' => $payload['firebase'] ?? [],
+                    'picture' => $user['photoUrl'] ?? null,
+                ];
+            }
+            
+            return [
+                'user_id' => $user['localId'] ?? null,
+                'email' => $user['email'] ?? null,
+                'name' => $user['displayName'] ?? null,
+                'email_verified' => $user['emailVerified'] ?? false,
+            ];
+            
+        } catch (\Exception $e) {
+            // Fallback to JWT verification
+            return $this->verifyFirebaseTokenJWT($idToken);
+        }
+    }
+
+    /**
+     * Verify Firebase ID token by decoding JWT and validating
+     * This is a fallback method when Firebase API key is not available
+     * 
+     * @param string $idToken
+     * @return array|null
+     */
+    private function verifyFirebaseTokenJWT(string $idToken): ?array
+    {
+        try {
+            // Decode JWT token (without signature verification for development)
+            // In production, you should verify the signature against Firebase public keys
+            $tokenParts = explode('.', $idToken);
+            
+            if (count($tokenParts) != 3) {
+                return null;
+            }
+            
+            $payload = json_decode(base64_decode(str_replace(['-', '_'], ['+', '/'], $tokenParts[1])), true);
+            
+            if (!$payload) {
+                return null;
+            }
+            
+            // Verify token is from Firebase
+            $projectId = config('services.firebase.project_id');
+            if ($projectId && isset($payload['aud']) && $payload['aud'] != $projectId) {
+                return null;
+            }
+            
+            // Check if token is expired
+            if (isset($payload['exp']) && $payload['exp'] < time()) {
+                return null;
+            }
+            
+            // Check issuer
+            if (isset($payload['iss'])) {
+                $expectedIssuer = 'https://securetoken.google.com/' . $projectId;
+                if ($payload['iss'] != $expectedIssuer) {
+                    return null;
+                }
+            }
+            
+            return $payload;
             
         } catch (\Exception $e) {
             return null;

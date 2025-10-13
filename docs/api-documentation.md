@@ -246,18 +246,33 @@ Reset user password using token from email.
 ```
 
 ### Social Authentication (Google)
-**POST** `/auth/social/google`
+**POST** `/auth/google`
 
-Authenticate user using Google OAuth.
+Authenticate user using Google OAuth. This endpoint accepts a Google ID token (obtained from Google Sign-In on mobile apps or web) and creates a new user account or logs in an existing user.
+
+**How it works:**
+1. Mobile app/web uses Google Sign-In SDK to authenticate user
+2. Google returns an `id_token` (JWT)
+3. Send this token to this endpoint
+4. Backend verifies token with Google's servers
+5. Creates user account (first time) or logs in existing user
+6. Returns API access token for subsequent requests
 
 **Request Body:**
 ```json
 {
-  "access_token": "google_access_token"
+  "id_token": "eyJhbGciOiJSUzI1NiIsImtpZCI6IjdlM...",
+  "name": "John Doe",
+  "email": "john@example.com"
 }
 ```
 
-**Response:**
+**Request Parameters:**
+- `id_token` (required, string): The Google ID token from Google Sign-In
+- `name` (optional, string): User's name (fallback if not in token)
+- `email` (optional, string): User's email (fallback if not in token)
+
+**Success Response (200 OK):**
 ```json
 {
   "success": true,
@@ -267,12 +282,126 @@ Authenticate user using Google OAuth.
       "id": 1,
       "name": "John Doe",
       "email": "john@example.com",
+      "role": "user",
+      "status": "active",
       "email_verified_at": "2025-01-01T00:00:00.000000Z"
     },
-    "token": "1|abcdef123456789..."
+    "token": "1|abcdef123456789...",
+    "token_type": "Bearer"
   }
 }
 ```
+
+**Error Response - Invalid Token (401 Unauthorized):**
+```json
+{
+  "success": false,
+  "message": "Invalid Google token",
+  "errors": {
+    "id_token": "The provided Google token is invalid or expired"
+  }
+}
+```
+
+**Error Response - Missing User Info (400 Bad Request):**
+```json
+{
+  "success": false,
+  "message": "Unable to retrieve user information from Google",
+  "errors": {
+    "google": "Missing required user information"
+  }
+}
+```
+
+**First-time users:**
+- Automatically creates account with `role: user`
+- Sets `status: active`
+- Auto-verifies email (since Google verified it)
+- Generates random password (user can reset later if needed)
+- Auto-grants GDPR consent
+
+**Testing:**
+See `docs/Google_OAuth_Testing_Guide.md` for detailed testing instructions.
+
+### Firebase Google Authentication (Mobile)
+**POST** `/auth/firebase/google`
+
+Authenticate user using Firebase Google Sign-In (for mobile apps). This endpoint accepts a Firebase ID token and automatically links accounts with web Google OAuth logins using the same Google ID.
+
+**How it works:**
+1. Mobile app uses Firebase Authentication with Google provider
+2. Firebase returns a Firebase `id_token` (JWT)
+3. Send this token to this endpoint
+4. Backend verifies token with Firebase servers
+5. Extracts Google ID from Firebase token claims
+6. Links with existing user account (if same Google account used on web)
+7. Returns API access token for subsequent requests
+
+**Account Linking:**
+- If user previously logged in via web (Google OAuth), they get the **same account**
+- If user previously logged in via mobile (Firebase), they get the **same account**
+- Linking happens automatically via Google ID matching
+
+**Request Body:**
+```json
+{
+  "id_token": "eyJhbGciOiJSUzI1NiIsImtpZCI6IjdlM..."
+}
+```
+
+**Request Parameters:**
+- `id_token` (required, string): The Firebase ID token from Firebase Authentication
+
+**Success Response (200 OK):**
+```json
+{
+  "success": true,
+  "message": "Firebase authentication successful",
+  "data": {
+    "user": {
+      "id": 1,
+      "name": "John Doe",
+      "email": "john@example.com",
+      "role": "user",
+      "status": "active",
+      "email_verified_at": "2025-01-01T00:00:00.000000Z"
+    },
+    "token": "1|abcdef123456789...",
+    "token_type": "Bearer"
+  }
+}
+```
+
+**Error Response - Invalid Token (401 Unauthorized):**
+```json
+{
+  "success": false,
+  "message": "Invalid Firebase token",
+  "errors": {
+    "id_token": "The provided Firebase token is invalid or expired"
+  }
+}
+```
+
+**Error Response - Missing User Info (400 Bad Request):**
+```json
+{
+  "success": false,
+  "message": "Unable to retrieve user information from Firebase",
+  "errors": {
+    "firebase": "Missing required user information"
+  }
+}
+```
+
+**Database Fields:**
+- Stores `firebase_uid` (Firebase user ID)
+- Stores `google_id` (Google's unique ID for cross-platform linking)
+- Both web and mobile users share the same `google_id`
+
+**Testing:**
+See `docs/Firebase_Google_Testing_Guide.md` for detailed testing instructions.
 
 ### Social Authentication (Apple)
 **POST** `/auth/social/apple`

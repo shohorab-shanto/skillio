@@ -29,6 +29,7 @@ class User extends Authenticatable
         'status',
         'apple_id', // Added for Apple authentication
         'google_id', // Added for Google authentication
+        'firebase_uid', // Added for Firebase authentication
         'phone',
         'address'
     ];

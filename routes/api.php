@@ -26,6 +26,7 @@ use App\Http\Controllers\Api\MentorReviewsApiController;
 use App\Http\Controllers\Api\MentorStudentsApiController;
 use App\Http\Controllers\Api\CourseApiController;
 use App\Http\Controllers\Api\MentorApiController;
+use App\Http\Controllers\Api\SliderApiController;
 
 /*
 |--------------------------------------------------------------------------
@@ -60,6 +61,10 @@ Route::get('courses', [CourseApiController::class, 'getAllCourses']);
 Route::get('courses/filter-options', [CourseApiController::class, 'getFilterOptions']);
 Route::get('mentors', [MentorApiController::class, 'getAllMentors']);
 Route::get('mentors/filter-options', [MentorApiController::class, 'getFilterOptions']);
+
+// Sliders endpoint
+Route::get('sliders', [SliderApiController::class, 'index']);
+Route::get('sliders/{slider}', [SliderApiController::class, 'show']);
 
 // Home page data endpoints
 Route::prefix('home')->group(function () {

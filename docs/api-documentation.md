@@ -56,21 +56,22 @@ When making payments, you need to provide a `payment_method_id` obtained from St
 ## Table of Contents
 1. [Authentication Endpoints](#authentication-endpoints)
 2. [Onboarding Endpoints](#onboarding-endpoints)
-3. [Home Page Data Endpoints](#home-page-data-endpoints)
-4. [Course Details Endpoints](#course-details-endpoints)
-5. [Mentor Details Endpoints](#mentor-details-endpoints)
-6. [Review Endpoints](#review-endpoints)
-7. [Course Enrollment Endpoints](#course-enrollment-endpoints)
-8. [Session Booking Endpoints](#session-booking-endpoints)
-9. [User Dashboard Endpoints](#user-dashboard-endpoints)
-10. [User Courses Management](#user-courses-management)
-11. [User Sessions Management](#user-sessions-management)
-12. [User Payment History](#user-payment-history)
-13. [User Profile Management](#user-profile-management)
-14. [User Conversations/Chat](#user-conversationschat)
-15. [User Notifications](#user-notifications)
-16. [Error Responses](#error-responses)
-17. [Personalization Logic](#personalization-logic)
+3. [Sliders Endpoints](#sliders-endpoints)
+4. [Home Page Data Endpoints](#home-page-data-endpoints)
+5. [Course Details Endpoints](#course-details-endpoints)
+6. [Mentor Details Endpoints](#mentor-details-endpoints)
+7. [Review Endpoints](#review-endpoints)
+8. [Course Enrollment Endpoints](#course-enrollment-endpoints)
+9. [Session Booking Endpoints](#session-booking-endpoints)
+10. [User Dashboard Endpoints](#user-dashboard-endpoints)
+11. [User Courses Management](#user-courses-management)
+12. [User Sessions Management](#user-sessions-management)
+13. [User Payment History](#user-payment-history)
+14. [User Profile Management](#user-profile-management)
+15. [User Conversations/Chat](#user-conversationschat)
+16. [User Notifications](#user-notifications)
+17. [Error Responses](#error-responses)
+18. [Personalization Logic](#personalization-logic)
 
 ---
 
@@ -655,6 +656,102 @@ Retrieve user's custom sub-categories.
       "category_id": 1
     }
   ]
+}
+```
+
+---
+
+## Sliders Endpoints
+
+### Get All Sliders
+**GET** `/sliders`
+
+Retrieve all active sliders ordered by position for display in the mobile app carousel/banner.
+
+**Headers:**
+- `Accept: application/json`
+- `Content-Type: application/json`
+
+**Query Parameters:**
+None required. Returns only active sliders in the correct order.
+
+**Success Response (200 OK):**
+```json
+{
+  "success": true,
+  "message": "Sliders retrieved successfully",
+  "data": {
+    "sliders": [
+      {
+        "image_url": "http://localhost/storage/sliders/slider1.jpg",
+        "order": 0
+      },
+      {
+        "image_url": "http://localhost/storage/sliders/slider2.jpg",
+        "order": 1
+      }
+    ]
+  }
+}
+```
+
+**Error Response (500 Internal Server Error):**
+```json
+{
+  "success": false,
+  "message": "Failed to retrieve sliders",
+  "error": "Error details"
+}
+```
+
+**Response Fields:**
+- `image_url` (string): Full URL to the slider image
+- `order` (integer): Display position (0, 1, 2...)
+
+**Usage Notes:**
+- Sliders are returned in ascending order (order: 0, 1, 2, etc.)
+- Only active sliders are included
+- Image URLs are fully qualified (can be used directly in mobile app)
+- Recommended to cache this data for 5-10 minutes to reduce API calls
+
+---
+
+### Get Single Slider
+**GET** `/sliders/{slider}`
+
+Retrieve details of a specific slider by ID.
+
+**Headers:**
+- `Accept: application/json`
+- `Content-Type: application/json`
+
+**URL Parameters:**
+- `slider` (required): The slider ID
+
+**Success Response (200 OK):**
+```json
+{
+  "success": true,
+  "message": "Slider retrieved successfully",
+  "data": {
+    "slider": {
+      "id": 1,
+      "title": "Welcome to Skillo",
+      "image_url": "http://localhost/storage/sliders/slider1.jpg",
+      "link": "https://example.com/promo",
+      "description": "Get 20% off on all courses",
+      "order": 0,
+      "status": "active"
+    }
+  }
+}
+```
+
+**Error Response (404 Not Found):**
+```json
+{
+  "success": false,
+  "message": "Slider not found"
 }
 ```
 

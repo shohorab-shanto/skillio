@@ -30,6 +30,11 @@
             <span class="sidebar-label">{{ __('trans.sub_categories') }}</span>
         </a>
         
+        <a href="{{ route('admin.sliders.index') }}" class="sidebar-item {{ request()->routeIs('admin.sliders*') ? 'active' : '' }}">
+            <i class="fa-solid fa-images"></i>
+            <span class="sidebar-label">{{ __('trans.sliders') }}</span>
+        </a>
+        
         <a href="{{ route('admin.transactions.index') }}" class="sidebar-item {{ request()->routeIs('admin.transactions*') ? 'active' : '' }}">
             <i class="fa-solid fa-credit-card"></i>
             <span class="sidebar-label">{{ __('trans.transactions') }}</span>

@@ -578,6 +578,215 @@
 			"description": "Authentication endpoints for user registration, login, logout, password management, and social authentication. Supports Google OAuth (web), Firebase Google Authentication (mobile with automatic account linking), and Apple Sign-In."
 		},
 		{
+			"name": "Sliders",
+			"item": [
+				{
+					"name": "Get All Sliders",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"url": {
+							"raw": "{{base_url}}/api/v1/sliders",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"sliders"
+							]
+						},
+						"description": "Retrieve all active sliders ordered by position for display in the mobile app carousel/banner. No authentication required. Returns only active sliders with full image URLs ready to use."
+					},
+					"response": [
+						{
+							"name": "Success Response",
+							"originalRequest": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Accept",
+										"value": "application/json"
+									},
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									}
+								],
+								"url": {
+									"raw": "{{base_url}}/api/v1/sliders",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"api",
+										"v1",
+										"sliders"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								}
+							],
+							"cookie": [],
+							"body": "{\n  \"success\": true,\n  \"message\": \"Sliders retrieved successfully\",\n  \"data\": {\n    \"sliders\": [\n      {\n        \"image_url\": \"http://localhost:8000/storage/sliders/banner1.jpg\",\n        \"order\": 0\n      },\n      {\n        \"image_url\": \"http://localhost:8000/storage/sliders/banner2.jpg\",\n        \"order\": 1\n      }\n    ]\n  }\n}"
+						},
+						{
+							"name": "Empty Response",
+							"originalRequest": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Accept",
+										"value": "application/json"
+									}
+								],
+								"url": {
+									"raw": "{{base_url}}/api/v1/sliders",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"api",
+										"v1",
+										"sliders"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								}
+							],
+							"cookie": [],
+							"body": "{\n  \"success\": true,\n  \"message\": \"Sliders retrieved successfully\",\n  \"data\": {\n    \"sliders\": []\n  }\n}"
+						}
+					]
+				},
+				{
+					"name": "Get Single Slider",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"url": {
+							"raw": "{{base_url}}/api/v1/sliders/1",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"sliders",
+								"1"
+							]
+						},
+						"description": "Get details of a specific slider by ID. Returns full slider information including status."
+					},
+					"response": [
+						{
+							"name": "Success Response",
+							"originalRequest": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Accept",
+										"value": "application/json"
+									}
+								],
+								"url": {
+									"raw": "{{base_url}}/api/v1/sliders/1",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"api",
+										"v1",
+										"sliders",
+										"1"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								}
+							],
+							"cookie": [],
+							"body": "{\n  \"success\": true,\n  \"message\": \"Slider retrieved successfully\",\n  \"data\": {\n    \"slider\": {\n      \"id\": 1,\n      \"title\": null,\n      \"image_url\": \"http://localhost:8000/storage/sliders/banner1.jpg\",\n      \"link\": null,\n      \"description\": null,\n      \"order\": 0,\n      \"status\": \"active\"\n    }\n  }\n}"
+						},
+						{
+							"name": "Not Found",
+							"originalRequest": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Accept",
+										"value": "application/json"
+									}
+								],
+								"url": {
+									"raw": "{{base_url}}/api/v1/sliders/999",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"api",
+										"v1",
+										"sliders",
+										"999"
+									]
+								}
+							},
+							"status": "Not Found",
+							"code": 404,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								}
+							],
+							"cookie": [],
+							"body": "{\n  \"success\": false,\n  \"message\": \"Slider not found\"\n}"
+						}
+					]
+				}
+			],
+			"description": "Slider endpoints for mobile app carousel/banner images. Public endpoints that return active sliders ordered by position with full image URLs."
+		},
+		{
 			"name": "Onboarding - Public",
 			"item": [
 				{

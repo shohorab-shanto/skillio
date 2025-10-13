@@ -1732,6 +1732,7 @@ return [
     'mentors' => 'Mentors',
     'categories' => 'Categories',
     'sub_categories' => 'Sub-Categories',
+    'sliders' => 'Sliders',
     'transactions' => 'Transactions',
     'logout' => 'Logout',
     

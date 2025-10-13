@@ -9,6 +9,7 @@ use App\Http\Controllers\Admin\AdminCourseController;
 use App\Http\Controllers\Admin\AdminCategoryController;
 use App\Http\Controllers\Admin\AdminSubCategoryController;
 use App\Http\Controllers\Admin\AdminTransactionController;
+use App\Http\Controllers\Admin\SliderController;
 
 /*
 |--------------------------------------------------------------------------
@@ -85,4 +86,14 @@ Route::middleware(['admin_auth', 'set_locale'])->group(function () {
     Route::get('/transactions', [AdminTransactionController::class, 'index'])->name('admin.transactions.index');
     Route::get('/transactions/{transaction}', [AdminTransactionController::class, 'show'])->name('admin.transactions.show');
     Route::get('/transactions/stats/summary', [AdminTransactionController::class, 'getTransactionStats'])->name('admin.transactions.stats');
+    
+    // Sliders Management
+    Route::get('/sliders', [SliderController::class, 'index'])->name('admin.sliders.index');
+    Route::get('/sliders/create', [SliderController::class, 'create'])->name('admin.sliders.create');
+    Route::post('/sliders', [SliderController::class, 'store'])->name('admin.sliders.store');
+    Route::get('/sliders/{slider}/edit', [SliderController::class, 'edit'])->name('admin.sliders.edit');
+    Route::put('/sliders/{slider}', [SliderController::class, 'update'])->name('admin.sliders.update');
+    Route::delete('/sliders/{slider}', [SliderController::class, 'destroy'])->name('admin.sliders.destroy');
+    Route::post('/sliders/update-order', [SliderController::class, 'updateOrder'])->name('admin.sliders.update-order');
+    Route::patch('/sliders/{slider}/toggle-status', [SliderController::class, 'toggleStatus'])->name('admin.sliders.toggle-status');
 });

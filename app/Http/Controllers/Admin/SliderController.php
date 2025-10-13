@@ -59,10 +59,10 @@ class SliderController extends Controller
             ]);
 
             return redirect()->route('admin.sliders.index')
-                ->with('success', 'Slider created successfully.');
+                ->with('success', __('trans.slider_created_successfully'));
         } catch (\Exception $e) {
             return redirect()->back()
-                ->with('error', 'Failed to create slider: ' . $e->getMessage())
+                ->with('error', __('trans.failed_to_create_slider') . ': ' . $e->getMessage())
                 ->withInput();
         }
     }
@@ -111,10 +111,10 @@ class SliderController extends Controller
             $slider->update($data);
 
             return redirect()->route('admin.sliders.index')
-                ->with('success', 'Slider updated successfully.');
+                ->with('success', __('trans.slider_updated_successfully'));
         } catch (\Exception $e) {
             return redirect()->back()
-                ->with('error', 'Failed to update slider: ' . $e->getMessage())
+                ->with('error', __('trans.failed_to_update_slider') . ': ' . $e->getMessage())
                 ->withInput();
         }
     }
@@ -133,10 +133,10 @@ class SliderController extends Controller
             $slider->delete();
 
             return redirect()->route('admin.sliders.index')
-                ->with('success', 'Slider deleted successfully.');
+                ->with('success', __('trans.slider_deleted_successfully'));
         } catch (\Exception $e) {
             return redirect()->back()
-                ->with('error', 'Failed to delete slider: ' . $e->getMessage());
+                ->with('error', __('trans.failed_to_delete_slider') . ': ' . $e->getMessage());
         }
     }
 
@@ -167,7 +167,7 @@ class SliderController extends Controller
 
             return response()->json([
                 'success' => true,
-                'message' => 'Slider order updated successfully',
+                'message' => __('trans.slider_order_updated'),
             ]);
         } catch (\Exception $e) {
             return response()->json([
@@ -188,10 +188,10 @@ class SliderController extends Controller
             $slider->save();
 
             return redirect()->back()
-                ->with('success', 'Slider status updated successfully.');
+                ->with('success', __('trans.slider_status_updated'));
         } catch (\Exception $e) {
             return redirect()->back()
-                ->with('error', 'Failed to update status: ' . $e->getMessage());
+                ->with('error', __('trans.failed_to_update_slider') . ': ' . $e->getMessage());
         }
     }
 }

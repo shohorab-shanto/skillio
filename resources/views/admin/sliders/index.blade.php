@@ -1,9 +1,9 @@
 @extends('admin.layouts.backend')
 
-@section('title', 'Sliders Management')
+@section('title', __('trans.sliders_management'))
 
 @section('header')
-    Sliders Management
+    {{ __('trans.sliders_management') }}
 @endsection
 
 @section('content')
@@ -25,12 +25,12 @@
     <!-- Page Header with Actions -->
     <div class="flex justify-between items-center mb-6">
         <div>
-            <p class="text-gray-600">Manage slider images for the mobile app carousel</p>
+            <p class="text-gray-600">{{ __('trans.manage_slider_images') }}</p>
         </div>
         <a href="{{ route('admin.sliders.create') }}" 
            class="px-4 py-2 bg-purple-600 text-white rounded-lg hover:bg-purple-700 transition-colors duration-200">
             <i class="fas fa-plus mr-2"></i>
-            Add New Slider
+            {{ __('trans.add_new_slider') }}
         </a>
     </div>
 
@@ -44,7 +44,7 @@
                     </div>
                     <div class="ml-3">
                         <p class="text-sm text-blue-700">
-                            Drag and drop sliders to reorder them. Changes are saved automatically.
+                            {{ __('trans.drag_drop_reorder_sliders') }}
                         </p>
                     </div>
                 </div>
@@ -55,16 +55,16 @@
                         <thead class="bg-gray-50">
                             <tr>
                                 <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider" width="80">
-                                    Order
+                                    {{ __('trans.order') }}
                                 </th>
                                 <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                                    Slider Image
+                                    {{ __('trans.slider_image') }}
                                 </th>
                                 <th class="px-6 py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider" width="120">
-                                    Status
+                                    {{ __('trans.status') }}
                                 </th>
                                 <th class="px-6 py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider" width="150">
-                                    Actions
+                                    {{ __('trans.actions') }}
                                 </th>
                             </tr>
                         </thead>
@@ -127,12 +127,12 @@
                 <div class="inline-flex items-center justify-center w-16 h-16 bg-gray-100 rounded-full mb-4">
                     <i class="fas fa-images text-3xl text-gray-400"></i>
                 </div>
-                <h3 class="text-lg font-medium text-gray-900 mb-2">No sliders found</h3>
-                <p class="text-gray-500 mb-4">Get started by creating your first slider</p>
+                <h3 class="text-lg font-medium text-gray-900 mb-2">{{ __('trans.no_sliders_found') }}</h3>
+                <p class="text-gray-500 mb-4">{{ __('trans.get_started_first_slider') }}</p>
                 <a href="{{ route('admin.sliders.create') }}" 
                    class="inline-flex items-center px-4 py-2 bg-purple-600 text-white rounded-lg hover:bg-purple-700 transition-colors duration-200">
                     <i class="fas fa-plus mr-2"></i>
-                    Create First Slider
+                    {{ __('trans.create_first_slider') }}
                 </a>
             </div>
         @endif

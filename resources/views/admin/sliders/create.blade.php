@@ -1,9 +1,9 @@
 @extends('admin.layouts.backend')
 
-@section('title', 'Create Slider')
+@section('title', __('trans.create_slider'))
 
 @section('header')
-    Create New Slider
+    {{ __('trans.create_new_slider') }}
 @endsection
 
 @section('content')
@@ -13,7 +13,7 @@
         <a href="{{ route('admin.sliders.index') }}" 
            class="px-4 py-2 bg-gray-100 text-gray-700 rounded-lg hover:bg-gray-200 transition-colors duration-200">
             <i class="fa-solid fa-arrow-left mr-2"></i>
-            Back to Sliders
+            {{ __('trans.back_to_sliders') }}
         </a>
     </div>
 
@@ -25,7 +25,7 @@
             <!-- Slider Image -->
             <div>
                 <label for="image" class="block text-sm font-medium text-gray-700 mb-2">
-                    Slider Image <span class="text-red-500">*</span>
+                    {{ __('trans.slider_image_required') }} <span class="text-red-500">*</span>
                 </label>
                 <div class="mt-1 flex justify-center px-6 pt-5 pb-6 border-2 border-gray-300 border-dashed rounded-lg hover:border-gray-400 transition-colors duration-200">
                     <div class="space-y-1 text-center">
@@ -34,12 +34,12 @@
                         </svg>
                         <div class="flex text-sm text-gray-600">
                             <label for="image" class="relative cursor-pointer bg-white rounded-md font-medium text-purple-600 hover:text-purple-500 focus-within:outline-none focus-within:ring-2 focus-within:ring-offset-2 focus-within:ring-purple-500">
-                                <span>Upload Image</span>
+                                <span>{{ __('trans.upload_image') }}</span>
                                 <input id="image" name="image" type="file" accept="image/*" class="sr-only" onchange="previewImage(this)" required>
                             </label>
-                            <p class="pl-1">or drag and drop</p>
+                            <p class="pl-1">{{ __('trans.or_drag_drop') }}</p>
                         </div>
-                        <p class="text-xs text-gray-500">PNG, JPG, GIF up to 2MB (Recommended: 1200x400px)</p>
+                        <p class="text-xs text-gray-500">{{ __('trans.recommended_size_slider') }}</p>
                     </div>
                 </div>
                 @error('image')
@@ -53,7 +53,7 @@
             <!-- Order -->
             <div>
                 <label for="order" class="block text-sm font-medium text-gray-700 mb-2">
-                    Display Order <span class="text-red-500">*</span>
+                    {{ __('trans.display_order_required') }} <span class="text-red-500">*</span>
                 </label>
                 <input type="number" id="order" name="order" value="{{ old('order', $maxOrder + 1) }}" required min="0"
                        placeholder="0"
@@ -61,7 +61,7 @@
                 @error('order')
                     <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
                 @enderror
-                <p class="mt-1 text-sm text-gray-500">Lower numbers appear first (0, 1, 2...). Current max: {{ $maxOrder }}</p>
+                <p class="mt-1 text-sm text-gray-500">{{ __('trans.lower_numbers_first') }}. {{ __('trans.current_max') }} {{ $maxOrder }}</p>
             </div>
 
             <!-- Hidden Status Field (default to active) -->
@@ -71,12 +71,12 @@
             <div class="flex justify-end gap-3 pt-4">
                 <a href="{{ route('admin.sliders.index') }}" 
                    class="px-6 py-3 bg-gray-100 text-gray-700 rounded-lg hover:bg-gray-200 transition-colors duration-200">
-                    Cancel
+                    {{ __('trans.cancel') }}
                 </a>
                 <button type="submit" 
                         class="px-6 py-3 bg-purple-600 text-white rounded-lg hover:bg-purple-700 transition-colors duration-200">
                     <i class="fa-solid fa-save mr-2"></i>
-                    Create Slider
+                    {{ __('trans.create_slider') }}
                 </button>
             </div>
         </form>

@@ -1,9 +1,9 @@
 @extends('admin.layouts.backend')
 
-@section('title', 'Edit Slider')
+@section('title', __('trans.edit_slider'))
 
 @section('header')
-    Edit Slider
+    {{ __('trans.edit_slider') }}
 @endsection
 
 @section('content')
@@ -13,7 +13,7 @@
         <a href="{{ route('admin.sliders.index') }}" 
            class="px-4 py-2 bg-gray-100 text-gray-700 rounded-lg hover:bg-gray-200 transition-colors duration-200">
             <i class="fa-solid fa-arrow-left mr-2"></i>
-            Back to Sliders
+            {{ __('trans.back_to_sliders') }}
         </a>
     </div>
 
@@ -27,7 +27,7 @@
             @if($slider->image)
             <div>
                 <label class="block text-sm font-medium text-gray-700 mb-2">
-                    Current Image
+                    {{ __('trans.current_image') }}
                 </label>
                 <div class="flex justify-center">
                     <img src="{{ asset('storage/' . $slider->image) }}" 
@@ -40,7 +40,7 @@
             <!-- Upload New Image -->
             <div>
                 <label for="image" class="block text-sm font-medium text-gray-700 mb-2">
-                    Upload New Image (Optional)
+                    {{ __('trans.upload_new_image_optional') }}
                 </label>
                 <div class="mt-1 flex justify-center px-6 pt-5 pb-6 border-2 border-gray-300 border-dashed rounded-lg hover:border-gray-400 transition-colors duration-200">
                     <div class="space-y-1 text-center">
@@ -49,20 +49,20 @@
                         </svg>
                         <div class="flex text-sm text-gray-600">
                             <label for="image" class="relative cursor-pointer bg-white rounded-md font-medium text-purple-600 hover:text-purple-500 focus-within:outline-none focus-within:ring-2 focus-within:ring-offset-2 focus-within:ring-purple-500">
-                                <span>Upload Image</span>
+                                <span>{{ __('trans.upload_image') }}</span>
                                 <input id="image" name="image" type="file" accept="image/*" class="sr-only" onchange="previewImage(this)">
                             </label>
-                            <p class="pl-1">or drag and drop</p>
+                            <p class="pl-1">{{ __('trans.or_drag_drop') }}</p>
                         </div>
-                        <p class="text-xs text-gray-500">PNG, JPG, GIF up to 2MB (Recommended: 1200x400px)</p>
-                        <p class="text-xs text-gray-500">Leave empty to keep current image</p>
+                        <p class="text-xs text-gray-500">{{ __('trans.recommended_size_slider') }}</p>
+                        <p class="text-xs text-gray-500">{{ __('trans.leave_empty_keep_current') }}</p>
                     </div>
                 </div>
                 @error('image')
                     <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
                 @enderror
                 <div id="image-preview" class="mt-4 hidden">
-                    <p class="text-sm text-gray-600 mb-2 text-center">New Image Preview:</p>
+                    <p class="text-sm text-gray-600 mb-2 text-center">{{ __('trans.new_image_preview') }}</p>
                     <img id="preview-img" src="" alt="Preview" class="max-h-64 w-auto object-cover rounded-lg mx-auto border-2 border-purple-200">
                 </div>
             </div>
@@ -70,7 +70,7 @@
             <!-- Order -->
             <div>
                 <label for="order" class="block text-sm font-medium text-gray-700 mb-2">
-                    Display Order <span class="text-red-500">*</span>
+                    {{ __('trans.display_order_required') }} <span class="text-red-500">*</span>
                 </label>
                 <input type="number" id="order" name="order" value="{{ old('order', $slider->order) }}" required min="0"
                        placeholder="0"
@@ -78,7 +78,7 @@
                 @error('order')
                     <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
                 @enderror
-                <p class="mt-1 text-sm text-gray-500">Lower numbers appear first (0, 1, 2...)</p>
+                <p class="mt-1 text-sm text-gray-500">{{ __('trans.lower_numbers_first') }}</p>
             </div>
 
             <!-- Hidden Status Field (keep current status) -->
@@ -87,25 +87,25 @@
             <!-- Action Buttons -->
             <div class="flex justify-between items-center pt-4">
                 <form action="{{ route('admin.sliders.destroy', $slider) }}" method="POST" class="inline"
-                      onsubmit="return confirm('Are you sure you want to delete this slider? This action cannot be undone.');">
+                      onsubmit="return confirm('{{ __('trans.confirm_delete_slider') }}');">
                     @csrf
                     @method('DELETE')
                     <button type="submit" 
                             class="px-6 py-3 bg-red-600 text-white rounded-lg hover:bg-red-700 transition-colors duration-200">
                         <i class="fa-solid fa-trash mr-2"></i>
-                        Delete Slider
+                        {{ __('trans.delete_slider') }}
                     </button>
                 </form>
 
                 <div class="flex gap-3">
                     <a href="{{ route('admin.sliders.index') }}" 
                        class="px-6 py-3 bg-gray-100 text-gray-700 rounded-lg hover:bg-gray-200 transition-colors duration-200">
-                        Cancel
+                        {{ __('trans.cancel') }}
                     </a>
                     <button type="submit" 
                             class="px-6 py-3 bg-purple-600 text-white rounded-lg hover:bg-purple-700 transition-colors duration-200">
                         <i class="fa-solid fa-save mr-2"></i>
-                        Update Slider
+                        {{ __('trans.update_slider') }}
                     </button>
                 </div>
             </div>

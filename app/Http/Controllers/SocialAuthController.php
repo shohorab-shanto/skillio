@@ -44,23 +44,29 @@ class SocialAuthController extends Controller
 
     public function handleAppleCallback()
     {
-        $appleUser = Socialite::driver('apple')->stateless()->user();
+        try {
+            $appleUser = Socialite::driver('apple')->stateless()->user();
 
-        $user = User::updateOrCreate(
-            ['email' => $appleUser->getEmail()],
-            [
-                'name' => $appleUser->getName() ?? 'Apple User',
-                'apple_id' => $appleUser->getId(),
-                'password' => bcrypt(Str::random(16)),
-                'status' => 'active',
-                'role' => 'user', // Default role, can be adjusted based on your logic
-                'email_verified_at' => now(),
-                'gdpr_consent' => true, // or handle this via a consent screen
-            ]
-        );
+            $user = User::updateOrCreate(
+                ['email' => $appleUser->getEmail()],
+                [
+                    'name' => $appleUser->getName() ?? 'Apple User',
+                    'apple_id' => $appleUser->getId(),
+                    'password' => bcrypt(Str::random(16)),
+                    'status' => 'active',
+                    'role' => 'user',
+                    'email_verified_at' => now(),
+                    'gdpr_consent' => true,
+                ]
+            );
 
-        Auth::login($user);
+            Auth::login($user);
 
-        return redirect('/user/dashboard');
+            return redirect('/user/dashboard');
+        } catch (\Exception $e) {
+            \Log::error('Apple OAuth Error: ' . $e->getMessage());
+            \Log::error('Apple OAuth Trace: ' . $e->getTraceAsString());
+            return redirect('/login')->with('error', 'Apple sign in failed. Please try again.');
+        }
     }
 }

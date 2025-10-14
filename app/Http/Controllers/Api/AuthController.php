@@ -299,6 +299,134 @@ class AuthController extends Controller
     }
 
     /**
+     * Firebase Apple OAuth - Authenticate user with Firebase ID token from mobile app
+     * This endpoint handles Apple authentication via Firebase for mobile apps
+     */
+    public function firebaseAppleAuth(Request $request): JsonResponse
+    {
+        $validator = Validator::make($request->all(), [
+            'id_token' => ['required', 'string'],
+        ]);
+
+        if ($validator->fails()) {
+            return response()->json([
+                'success' => false,
+                'message' => 'Validation failed',
+                'errors' => $validator->errors(),
+            ], 422);
+        }
+
+        try {
+            // Verify the Firebase ID token
+            $firebaseUser = $this->verifyFirebaseToken($request->id_token);
+            
+            if (!$firebaseUser) {
+                return response()->json([
+                    'success' => false,
+                    'message' => 'Invalid Firebase token',
+                    'errors' => ['id_token' => 'The provided Firebase token is invalid or expired'],
+                ], 401);
+            }
+
+            // Extract user information from Firebase response
+            $firebaseUid = $firebaseUser['user_id'] ?? $firebaseUser['sub'] ?? null;
+            $email = $firebaseUser['email'] ?? null;
+            $name = $firebaseUser['name'] ?? null;
+            $emailVerified = $firebaseUser['email_verified'] ?? false;
+            
+            // Extract Apple ID from Firebase identities
+            $appleId = null;
+            if (isset($firebaseUser['firebase']['identities']['apple.com'][0])) {
+                $appleId = $firebaseUser['firebase']['identities']['apple.com'][0];
+            }
+
+            if (!$firebaseUid || !$email) {
+                return response()->json([
+                    'success' => false,
+                    'message' => 'Unable to retrieve user information from Firebase',
+                    'errors' => ['firebase' => 'Missing required user information'],
+                ], 400);
+            }
+
+            // Find existing user by email OR apple_id OR firebase_uid
+            // This ensures same Apple user from web and mobile gets same account
+            $existingUser = User::where('email', $email)
+                ->orWhere(function($query) use ($appleId) {
+                    if ($appleId) {
+                        $query->where('apple_id', $appleId);
+                    }
+                })
+                ->orWhere(function($query) use ($firebaseUid) {
+                    if ($firebaseUid) {
+                        $query->where('firebase_uid', $firebaseUid);
+                    }
+                })
+                ->first();
+
+            // Prepare user data
+            $userData = [
+                'name' => $name ?? $existingUser->name ?? 'Apple User',
+                'firebase_uid' => $firebaseUid,
+                'status' => 'active',
+                'gdpr_consent' => true,
+                'email_verified_at' => $emailVerified ? now() : ($existingUser->email_verified_at ?? null),
+            ];
+
+            // Add Apple ID if available (this links web and mobile logins)
+            if ($appleId) {
+                $userData['apple_id'] = $appleId;
+            }
+
+            // If user doesn't exist, set default values
+            if (!$existingUser) {
+                $userData['password'] = Hash::make(Str::random(32));
+                $userData['role'] = 'user';
+            } else {
+                // Preserve existing password and role
+                if ($existingUser->password) {
+                    $userData['password'] = $existingUser->password;
+                }
+                if ($existingUser->role) {
+                    $userData['role'] = $existingUser->role;
+                }
+            }
+
+            // Create or update user
+            $user = User::updateOrCreate(
+                ['email' => $email],
+                $userData
+            );
+
+            // Generate Sanctum token
+            $token = $user->createToken('firebase_auth_token')->plainTextToken;
+
+            return response()->json([
+                'success' => true,
+                'message' => 'Firebase Apple authentication successful',
+                'data' => [
+                    'user' => [
+                        'id' => $user->id,
+                        'name' => $user->name,
+                        'email' => $user->email,
+                        'role' => $user->role,
+                        'status' => $user->status,
+                        'email_verified_at' => $user->email_verified_at,
+                    ],
+                    'token' => $token,
+                    'token_type' => 'Bearer',
+                ],
+            ], 200);
+
+        } catch (\Exception $e) {
+            return response()->json([
+                'success' => false,
+                'message' => 'Firebase Apple authentication failed',
+                'errors' => ['server' => 'An error occurred during Firebase authentication: ' . $e->getMessage()],
+            ], 500);
+        }
+    }
+
+    /**
      * Firebase Google OAuth - Authenticate user with Firebase ID token from mobile app
      * This endpoint handles Google authentication via Firebase for mobile apps
      */

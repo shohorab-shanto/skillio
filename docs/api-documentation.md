@@ -433,6 +433,90 @@ Authenticate user using Apple Sign-In.
 }
 ```
 
+### Firebase Apple Authentication (Mobile)
+**POST** `/auth/firebase/apple`
+
+Authenticate user using Firebase Apple Sign-In (for mobile apps). This endpoint accepts a Firebase ID token and automatically links accounts with web Apple OAuth logins using the same Apple ID.
+
+**How it works:**
+1. Mobile app uses Firebase Authentication with Apple provider
+2. Firebase returns a Firebase `id_token` (JWT)
+3. Send this token to this endpoint
+4. Backend verifies token with Firebase servers
+5. Extracts Apple ID from Firebase token claims
+6. Links with existing user account (if same Apple account used on web)
+7. Returns API access token for subsequent requests
+
+**Account Linking:**
+- If user previously logged in via web (Apple OAuth), they get the **same account**
+- If user previously logged in via mobile (Firebase), they get the **same account**
+- Linking happens automatically via Apple ID matching
+
+**Request Body:**
+```json
+{
+  "id_token": "eyJhbGciOiJSUzI1NiIsImtpZCI6IjE2..."
+}
+```
+
+**Request Parameters:**
+- `id_token` (required, string): The Firebase ID token from Firebase Authentication
+
+**Success Response (200 OK):**
+```json
+{
+  "success": true,
+  "message": "Firebase Apple authentication successful",
+  "data": {
+    "user": {
+      "id": 1,
+      "name": "John Doe",
+      "email": "john@example.com",
+      "role": "user",
+      "status": "active",
+      "email_verified_at": "2025-10-13T10:30:00.000000Z"
+    },
+    "token": "1|abcdef123456789...",
+    "token_type": "Bearer"
+  }
+}
+```
+
+**Error Response - Invalid Token (401 Unauthorized):**
+```json
+{
+  "success": false,
+  "message": "Invalid Firebase token",
+  "errors": {
+    "id_token": "The provided Firebase token is invalid or expired"
+  }
+}
+```
+
+**Error Response - Missing User Info (400 Bad Request):**
+```json
+{
+  "success": false,
+  "message": "Unable to retrieve user information from Firebase",
+  "errors": {
+    "firebase": "Missing required user information"
+  }
+}
+```
+
+**Database Fields:**
+- Stores `firebase_uid` (Firebase user ID)
+- Stores `apple_id` (Apple's unique ID for cross-platform linking)
+- Both web and mobile users share the same `apple_id`
+
+**Important Notes:**
+- Apple may provide private relay emails (`@privaterelay.appleid.com`)
+- Handle these emails normally - they work like regular emails
+- User's real email remains private
+
+**Testing:**
+See `docs/Firebase_Apple_Implementation.md` for detailed implementation and testing instructions.
+
 ---
 
 ## Onboarding Endpoints

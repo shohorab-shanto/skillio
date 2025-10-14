@@ -48,6 +48,7 @@ Route::prefix('v1')->group(function () {
         Route::post('social/google', [AuthController::class, 'googleAuth']); // For web (direct Google OAuth)
         Route::post('firebase/google', [AuthController::class, 'firebaseGoogleAuth']); // For mobile (Firebase)
         Route::post('social/apple', [AuthController::class, 'appleAuth']);
+        Route::post('firebase/apple', [AuthController::class, 'firebaseAppleAuth']); // For mobile (Firebase)
         Route::post('forgot-password', [AuthController::class, 'forgotPassword']);
         Route::post('reset-password', [AuthController::class, 'resetPassword']);
     });

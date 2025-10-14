@@ -15,6 +15,11 @@ return Application::configure(basePath: dirname(__DIR__))
         $middleware->alias([
             'api.auth' => \App\Http\Middleware\ApiAuth::class,
         ]);
+        
+        // Exclude Apple callback from CSRF verification (Apple sends POST from their servers)
+        $middleware->validateCsrfTokens(except: [
+            'login/apple/callback',
+        ]);
     })
     ->withExceptions(function (Exceptions $exceptions): void {
         $exceptions->render(function (Illuminate\Auth\AuthenticationException $e, $request) {

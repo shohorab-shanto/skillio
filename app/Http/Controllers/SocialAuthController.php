@@ -55,7 +55,6 @@ class SocialAuthController extends Controller
                 'status' => 'active',
                 'role' => 'user', // Default role, can be adjusted based on your logic
                 'email_verified_at' => now(),
-                'apple_user_id' => $appleUser->getId(),
                 'gdpr_consent' => true, // or handle this via a consent screen
             ]
         );

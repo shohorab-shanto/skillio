@@ -140,7 +140,7 @@ Route::middleware(['set_locale'])->group(function () {
 // Apple
 Route::middleware(['set_locale'])->group(function () {
     Route::get('/login/apple', [SocialAuthController::class, 'redirectToApple'])->name('login.apple');
-    Route::post('/login/apple/callback', [SocialAuthController::class, 'handleAppleCallback'])->name('login.apple.callback'); // Apple often uses POST
+    Route::get('/login/apple/callback', [SocialAuthController::class, 'handleAppleCallback'])->name('login.apple.callback'); // Apple often uses POST
 });
 
 

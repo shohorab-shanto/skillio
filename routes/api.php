@@ -133,6 +133,9 @@ Route::middleware('auth:sanctum')->prefix('v1')->group(function () {
     Route::prefix('enrollments')->group(function () {
         Route::get('courses/{course}/info', [CourseEnrollmentApiController::class, 'getEnrollmentInfo']);
         Route::post('courses/{course}/enroll', [CourseEnrollmentApiController::class, 'enroll']);
+        // New Two-Step Payment Flow
+        Route::post('courses/{course}/create-payment-intent', [CourseEnrollmentApiController::class, 'createPaymentIntent']);
+        Route::post('courses/{course}/confirm-enrollment', [CourseEnrollmentApiController::class, 'confirmEnrollment']);
         Route::get('my-enrollments', [CourseEnrollmentApiController::class, 'getUserEnrollments']);
         Route::get('{enrollment}', [CourseEnrollmentApiController::class, 'getEnrollmentDetails']);
         Route::post('{enrollment}/cancel', [CourseEnrollmentApiController::class, 'cancelEnrollment']);
@@ -143,6 +146,9 @@ Route::middleware('auth:sanctum')->prefix('v1')->group(function () {
         Route::get('available', [SessionBookingApiController::class, 'getAvailableSessions']);
         Route::get('{session}/info', [SessionBookingApiController::class, 'getBookingInfo']);
         Route::post('{session}/book', [SessionBookingApiController::class, 'bookSession']);
+        // New Two-Step Payment Flow
+        Route::post('{session}/create-payment-intent', [SessionBookingApiController::class, 'createPaymentIntent']);
+        Route::post('{session}/confirm-booking', [SessionBookingApiController::class, 'confirmBooking']);
         Route::get('my-bookings', [SessionBookingApiController::class, 'getUserBookings']);
         Route::get('bookings/{enrollment}', [SessionBookingApiController::class, 'getBookingDetails']);
         Route::post('bookings/{enrollment}/cancel', [SessionBookingApiController::class, 'cancelBooking']);

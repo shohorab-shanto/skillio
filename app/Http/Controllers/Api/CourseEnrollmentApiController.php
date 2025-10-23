@@ -331,6 +331,299 @@ class CourseEnrollmentApiController extends Controller
     }
 
     /**
+     * Create Payment Intent for course enrollment (Step 1 - New Flow)
+     */
+    public function createPaymentIntent(Request $request, Course $course)
+    {
+        try {
+            $user = Auth::user();
+            
+            // Check if course is available
+            if ($course->status != 'approved') {
+                return response()->json([
+                    'success' => false,
+                    'message' => 'Course is not available for enrollment',
+                    'error' => 'Course status is not approved'
+                ], 400);
+            }
+
+            // Check if user is already enrolled
+            $existingEnrollment = UserEnrollment::where('user_id', $user->id)
+                ->where('enrollable_type', Course::class)
+                ->where('enrollable_id', $course->id)
+                ->first();
+
+            if ($existingEnrollment) {
+                return response()->json([
+                    'success' => false,
+                    'message' => 'You are already enrolled in this course',
+                    'error' => 'Duplicate enrollment attempt'
+                ], 400);
+            }
+
+            // Set Stripe API key
+            Stripe::setApiKey(config('services.stripe.secret_key'));
+            
+            // Calculate amounts
+            $grossAmount = $course->discounted_price;
+            $stripeFee = $this->calculateStripeFee($grossAmount);
+            $netAmount = $grossAmount - $stripeFee;
+            $mentorAmount = $netAmount * 0.80;
+            $adminAmount = $netAmount * 0.20;
+            
+            // Get or create Stripe customer
+            $stripeCustomerId = $this->getOrCreateStripeCustomer($user);
+            
+            // Create Payment Intent WITHOUT confirming
+            $paymentIntent = PaymentIntent::create([
+                'amount' => (int)($grossAmount * 100), // Convert to cents
+                'currency' => 'usd',
+                'customer' => $stripeCustomerId,
+                'automatic_payment_methods' => [
+                    'enabled' => true,
+                ],
+                'description' => "Course enrollment: {$course->title}",
+                'metadata' => [
+                    'type' => 'course',
+                    'course_id' => $course->id,
+                    'user_id' => $user->id,
+                    'mentor_id' => $course->mentor_id,
+                    'gross_amount' => $grossAmount,
+                    'stripe_fee' => $stripeFee,
+                    'net_amount' => $netAmount,
+                    'mentor_amount' => $mentorAmount,
+                    'admin_amount' => $adminAmount,
+                ],
+            ]);
+
+            return response()->json([
+                'success' => true,
+                'message' => 'Payment Intent created successfully',
+                'data' => [
+                    'client_secret' => $paymentIntent->client_secret,
+                    'payment_intent_id' => $paymentIntent->id,
+                    'amount' => $grossAmount,
+                    'currency' => 'USD',
+                    'course' => [
+                        'id' => $course->id,
+                        'title' => $course->title,
+                        'description' => $course->description,
+                        'thumbnail' => $course->thumbnail_url,
+                        'price' => $course->price,
+                        'discounted_price' => $course->discounted_price,
+                        'discount' => $course->discount,
+                        'mentor' => [
+                            'id' => $course->mentor->id,
+                            'name' => $course->mentor->user->name,
+                        ],
+                    ],
+                    'pricing_breakdown' => [
+                        'gross_amount' => round($grossAmount, 2),
+                        'stripe_fee' => round($stripeFee, 2),
+                        'net_amount' => round($netAmount, 2),
+                        'mentor_amount' => round($mentorAmount, 2),
+                        'admin_amount' => round($adminAmount, 2),
+                    ]
+                ]
+            ]);
+
+        } catch (\Exception $e) {
+            return response()->json([
+                'success' => false,
+                'message' => 'Failed to create payment intent',
+                'error' => $e->getMessage()
+            ], 500);
+        }
+    }
+
+    /**
+     * Confirm course enrollment after payment (Step 2 - New Flow)
+     */
+    public function confirmEnrollment(Request $request, Course $course)
+    {
+        try {
+            $user = Auth::user();
+            
+            // Validate request
+            $validator = Validator::make($request->all(), [
+                'payment_intent_id' => 'required|string',
+            ]);
+
+            if ($validator->fails()) {
+                return response()->json([
+                    'success' => false,
+                    'message' => 'Validation failed',
+                    'errors' => $validator->errors()
+                ], 422);
+            }
+
+            // Check if course is still available
+            if ($course->status != 'approved') {
+                return response()->json([
+                    'success' => false,
+                    'message' => 'Course is no longer available',
+                    'error' => 'Course status is not approved'
+                ], 400);
+            }
+
+            // Check if user is already enrolled
+            $existingEnrollment = UserEnrollment::where('user_id', $user->id)
+                ->where('enrollable_type', Course::class)
+                ->where('enrollable_id', $course->id)
+                ->first();
+
+            if ($existingEnrollment) {
+                return response()->json([
+                    'success' => false,
+                    'message' => 'You are already enrolled in this course',
+                    'error' => 'Duplicate enrollment attempt'
+                ], 400);
+            }
+
+            DB::beginTransaction();
+
+            try {
+                // Set Stripe API key
+                Stripe::setApiKey(config('services.stripe.secret_key'));
+                
+                // Retrieve and verify Payment Intent
+                $paymentIntent = PaymentIntent::retrieve($request->payment_intent_id);
+                
+                // Verify payment intent belongs to this user
+                if ($paymentIntent->customer != $this->getOrCreateStripeCustomer($user)) {
+                    DB::rollBack();
+                    return response()->json([
+                        'success' => false,
+                        'message' => 'Unauthorized',
+                        'error' => 'Payment Intent does not belong to this user'
+                    ], 403);
+                }
+
+                // Verify payment was successful
+                if ($paymentIntent->status !== 'succeeded') {
+                    DB::rollBack();
+                    return response()->json([
+                        'success' => false,
+                        'message' => 'Payment not completed',
+                        'error' => 'Payment status: ' . $paymentIntent->status,
+                        'payment_status' => $paymentIntent->status
+                    ], 400);
+                }
+
+                // Check if this payment intent was already processed
+                $existingTransaction = PaymentTransaction::where('stripe_payment_intent_id', $paymentIntent->id)->first();
+                if ($existingTransaction) {
+                    DB::rollBack();
+                    $enrollment = UserEnrollment::where('payment_transaction_id', $existingTransaction->id)->first();
+                    return response()->json([
+                        'success' => false,
+                        'message' => 'Payment already processed',
+                        'error' => 'This Payment Intent has already been used',
+                        'enrollment_id' => $enrollment ? $enrollment->id : null
+                    ], 400);
+                }
+
+                // Get amounts from metadata
+                $metadata = $paymentIntent->metadata;
+                $grossAmount = $metadata->gross_amount ?? $course->discounted_price;
+                $stripeFee = $metadata->stripe_fee ?? $this->calculateStripeFee($grossAmount);
+                $netAmount = $metadata->net_amount ?? ($grossAmount - $stripeFee);
+                $mentorAmount = $metadata->mentor_amount ?? ($netAmount * 0.80);
+                $adminAmount = $metadata->admin_amount ?? ($netAmount * 0.20);
+
+                // Create user enrollment
+                $enrollment = UserEnrollment::create([
+                    'user_id' => $user->id,
+                    'enrollment_status' => 'active',
+                    'enrollable_type' => Course::class,
+                    'enrollable_id' => $course->id,
+                    'amount' => $grossAmount,
+                    'currency' => 'USD',
+                    'payment_status' => 'paid',
+                    'payment_method' => 'stripe',
+                    'enrolled_at' => now(),
+                ]);
+
+                // Create payment transaction
+                $transaction = PaymentTransaction::create([
+                    'transaction_id' => 'TXN_' . uniqid(),
+                    'transaction_type' => 'payment',
+                    'transaction_status' => 'completed',
+                    'gross_amount' => $grossAmount,
+                    'stripe_fee' => $stripeFee,
+                    'net_amount' => $netAmount,
+                    'mentor_amount' => $mentorAmount,
+                    'admin_amount' => $adminAmount,
+                    'currency' => 'USD',
+                    'stripe_payment_intent_id' => $paymentIntent->id,
+                    'stripe_customer_id' => $paymentIntent->customer,
+                    'stripe_charge_id' => $paymentIntent->latest_charge,
+                    'payment_method_type' => $paymentIntent->payment_method_types[0] ?? 'card',
+                    'description' => "Course enrollment: {$course->title}",
+                ]);
+
+                // Update enrollment with transaction ID
+                $enrollment->update([
+                    'payment_transaction_id' => $transaction->id,
+                ]);
+
+                // Create conversation for this enrollment
+                $conversation = $enrollment->createConversation();
+
+                // Create notification for mentor
+                \App\Services\NotificationService::createCourseEnrollmentNotification($user, $course);
+
+                // Create transfer to mentor if they have Stripe Connect account
+                $this->createMentorTransfer($course, $transaction, $mentorAmount);
+
+                DB::commit();
+
+                // Load relationships for response
+                $enrollment->load(['enrollable.mentor.user', 'paymentTransaction']);
+
+                return response()->json([
+                    'success' => true,
+                    'message' => 'Successfully enrolled in course',
+                    'data' => [
+                        'enrollment' => [
+                            'id' => $enrollment->id,
+                            'enrollment_status' => $enrollment->enrollment_status,
+                            'payment_status' => $enrollment->payment_status,
+                            'enrolled_at' => $enrollment->enrolled_at->toISOString(),
+                            'amount' => $enrollment->amount,
+                            'currency' => $enrollment->currency,
+                        ],
+                        'course' => [
+                            'id' => $course->id,
+                            'title' => $course->title,
+                            'thumbnail' => $course->thumbnail_url,
+                        ],
+                        'transaction' => [
+                            'id' => $transaction->id,
+                            'transaction_id' => $transaction->transaction_id,
+                            'status' => $transaction->transaction_status,
+                            'amount' => $transaction->gross_amount,
+                            'currency' => $transaction->currency,
+                        ],
+                        'conversation_code' => $conversation->code ?? null,
+                    ]
+                ]);
+
+            } catch (\Exception $e) {
+                DB::rollBack();
+                throw $e;
+            }
+
+        } catch (\Exception $e) {
+            return response()->json([
+                'success' => false,
+                'message' => 'Failed to confirm enrollment',
+                'error' => $e->getMessage()
+            ], 500);
+        }
+    }
+
+    /**
      * Get user's course enrollments
      */
     public function getUserEnrollments(Request $request)

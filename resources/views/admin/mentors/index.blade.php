@@ -287,11 +287,88 @@
     </div>
 </div>
 
+<!-- Delete Confirmation Modal -->
+<div id="delete-modal" class="fixed inset-0 bg-black bg-opacity-50 hidden z-[100] flex items-center justify-center p-4">
+    <div class="bg-white rounded-2xl shadow-2xl max-w-md w-full mx-4 transform transition-all duration-300 scale-95 opacity-0" id="delete-modal-content">
+        <div class="p-6">
+            <div class="flex items-center justify-center w-16 h-16 mx-auto bg-red-100 rounded-full mb-4">
+                <i class="fa-solid fa-trash text-2xl text-red-600"></i>
+            </div>
+            <h3 class="text-xl font-semibold text-gray-900 text-center mb-2">
+                {{ __('trans.delete_mentor') }}
+            </h3>
+            <p class="text-gray-600 text-center mb-2" id="mentor-name-display"></p>
+            <p class="text-gray-600 text-center mb-6">
+                {{ __('trans.are_you_sure_delete_mentor') }}
+            </p>
+            <div class="flex space-x-3">
+                <button onclick="cancelDelete()" class="flex-1 px-4 py-3 bg-gray-100 text-gray-700 rounded-xl font-medium hover:bg-gray-200 transition-colors duration-200">
+                    {{ __('trans.cancel') }}
+                </button>
+                <button onclick="confirmDelete()" class="flex-1 px-4 py-3 bg-red-600 text-white rounded-xl font-medium hover:bg-red-700 transition-colors duration-200">
+                    <i class="fa-solid fa-trash mr-2"></i>
+                    {{ __('trans.delete') }}
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
 
+<!-- Hidden delete form -->
+<form id="delete-form" method="POST" class="hidden">
+    @csrf
+    @method('DELETE')
+</form>
 @endsection
 
 @push('scripts')
 <script>
-// No JavaScript needed for the simplified index page
+let mentorToDelete = null;
+
+function deleteMentor(mentorId, mentorName) {
+    mentorToDelete = mentorId;
+    document.getElementById('mentor-name-display').textContent = mentorName;
+    showDeleteModal();
+}
+
+function showDeleteModal() {
+    const modal = document.getElementById('delete-modal');
+    const modalContent = document.getElementById('delete-modal-content');
+    
+    modal.classList.remove('hidden');
+    setTimeout(() => {
+        modalContent.classList.remove('scale-95', 'opacity-0');
+        modalContent.classList.add('scale-100', 'opacity-100');
+    }, 10);
+}
+
+function cancelDelete() {
+    const modal = document.getElementById('delete-modal');
+    const modalContent = document.getElementById('delete-modal-content');
+    
+    modalContent.classList.add('scale-95', 'opacity-0');
+    modalContent.classList.remove('scale-100', 'opacity-100');
+    
+    setTimeout(() => {
+        modal.classList.add('hidden');
+    }, 200);
+    
+    mentorToDelete = null;
+}
+
+function confirmDelete() {
+    if (mentorToDelete) {
+        const form = document.getElementById('delete-form');
+        form.action = `/admin/mentors/${mentorToDelete}`;
+        form.submit();
+    }
+}
+
+// Close modal when clicking outside
+document.getElementById('delete-modal').addEventListener('click', function(e) {
+    if (e.target == this) {
+        cancelDelete();
+    }
+});
 </script>
 @endpush

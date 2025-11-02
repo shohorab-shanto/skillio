@@ -223,12 +223,12 @@ class AdminMentorController extends Controller
     public function destroy(User $user)
     {
         if ($user->role != 'mentor') {
-            return response()->json(['success' => false, 'message' => 'Invalid user type']);
+            return redirect()->back()->with('error', 'Invalid user type');
         }
 
         $mentor = $user->mentor;
         if (!$mentor) {
-            return response()->json(['success' => false, 'message' => 'Mentor profile not found']);
+            return redirect()->back()->with('error', 'Mentor profile not found');
         }
 
         // Check if mentor has courses or session bookings
@@ -236,10 +236,7 @@ class AdminMentorController extends Controller
         $sessionsCount = $mentor->sessionBookings()->count();
 
         if ($coursesCount > 0 || $sessionsCount > 0) {
-            return response()->json([
-                'success' => false, 
-                'message' => "Cannot delete mentor. They have {$coursesCount} courses and {$sessionsCount} session bookings."
-            ]);
+            return redirect()->back()->with('error', "Cannot delete mentor. They have {$coursesCount} courses and {$sessionsCount} session bookings.");
         }
 
         // Delete mentor photo if exists
@@ -251,10 +248,7 @@ class AdminMentorController extends Controller
         $mentor->delete();
         $user->delete();
 
-        return response()->json([
-            'success' => true, 
-            'message' => 'Mentor deleted successfully'
-        ]);
+        return redirect()->back()->with('success', 'Mentor deleted successfully');
     }
 
     public function courses(User $user)

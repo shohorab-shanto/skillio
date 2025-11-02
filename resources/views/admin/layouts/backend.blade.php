@@ -236,6 +236,31 @@
 
             <!-- Page Content -->
             <main class="flex-1 overflow-y-auto px-4 pb-4">
+                <!-- Success/Error Messages -->
+                @if(session('success'))
+                <div class="mb-6 bg-green-50 border border-green-200 text-green-800 px-4 py-3 rounded-lg relative" role="alert">
+                    <div class="flex items-center">
+                        <i class="fa-solid fa-check-circle mr-2"></i>
+                        <span class="block sm:inline">{{ session('success') }}</span>
+                        <button type="button" class="ml-auto text-green-800 hover:text-green-900" onclick="this.parentElement.parentElement.remove()">
+                            <i class="fa-solid fa-times"></i>
+                        </button>
+                    </div>
+                </div>
+                @endif
+
+                @if(session('error'))
+                <div class="mb-6 bg-red-50 border border-red-200 text-red-800 px-4 py-3 rounded-lg relative" role="alert">
+                    <div class="flex items-center">
+                        <i class="fa-solid fa-exclamation-circle mr-2"></i>
+                        <span class="block sm:inline">{{ session('error') }}</span>
+                        <button type="button" class="ml-auto text-red-800 hover:text-red-900" onclick="this.parentElement.parentElement.remove()">
+                            <i class="fa-solid fa-times"></i>
+                        </button>
+                    </div>
+                </div>
+                @endif
+
                 @yield('content')
             </main>
         </div>

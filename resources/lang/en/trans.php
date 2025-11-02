@@ -1754,6 +1754,10 @@ return [
     'cancel' => 'Cancel',
     'delete' => 'Delete',
     
+    // Admin Mentors Index Page - Delete Modal
+    'delete_mentor' => 'Delete Mentor',
+    'are_you_sure_delete_mentor' => 'Are you sure you want to delete this mentor? This action cannot be undone.',
+    
     // Auth Forgot Password Page - Additional Key
     'back_to_login' => '← Back to Login',
     

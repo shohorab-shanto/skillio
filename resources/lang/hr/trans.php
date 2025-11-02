@@ -1748,6 +1748,10 @@ return [
     'cancel' => 'Odustani',
     'delete' => 'Obriši',
     
+    // Admin Mentors Index Page - Delete Modal
+    'delete_mentor' => 'Obriši mentora',
+    'are_you_sure_delete_mentor' => 'Jeste li sigurni da želite obrisati ovog mentora? Ova radnja je nepovratna.',
+    
     // Auth Forgot Password Page - Additional Key
     'back_to_login' => '← Povratak na prijavu',
     

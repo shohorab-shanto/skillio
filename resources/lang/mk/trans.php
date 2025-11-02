@@ -1747,6 +1747,10 @@ return [
     'cancel' => 'Откажи',
     'delete' => 'Избриши',
 
+    // Admin Mentors Index Page - Delete Modal
+    'delete_mentor' => 'Избриши ментор',
+    'are_you_sure_delete_mentor' => 'Дали сте сигурни дека сакате да го избришете овој ментор? Оваа акција не може да се врати.',
+
     // Auth Forgot Password Page - Additional Key
     'back_to_login' => '← Назад кон најава',
 

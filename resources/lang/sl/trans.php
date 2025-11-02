@@ -1747,6 +1747,10 @@ return [
     'cancel' => 'Prekliči',
     'delete' => 'Izbriši',
     
+    // Admin Mentors Index Page - Delete Modal
+    'delete_mentor' => 'Izbriši mentorja',
+    'are_you_sure_delete_mentor' => 'Ali ste prepričani, da želite izbrisati tega mentorja? Tega dejanja ni mogoče razveljaviti.',
+    
     // Auth Forgot Password Page - Additional Key
     'back_to_login' => '← Nazaj na prijavo',
     

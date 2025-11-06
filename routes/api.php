@@ -195,6 +195,9 @@ Route::middleware('auth:sanctum')->prefix('v1')->group(function () {
             Route::get('onboarding-status', [UserProfileApiController::class, 'getOnboardingStatus']);
         });
         
+        // Account deletion
+        Route::post('delete-account', [UserProfileApiController::class, 'deleteAccount']);
+        
         // Chat/Conversation management
         Route::prefix('conversations')->group(function () {
             Route::get('/', [UserConversationsApiController::class, 'index']);

@@ -3755,6 +3755,44 @@
 						},
 						"description": "Check if user has completed onboarding process"
 					}
+				},
+				{
+					"name": "Delete Account",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							},
+							{
+								"key": "Authorization",
+								"value": "Bearer {{auth_token}}",
+								"description": "Required"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"password\": \"current_password\"\n}"
+						},
+						"url": {
+							"raw": "{{base_url}}/api/v1/user/delete-account",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"user",
+								"delete-account"
+							]
+						},
+						"description": "Delete user account permanently. This will:\n- Anonymize all personal data (name, email, phone, address)\n- Clear OAuth IDs (Google, Apple, Firebase)\n- Revoke all authentication tokens\n- Set account status to 'deleted'\n- Soft delete the user (preserves financial records)\n\nNote: Password field is optional but recommended for extra security. Reviews and financial records are preserved for legal compliance but anonymized."
+					}
 				}
 			],
 			"description": "User profile management endpoints for profile information, preferences, and settings"

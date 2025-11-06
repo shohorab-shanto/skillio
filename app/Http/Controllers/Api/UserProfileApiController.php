@@ -232,4 +232,47 @@ class UserProfileApiController extends Controller
             ]
         ]);
     }
+
+    /**
+     * Delete user account (soft delete with anonymization)
+     */
+    public function deleteAccount(Request $request)
+    {
+        $user = Auth::user();
+        
+        // Optional: Require password confirmation for extra security
+        if ($request->has('password')) {
+            $request->validate([
+                'password' => ['required', 'current_password'],
+            ]);
+        }
+
+        // Generate anonymized email to maintain uniqueness if needed
+        $anonymizedEmail = 'deleted_user_' . $user->id . '_' . time() . '@deleted.local';
+
+        // Anonymize user data
+        $user->update([
+            'name' => 'Deleted User',
+            'email' => $anonymizedEmail,
+            'phone' => null,
+            'address' => null,
+            'google_id' => null,
+            'apple_id' => null,
+            'firebase_uid' => null,
+            'password' => Hash::make(bin2hex(random_bytes(32))), // Random password
+            'status' => 'inactive',
+            'is_anonymized' => true,
+        ]);
+
+        // Revoke all authentication tokens
+        $user->tokens()->delete();
+
+        // Soft delete the user
+        $user->delete();
+
+        return response()->json([
+            'success' => true,
+            'message' => 'Your account has been successfully deleted. All personal information has been removed from our system.',
+        ], 200);
+    }
 }

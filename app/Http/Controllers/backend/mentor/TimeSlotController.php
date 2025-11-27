@@ -53,24 +53,56 @@ class TimeSlotController extends Controller
 
     public function store(Request $request)
     {
-        $mentor = Mentor::where('user_id', Auth::id())->firstOrFail();
-
-        $timeSlot = SessionBooking::create([
-            'mentor_id' => $mentor->id,
-            'category_id' => $request->category_id,
-            'date' => $request->date,
-            'start_time' => $request->start_time,
-            'end_time' => $request->end_time,
-            'fee' => $request->fee,
-            'status' => 'active',
+        $request->validate([
+            'dates' => 'required|array|min:1',
+            'dates.*' => 'required|date',
+            'time_slots' => 'required|array|min:1',
+            'time_slots.*.start_time' => 'required|date_format:H:i',
+            'time_slots.*.end_time' => 'required|date_format:H:i|after:time_slots.*.start_time',
+            'category_id' => 'required|exists:categories,id',
+            'sub_category_id' => 'required|exists:sub_categories,id',
+            'fee' => 'required|numeric|min:0',
         ]);
-
-        // Attach single subcategory (even though model supports multiple)
-        if ($request->sub_category_id) {
-            $timeSlot->subCategories()->attach($request->sub_category_id);
+        
+        // Additional validation: Check if dates are not in the past
+        $today = now()->startOfDay();
+        foreach ($request->dates as $date) {
+            $dateObj = \Carbon\Carbon::parse($date)->startOfDay();
+            if ($dateObj->lt($today)) {
+                return redirect()->back()
+                    ->withInput()
+                    ->withErrors(['dates' => 'Cannot create time slots for past dates.']);
+            }
         }
 
-        return redirect()->route('mentor.time-slots.index')->with('success', 'Time slot created successfully!');
+        $mentor = Mentor::where('user_id', Auth::id())->firstOrFail();
+        $createdCount = 0;
+
+        // Loop through each selected date
+        foreach ($request->dates as $date) {
+            // Loop through each time slot
+            foreach ($request->time_slots as $timeSlot) {
+                $booking = SessionBooking::create([
+                    'mentor_id' => $mentor->id,
+                    'category_id' => $request->category_id,
+                    'date' => $date,
+                    'start_time' => $timeSlot['start_time'],
+                    'end_time' => $timeSlot['end_time'],
+                    'fee' => $request->fee,
+                    'status' => 'active',
+                ]);
+
+                // Attach subcategory
+                if ($request->sub_category_id) {
+                    $booking->subCategories()->attach($request->sub_category_id);
+                }
+
+                $createdCount++;
+            }
+        }
+
+        return redirect()->route('mentor.time-slots.index')
+            ->with('success', "Successfully created {$createdCount} time slot" . ($createdCount > 1 ? 's' : '') . "!");
     }
 
     public function show(SessionBooking $timeSlot)

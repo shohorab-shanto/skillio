@@ -180,13 +180,16 @@
                             </div>
                         </td>
                         <td class="px-6 py-4 whitespace-nowrap">
+                            @php
+                                $currencySymbol = $course->currency == 'EUR' ? '€' : '$';
+                            @endphp
                             <div class="text-sm text-gray-900">
                                 @if($course->discount > 0)
-                                    <div class="line-through text-gray-400">${{ number_format($course->price, 2) }}</div>
-                                    <div class="text-green-600 font-medium">${{ number_format($course->price - ($course->price * $course->discount / 100), 2) }}</div>
+                                    <div class="line-through text-gray-400">{{ $currencySymbol }}{{ number_format($course->price, 2) }}</div>
+                                    <div class="text-green-600 font-medium">{{ $currencySymbol }}{{ number_format($course->price - ($course->price * $course->discount / 100), 2) }}</div>
                                     <div class="text-xs text-gray-500">-{{ number_format($course->discount, 0) }}%</div>
                                 @else
-                                    <div class="font-medium">${{ number_format($course->price, 2) }}</div>
+                                    <div class="font-medium">{{ $currencySymbol }}{{ number_format($course->price, 2) }}</div>
                                 </div>
                             @endif
                         </td>

@@ -125,8 +125,11 @@
                             
                             @if($item->discount > 0)
                                 <div class="flex justify-between items-center">
+                                    @php
+                                        $currencySymbol = $item->currency == 'EUR' ? '€' : '$';
+                                    @endphp
                                     <span class="text-gray-600">{{ __('trans.original_price') }}</span>
-                                    <span class="font-semibold line-through text-gray-400">${{ number_format($item->price, 2) }}</span>
+                                    <span class="font-semibold line-through text-gray-400">{{ $currencySymbol }}{{ number_format($item->price, 2) }}</span>
                                 </div>
                                 <div class="flex justify-between items-center">
                                     <span class="text-gray-600">{{ __('trans.discount') }}</span>
@@ -159,8 +162,8 @@
                 <!-- Total Amount -->
                 <div class="bg-purple-50 rounded-lg p-4 mb-6">
                     <div class="flex justify-between items-center">
-                        <span class="text-lg font-semibold text-gray-900">{{ __('trans.total_amount') }}</span>
-                        <span class="text-2xl font-bold text-purple-600">${{ number_format($amount, 2) }}</span>
+                        <span class="text-lg font-semibold text-gray-900">{{ $currencySymbol }}{{ __('trans.total_amount') }}</span>
+                        <span class="text-2xl font-bold text-purple-600">{{ $currencySymbol }}{{ number_format($amount, 2) }}</span>
                     </div>
                 </div>
 
@@ -197,7 +200,7 @@
                     <button type="submit" 
                             id="submit-button"
                             class="w-full bg-purple-600 text-white py-3 px-6 rounded-lg font-semibold hover:bg-purple-700 transition-colors duration-200 disabled:opacity-50 disabled:cursor-not-allowed">
-                        <span id="button-text">{{ __('trans.pay_amount') }} ${{ number_format($amount, 2) }}</span>
+                        <span id="button-text">{{ __('trans.pay_amount') }} {{ $currencySymbol }}{{ number_format($amount, 2) }}</span>
                         <span id="spinner" class="hidden">
                             <svg class="animate-spin -ml-1 mr-3 h-5 w-5 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
                                 <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>

@@ -128,13 +128,16 @@ class CheckoutController extends Controller
             $mentorAmount = $netAmount * 0.80; // 80% for mentor
             $adminAmount = $netAmount * 0.20; // 20% for admin
 
+            // Get currency from item (default to USD if not set)
+            $currency = strtolower($item->currency ?? 'USD');
+
             // Get or create Stripe customer
             $stripeCustomerId = $this->getOrCreateStripeCustomer();
 
             // Create Stripe Payment Intent
             $paymentIntent = PaymentIntent::create([
                 'amount' => (int)($grossAmount * 100), // Convert to cents
-                'currency' => 'usd',
+                'currency' => $currency,
                 'customer' => $stripeCustomerId,
                 'payment_method' => $request->payment_method_id,
                 'confirm' => true,
@@ -168,7 +171,7 @@ class CheckoutController extends Controller
                     'enrollable_type' => get_class($item),
                     'enrollable_id' => $item->id,
                     'amount' => $grossAmount,
-                    'currency' => 'USD',
+                    'currency' => strtoupper($currency),
                     'payment_status' => 'paid',
                     'payment_method' => 'stripe',
                     'enrolled_at' => now(),
@@ -191,7 +194,7 @@ class CheckoutController extends Controller
                     'net_amount' => $netAmount,
                     'mentor_amount' => $mentorAmount,
                     'admin_amount' => $adminAmount,
-                    'currency' => 'USD',
+                    'currency' => strtoupper($currency),
                     'stripe_payment_intent_id' => $paymentIntent->id,
                     'stripe_customer_id' => $stripeCustomerId,
                     'stripe_charge_id' => $paymentIntent->latest_charge,
@@ -337,7 +340,7 @@ class CheckoutController extends Controller
             // Create transfer to mentor's Stripe Connect account
             $transfer = Transfer::create([
                 'amount' => (int)($mentorAmount * 100), // Convert to cents
-                'currency' => 'usd',
+                'currency' => strtolower($transaction->currency ?? 'usd'),
                 'destination' => $mentor->stripe_connect_account_id,
                 'description' => "Payment for " . ($item instanceof \App\Models\SessionBooking 
                     ? "session booking on " . $item->date->format('M d, Y') 

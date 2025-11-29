@@ -3,6 +3,22 @@
 @section('title', __('trans.payment_failed_title'))
 
 @section('content')
+@php
+    // Determine currency symbol for potential amount display
+    $currency = 'USD'; // default
+    if (isset($type) && isset($itemId)) {
+        if ($type == 'session') {
+            $item = \App\Models\SessionBooking::find($itemId);
+        } else {
+            $item = \App\Models\Course::find($itemId);
+        }
+        if (isset($item) && $item) {
+            $currency = $item->currency ?? 'USD';
+        }
+    }
+    $currencySymbol = $currency == 'EUR' ? '€' : '$';
+@endphp
+
 <div class="min-h-screen bg-gray-50 pt-32 mb-12">
     <div class="max-w-4xl mx-auto px-6">
         <!-- Header -->

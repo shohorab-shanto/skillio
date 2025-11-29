@@ -25,12 +25,12 @@ class AuthenticatedSessionController extends Controller
     public function store(LoginRequest $request): RedirectResponse
     {
         try {
+            // Get intended URL BEFORE authenticating and regenerating session
+            $intendedUrl = $request->session()->get('url.intended');
+            
             $request->authenticate();
             $request->session()->regenerate();
             $user = Auth::user();
-            
-            // Debug: Check user role (remove this after debugging)
-            // dd($user->role, route('mentor.dashboard'));
             
             // Redirect based on user role
             if ($user->role == 'admin') {
@@ -38,8 +38,15 @@ class AuthenticatedSessionController extends Controller
             } elseif ($user->role == 'mentor') {
                 return redirect()->route('mentor.dashboard');
             } else {
-                // For users, redirect to intended URL (like checkout page) or dashboard as fallback
-                return redirect()->intended(route('user.dashboard'));
+                // For users, check if there's an intended URL (like checkout page)
+                if ($intendedUrl) {
+                    // Clear the intended URL from session
+                    $request->session()->forget('url.intended');
+                    return redirect($intendedUrl);
+                }
+                
+                // Otherwise, redirect to user dashboard
+                return redirect()->route('user.dashboard');
             }
         } catch (\Illuminate\Validation\ValidationException $e) {
             return back()

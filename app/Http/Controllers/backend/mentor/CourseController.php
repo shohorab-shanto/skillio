@@ -84,6 +84,7 @@ class CourseController extends Controller
             'sub_category_ids' => 'required|array|min:1',
             'sub_category_ids.*' => 'exists:sub_categories,id',
             'price' => 'required|numeric|min:0',
+            'currency' => 'required|in:USD,EUR',
             'discount' => 'nullable|numeric|min:0|max:100',
             'duration_days' => 'required|integer|min:1|max:365',
             'course_image' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
@@ -118,6 +119,7 @@ class CourseController extends Controller
             'thumbnail' => $thumbnailPath,
             'cover_photo' => $coverPhotoPath,
             'price' => $validated['price'],
+            'currency' => $validated['currency'],
             'discount' => $validated['discount'] ?? 0,
             'start_date' => null,
             'end_date' => null,
@@ -194,6 +196,7 @@ class CourseController extends Controller
             'sub_category_ids' => 'required|array|min:1',
             'sub_category_ids.*' => 'exists:sub_categories,id',
             'price' => 'required|numeric|min:0',
+            'currency' => 'required|in:USD,EUR',
             'discount' => 'nullable|numeric|min:0|max:100',
             'duration_days' => 'required|integer|min:1|max:365',
             'course_image' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
@@ -231,7 +234,7 @@ class CourseController extends Controller
         $needsReapproval = false;
         if ($course->status == 'approved') {
             // Check if any significant changes were made
-            $significantFields = ['title', 'description', 'price', 'duration_days'];
+            $significantFields = ['title', 'description', 'price', 'currency', 'duration_days'];
             foreach ($significantFields as $field) {
                 if ($course->{$field} != $validated[$field]) {
                     $needsReapproval = true;
@@ -258,6 +261,7 @@ class CourseController extends Controller
             'title' => $validated['title'],
             'description' => $validated['description'],
             'price' => $validated['price'],
+            'currency' => $validated['currency'],
             'discount' => $validated['discount'] ?? 0,
             'start_date' => null,
             'end_date' => null,

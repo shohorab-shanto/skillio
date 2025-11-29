@@ -270,21 +270,35 @@
                     @enderror
                 </div>
 
-                <!-- Price -->
-                <div>
-                    <label for="price" class="block text-sm font-medium text-gray-700 mb-2">{{ __('trans.price_usd') }} *</label>
-                    <div class="relative">
-                        <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-                            <span class="text-gray-500 sm:text-sm">$</span>
-                        </div>
-                        <input type="number" id="price" name="price" value="{{ old('price', $course->price) }}" 
-                               step="0.01" min="0"
-                               class="w-full pl-8 pr-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent" 
-                               placeholder="0.00" required>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <!-- Currency -->
+                    <div>
+                        <label for="currency" class="block text-sm font-medium text-gray-700 mb-2">{{ __('trans.currency') ?? 'Currency' }} *</label>
+                        <select id="currency" name="currency" class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent" required onchange="updateCurrencySymbol()">
+                            <option value="USD" {{ old('currency', $course->currency) == 'USD' ? 'selected' : '' }}>USD ($)</option>
+                            <option value="EUR" {{ old('currency', $course->currency) == 'EUR' ? 'selected' : '' }}>EUR (€)</option>
+                        </select>
+                        @error('currency')
+                            <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
+                        @enderror
                     </div>
-                    @error('price')
-                        <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
-                    @enderror
+
+                    <!-- Price -->
+                    <div>
+                        <label for="price" class="block text-sm font-medium text-gray-700 mb-2">{{ __('trans.price') ?? 'Price' }} *</label>
+                        <div class="relative">
+                            <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                                <span id="currency-symbol" class="text-gray-500 sm:text-sm">$</span>
+                            </div>
+                            <input type="number" id="price" name="price" value="{{ old('price', $course->price) }}" 
+                                   step="0.01" min="0"
+                                   class="w-full pl-8 pr-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent" 
+                                   placeholder="0.00" required>
+                        </div>
+                        @error('price')
+                            <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
+                        @enderror
+                    </div>
                 </div>
 
                 <!-- Discount -->
@@ -665,7 +679,16 @@ function previewImage(input, previewId) {
     }
 }
 
-
+function updateCurrencySymbol() {
+    const currency = document.getElementById('currency').value;
+    const symbol = document.getElementById('currency-symbol');
+    
+    if (currency === 'EUR') {
+        symbol.textContent = '€';
+    } else {
+        symbol.textContent = '$';
+    }
+}
 
 function updateCharacterCount(inputId, countId, maxLength) {
     const input = document.getElementById(inputId);
@@ -695,6 +718,9 @@ document.addEventListener('DOMContentLoaded', function() {
     // Initialize character counts
     updateCharacterCount('title', 'title-count', 255);
     updateCharacterCount('description', 'description-count', 5000);
+    
+    // Initialize currency symbol
+    updateCurrencySymbol();
 });
 
 // Delete Modal Functions

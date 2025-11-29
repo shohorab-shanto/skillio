@@ -20,6 +20,7 @@ class Course extends Model
         'thumbnail',
         'cover_photo',
         'price',
+        'currency',
         'discount',
         'duration_days',
         'start_date',

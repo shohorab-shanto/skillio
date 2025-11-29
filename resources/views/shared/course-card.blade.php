@@ -95,11 +95,14 @@
                         </div>
                         @endif
                         <div class="text-right">
+                            @php
+                                $currencySymbol = $course->currency == 'EUR' ? '€' : '$';
+                            @endphp
                             @if($course->discount > 0)
-                                <span class="text-sm text-gray-500 line-through">${{ number_format($course->price, 2) }}</span>
-                                <span class="text-lg font-bold text-purple-600 ml-2">${{ number_format($course->discounted_price, 2) }}</span>
+                                <span class="text-sm text-gray-500 line-through">{{ $currencySymbol }}{{ number_format($course->price, 2) }}</span>
+                                <span class="text-lg font-bold text-purple-600 ml-2">{{ $currencySymbol }}{{ number_format($course->discounted_price, 2) }}</span>
                             @else
-                                <span class="text-lg font-bold text-purple-600">${{ number_format($course->price, 2) }}</span>
+                                <span class="text-lg font-bold text-purple-600">{{ $currencySymbol }}{{ number_format($course->price, 2) }}</span>
                             @endif
                         </div>
                     </div>

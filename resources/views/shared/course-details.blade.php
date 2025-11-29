@@ -2,6 +2,7 @@
 @php
     $showEditButton = $showEditButton ?? false;
     $showEarningTab = $showEarningTab ?? false;
+    $currencySymbol = $course->currency == 'EUR' ? '€' : '$';
 @endphp
 
 <div class="w-full">
@@ -70,10 +71,10 @@
                         <div class="flex flex-col items-end">
                             <div class="flex items-center space-x-3">
                                 <span class="text-xl font-semibold text-purple-700">
-                                    ${{ number_format($course->discounted_price, 2) }}
+                                    {{ $currencySymbol }}{{ number_format($course->discounted_price, 2) }}
                                 </span>
                                 <span class="text-lg text-gray-400 line-through">
-                                    ${{ number_format($course->price, 2) }}
+                                    {{ $currencySymbol }}{{ number_format($course->price, 2) }}
                                 </span>
                             </div>
                             <span class="inline-flex items-center px-2 py-1 rounded-full text-xs font-semibold bg-red-100 text-red-800 mt-1">
@@ -81,7 +82,7 @@
                             </span>
                         </div>
                     @else
-                        <div class="text-xl font-semibold text-purple-700">${{ number_format($course->price, 2) }}</div>
+                        <div class="text-xl font-semibold text-purple-700">{{ $currencySymbol }}{{ number_format($course->price, 2) }}</div>
                     @endif
                 </div>
             </div>
@@ -122,7 +123,7 @@
                 @else
                     <a href="{{ route('checkout.course', $course) }}" 
                        class="bg-purple-600 hover:bg-purple-700 text-white px-8 py-3 rounded-lg text-lg font-medium transition-colors inline-block">
-                        {{ __('trans.enroll_now_price') }} ${{ number_format($course->discount > 0 ? $course->discounted_price : $course->price, 2) }}
+                        {{ __('trans.enroll_now_price') }} {{ $currencySymbol }}{{ number_format($course->discount > 0 ? $course->discounted_price : $course->price, 2) }}
                     </a>
                 @endif
             </div>
@@ -298,7 +299,7 @@
                                 </div>
                                 <span class="text-xl text-gray-500">{{ __('trans.total_income') }}</span>
                             </div>
-                            <p class="text-2xl font-extrabold mt-3 text-black">${{ number_format($course->totalIncome(), 2) }}</p>
+                            <p class="text-2xl font-extrabold mt-3 text-black">{{ $currencySymbol }}{{ number_format($course->totalIncome(), 2) }}</p>
                         </div>
                     </section>
 

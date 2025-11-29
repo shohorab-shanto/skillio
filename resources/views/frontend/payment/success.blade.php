@@ -22,6 +22,14 @@
                 <h2 class="text-xl font-bold text-gray-900 mb-4">{{ __('trans.payment_details') }}</h2>
                 
                 @if($transaction)
+                    @php
+                        // Determine currency symbol based on transaction or enrollable item
+                        $currency = 'USD'; // default
+                        if ($enrollment && $enrollment->enrollable) {
+                            $currency = $enrollment->enrollable->currency ?? 'USD';
+                        }
+                        $currencySymbol = $currency == 'EUR' ? '€' : '$';
+                    @endphp
                     <div class="space-y-4">
                         <div class="flex justify-between">
                             <span class="text-gray-600">{{ __('trans.transaction_id') }}</span>
@@ -29,7 +37,7 @@
                         </div>
                         <div class="flex justify-between">
                             <span class="text-gray-600">{{ __('trans.amount_paid') }}</span>
-                            <span class="font-semibold text-green-600">${{ number_format($transaction->gross_amount, 2) }}</span>
+                            <span class="font-semibold text-green-600">{{ $currencySymbol }}{{ number_format($transaction->gross_amount, 2) }}</span>
                         </div>
                         <div class="flex justify-between">
                             <span class="text-gray-600">{{ __('trans.payment_method') }}</span>

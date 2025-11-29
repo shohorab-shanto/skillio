@@ -110,10 +110,13 @@
 
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
                     <div>
-                        <p class="text-gray-600"><strong>{{ __('trans.price') }}:</strong> ${{ number_format($course->price, 2) }}</p>
+                        @php
+                            $currencySymbol = $course->currency == 'EUR' ? '€' : '$';
+                        @endphp
+                        <p class="text-gray-600"><strong>{{ __('trans.price') }}:</strong> {{ $currencySymbol }}{{ number_format($course->price, 2) }}</p>
                         @if($course->discount > 0)
                             <p class="text-gray-600"><strong>{{ __('trans.discount') }}:</strong> {{ number_format($course->discount, 0) }}%</p>
-                            <p class="text-gray-600"><strong>{{ __('trans.final_price') }}:</strong> ${{ number_format($course->price - ($course->price * $course->discount / 100), 2) }}</p>
+                            <p class="text-gray-600"><strong>{{ __('trans.final_price') }}:</strong> {{ $currencySymbol }}{{ number_format($course->price - ($course->price * $course->discount / 100), 2) }}</p>
                         @endif
                         <p class="text-gray-600"><strong>{{ __('trans.duration') }}:</strong> {{ $course->duration_days }} {{ Str::plural(__('trans.day'), $course->duration_days) }}</p>
                     </div>

@@ -32,12 +32,12 @@
                         </svg>
                         <span>{{ $course->enrolledStudentsCount() }} {{ $course->enrolledStudentsCount() > 1 ? __('trans.students') : __('trans.student') }}</span>
                     </div>
-                    @if($course->duration_days)
+                    @if($course->duration_days || $course->duration_hours)
                     <div class="flex items-center">
                         <svg class="w-4 h-4 mr-2 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path>
                         </svg>
-                        <span>{{ $course->duration_days }} {{ __('trans.days') }}</span>
+                        <span>{{ $course->formatted_duration }}</span>
                     </div>
                     @endif
                 </div>
@@ -384,7 +384,14 @@
                                                 <div class="flex items-center">
                                                     @php
                                                         $enrollmentDate = $enrollment->enrolled_at ?: $enrollment->created_at;
-                                                        $courseDuration = $course->duration_days * 24 * 60; // Convert to minutes
+                                                        
+                                                        // Calculate course duration in minutes based on type
+                                                        if ($course->duration_type === 'hours') {
+                                                            $courseDuration = $course->duration_hours * 60; // Convert hours to minutes
+                                                        } else {
+                                                            $courseDuration = $course->duration_days * 24 * 60; // Convert days to minutes
+                                                        }
+                                                        
                                                         $elapsedMinutes = $enrollmentDate->diffInMinutes(now());
                                                         $remainingMinutes = max(0, $courseDuration - $elapsedMinutes);
                                                         

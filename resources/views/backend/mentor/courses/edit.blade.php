@@ -313,15 +313,40 @@
                     @enderror
                 </div>
 
-                <!-- Course Duration -->
+                <!-- Course Duration Type -->
                 <div>
-                    <label for="duration_days" class="block text-sm font-medium text-gray-700 mb-2">{{ __('trans.course_duration_days') }} *</label>
+                    <label for="duration_type" class="block text-sm font-medium text-gray-700 mb-2">{{ __('trans.duration_type') ?? 'Duration Type' }} *</label>
+                    <select id="duration_type" name="duration_type" class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent" required onchange="toggleDurationType()">
+                        <option value="days" {{ old('duration_type', $course->duration_type ?? 'days') == 'days' ? 'selected' : '' }}>{{ __('trans.days') ?? 'Days' }}</option>
+                        <option value="hours" {{ old('duration_type', $course->duration_type ?? 'days') == 'hours' ? 'selected' : '' }}>{{ __('trans.hours') ?? 'Hours' }}</option>
+                    </select>
+                    @error('duration_type')
+                        <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
+                    @enderror
+                </div>
+
+                <!-- Course Duration Days -->
+                <div id="duration_days_field">
+                    <label for="duration_days" class="block text-sm font-medium text-gray-700 mb-2">{{ __('trans.course_duration_days') ?? 'Course Duration (Days)' }} *</label>
                     <input type="number" id="duration_days" name="duration_days" value="{{ old('duration_days', $course->duration_days) }}" 
                            min="1" max="365"
                            class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent" 
-                           placeholder="e.g., 30" required>
-                    <p class="text-xs text-gray-500 mt-1">{{ __('trans.enter_number_days_course') }}</p>
+                           placeholder="e.g., 30">
+                    <p class="text-xs text-gray-500 mt-1">{{ __('trans.enter_number_days_course') ?? 'Enter the number of days for the course (1-365)' }}</p>
                     @error('duration_days')
+                        <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
+                    @enderror
+                </div>
+
+                <!-- Course Duration Hours -->
+                <div id="duration_hours_field" style="display: none;">
+                    <label for="duration_hours" class="block text-sm font-medium text-gray-700 mb-2">{{ __('trans.course_duration_hours') ?? 'Course Duration (Hours)' }} *</label>
+                    <input type="number" id="duration_hours" name="duration_hours" value="{{ old('duration_hours', $course->duration_hours) }}" 
+                           min="1" max="8760"
+                           class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent" 
+                           placeholder="e.g., 40">
+                    <p class="text-xs text-gray-500 mt-1">{{ __('trans.enter_number_hours_course') ?? 'Enter the number of hours for the course (1-8760)' }}</p>
+                    @error('duration_hours')
                         <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
                     @enderror
                 </div>
@@ -690,6 +715,26 @@ function updateCurrencySymbol() {
     }
 }
 
+function toggleDurationType() {
+    const durationType = document.getElementById('duration_type').value;
+    const daysField = document.getElementById('duration_days_field');
+    const hoursField = document.getElementById('duration_hours_field');
+    const daysInput = document.getElementById('duration_days');
+    const hoursInput = document.getElementById('duration_hours');
+    
+    if (durationType === 'days') {
+        daysField.style.display = 'block';
+        hoursField.style.display = 'none';
+        daysInput.required = true;
+        hoursInput.required = false;
+    } else {
+        daysField.style.display = 'none';
+        hoursField.style.display = 'block';
+        daysInput.required = false;
+        hoursInput.required = true;
+    }
+}
+
 function updateCharacterCount(inputId, countId, maxLength) {
     const input = document.getElementById(inputId);
     const counter = document.getElementById(countId);
@@ -721,6 +766,9 @@ document.addEventListener('DOMContentLoaded', function() {
     
     // Initialize currency symbol
     updateCurrencySymbol();
+    
+    // Initialize duration type toggle
+    toggleDurationType();
 });
 
 // Delete Modal Functions

@@ -22,3 +22,7 @@
 Homestead.json
 Homestead.yaml
 Thumbs.db
+/storage/app/*
+!/storage/app/public         # allow uploaded assets symlink
+/storage/framework/*
+/storage/logs/*

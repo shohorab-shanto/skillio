@@ -23,6 +23,8 @@ class Course extends Model
         'currency',
         'discount',
         'duration_days',
+        'duration_type',
+        'duration_hours',
         'start_date',
         'end_date',
         'status',
@@ -35,6 +37,7 @@ class Course extends Model
         'price' => 'decimal:2',
         'discount' => 'decimal:2',
         'duration_days' => 'integer',
+        'duration_hours' => 'integer',
         'start_date' => 'date',
         'end_date' => 'date',
         'needs_reapproval' => 'boolean',
@@ -204,6 +207,17 @@ class Course extends Model
     public function getCoverPhotoUrlAttribute(): ?string
     {
         return $this->cover_photo ? asset('storage/' . $this->cover_photo) : null;
+    }
+
+    public function getFormattedDurationAttribute(): string
+    {
+        if ($this->duration_type === 'hours') {
+            $hours = $this->duration_hours ?? 0;
+            return $hours . ' ' . ($hours == 1 ? 'hour' : 'hours');
+        } else {
+            $days = $this->duration_days ?? 0;
+            return $days . ' ' . ($days == 1 ? 'day' : 'days');
+        }
     }
 
     public function markForReapproval(): void

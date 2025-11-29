@@ -86,7 +86,9 @@ class CourseController extends Controller
             'price' => 'required|numeric|min:0',
             'currency' => 'required|in:USD,EUR',
             'discount' => 'nullable|numeric|min:0|max:100',
-            'duration_days' => 'required|integer|min:1|max:365',
+            'duration_type' => 'required|in:days,hours',
+            'duration_days' => 'required_if:duration_type,days|nullable|integer|min:1|max:365',
+            'duration_hours' => 'required_if:duration_type,hours|nullable|integer|min:1|max:8760',
             'course_image' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
         ]);
 
@@ -123,7 +125,9 @@ class CourseController extends Controller
             'discount' => $validated['discount'] ?? 0,
             'start_date' => null,
             'end_date' => null,
-            'duration_days' => $validated['duration_days'],
+            'duration_type' => $validated['duration_type'],
+            'duration_days' => $validated['duration_type'] === 'days' ? $validated['duration_days'] : null,
+            'duration_hours' => $validated['duration_type'] === 'hours' ? $validated['duration_hours'] : null,
             'status' => 'pending',
             'needs_reapproval' => false,
         ]);
@@ -198,7 +202,9 @@ class CourseController extends Controller
             'price' => 'required|numeric|min:0',
             'currency' => 'required|in:USD,EUR',
             'discount' => 'nullable|numeric|min:0|max:100',
-            'duration_days' => 'required|integer|min:1|max:365',
+            'duration_type' => 'required|in:days,hours',
+            'duration_days' => 'required_if:duration_type,days|nullable|integer|min:1|max:365',
+            'duration_hours' => 'required_if:duration_type,hours|nullable|integer|min:1|max:8760',
             'course_image' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
         ]);
 
@@ -234,9 +240,9 @@ class CourseController extends Controller
         $needsReapproval = false;
         if ($course->status == 'approved') {
             // Check if any significant changes were made
-            $significantFields = ['title', 'description', 'price', 'currency', 'duration_days'];
+            $significantFields = ['title', 'description', 'price', 'currency', 'duration_type', 'duration_days', 'duration_hours'];
             foreach ($significantFields as $field) {
-                if ($course->{$field} != $validated[$field]) {
+                if ($course->{$field} != ($validated[$field] ?? null)) {
                     $needsReapproval = true;
                     break;
                 }
@@ -265,7 +271,9 @@ class CourseController extends Controller
             'discount' => $validated['discount'] ?? 0,
             'start_date' => null,
             'end_date' => null,
-            'duration_days' => $validated['duration_days'],
+            'duration_type' => $validated['duration_type'],
+            'duration_days' => $validated['duration_type'] === 'days' ? $validated['duration_days'] : null,
+            'duration_hours' => $validated['duration_type'] === 'hours' ? $validated['duration_hours'] : null,
             'needs_reapproval' => $needsReapproval,
             'status' => 'pending',
         ];

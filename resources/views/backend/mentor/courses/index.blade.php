@@ -209,7 +209,7 @@
                                     </div>
                                     <div class="flex items-center">
                                         <i class="fa-solid fa-clock mr-1"></i>
-                                        <span>{{ $course->duration_days }} {{ __('trans.days') }}</span>
+                                        <span>{{ $course->formatted_duration }}</span>
                                     </div>
                                 </div>
 

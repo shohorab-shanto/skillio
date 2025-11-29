@@ -32,25 +32,32 @@ class DashboardController extends Controller
             $query->where('mentor_id', $mentor->id);
         })->distinct('user_id')->count();
         
-        // Get income statistics
-        $mentorIncome = PaymentTransaction::whereHas('enrollments.enrollable', function($query) use ($mentor) {
+        // Get income statistics by currency
+        $incomeQuery = PaymentTransaction::whereHas('enrollments.enrollable', function($query) use ($mentor) {
             $query->where('mentor_id', $mentor->id);
-        })->where('transaction_status', 'completed')->sum('mentor_amount');
+        })->where('transaction_status', 'completed');
         
-        // Get current month earnings
-        $currentMonthEarnings = PaymentTransaction::whereHas('enrollments.enrollable', function($query) use ($mentor) {
+        $mentorIncomeUSD = (clone $incomeQuery)->where('currency', 'USD')->sum('mentor_amount');
+        $mentorIncomeEUR = (clone $incomeQuery)->where('currency', 'EUR')->sum('mentor_amount');
+        
+        // Get current month earnings by currency
+        $currentMonthQuery = PaymentTransaction::whereHas('enrollments.enrollable', function($query) use ($mentor) {
             $query->where('mentor_id', $mentor->id);
         })->where('transaction_status', 'completed')
           ->whereMonth('created_at', Carbon::now()->month)
-          ->whereYear('created_at', Carbon::now()->year)
-          ->sum('mentor_amount');
+          ->whereYear('created_at', Carbon::now()->year);
         
-        // Get today's earnings
-        $todayEarnings = PaymentTransaction::whereHas('enrollments.enrollable', function($query) use ($mentor) {
+        $currentMonthEarningsUSD = (clone $currentMonthQuery)->where('currency', 'USD')->sum('mentor_amount');
+        $currentMonthEarningsEUR = (clone $currentMonthQuery)->where('currency', 'EUR')->sum('mentor_amount');
+        
+        // Get today's earnings by currency
+        $todayQuery = PaymentTransaction::whereHas('enrollments.enrollable', function($query) use ($mentor) {
             $query->where('mentor_id', $mentor->id);
         })->where('transaction_status', 'completed')
-          ->whereDate('created_at', Carbon::today())
-          ->sum('mentor_amount');
+          ->whereDate('created_at', Carbon::today());
+        
+        $todayEarningsUSD = (clone $todayQuery)->where('currency', 'USD')->sum('mentor_amount');
+        $todayEarningsEUR = (clone $todayQuery)->where('currency', 'EUR')->sum('mentor_amount');
         
         // Get monthly earnings for the last 6 months (for bar chart)
         $monthlyEarnings = [];
@@ -209,10 +216,13 @@ class DashboardController extends Controller
         return view('backend.mentor.dashboard.index', compact(
             'totalCourses',
             'totalUsers', 
-            'mentorIncome',
+            'mentorIncomeUSD',
+            'mentorIncomeEUR',
             'activeCourses',
-            'currentMonthEarnings',
-            'todayEarnings',
+            'currentMonthEarningsUSD',
+            'currentMonthEarningsEUR',
+            'todayEarningsUSD',
+            'todayEarningsEUR',
             'monthlyEarnings',
             'dailyEarnings',
             'students',

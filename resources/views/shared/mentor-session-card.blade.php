@@ -85,8 +85,11 @@
     <!-- Fee and Type -->
     <div class="flex items-center justify-between mb-4">
         <div class="text-sm text-gray-600">
-            <i class="fa-solid fa-dollar-sign mr-1"></i>
-            {{ number_format($session->fee ?? 0, 2) }}
+            @php
+                $currencySymbol = ($session->currency ?? 'USD') == 'EUR' ? '€' : '$';
+            @endphp
+            <i class="fa-solid fa-{{ ($session->currency ?? 'USD') == 'EUR' ? 'euro-sign' : 'dollar-sign' }} mr-1"></i>
+            {{ $currencySymbol }}{{ number_format($session->fee ?? 0, 2) }}
         </div>
         <div class="text-sm text-gray-600">
             @if(($session->type ?? 'online') == 'online')

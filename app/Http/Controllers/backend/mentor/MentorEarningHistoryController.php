@@ -62,23 +62,37 @@ class MentorEarningHistoryController extends Controller
             $statsQuery->whereDate('created_at', '<=', $request->end_date);
         }
         
-        $totalEarning = $statsQuery->sum('mentor_amount');
+        // Calculate earnings by currency
+        $totalEarningUSD = (clone $statsQuery)->where('currency', 'USD')->sum('mentor_amount');
+        $totalEarningEUR = (clone $statsQuery)->where('currency', 'EUR')->sum('mentor_amount');
         
-        // This month earning (always current month, regardless of date filters)
-        $thisMonthEarning = PaymentTransaction::whereHas('enrollments.enrollable', function($q) use ($mentor) {
+        // This month earning by currency (always current month, regardless of date filters)
+        $thisMonthQuery = PaymentTransaction::whereHas('enrollments.enrollable', function($q) use ($mentor) {
             $q->where('mentor_id', $mentor->id);
         })->where('transaction_status', 'completed')
           ->whereMonth('created_at', Carbon::now()->month)
-          ->whereYear('created_at', Carbon::now()->year)
-          ->sum('mentor_amount');
+          ->whereYear('created_at', Carbon::now()->year);
         
-        // Today's earning (always current day, regardless of date filters)
-        $todayEarning = PaymentTransaction::whereHas('enrollments.enrollable', function($q) use ($mentor) {
+        $thisMonthEarningUSD = (clone $thisMonthQuery)->where('currency', 'USD')->sum('mentor_amount');
+        $thisMonthEarningEUR = (clone $thisMonthQuery)->where('currency', 'EUR')->sum('mentor_amount');
+        
+        // Today's earning by currency (always current day, regardless of date filters)
+        $todayQuery = PaymentTransaction::whereHas('enrollments.enrollable', function($q) use ($mentor) {
             $q->where('mentor_id', $mentor->id);
         })->where('transaction_status', 'completed')
-          ->whereDate('created_at', Carbon::today())
-          ->sum('mentor_amount');
+          ->whereDate('created_at', Carbon::today());
         
-        return view('backend.mentor.earning-history.index', compact('payments', 'totalEarning', 'thisMonthEarning', 'todayEarning'));
+        $todayEarningUSD = (clone $todayQuery)->where('currency', 'USD')->sum('mentor_amount');
+        $todayEarningEUR = (clone $todayQuery)->where('currency', 'EUR')->sum('mentor_amount');
+        
+        return view('backend.mentor.earning-history.index', compact(
+            'payments', 
+            'totalEarningUSD', 
+            'totalEarningEUR',
+            'thisMonthEarningUSD', 
+            'thisMonthEarningEUR',
+            'todayEarningUSD', 
+            'todayEarningEUR'
+        ));
     }
 }

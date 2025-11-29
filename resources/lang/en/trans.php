@@ -2034,6 +2034,7 @@ return [
     'confirm_selection' => 'Confirm Selection',
     'please_select_at_least_one_date' => 'Please select at least one date',
     'date' => 'Date',
+    'currency' => 'Currency',
     'price' => 'Price',
     'category' => 'Category',
     'select_a_category' => 'Select a category',

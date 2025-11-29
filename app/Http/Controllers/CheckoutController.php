@@ -35,16 +35,22 @@ class CheckoutController extends Controller
             ->first();
 
         if ($existingEnrollment) {
-            return redirect()->route('dashboard')->with('error', 'You have already enrolled in this session.');
+            return redirect()->route('user.dashboard')->with('error', 'You have already enrolled in this session.');
         }
 
         // Get session details with relationships
         $sessionBooking->load(['mentor.user', 'category', 'subCategories']);
 
+        // Determine currency symbol
+        $currency = $sessionBooking->currency ?? 'USD';
+        $currencySymbol = $currency == 'EUR' ? '€' : '$';
+
         return view('frontend.checkout.index', [
             'type' => 'session',
             'item' => $sessionBooking,
             'amount' => $sessionBooking->fee,
+            'currency' => $currency,
+            'currencySymbol' => $currencySymbol,
             'title' => 'Session with ' . $sessionBooking->mentor->user->name
         ]);
     }
@@ -66,16 +72,22 @@ class CheckoutController extends Controller
             ->first();
 
         if ($existingEnrollment) {
-            return redirect()->route('dashboard')->with('error', 'You have already enrolled in this course.');
+            return redirect()->route('user.dashboard')->with('error', 'You have already enrolled in this course.');
         }
 
         // Get course details with relationships
         $course->load(['mentor.user', 'category', 'subCategories']);
 
+        // Determine currency symbol
+        $currency = $course->currency ?? 'USD';
+        $currencySymbol = $currency == 'EUR' ? '€' : '$';
+
         return view('frontend.checkout.index', [
             'type' => 'course',
             'item' => $course,
             'amount' => $course->discounted_price,
+            'currency' => $currency,
+            'currencySymbol' => $currencySymbol,
             'title' => $course->title
         ]);
     }

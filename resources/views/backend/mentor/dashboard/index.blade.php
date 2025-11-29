@@ -66,13 +66,19 @@
                             </div>
                             <div class="min-w-0 flex-1">
                                 <p class="text-xs sm:text-sm text-gray-600 truncate">{{ __('trans.mentors_income') }}</p>
-                                <p class="text-lg sm:text-2xl font-bold text-gray-900 truncate">${{ number_format($mentorIncome) }}</p>
+                                <div class="space-y-0.5">
+                                    <p class="text-base sm:text-xl font-bold text-gray-900 truncate">${{ number_format($mentorIncomeUSD) }}</p>
+                                    <p class="text-base sm:text-xl font-bold text-gray-900 truncate">€{{ number_format($mentorIncomeEUR) }}</p>
+                                </div>
                         </div>
                         </div>
                     </div>
                     <div class="flex space-x-1 justify-between w-full overflow-hidden">
+                    @php
+                        $totalIncome = $mentorIncomeUSD + $mentorIncomeEUR;
+                    @endphp
                     @for($i = 1; $i <= 15; $i++)
-                            <div class="w-1.5 h-6 sm:w-3 sm:h-8 rounded-xl flex-1 min-w-0 {{ $i <= min(15, $mentorIncome / 1000) ? 'bg-blue-600' : 'bg-gray-200' }}"></div>
+                            <div class="w-1.5 h-6 sm:w-3 sm:h-8 rounded-xl flex-1 min-w-0 {{ $i <= min(15, $totalIncome / 1000) ? 'bg-blue-600' : 'bg-gray-200' }}"></div>
                     @endfor
                 </div>
             </div>

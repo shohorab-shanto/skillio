@@ -20,6 +20,7 @@ class SessionBooking extends Model
         'start_time',
         'end_time',
         'fee',
+        'currency',
         'status',
         'payment_status',
     ];

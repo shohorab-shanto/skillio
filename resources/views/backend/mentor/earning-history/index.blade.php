@@ -19,12 +19,15 @@
             <div class="flex items-center">
                 <div class="flex-shrink-0">
                     <div class="w-12 h-12 bg-green-100 rounded-lg flex items-center justify-center">
-                        <i class="fa-solid fa-dollar-sign text-green-600 text-xl"></i>
+                        <i class="fa-solid fa-coins text-green-600 text-xl"></i>
                     </div>
                 </div>
                 <div class="ml-4">
                     <p class="text-sm font-medium text-gray-500">{{ __('trans.total_earning') }}</p>
-                    <p class="text-2xl font-bold text-gray-900">${{ number_format($totalEarning, 2) }}</p>
+                    <div class="space-y-1">
+                        <p class="text-xl font-bold text-gray-900">${{ number_format($totalEarningUSD, 2) }}</p>
+                        <p class="text-xl font-bold text-gray-900">€{{ number_format($totalEarningEUR, 2) }}</p>
+                    </div>
                 </div>
             </div>
         </div>
@@ -39,7 +42,10 @@
                 </div>
                 <div class="ml-4">
                     <p class="text-sm font-medium text-gray-500">{{ __('trans.this_month') }}</p>
-                    <p class="text-2xl font-bold text-gray-900">${{ number_format($thisMonthEarning, 2) }}</p>
+                    <div class="space-y-1">
+                        <p class="text-xl font-bold text-gray-900">${{ number_format($thisMonthEarningUSD, 2) }}</p>
+                        <p class="text-xl font-bold text-gray-900">€{{ number_format($thisMonthEarningEUR, 2) }}</p>
+                    </div>
                 </div>
             </div>
         </div>
@@ -54,7 +60,10 @@
                 </div>
                 <div class="ml-4">
                     <p class="text-sm font-medium text-gray-500">{{ __('trans.today') }}</p>
-                    <p class="text-2xl font-bold text-gray-900">${{ number_format($todayEarning, 2) }}</p>
+                    <div class="space-y-1">
+                        <p class="text-xl font-bold text-gray-900">${{ number_format($todayEarningUSD, 2) }}</p>
+                        <p class="text-xl font-bold text-gray-900">€{{ number_format($todayEarningEUR, 2) }}</p>
+                    </div>
                 </div>
             </div>
         </div>
@@ -261,7 +270,10 @@
                                 @endif
                             </td>
                             <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
-                                ${{ number_format($payment->mentor_amount, 2) }}
+                                @php
+                                    $currencySymbol = $payment->currency == 'EUR' ? '€' : '$';
+                                @endphp
+                                {{ $currencySymbol }}{{ number_format($payment->mentor_amount, 2) }}
                             </td>
                             <td class="px-6 py-4 whitespace-nowrap">
                                 @if($payment->transaction_status == 'completed')
@@ -337,7 +349,10 @@
                             <p class="text-sm text-gray-500">{{ $payment->created_at->format('M d, Y') }}</p>
                         </div>
                         <div class="text-right">
-                            <p class="text-lg font-bold text-green-600">${{ number_format($payment->mentor_amount, 2) }}</p>
+                            @php
+                                $currencySymbol = $payment->currency == 'EUR' ? '€' : '$';
+                            @endphp
+                            <p class="text-lg font-bold text-green-600">{{ $currencySymbol }}{{ number_format($payment->mentor_amount, 2) }}</p>
                             @if($payment->transaction_status == 'completed')
                                 <span class="inline-flex items-center px-2 py-1 rounded-full text-sm font-medium bg-green-100 text-green-800">
                                     <svg class="w-4 h-4 mr-1.5 text-green-400" fill="currentColor" viewBox="0 0 20 20">

@@ -14,7 +14,10 @@
         </div>
         
         <div class="mb-2">
-            <p class="text-xl font-bold text-gray-900" id="earningsAmount">${{ number_format($currentMonthEarnings) }}</p>
+            <div class="space-y-0.5" id="earningsAmount">
+                <p class="text-lg font-bold text-gray-900">${{ number_format($currentMonthEarningsUSD ?? 0) }}</p>
+                <p class="text-lg font-bold text-gray-900">€{{ number_format($currentMonthEarningsEUR ?? 0) }}</p>
+            </div>
             <p class="text-xs text-gray-500" id="earningsDate">{{ Carbon\Carbon::now()->format('M d, Y') }}</p>
         </div>
         
@@ -75,7 +78,7 @@ document.addEventListener('DOMContentLoaded', function() {
         '1M': {
             labels: @json(collect($dailyEarnings)->pluck('date')->toArray()),
             data: @json(collect($dailyEarnings)->pluck('earnings')->toArray()),
-            total: @json($currentMonthEarnings),
+            total: @json(($currentMonthEarningsUSD ?? 0) + ($currentMonthEarningsEUR ?? 0)),
             date: '{{ Carbon\Carbon::now()->format("M d, Y") }}'
         },
         '1YR': {

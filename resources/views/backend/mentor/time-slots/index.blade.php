@@ -174,8 +174,11 @@
                         <!-- Fee and Type -->
                         <div class="flex items-center justify-between">
                             <div class="text-sm text-gray-600">
-                                <i class="fa-solid fa-dollar-sign mr-1"></i>
-                                {{ number_format($timeSlot->fee, 2) }}
+                                @php
+                                    $currencySymbol = $timeSlot->currency == 'EUR' ? '€' : '$';
+                                @endphp
+                                <i class="fa-solid fa-{{ $timeSlot->currency == 'EUR' ? 'euro-sign' : 'dollar-sign' }} mr-1"></i>
+                                {{ $currencySymbol }}{{ number_format($timeSlot->fee, 2) }}
                             </div>
                             <div class="text-sm text-gray-600">
                                 <i class="fa-solid fa-{{ $timeSlot->mentor->type == 'online' ? 'video' : 'location-dot' }} mr-1"></i>

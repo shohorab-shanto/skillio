@@ -15,11 +15,22 @@ class UserAuth
      */
     public function handle(Request $request, Closure $next): Response
     {
-        if (auth()->check() && auth()->user()->role == 'user') {
-            return $next($request);
+        // Check if user is authenticated
+        if (auth()->check()) {
+            // Check if user has correct role
+            if (auth()->user()->role == 'user') {
+                return $next($request);
+            }
+            
+            // User is logged in but not a 'user' role - redirect to their dashboard
+            if (auth()->user()->role == 'admin') {
+                return redirect()->route('admin.dashboard')->with('error', 'Access denied. Admin accounts cannot book sessions.');
+            } elseif (auth()->user()->role == 'mentor') {
+                return redirect()->route('mentor.dashboard')->with('error', 'Access denied. Mentors cannot book their own sessions.');
+            }
         }
         
-        // Store the intended URL before redirecting to login
+        // User is not authenticated - store intended URL and redirect to login
         $request->session()->put('url.intended', $request->fullUrl());
         
         return redirect()->route('login')->with('error', 'Please log in to continue.');

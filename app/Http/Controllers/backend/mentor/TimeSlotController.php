@@ -61,6 +61,7 @@ class TimeSlotController extends Controller
             'time_slots.*.end_time' => 'required|date_format:H:i|after:time_slots.*.start_time',
             'category_id' => 'required|exists:categories,id',
             'sub_category_id' => 'required|exists:sub_categories,id',
+            'currency' => 'required|in:USD,EUR',
             'fee' => 'required|numeric|min:0',
         ]);
         
@@ -89,6 +90,7 @@ class TimeSlotController extends Controller
                     'start_time' => $timeSlot['start_time'],
                     'end_time' => $timeSlot['end_time'],
                     'fee' => $request->fee,
+                    'currency' => $request->currency,
                     'status' => 'active',
                 ]);
 
@@ -145,6 +147,7 @@ class TimeSlotController extends Controller
             'start_time' => $request->start_time,
             'end_time' => $request->end_time,
             'fee' => $request->fee,
+            'currency' => $request->currency,
         ]);
 
         // Update single subcategory

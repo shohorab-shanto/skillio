@@ -143,21 +143,35 @@ select.custom-dropdown:-moz-focusring {
                     @enderror
                 </div>
                 <div>
-                    <label class="block text-sm font-medium text-gray-700 mb-2">{{ __('trans.price') }} *</label>
-                    <div class="relative">
-                        <span class="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-500">$</span>
-                        <input type="number" 
-                               name="fee"
-                               step="0.01"
-                               min="0"
-                               class="w-full pl-8 pr-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent"
-                               placeholder="0.00" 
-                               value="{{ old('fee') }}" required>
-                    </div>
-                    @error('fee')
+                    <label class="block text-sm font-medium text-gray-700 mb-2">{{ __('trans.currency') }} *</label>
+                    <select id="currency" name="currency" 
+                            class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent" 
+                            required onchange="updateCurrencySymbol()">
+                        <option value="USD" {{ old('currency') == 'USD' ? 'selected' : '' }}>USD ($)</option>
+                        <option value="EUR" {{ old('currency') == 'EUR' ? 'selected' : '' }}>EUR (€)</option>
+                    </select>
+                    @error('currency')
                         <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
                     @enderror
                 </div>
+            </div>
+
+            <!-- Price -->
+            <div>
+                <label class="block text-sm font-medium text-gray-700 mb-2">{{ __('trans.price') }} *</label>
+                <div class="relative max-w-xs">
+                    <span id="currency-symbol" class="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-500">$</span>
+                    <input type="number" 
+                           name="fee"
+                           step="0.01"
+                           min="0"
+                           class="w-full pl-8 pr-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent"
+                           placeholder="0.00" 
+                           value="{{ old('fee') }}" required>
+                </div>
+                @error('fee')
+                    <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
+                @enderror
             </div>
 
             <!-- Category Selection -->
@@ -598,10 +612,23 @@ document.addEventListener('click', function(event) {
     }
 });
 
+// Currency Symbol Update
+function updateCurrencySymbol() {
+    const currency = document.getElementById('currency').value;
+    const symbol = document.getElementById('currency-symbol');
+    
+    if (currency === 'EUR') {
+        symbol.textContent = '€';
+    } else {
+        symbol.textContent = '$';
+    }
+}
+
 // Initialize on page load
 document.addEventListener('DOMContentLoaded', function() {
     updateRemoveButtons();
     updateSelectedCount();
+    updateCurrencySymbol();
 });
 </script>
 @endsection

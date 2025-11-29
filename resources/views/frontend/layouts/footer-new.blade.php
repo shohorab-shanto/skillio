@@ -31,7 +31,7 @@
                             Subscribe to Newsletter
                         </h2>
                         <p class="text-white/80 text-xs lg:text-sm">
-                            Get the latest updates about courses and mentorship programs.
+                            Get the latest updates about courses/mentorships programs.
                         </p>
                         <form class="flex flex-col sm:flex-row gap-2 max-w-sm mx-auto">
                             <input type="email" 
@@ -106,7 +106,7 @@
                         <div class="grid grid-cols-2 gap-3 text-xs lg:text-sm">
                             <a href="#" class="text-white/90 hover:text-white transition-colors duration-200 hover:underline">About Us</a>
                             <a href="#" class="text-white/90 hover:text-white transition-colors duration-200 hover:underline">How it Works</a>
-                            <a href="#" class="text-white/90 hover:text-white transition-colors duration-200 hover:underline">Courses</a>
+                            <a href="#" class="text-white/90 hover:text-white transition-colors duration-200 hover:underline">Courses/Mentorships</a>
                             <a href="#" class="text-white/90 hover:text-white transition-colors duration-200 hover:underline">Mentors</a>
                             <a href="#" class="text-white/90 hover:text-white transition-colors duration-200 hover:underline">Reviews</a>
                             <a href="#" class="text-white/90 hover:text-white transition-colors duration-200 hover:underline">FAQ</a>

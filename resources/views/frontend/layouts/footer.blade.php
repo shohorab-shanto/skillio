@@ -57,7 +57,7 @@
                     <p class="text-base text-center w-full">{{ __('trans.social_media') }}</p>
                     <div class="flex flex-wrap justify-center gap-2 md:gap-4">
                         <!-- TikTok -->
-                        <a href="https://www.tiktok.com/@skillio.official?_t=ZS-8zKoEUxHhEP&_r=1" aria-label="TikTok" class="hover:text-gray-300" target="_blank" rel="noopener noreferrer">
+                        <a href="https://www.tiktok.com/@skillioapp?_r=1&_t=ZS-91UIyBJ2Qem" aria-label="TikTok" class="hover:text-gray-300" target="_blank" rel="noopener noreferrer">
                             <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor"
                                 viewBox="0 0 24 24">
                                 <path
@@ -75,7 +75,7 @@
                             </svg>
                         </a>
                         <!-- Instagram -->
-                        <a href="https://www.instagram.com/skillio.official?igsh=OHFsbTdjaXl5YTZp&utm_source=qr" aria-label="Instagram" class="hover:text-gray-300" target="_blank" rel="noopener noreferrer">
+                        <a href="https://www.instagram.com/skillioapp?igsh=OHFsbTdjaXl5YTZp&utm_source=qr" aria-label="Instagram" class="hover:text-gray-300" target="_blank" rel="noopener noreferrer">
                             <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor"
                                 viewBox="0 0 24 24">
                                 <path

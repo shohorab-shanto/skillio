@@ -28,14 +28,14 @@
             <div class="bg-white rounded-2xl border border-gray-200 shadow-sm hover:shadow-md transition-shadow duration-300">
                 <details class="group">
                     <summary class="flex items-center justify-between p-6 cursor-pointer">
-                        <h3 class="font-semibold text-lg text-gray-900">{{ __('trans.how_do_i_start_learning_question') }}</h3>
+                        <h3 class="font-semibold text-lg text-gray-900">{{ __('trans.how_to_start_learning_question') }}</h3>
                         <svg class="w-6 h-6 text-purple-600 transform transition-transform group-open:rotate-45" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6v6m0 0v6m0-6h6m-6 0H6"/>
                         </svg>
                     </summary>
                     <div class="px-6 pb-6">
                         <p class="text-gray-700 leading-relaxed">
-                            {{ __('trans.how_do_i_start_learning_answer') }}
+                            {{ __('trans.how_to_start_learning_answer') }}
                         </p>
                     </div>
                 </details>
@@ -92,7 +92,7 @@
                 </details>
             </div>
 
-            <!-- FAQ Item 6 -->
+            <!-- FAQ Item 6 
             <div class="bg-white rounded-2xl border border-gray-200 shadow-sm hover:shadow-md transition-shadow duration-300">
                 <details class="group">
                     <summary class="flex items-center justify-between p-6 cursor-pointer">
@@ -107,9 +107,9 @@
                         </p>
                     </div>
                 </details>
-            </div>
+            </div> -->
 
-            <!-- FAQ Item 7 -->
+            <!-- FAQ Item 7 
             <div class="bg-white rounded-2xl border border-gray-200 shadow-sm hover:shadow-md transition-shadow duration-300">
                 <details class="group">
                     <summary class="flex items-center justify-between p-6 cursor-pointer">
@@ -124,9 +124,9 @@
                         </p>
                     </div>
                 </details>
-            </div>
+            </div> -->
 
-            <!-- FAQ Item 8 -->
+            <!-- FAQ Item 8 
             <div class="bg-white rounded-2xl border border-gray-200 shadow-sm hover:shadow-md transition-shadow duration-300">
                 <details class="group">
                     <summary class="flex items-center justify-between p-6 cursor-pointer">
@@ -141,7 +141,7 @@
                         </p>
                     </div>
                 </details>
-            </div>
+            </div> -->
 
         </div>
     </div>

@@ -64,7 +64,7 @@
                 <label class="flex-1 cursor-pointer group">
                     <input type="radio" name="education_type" value="in-person" class="peer sr-only" {{ old('education_type', isset($selectedEducationType) ? $selectedEducationType : null) == 'in-person' ? 'checked' : '' }}>
                     <div class="flex flex-row items-center border-2 border-transparent peer-checked:border-purple-600 rounded-xl bg-white px-6 py-5 transition-all duration-200 shadow-sm peer-checked:shadow-lg hover:border-purple-400">
-                        <img src="{{ asset('assets/images/Layer_1.png') }}" alt="In-person education" class="w-12 h-12 mr-4">
+                        <img src="{{ asset('assets/images/person.png') }}" alt="In-person education" class="w-12 h-12 mr-4">
                         <div>
                             <span class="font-semibold text-base text-gray-900 mb-1 block">{{ __('trans.in_person_education') }}</span>
                             <span class="text-sm text-gray-500 text-left block">{{ __('trans.attend_classes_physically') }}</span>
@@ -74,7 +74,7 @@
                 <label class="flex-1 cursor-pointer group">
                     <input type="radio" name="education_type" value="online" class="peer sr-only" {{ old('education_type', isset($selectedEducationType) ? $selectedEducationType : null) == 'online' ? 'checked' : '' }}>
                     <div class="flex flex-row items-center border-2 border-transparent peer-checked:border-purple-600 rounded-xl bg-white px-6 py-5 transition-all duration-200 shadow-sm peer-checked:shadow-lg hover:border-purple-400">
-                        <img src="{{ asset('assets/images/Layer_1.png') }}" alt="Online education" class="w-12 h-12 mr-4">
+                        <img src="{{ asset('assets/images/Online.png') }}" alt="Online education" class="w-12 h-12 mr-4">
                         <div>
                             <span class="font-semibold text-base text-gray-900 mb-1 block">{{ __('trans.online_education') }}</span>
                             <span class="text-sm text-gray-500 text-left block">{{ __('trans.learn_remotely') }}</span>

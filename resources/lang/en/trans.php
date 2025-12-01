@@ -22,12 +22,12 @@ return [
     'image_requirements' => 'PNG, JPG, GIF up to 2MB',
     'current_image' => 'Current Image',
     'card_1_title' => 'Register & Get Verified',
-    'card_1_description' => 'Take our personalized quiz to find courses and mentors that match your goals and learning style.',
+    'card_1_description' => 'Fill out our personalized form to get on the Skillio platform.',
     'card_2_title_line1' => 'Publish Courses / Set',
     'card_2_title_line2' => 'Time Slots.',
-    'card_2_description' => 'Take our personalized quiz to find courses and mentors that match your goals and learning style.',
+    'card_2_description' => 'In agreement with the Skillio expert team, choose the dates when you will be available to other members for your education.',
     'card_3_title' => 'Earn & Inspire',
-    'card_3_description' => 'Take our personalized quiz to find courses and mentors that match your goals and learning style.',
+    'card_3_description' => 'Access your content at any time, receive personalized feedback and track your progress.',
 
     // Learners Content
     'learners_card_1_title' => 'Apply & Answer The Questions',
@@ -123,7 +123,7 @@ return [
     'copyright' => '© Skillio LLC, All Rights Reserved',
 
     // Courses Page
-    'search_for_courses' => 'Search for courses',
+    'search_for_courses' => 'Search for courses/mentorships',
     'search_results_for' => 'Search results for:',
     'clear_search' => 'Clear search',
     'all' => 'All',
@@ -257,7 +257,7 @@ return [
     'back_to_dashboard' => 'Back to Dashboard',
     'view_courses' => 'View All Courses/Mentorships',
     'book_another_session' => 'Book Another Session',
-    'course' => 'Course:',
+    'course' => 'Course/Mentorship:',
     'instructor' => 'Instructor:',
     'enrollment_status' => 'Enrollment Status:',
     'enrolled_at' => 'Enrolled At:',
@@ -715,7 +715,7 @@ return [
     'serbian_short' => 'SR',
     'slovenian_short' => 'SL',
     'macedonian_short' => 'MK',
-    
+
     // Auth Pages - Additional Keys
     'name' => 'Name',
     'confirm_password_area' => 'This is a secure area of the application. Please confirm your password before continuing.',
@@ -725,18 +725,18 @@ return [
     'verification_link_sent' => 'A new verification link has been sent to the email address you provided during registration.',
     'resend_verification_email' => 'Resend Verification Email',
     'log_out' => 'Log Out',
-    
+
     // Reset Password Additional Keys
     'reset_password' => 'Reset Password',
     'reset_password_description' => 'Create a strong password to secure your account',
     'enter_new_password_placeholder' => 'Enter your new password',
     'confirm_new_password_placeholder' => 'Confirm your new password',
     'back_to_login' => '← Back to Login',
-    
+
     // Forgot Password Additional Keys
     'forgot_password_description' => 'Enter your email to receive a password reset link.',
     'email_password_reset_link' => 'Email Password Reset Link',
-    
+
     // Mentor Time Slots - Student Details Modal
     'student_details' => 'Student Details',
     'booked_student_information' => 'Booked student information',
@@ -781,7 +781,7 @@ return [
     'from_date' => 'From Date',
     'apply_filters' => 'Apply Filters',
     'clear_filters' => 'Clear Filters',
-    'course' => 'Course',
+    'course' => 'Course/Mentorship',
     'price' => 'Price',
     'enrollments' => 'Enrollments',
     'created_date' => 'Created Date',
@@ -936,7 +936,7 @@ return [
     'search_placeholder_mentors' => 'Search mentors...',
     'search_placeholder_categories' => 'Search categories...',
     'search_placeholder_transactions' => 'Search transactions...',
-    
+
     // Additional Admin Keys
     'verification' => 'Verification',
     'availability' => 'Availability',
@@ -961,7 +961,7 @@ return [
     'in_progress' => 'in progress',
     'no_active_courses' => 'No active courses/mentorships',
     'completed' => 'completed',
-    'no_courses' => 'No courses',
+    'no_courses' => 'No courses/mentorships',
     'next' => 'Next',
     'soon' => 'Soon',
     'no_sessions' => 'No sessions',
@@ -993,7 +993,7 @@ return [
     'completed' => 'Completed',
     'filter' => 'Filter',
     'clear' => 'Clear',
-    'course' => 'Course',
+    'course' => 'Course/Mentorship',
     'price' => 'Price',
     'enrollments' => 'Enrollments',
     'created_date' => 'Created Date',
@@ -1088,7 +1088,7 @@ return [
     'title' => 'Title',
     'paid_amount' => 'Paid Amount',
     'status' => 'Status',
-    'course_badge' => 'Course',
+    'course_badge' => 'Course/Mentorship',
     'session_badge' => 'Session',
     'session_with' => 'Session with',
     'unknown_mentor' => 'Unknown Mentor',
@@ -1154,7 +1154,7 @@ return [
     'password_must_contain' => 'Please ensure your password meets all requirements: minimum 8 characters, 1 uppercase letter, and 1 number.',
     'password_confirmation_mismatch' => 'Password confirmation does not match.',
     'enter_valid_phone' => 'Please enter a valid phone number (e.g., +1234567890)',
-    
+
     // Admin Login Page
     'admin_login_title' => 'Admin Login',
     'admin_access' => 'Admin Access',
@@ -1186,7 +1186,7 @@ return [
     'sub_categories' => 'Sub-Categories:',
     'sub_categories_description' => 'You can add sub-categories to further organize content.',
     'please_enter_category_name' => 'Please enter a category name.',
-    
+
     // Admin Categories Edit Page
     'edit_category' => 'Edit Category',
     'update_category' => 'Update Category',
@@ -1197,7 +1197,7 @@ return [
     'data_integrity_description' => 'Changes will affect all courses, sessions, and sub-categories.',
     'cascade_effects' => 'Cascade Effects:',
     'cascade_effects_description' => 'Updates will reflect in all related content.',
-    
+
     // Admin Categories Index Page
     'categories_management' => 'Categories Management',
     'add_category' => 'Add Category',
@@ -1205,7 +1205,7 @@ return [
     'usage_stats' => 'Usage Stats',
     'created' => 'Created',
     'actions' => 'Actions',
-    'courses' => 'Courses',
+    'courses' => 'Courses/Mentorships',
     'sessions' => 'Sessions',
     'sub_categories' => 'Sub-Categories',
     'no_description' => 'No description',
@@ -1223,7 +1223,7 @@ return [
     'cancel' => 'Cancel',
     'delete_button' => 'Delete',
     'an_error_occurred_deleting' => 'An error occurred while deleting the category',
-    
+
     // Admin Courses Index Page - Additional Keys
     'min_price' => 'Min Price',
     'max_price' => 'Max Price',
@@ -1253,7 +1253,7 @@ return [
     'an_error_occurred_updating' => 'An error occurred while updating course status',
     'please_provide_rejection_reason' => 'Please provide a rejection reason',
     'an_error_occurred_rejecting' => 'An error occurred while rejecting the course',
-    
+
     // Admin Courses Show Page
     'course_details' => 'Course/Mentorship Details',
     'course_information' => 'Course/Mentorship Information',
@@ -1293,7 +1293,7 @@ return [
     'an_error_occurred_updating_status' => 'An error occurred while updating course status',
     'please_provide_rejection_reason' => 'Please provide a rejection reason',
     'an_error_occurred_rejecting' => 'An error occurred while rejecting the course',
-    
+
     // Admin Backend Layout
     'admin_dashboard' => 'Admin Dashboard',
     'confirm_logout' => 'Confirm Logout',
@@ -1307,14 +1307,14 @@ return [
     'srpski' => 'Српски',
     'slovenscina' => 'Slovenščina',
     'makedonski' => 'Македонски',
-    
+
     // Admin Mentors Courses Page
     'mentor_courses' => 'Mentor Courses',
     'all_courses_created_by' => 'All courses created by',
     'back_to_mentor' => 'Back to Mentor',
     'total' => 'Total:',
-    'courses' => 'Courses',
-    'course' => 'Course',
+    'courses' => 'Courses/Mentorships',
+    'course' => 'Course/Mentorship',
     'category' => 'Category',
     'status' => 'Status',
     'price' => 'Price',
@@ -1332,7 +1332,7 @@ return [
     'showing' => 'Showing',
     'to' => 'to',
     'of' => 'of',
-    
+
     // Admin Mentors Create Page
     'create_mentor' => 'Create Mentor',
     'back_to_mentors' => 'Back to Mentors',
@@ -1382,7 +1382,7 @@ return [
     'at_least_8_characters' => 'at least 8 characters',
     '1_uppercase_letter' => '1 uppercase letter',
     '1_number' => '1 number',
-    
+
     // Admin Mentors Edit Page
     'edit_mentor' => 'Edit Mentor',
     'back_to_mentors' => 'Back to Mentors',
@@ -1447,7 +1447,7 @@ return [
     'years_exp' => 'years exp.',
     'unknown' => 'Unknown',
     'na' => 'N/A',
-    
+
     // Admin Mentors Sessions Page
     'mentor_sessions' => 'Mentor Sessions',
     'all_sessions_created_by' => 'All sessions created by',
@@ -1468,7 +1468,7 @@ return [
     'showing' => 'Showing',
     'to' => 'to',
     'of' => 'of',
-    
+
     // Admin Mentors Show Page
     'mentor_details' => 'Mentor Details',
     'back_to_mentors' => 'Back to Mentors',
@@ -1519,7 +1519,7 @@ return [
     'error_updating_availability' => 'An error occurred while updating availability',
     'years' => 'years',
     'standard' => 'Standard',
-    
+
     // Admin Sub-Categories Create Page
     'create_sub_category' => 'Create Sub-Category',
     'back_to_sub_categories' => 'Back to Sub-Categories',
@@ -1541,7 +1541,7 @@ return [
     'organization_description' => 'Use sub-categories to further organize courses and sessions.',
     'please_select_parent_category' => 'Please select a parent category.',
     'please_enter_sub_category_name' => 'Please enter a sub-category name.',
-    
+
     // Admin Sub-Categories Edit Page
     'edit_sub_category' => 'Edit Sub-Category',
     'back_to_sub_categories' => 'Back to Sub-Categories',
@@ -1563,7 +1563,7 @@ return [
     'data_integrity_description' => 'Changes will affect all courses and sessions using this sub-category.',
     'please_select_parent_category' => 'Please select a parent category.',
     'please_enter_sub_category_name' => 'Please enter a sub-category name.',
-    
+
     // Admin Sub-Categories Index Page
     'sub_categories_management' => 'Sub-Categories Management',
     'create_sub_category' => 'Create Sub-Category',
@@ -1589,7 +1589,7 @@ return [
     'cancel' => 'Cancel',
     'delete' => 'Delete',
     'error_deleting_sub_category' => 'An error occurred while deleting the sub-category',
-    
+
     // Admin Transactions Index Page
     'transactions_management' => 'Transactions Management',
     'total_transactions' => 'Total Transactions',
@@ -1642,7 +1642,7 @@ return [
     'to' => 'to',
     'of' => 'of',
     'transactions' => 'transactions',
-    
+
     // Admin Transactions Show Page
     'transaction_details' => 'Transaction Details',
     'back_to_transactions' => 'Back to Transactions',
@@ -1674,11 +1674,11 @@ return [
     'title' => 'Title',
     'status' => 'Status',
     'enrolled_date' => 'Enrolled Date',
-    'course' => 'Course',
+    'course' => 'Course/Mentorship',
     'session' => 'Session',
     'active' => 'Active',
     'na' => 'N/A',
-    
+
     // Admin Sliders Management
     'sliders_management' => 'Sliders Management',
     'manage_slider_images' => 'Manage slider images for the mobile app carousel',
@@ -1713,7 +1713,7 @@ return [
     'create_first_slider' => 'Create First Slider',
     'slider_order_updated' => 'Slider order updated successfully',
     'slider_status_updated' => 'Slider status updated successfully',
-    
+
     // Admin Users Enrollments Page
     'user_enrollment_history' => 'User Enrollment History',
     'back_to_users' => 'Back to Users',
@@ -1725,9 +1725,9 @@ return [
     'payment_amount' => 'Payment Amount',
     'enrollment_date' => 'Enrollment Date',
     'status' => 'Status',
-    'course' => 'Course',
+    'course' => 'Course/Mentorship',
     'session' => 'Session',
-    'untitled_course' => 'Untitled Course',
+    'untitled_course' => 'Untitled Course/Mentorship',
     'duration' => 'Duration:',
     'day' => 'day',
     'days' => 'days',
@@ -1747,23 +1747,23 @@ return [
     'showing' => 'Showing',
     'to' => 'to',
     'of' => 'of',
-    
+
     // Admin Users Index Page - Additional Keys
     'delete_user' => 'Delete User',
     'are_you_sure_delete_user' => 'Are you sure you want to delete this user? This action cannot be undone.',
     'cancel' => 'Cancel',
     'delete' => 'Delete',
-    
+
     // Admin Mentors Index Page - Delete Modal
     'delete_mentor' => 'Delete Mentor',
     'are_you_sure_delete_mentor' => 'Are you sure you want to delete this mentor? This action cannot be undone.',
-    
+
     // Auth Forgot Password Page - Additional Key
     'back_to_login' => '← Back to Login',
-    
+
     // Auth Login Page - Additional Key
     'enter_your_password' => 'Enter your password',
-    
+
     // Backend Admin Nav Bar
     'dashboard' => 'Dashboard',
     'users' => 'Users',
@@ -1774,7 +1774,7 @@ return [
     'sliders' => 'Sliders',
     'transactions' => 'Transactions',
     'logout' => 'Logout',
-    
+
     // Backend App Layout - Additional Keys
     'notifications' => 'Notifications',
     'no_notifications_yet' => 'No notifications yet',
@@ -1786,16 +1786,16 @@ return [
     'srpski' => 'Српски',
     'slovenscina' => 'Slovenščina',
     'makedonski' => 'Македонски',
-    
+
     // Backend Mentor Nav Bar
     'dashboard' => 'Dashboard',
-    'my_course' => 'My Course',
+    'my_course' => 'My Course/Mentorship',
     'time_slots' => 'Time Slots',
     'earning_history' => 'Earning History',
     'profile' => 'Profile',
     'student_chat' => 'Student Chat',
     'logout' => 'Logout',
-    
+
     // Backend User Nav Bar
     'dashboard' => 'Dashboard',
     'courses' => 'Courses',
@@ -1805,7 +1805,7 @@ return [
     'profile' => 'Profile',
     'preferences' => 'Preferences',
     'logout' => 'Logout',
-    
+
     // Backend Mentor Courses Create Page
     'create_new_course' => 'Create New Course/Mentorship',
     'course_information' => 'Course/Mentorship Information',
@@ -1834,7 +1834,7 @@ return [
     'cancel' => 'Cancel',
     'submit_for_review' => 'Submit for Review',
     'more' => 'more',
-    
+
     // Backend Mentor Courses Edit Page
     'edit_course' => 'Edit Course/Mentorship',
     'approved' => 'Approved',
@@ -1854,11 +1854,11 @@ return [
     'delete_course_modal_warning' => 'This action cannot be undone. All course data including images will be permanently removed.',
     'cancel' => 'Cancel',
     'delete_course_button' => 'Delete Course',
-    
+
     // Backend Mentor Courses Index Page
-    'my_courses' => 'My Courses',
-    'create_new_course' => 'Create New Course',
-    'total_courses' => 'Total Courses',
+    'my_courses' => 'My Courses/Mentorships',
+    'create_new_course' => 'Create New Course/Mentorship',
+    'total_courses' => 'Total Courses/Mentorships',
     'approved' => 'Approved',
     'pending' => 'Pending',
     'rejected' => 'Rejected',
@@ -1885,17 +1885,17 @@ return [
     'start_creating_courses' => 'Start creating courses to share your knowledge with students.',
     'view_all_courses' => 'View All Courses',
     'create_your_first_course' => 'Create Your First Course',
-    
+
     // Backend Mentor Courses Show Page
     'course_details' => 'Course/Mentorship Details',
     'view_course_information' => 'View your course/mentorship information',
     'reapproval_required' => 'Re-Approval Required',
     'edit_course' => 'Edit Course/Mentorship',
-    
+
     // Backend Mentor Dashboard Index Page
     'mentor_dashboard' => 'Mentor Dashboard',
     'dashboard' => 'Dashboard',
-    'total_courses' => 'Total Courses',
+    'total_courses' => 'Total Courses/Mentorships',
     'total_user' => 'Total User',
     'mentors_income' => 'Mentors Income',
     'active_courses' => 'Active Courses',
@@ -1912,7 +1912,7 @@ return [
     'status' => 'Status',
     'action' => 'Action',
     'session' => 'Session',
-    'course' => 'Course',
+    'course' => 'Course/Mentorship',
     'chat' => 'Chat',
     'no_students_found' => 'No students found',
     'students_appear_here' => 'Students will appear here once they enroll in your courses or book sessions',
@@ -1922,7 +1922,7 @@ return [
     'students' => 'students',
     'earnings' => 'Earnings',
     'monthly_earnings' => 'Monthly Earnings',
-    
+
     // Backend Mentor Earning History Index Page
     'earning_history' => 'Earning History',
     'total_earning' => 'Total Earning',
@@ -1939,7 +1939,7 @@ return [
     'title' => 'Title',
     'earning_amount' => 'Earning Amount',
     'status' => 'Status',
-    'course' => 'Course',
+    'course' => 'Course/Mentorship',
     'session' => 'Session',
     'session_with' => 'Session with',
     'unknown_student' => 'Unknown Student',
@@ -1950,7 +1950,7 @@ return [
     'no_earnings_found' => 'No earnings found',
     'no_earnings_criteria' => 'No earnings found for the selected criteria.',
     'no_earnings_yet' => 'You haven\'t earned any money yet.',
-    
+
     // Backend Mentor Profile Show Page
     'profile' => 'Profile',
     'edit_profile' => 'Edit Profile',
@@ -1991,7 +1991,7 @@ return [
     'enter_valid_phone' => 'Please enter a valid phone number (e.g., +1234567890)',
     'file_size_2mb' => 'File size must be less than 2MB',
     'valid_image_file' => 'Please select a valid image file (JPEG, PNG, JPG, GIF)',
-    
+
     // Backend Mentor Reviews Index Page
     'my_reviews' => 'My Reviews',
     'rating_overview' => 'Rating Overview',
@@ -2026,7 +2026,7 @@ return [
     'try_adjusting_search_criteria' => 'Try adjusting your search criteria or filters.',
     'student_reviews_will_appear' => 'Your student reviews will appear here once they start rating your mentoring.',
     'view_all_reviews' => 'View All Reviews',
-    
+
     // Backend Mentor Time Slots Create Page
     'create_time_slot' => 'Create Time Slot',
     'create_new_time_slot' => 'Create New Time Slot',
@@ -2048,7 +2048,7 @@ return [
     'start_time' => 'Start Time',
     'end_time' => 'End Time',
     'create_time_slot_button' => 'Create Time Slot',
-    
+
     // Backend Mentor Time Slots Edit Page
     'edit_time_slot' => 'Edit Time Slot',
     'delete_time_slot' => 'Delete The Slot',
@@ -2067,7 +2067,7 @@ return [
     'delete_time_slot_modal_message' => 'Are you sure you want to delete this time slot? This will permanently remove it from your schedule.',
     'delete' => 'Delete',
     'update_time_slot_button' => 'Update Time Slot',
-    
+
     // Backend Mentor Time Slots Index Page
     'my_time_slots' => 'My Time Slots',
     'create_time_slot' => 'Create Time Slot',
@@ -2105,7 +2105,7 @@ return [
     'no_student_selected' => 'No student selected',
     'please_login_to_chat' => 'Please login to chat',
     'failed_to_start_conversation' => 'Failed to start conversation',
-    
+
     // Backend User Sessions Show Page
     'session_details' => 'Session Details',
     'back_to_sessions' => 'Back to Sessions',
@@ -2137,11 +2137,11 @@ return [
     'session_time_switched_successfully' => 'Session time switched successfully!',
     'failed_to_switch_session' => 'Failed to switch session:',
     'error_switching_session' => 'Error switching session. Please try again.',
-    
+
     // Chat Conversation Page
     'online' => 'Online',
     'session' => 'Session:',
-    'course' => 'Course:',
+    'course' => 'Course/Mentorship:',
     'session_ends_at' => 'Session ends at',
     'course_ends' => 'Course ends',
     'start_the_conversation' => 'Start the conversation',
@@ -2162,7 +2162,7 @@ return [
     'failed_to_send_message' => 'Failed to send message ({{status}}). Please try again.',
     'failed_to_send_message_generic' => 'Failed to send message. Please try again.',
     'try_different_search' => 'Try a different search term or browse all courses.',
-    
+
     // Frontend Home Featured Courses Page
     'explore_featured_courses' => 'Explore Featured Courses',
     'discover_handpicked_featured_courses' => 'Discover our handpicked featured courses that stand out for their quality, content, and student satisfaction.',
@@ -2170,10 +2170,10 @@ return [
     'no_featured_courses_yet' => 'No Featured Courses Yet',
     'working_on_featuring_best_courses' => 'We\'re working on featuring the best courses for you. Check back soon!',
     'browse_all_courses' => 'Browse All Courses',
-    
+
     // Frontend Home Index Page
     'home' => 'Home',
-    
+
     // Frontend Home New Courses Page
     'explore_new_courses' => 'Explore New Courses',
     'discover_latest_courses_from_experts' => 'Discover the latest courses from expert mentors, fresh content tailored to your learning preferences.',
@@ -2182,10 +2182,10 @@ return [
     'view_all_courses' => 'View All Courses',
     'reviews_count_with_number' => 'Reviews',
     'logout' => 'Logout',
-    
+
     // Frontend Mentors Index Page - Additional Key
     'mentors' => 'Mentors',
-    
+
     // Frontend Mentors Profile and Sessions Page
     'profile_sessions' => 'Profile & Sessions',
     'work_experience' => 'Work Experience',
@@ -2211,7 +2211,7 @@ return [
     'overall_rating' => 'Overall Rating',
     'rating_distribution' => 'Rating Distribution',
     'no_reviews_yet_first' => 'No reviews yet. Be the first to share your experience!',
-    
+
     // Profile Delete User Form
     'delete_account' => 'Delete Account',
     'delete_account_warning' => 'Once your account is deleted, all of its resources and data will be permanently deleted. Before deleting your account, please download any data or information that you wish to retain.',
@@ -2219,14 +2219,14 @@ return [
     'delete_account_confirmation' => 'Once your account is deleted, all of its resources and data will be permanently deleted. Please enter your password to confirm you would like to permanently delete your account.',
     'password' => 'Password',
     'cancel' => 'Cancel',
-    
+
     // Profile Update Password Form
     'update_password' => 'Update Password',
     'password_security_message' => 'Ensure your account is using a long, random password to stay secure.',
     'current_password' => 'Current Password',
     'new_password' => 'New Password',
     'confirm_password' => 'Confirm Password',
-    
+
     // Admin Password Update
     'update_password_description' => 'Update your admin account password to keep your account secure.',
     'enter_current_password' => 'Enter your current password',
@@ -2239,7 +2239,7 @@ return [
     'back_to_dashboard' => 'Back to Dashboard',
     'save' => 'Save',
     'saved' => 'Saved.',
-    
+
     // Profile Update Profile Information Form
     'profile_information' => 'Profile Information',
     'update_profile_message' => 'Update your account\'s profile information and email address.',
@@ -2248,13 +2248,13 @@ return [
     'email_unverified' => 'Your email address is unverified.',
     'resend_verification' => 'Click here to re-send the verification email.',
     'verification_link_sent' => 'A new verification link has been sent to your email address.',
-    
+
     // Profile Edit Page
     'profile' => 'Profile',
-    
+
     // Shared Course Card
     'reviews_count' => 'reviews',
-    
+
     // Shared Mentor Session Card
     'hour_session' => 'hour session',
     'minute_session' => 'minute session',
@@ -2263,7 +2263,7 @@ return [
     'drag_to_navigate' => 'Drag to navigate reviews',
     'auto_scroll' => 'Auto scroll',
     'toggle_auto_scroll' => 'Toggle auto scroll',
-    
+
     // Message Deletion
     'delete_message' => 'Delete Message',
     'delete_message_confirm' => 'Are you sure you want to delete this message?',

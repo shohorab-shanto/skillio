@@ -16,12 +16,12 @@ return [
     'for_members' => 'Za članove',
     'for_mentors' => 'Za mentore',
     'card_1_title' => 'Registrujte se i verifikujte',
-    'card_1_description' => 'Popunite naš personalizovani kviz da pronađete kurseve i mentore koji odgovaraju vašim ciljevima i stilu učenja.',
+    'card_1_description' => 'Popunite naš personalizovani formular da biste pristupili Skillio platformi.',
     'card_2_title_line1' => 'Objavite kurseve / postavite',
     'card_2_title_line2' => 'termine.',
-    'card_2_description' => 'Popunite naš personalizovani kviz da pronađete kurseve i mentore koji odgovaraju vašim ciljevima i stilu učenja.',
+    'card_2_description' => 'U dogovoru sa Skillio timom izaberite datume kada ćete biti dostupni drugim članovima za edukaciju.',
     'card_3_title' => 'Zaradite i inspirišite',
-    'card_3_description' => 'Popunite naš personalizovani kviz da pronađete kurseve i mentore koji odgovaraju vašim ciljevima i stilu učenja.',
+    'card_3_description' => 'Pristupite svom sadržaju u bilo kom trenutku, primajte personalizovane povratne informacije i pratite svoj napredak.',
 
     // Learners Content
     'learners_card_1_title' => 'Prijavite se i odgovorite na pitanja',
@@ -116,7 +116,7 @@ return [
     'copyright' => '© Skillio LLC, Sva prava zadržana',
 
     // Courses Page
-    'search_for_courses' => 'Pretraži kurseve/mentorstva',
+    'search_for_courses' => 'Pretraga kurseva/mentorstava',
     'search_results_for' => 'Rezultati pretrage za:',
     'clear_search' => 'Obriši pretragu',
     'all' => 'Sve',
@@ -605,7 +605,7 @@ return [
     'explore_new_courses_description' => 'Ovo su najpopularniji kursevi i mentorstva dostupni na Skillio.',
     'explore_featured_courses_title' => 'Istražite istaknute kurseve',
     'explore_featured_courses_description' => 'Otkrijte naše pažljivo odabrane istaknute kurseve koji se izdvajaju po kvalitetu, sadržaju i zadovoljstvu studenata.',
-    'view_all_courses_button' => 'Pogledaj sve kurseve',
+    'view_all_courses_button' => 'Pogledajte sve kurseve/mentorstva',
     'no_new_courses_yet_title' => 'Još nema novih kurseva',
     'no_new_courses_yet_description' => 'Radimo na dodavanju novih kurseva za vas. Proverite uskoro!',
     'browse_all_courses_button' => 'Pretraži sve kurseve',
@@ -708,7 +708,7 @@ return [
     'serbian_short' => 'SR',
     'slovenian_short' => 'SL',
     'macedonian_short' => 'MK',
-    
+
     // Auth Pages - Additional Keys
     'name' => 'Ime',
     'confirm_password_area' => 'Ovo je sigurno područje aplikacije. Potvrdite lozinku pre nastavka.',
@@ -718,18 +718,18 @@ return [
     'verification_link_sent' => 'Novi link za verifikaciju je poslat na email adresu koju ste naveli prilikom registracije.',
     'resend_verification_email' => 'Pošalji verifikacioni email ponovo',
     'log_out' => 'Odjavi se',
-    
+
     // Reset Password Additional Keys
     'reset_password' => 'Resetuj lozinku',
     'reset_password_description' => 'Kreirajte jaku lozinku za zaštitu svog naloga',
     'enter_new_password_placeholder' => 'Unesite novu lozinku',
     'confirm_new_password_placeholder' => 'Potvrdite novu lozinku',
     'back_to_login' => '← Nazad na prijavu',
-    
+
     // Forgot Password Additional Keys
     'forgot_password_description' => 'Unesite svoj email da biste dobili link za resetovanje lozinke.',
     'email_password_reset_link' => 'Pošalji link za reset lozinke',
-    
+
     // Mentor Time Slots - Student Details Modal
     'student_details' => 'Detalji studenta',
     'booked_student_information' => 'Informacije o rezervisanom studentu',
@@ -774,7 +774,7 @@ return [
     'from_date' => 'Od datuma',
     'apply_filters' => 'Primeni filtere',
     'clear_filters' => 'Obriši filtere',
-    'course' => 'Kurs',
+    'course' => 'Kurs/Mentorstvo',
     'price' => 'Cena',
     'enrollments' => 'Upisi',
     'created_date' => 'Datum kreiranja',
@@ -929,7 +929,7 @@ return [
     'search_placeholder_mentors' => 'Pretraga mentora...',
     'search_placeholder_categories' => 'Pretraga kategorija...',
     'search_placeholder_transactions' => 'Pretraga transakcija...',
-    
+
     // Additional Admin Keys
     'verification' => 'Verifikacija',
     'availability' => 'Dostupnost',
@@ -954,7 +954,7 @@ return [
     'in_progress' => 'u toku',
     'no_active_courses' => 'Nema aktivnih kurseva',
     'completed' => 'završeno',
-    'no_courses' => 'Nema kurseva',
+    'no_courses' => 'Nema kurseva/mentorstava',
     'next' => 'Sledeće',
     'soon' => 'Uskoro',
     'no_sessions' => 'Nema sesija',
@@ -977,7 +977,7 @@ return [
     'total_courses' => 'Ukupan broj kurseva/mentorstava',
     'active_courses' => 'Aktivni kursevi/mentorstva',
     'search_courses' => 'Pretraga kurseva',
-    'search_by_course_title' => 'Pretraga po nazivu ili opisu kursa...',
+    'search_by_course_title' => 'Pretraga po nazivu ili opisu kursa/mentorstva...',
     'category' => 'Kategorija',
     'all_categories' => 'Sve kategorije',
     'status' => 'Status',
@@ -986,7 +986,7 @@ return [
     'completed' => 'Završen',
     'filter' => 'Filter',
     'clear' => 'Obriši',
-    'course' => 'Kurs',
+    'course' => 'Kurs/Mentorstvo',
     'price' => 'Cena',
     'enrollments' => 'Upisi',
     'created_date' => 'Datum kreiranja',
@@ -1004,9 +1004,9 @@ return [
     'details' => 'Detalji',
     'no_courses_found_title' => 'Nema pronađenih kurseva',
     'no_courses_match_filters' => 'Nijedan kurs ne odgovara trenutnim filterima. Pokušajte da promenite kriterijume pretrage.',
-    'no_courses_enrolled_yet' => 'Još niste upisali nijedan kurs. Počnite sa učenjem već danas!',
+    'no_courses_enrolled_yet' => 'Još uvek se niste upisali ni na jedan kurs/mentorstvo. Počnite da učite već danas!',
     'clear_filters' => 'Obriši filtere',
-    'browse_all_courses' => 'Pretraži kurseve',
+    'browse_all_courses' => 'Pregledajte sve kurseve/mentorstva',
 
     // User Course Details
     'course_details' => 'Detalji kursa',
@@ -1081,7 +1081,7 @@ return [
     'title' => 'Naslov',
     'paid_amount' => 'Plaćeni iznos',
     'status' => 'Status',
-    'course_badge' => 'Kurs',
+    'course_badge' => 'Kurs/Mentorstvo',
     'session_badge' => 'Sesija',
     'session_with' => 'Sesija sa',
     'unknown_mentor' => 'Nepoznat mentor',
@@ -1147,7 +1147,7 @@ return [
     'password_must_contain' => 'Molimo vas da lozinka ispunjava sve zahteve: minimum 8 karaktera, 1 veliko slovo i 1 broj.',
     'password_confirmation_mismatch' => 'Potvrda lozinke se ne poklapa.',
     'enter_valid_phone' => 'Unesite važeći broj telefona (npr. +381601234567)',
-    
+
     // Admin Login Page
     'admin_login_title' => 'Prijava administratora',
     'admin_access' => 'Pristup administratora',
@@ -1179,7 +1179,7 @@ return [
     'sub_categories' => 'Potkategorije:',
     'sub_categories_description' => 'Možete dodati potkategorije za dodatnu organizaciju sadržaja.',
     'please_enter_category_name' => 'Unesite naziv kategorije.',
-    
+
     // Admin Categories Edit Page
     'edit_category' => 'Uredi kategoriju',
     'update_category' => 'Ažuriraj kategoriju',
@@ -1190,7 +1190,7 @@ return [
     'data_integrity_description' => 'Izmene će uticati na sve kurseve, sesije i potkategorije.',
     'cascade_effects' => 'Kaskadni efekti:',
     'cascade_effects_description' => 'Ažuriranja će biti prikazana u celom povezanom sadržaju.',
-    
+
     // Admin Categories Index Page
     'categories_management' => 'Upravljanje kategorijama',
     'add_category' => 'Dodaj kategoriju',
@@ -1198,7 +1198,7 @@ return [
     'usage_stats' => 'Statistika korišćenja',
     'created' => 'Kreirano',
     'actions' => 'Akcije',
-    'courses' => 'Kursevi',
+    'courses' => 'Kursevi/Mentorstva',
     'sessions' => 'Sesije',
     'sub_categories' => 'Potkategorije',
     'no_description' => 'Nema opisa',
@@ -1216,7 +1216,7 @@ return [
     'cancel' => 'Otkaži',
     'delete_button' => 'Obriši',
     'an_error_occurred_deleting' => 'Došlo je do greške prilikom brisanja kategorije',
-    
+
     // Admin Courses Index Page - Additional Keys
     'min_price' => 'Minimalna cena',
     'max_price' => 'Maksimalna cena',
@@ -1246,7 +1246,7 @@ return [
     'an_error_occurred_updating' => 'Došlo je do greške prilikom ažuriranja statusa kursa',
     'please_provide_rejection_reason' => 'Navedite razlog odbijanja',
     'an_error_occurred_rejecting' => 'Došlo je do greške prilikom odbijanja kursa',
-    
+
     // Admin Courses Show Page
     'course_details' => 'Detalji kursa',
     'course_information' => 'Informacije o kursu',
@@ -1286,7 +1286,7 @@ return [
     'an_error_occurred_updating_status' => 'Došlo je do greške prilikom ažuriranja statusa kursa',
     'please_provide_rejection_reason' => 'Navedite razlog odbijanja',
     'an_error_occurred_rejecting' => 'Došlo je do greške prilikom odbijanja kursa',
-    
+
     // Admin Backend Layout
     'admin_dashboard' => 'Administratorska kontrolna tabla',
     'confirm_logout' => 'Potvrda odjave',
@@ -1300,14 +1300,14 @@ return [
     'srpski' => 'Српски',
     'slovenscina' => 'Slovenački',
     'makedonski' => 'Makedonski',
-    
+
     // Admin Mentors Courses Page
     'mentor_courses' => 'Kursevi mentora',
     'all_courses_created_by' => 'Svi kursevi koje je kreirao',
     'back_to_mentor' => 'Nazad na mentora',
     'total' => 'Ukupno:',
     'courses' => 'Kursevi',
-    'course' => 'Kurs',
+    'course' => 'Kurs/Mentorstvo',
     'category' => 'Kategorija',
     'status' => 'Status',
     'price' => 'Cena',
@@ -1325,7 +1325,7 @@ return [
     'showing' => 'Prikazano',
     'to' => 'do',
     'of' => 'od',
-    
+
     // Admin Mentors Create Page
     'create_mentor' => 'Kreiraj mentora',
     'back_to_mentors' => 'Nazad na mentore',
@@ -1375,7 +1375,7 @@ return [
     'at_least_8_characters' => 'najmanje 8 karaktera',
     '1_uppercase_letter' => '1 veliko slovo',
     '1_number' => '1 broj',
-    
+
     // Admin Mentors Edit Page
     'edit_mentor' => 'Uredi mentora',
     'back_to_mentors' => 'Nazad na mentore',
@@ -1440,7 +1440,7 @@ return [
     'years_exp' => 'godina iskustva',
     'unknown' => 'Nepoznato',
     'na' => 'N/A',
-    
+
     // Admin Mentors Sessions Page
     'mentor_sessions' => 'Sesije mentora',
     'all_sessions_created_by' => 'Sve sesije koje je kreirao',
@@ -1461,7 +1461,7 @@ return [
     'showing' => 'Prikazano',
     'to' => 'do',
     'of' => 'od',
-    
+
     // Admin Mentors Show Page
     'mentor_details' => 'Detalji mentora',
     'back_to_mentors' => 'Nazad na mentore',
@@ -1512,7 +1512,7 @@ return [
     'error_updating_availability' => 'Došlo je do greške prilikom ažuriranja dostupnosti',
     'years' => 'godina',
     'standard' => 'Standard',
-    
+
     // Admin Sub-Categories Create Page
     'create_sub_category' => 'Kreiraj potkategoriju',
     'back_to_sub_categories' => 'Nazad na potkategorije',
@@ -1534,7 +1534,7 @@ return [
     'organization_description' => 'Koristite potkategorije za dodatnu organizaciju kurseva i sesija.',
     'please_select_parent_category' => 'Molimo izaberite glavnu kategoriju.',
     'please_enter_sub_category_name' => 'Molimo unesite naziv potkategorije.',
-    
+
     // Admin Sub-Categories Edit Page
     'edit_sub_category' => 'Uredi potkategoriju',
     'back_to_sub_categories' => 'Nazad na potkategorije',
@@ -1556,7 +1556,7 @@ return [
     'data_integrity_description' => 'Promene će uticati na sve kurseve i sesije koje koriste ovu potkategoriju.',
     'please_select_parent_category' => 'Molimo izaberite glavnu kategoriju.',
     'please_enter_sub_category_name' => 'Molimo unesite naziv potkategorije.',
-    
+
     // Admin Sub-Categories Index Page
     'sub_categories_management' => 'Upravljanje potkategorijama',
     'create_sub_category' => 'Kreiraj potkategoriju',
@@ -1582,7 +1582,7 @@ return [
     'cancel' => 'Otkaži',
     'delete' => 'Obriši',
     'error_deleting_sub_category' => 'Došlo je do greške prilikom brisanja potkategorije',
-    
+
     // Admin Transactions Index Page
     'transactions_management' => 'Upravljanje transakcijama',
     'total_transactions' => 'Ukupno transakcija',
@@ -1635,7 +1635,7 @@ return [
     'to' => 'do',
     'of' => 'od',
     'transactions' => 'transakcije',
-    
+
     // Admin Transactions Show Page
     'transaction_details' => 'Detalji transakcije',
     'back_to_transactions' => 'Nazad na transakcije',
@@ -1667,11 +1667,11 @@ return [
     'title' => 'Naziv',
     'status' => 'Status',
     'enrolled_date' => 'Datum upisa',
-    'course' => 'Kurs',
+    'course' => 'Kurs/Mentorstvo',
     'session' => 'Sesija',
     'active' => 'Aktivan',
     'na' => 'N/A',
-    
+
     // Admin Sliders Management
     'sliders_management' => 'Upravljanje Klizačima',
     'manage_slider_images' => 'Upravljajte slikama klizača za karusel mobilne aplikacije',
@@ -1706,7 +1706,7 @@ return [
     'create_first_slider' => 'Kreiraj Prvi Klizač',
     'slider_order_updated' => 'Redosled klizača uspešno ažuriran',
     'slider_status_updated' => 'Status klizača uspešno ažuriran',
-    
+
     // Admin Users Enrollments Page
     'user_enrollment_history' => 'Istorija upisa korisnika',
     'back_to_users' => 'Nazad na korisnike',
@@ -1718,7 +1718,7 @@ return [
     'payment_amount' => 'Iznos plaćanja',
     'enrollment_date' => 'Datum upisa',
     'status' => 'Status',
-    'course' => 'Kurs',
+    'course' => 'Kurs/Mentorstvo',
     'session' => 'Sesija',
     'untitled_course' => 'Kurs bez naziva',
     'duration' => 'Trajanje:',
@@ -1740,23 +1740,23 @@ return [
     'showing' => 'Prikazano',
     'to' => 'do',
     'of' => 'od',
-    
+
     // Admin Users Index Page - Additional Keys
     'delete_user' => 'Obriši korisnika',
     'are_you_sure_delete_user' => 'Da li ste sigurni da želite da obrišete ovog korisnika? Ova radnja je nepovratna.',
     'cancel' => 'Otkaži',
     'delete' => 'Obriši',
-    
+
     // Admin Mentors Index Page - Delete Modal
     'delete_mentor' => 'Obriši mentora',
     'are_you_sure_delete_mentor' => 'Da li ste sigurni da želite da obrišete ovog mentora? Ova radnja je nepovratna.',
-    
+
     // Auth Forgot Password Page - Additional Key
     'back_to_login' => '← Nazad na prijavu',
-    
+
     // Auth Login Page - Additional Key
     'enter_your_password' => 'Unesite svoju lozinku',
-    
+
     // Backend Admin Nav Bar
     'dashboard' => 'Kontrolna tabla',
     'users' => 'Korisnici',
@@ -1767,7 +1767,7 @@ return [
     'sliders' => 'Klizači',
     'transactions' => 'Transakcije',
     'logout' => 'Odjava',
-    
+
     // Backend App Layout - Additional Keys
     'notifications' => 'Obaveštenja',
     'no_notifications_yet' => 'Još nema obaveštenja',
@@ -1779,7 +1779,7 @@ return [
     'srpski' => 'Српски',
     'slovenscina' => 'Slovenščina',
     'makedonski' => 'Македонски',
-    
+
     // Backend Mentor Nav Bar
     'dashboard' => 'Kontrolna tabla',
     'my_course' => 'Moj kurs',
@@ -1788,7 +1788,7 @@ return [
     'profile' => 'Profil',
     'student_chat' => 'Čet sa studentima',
     'logout' => 'Odjava',
-    
+
     // Backend User Nav Bar
     'dashboard' => 'Kontrolna tabla',
     'courses' => 'Kursevi',
@@ -1798,7 +1798,7 @@ return [
     'profile' => 'Profil',
     'preferences' => 'Podešavanja',
     'logout' => 'Odjava',
-    
+
     // Backend Mentor Courses Create Page
     'create_new_course' => 'Kreiraj novi kurs',
     'course_information' => 'Informacije o kursu',
@@ -1824,7 +1824,7 @@ return [
     'cancel' => 'Otkaži',
     'submit_for_review' => 'Pošalji na pregled',
     'more' => 'više',
-    
+
     // Backend Mentor Courses Edit Page
     'edit_course' => 'Uredi kurs',
     'approved' => 'Odobreno',
@@ -1844,7 +1844,7 @@ return [
     'delete_course_modal_warning' => 'Ova radnja je nepovratna. Svi podaci o kursu, uključujući slike, biće trajno uklonjeni.',
     'cancel' => 'Otkaži',
     'delete_course_button' => 'Obriši kurs',
-    
+
     // Backend Mentor Courses Index Page
     'my_courses' => 'Moji kursevi/mentorstva',
     'create_new_course' => 'Kreiraj novi kurs/mentorstvo',
@@ -1875,13 +1875,13 @@ return [
     'start_creating_courses' => 'Počnite da kreirate kurseve i podelite svoje znanje sa studentima.',
     'view_all_courses' => 'Pogledaj sve kurseve',
     'create_your_first_course' => 'Kreirajte svoj prvi kurs',
-    
+
     // Backend Mentor Courses Show Page
     'course_details' => 'Detalji kursa',
     'view_course_information' => 'Pogledajte informacije o svom kursu',
     'reapproval_required' => 'Potrebno ponovno odobrenje',
     'edit_course' => 'Uredi kurs',
-    
+
     // Backend Mentor Dashboard Index Page
     'mentor_dashboard' => 'Mentorska kontrolna tabla',
     'dashboard' => 'Kontrolna tabla',
@@ -1902,7 +1902,7 @@ return [
     'status' => 'Status',
     'action' => 'Akcija',
     'session' => 'Sesija',
-    'course' => 'Kurs',
+    'course' => 'Kurs/Mentorstvo',
     'chat' => 'Čet',
     'no_students_found' => 'Nema pronađenih studenata',
     'students_appear_here' => 'Studenti će se pojaviti ovde kada se upišu na vaše kurseve ili rezervišu sesije',
@@ -1912,7 +1912,7 @@ return [
     'students' => 'studenti',
     'earnings' => 'Zarada',
     'monthly_earnings' => 'Mesečna zarada',
-    
+
     // Backend Mentor Earning History Index Page
     'earning_history' => 'Istorija zarade',
     'total_earning' => 'Ukupna zarada',
@@ -1929,7 +1929,7 @@ return [
     'title' => 'Naziv',
     'earning_amount' => 'Iznos zarade',
     'status' => 'Status',
-    'course' => 'Kurs',
+    'course' => 'Kurs/Mentorstvo',
     'session' => 'Sesija',
     'session_with' => 'Sesija sa',
     'unknown_student' => 'Nepoznat student',
@@ -1955,7 +1955,7 @@ return [
     'organization_description' => 'Koristite potkategorije za dodatnu organizaciju kurseva i sesija.',
     'please_select_parent_category' => 'Molimo izaberite glavnu kategoriju.',
     'please_enter_sub_category_name' => 'Molimo unesite naziv potkategorije.',
-    
+
     // Admin Sub-Categories Edit Page
     'edit_sub_category' => 'Uredi potkategoriju',
     'back_to_sub_categories' => 'Nazad na potkategorije',
@@ -1977,7 +1977,7 @@ return [
     'data_integrity_description' => 'Promene će uticati na sve kurseve i sesije koje koriste ovu potkategoriju.',
     'please_select_parent_category' => 'Molimo izaberite glavnu kategoriju.',
     'please_enter_sub_category_name' => 'Molimo unesite naziv potkategorije.',
-    
+
     // Admin Sub-Categories Index Page
     'sub_categories_management' => 'Upravljanje potkategorijama',
     'sub_category' => 'Potkategorija',
@@ -2000,7 +2000,7 @@ return [
     'are_you_sure_delete' => 'Da li ste sigurni da želite da obrišete',
     'this_action_cannot_be_undone' => 'Ova akcija je nepovratna.',
     'error_deleting_sub_category' => 'Došlo je do greške prilikom brisanja potkategorije',
-    
+
     // Admin Transactions Index Page
     'transactions_management' => 'Upravljanje transakcijama',
     'total_transactions' => 'Ukupno transakcija',
@@ -2047,7 +2047,7 @@ return [
     'to' => 'do',
     'of' => 'od',
     'transactions' => 'transakcije',
-    
+
     // Admin Transactions Show Page
     'transaction_details' => 'Detalji transakcije',
     'back_to_transactions' => 'Nazad na transakcije',
@@ -2073,10 +2073,10 @@ return [
     'title' => 'Naziv',
     'status' => 'Status',
     'enrolled_date' => 'Datum upisa',
-    'course' => 'Kurs',
+    'course' => 'Kurs/Mentorstvo',
     'session' => 'Sesija',
     'active' => 'Aktivan',
-    
+
     // Admin Users Enrollments Page
     'user_enrollment_history' => 'Istorija upisa korisnika',
     'back_to_users' => 'Nazad na korisnike',
@@ -2088,7 +2088,7 @@ return [
     'payment_amount' => 'Iznos plaćanja',
     'enrollment_date' => 'Datum upisa',
     'status' => 'Status',
-    'course' => 'Kurs',
+    'course' => 'Kurs/Mentorstvo',
     'session' => 'Sesija',
     'untitled_course' => 'Bez naslova',
     'duration' => 'Trajanje:',
@@ -2110,18 +2110,18 @@ return [
     'showing' => 'Prikazano',
     'to' => 'do',
     'of' => 'od',
-    
+
     // Admin Users Index Page - Additional Keys
     'delete_user' => 'Obriši korisnika',
     'are_you_sure_delete_user' => 'Da li ste sigurni da želite da obrišete ovog korisnika? Ova akcija je nepovratna.',
     'delete' => 'Obriši',
-    
+
     // Auth Forgot Password Page - Additional Key
     'back_to_login' => '← Nazad na prijavu',
-    
+
     // Auth Login Page - Additional Key
     'enter_your_password' => 'Unesite vašu lozinku',
-    
+
     // Backend Admin Nav Bar
     'dashboard' => 'Kontrolna tabla',
     'users' => 'Korisnici',
@@ -2132,7 +2132,7 @@ return [
     'sliders' => 'Klizači',
     'transactions' => 'Transakcije',
     'logout' => 'Odjava',
-    
+
     // Backend App Layout - Additional Keys
     'notifications' => 'Obaveštenja',
     'no_notifications_yet' => 'Još nema obaveštenja',
@@ -2144,7 +2144,7 @@ return [
     'srpski' => 'Српски',
     'slovenscina' => 'Slovenščina',
     'makedonski' => 'Македонски',
-    
+
     // Backend Mentor Nav Bar
     'dashboard' => 'Kontrolna tabla',
     'my_course' => 'Moj kurs',
@@ -2153,7 +2153,7 @@ return [
     'profile' => 'Profil',
     'student_chat' => 'Čet sa studentima',
     'logout' => 'Odjava',
-    
+
     // Backend User Nav Bar
     'dashboard' => 'Kontrolna tabla',
     'courses' => 'Kursevi',
@@ -2163,7 +2163,7 @@ return [
     'profile' => 'Profil',
     'preferences' => 'Podešavanja',
     'logout' => 'Odjava',
-    
+
     // Backend Mentor Courses Create Page
     'create_new_course' => 'Kreiraj novi kurs',
     'course_information' => 'Informacije o kursu',
@@ -2188,7 +2188,7 @@ return [
     'image_cover_photo_thumbnail' => 'Ova slika će biti korišćena kao naslovna i automatski će biti smanjena za sličicu',
     'submit_for_review' => 'Pošalji na pregled',
     'more' => 'više',
-    
+
     // Backend Mentor Courses Edit Page
     'edit_course' => 'Uredi kurs',
     'approved' => 'Odobreno',
@@ -2207,7 +2207,7 @@ return [
     'delete_course_modal_message' => 'Da li ste sigurni da želite da obrišete',
     'delete_course_modal_warning' => 'Ova akcija je nepovratna. Svi podaci o kursu, uključujući slike, biće trajno uklonjeni.',
     'delete_course_button' => 'Obriši kurs',
-    
+
     // Backend Mentor Courses Index Page
     'my_courses' => 'Moji kursevi',
     'total_courses' => 'Ukupno kurseva',
@@ -2237,13 +2237,13 @@ return [
     'start_creating_courses' => 'Počnite da kreirate kurseve i delite znanje sa studentima.',
     'view_all_courses' => 'Pogledaj sve kurseve',
     'create_your_first_course' => 'Kreirajte svoj prvi kurs',
-    
+
     // Backend Mentor Courses Show Page
     'course_details' => 'Detalji kursa',
     'view_course_information' => 'Pogledajte informacije o vašem kursu',
     'reapproval_required' => 'Potrebno ponovno odobrenje',
     'edit_course' => 'Uredi kurs',
-    
+
     // Backend Mentor Dashboard Index Page
     'mentor_dashboard' => 'Mentorska kontrolna tabla',
     'dashboard' => 'Kontrolna tabla',
@@ -2264,7 +2264,7 @@ return [
     'status' => 'Status',
     'action' => 'Akcija',
     'session' => 'Sesija',
-    'course' => 'Kurs',
+    'course' => 'Kurs/Mentorstvo',
     'chat' => 'Čet',
     'no_students_found' => 'Nema pronađenih studenata',
     'students_appear_here' => 'Studenti će se pojaviti ovde kada se upišu na vaše kurseve ili rezervišu sesije',
@@ -2274,7 +2274,7 @@ return [
     'students' => 'studenti',
     'earnings' => 'Zarada',
     'monthly_earnings' => 'Mesečna zarada',
-    
+
     // Backend Mentor Earning History Index Page
     'earning_history' => 'Istorija zarade',
     'total_earning' => 'Ukupna zarada',
@@ -2295,7 +2295,7 @@ return [
     'no_earnings_found' => 'Nema pronađene zarade',
     'no_earnings_criteria' => 'Nema zarade za izabrane kriterijume.',
     'no_earnings_yet' => 'Još niste ostvarili zaradu.',
-    
+
     // Backend Mentor Profile Show Page
     'profile' => 'Profil',
     'edit_profile' => 'Uredi profil',
@@ -2336,7 +2336,7 @@ return [
     'enter_valid_phone' => 'Unesite ispravan broj telefona (npr. +381601234567)',
     'file_size_2mb' => 'Veličina fajla mora biti manja od 2MB',
     'valid_image_file' => 'Izaberite validan format slike (JPEG, PNG, JPG, GIF)',
-    
+
     // Backend Mentor Reviews Index Page
     'my_reviews' => 'Moje recenzije',
     'rating_overview' => 'Pregled ocena',
@@ -2371,7 +2371,7 @@ return [
     'try_adjusting_search_criteria' => 'Pokušajte da promenite kriterijume pretrage ili filtere.',
     'student_reviews_will_appear' => 'Recenzije studenata će se pojaviti ovde kada počnu da ocenjuju vaše mentorstvo.',
     'view_all_reviews' => 'Pogledaj sve recenzije',
-    
+
     // Backend Mentor Time Slots Create Page
     'create_time_slot' => 'Kreiraj termin',
     'create_new_time_slot' => 'Kreiraj novi termin',
@@ -2384,7 +2384,7 @@ return [
     'start_time' => 'Vreme početka',
     'end_time' => 'Vreme završetka',
     'create_time_slot_button' => 'Kreiraj termin',
-    
+
     // Backend Mentor Time Slots Edit Page
     'edit_time_slot' => 'Uredi termin',
     'delete_time_slot' => 'Obriši termin',
@@ -2403,7 +2403,7 @@ return [
     'delete_time_slot_modal_message' => 'Da li ste sigurni da želite da obrišete ovaj termin? Ovo će ga trajno ukloniti iz vašeg rasporeda.',
     'delete' => 'Obriši',
     'update_time_slot_button' => 'Ažuriraj termin',
-    
+
     // Backend Mentor Time Slots Index Page
     'my_time_slots' => 'Moji termini',
     'create_time_slot' => 'Kreiraj termin',
@@ -2441,7 +2441,7 @@ return [
     'no_student_selected' => 'Nije izabran student',
     'please_login_to_chat' => 'Prijavite se za čet',
     'failed_to_start_conversation' => 'Neuspešno pokretanje razgovora',
-    
+
     // Backend User Sessions Show Page
     'session_details' => 'Detalji sesije',
     'back_to_sessions' => 'Nazad na sesije',
@@ -2473,11 +2473,11 @@ return [
     'session_time_switched_successfully' => 'Vreme sesije je uspešno promenjeno!',
     'failed_to_switch_session' => 'Neuspešna promena sesije:',
     'error_switching_session' => 'Greška pri promeni sesije. Pokušajte ponovo.',
-    
+
     // Chat Conversation Page
     'online' => 'Na mreži',
     'session' => 'Sesija:',
-    'course' => 'Kurs:',
+    'course' => 'Kurs/Mentorstvo:',
     'session_ends_at' => 'Sesija se završava u',
     'course_ends' => 'Kurs se završava',
     'start_the_conversation' => 'Započnite razgovor',
@@ -2498,7 +2498,7 @@ return [
     'failed_to_send_message' => 'Neuspešno slanje poruke ({{status}}). Pokušajte ponovo.',
     'failed_to_send_message_generic' => 'Neuspešno slanje poruke. Pokušajte ponovo.',
     'try_different_search' => 'Pokušajte sa drugim pojmom za pretragu ili pregledajte sve kurseve.',
-    
+
     // Frontend Home Featured Courses Page
     'explore_featured_courses' => 'Istražite istaknute kurseve',
     'discover_handpicked_featured_courses' => 'Otkrijte pažljivo odabrane istaknute kurseve koji se izdvajaju po kvalitetu, sadržaju i zadovoljstvu studenata.',
@@ -2506,10 +2506,10 @@ return [
     'no_featured_courses_yet' => 'Još nema istaknutih kurseva',
     'working_on_featuring_best_courses' => 'Radimo na tome da izdvojimo najbolje kurseve za vas. Proverite uskoro!',
     'browse_all_courses' => 'Pretraži sve kurseve',
-    
+
     // Frontend Home Index Page
     'home' => 'Početna',
-    
+
     // Frontend Home New Courses Page
     'explore_new_courses' => 'Istražite nove kurseve',
     'discover_latest_courses_from_experts' => 'Otkrijte najnovije kurseve od stručnih mentora, svež sadržaj prilagođen vašim potrebama za učenjem.',
@@ -2517,10 +2517,10 @@ return [
     'working_on_adding_more_courses' => 'Radimo na dodavanju novih kurseva na našu platformu.',
     'reviews_count_with_number' => 'Recenzije',
     'logout' => 'Odjava',
-    
+
     // Frontend Mentors Index Page - Additional Key
     'mentors' => 'Mentori',
-    
+
     // Frontend Mentors Profile and Sessions Page
     'profile_sessions' => 'Profil i sesije',
     'work_experience' => 'Radno iskustvo',
@@ -2546,7 +2546,7 @@ return [
     'overall_rating' => 'Ukupna ocena',
     'rating_distribution' => 'Raspodela ocena',
     'no_reviews_yet_first' => 'Još nema recenzija. Budite prvi koji će podeliti svoje iskustvo!',
-    
+
     // Profile Delete User Form
     'delete_account' => 'Obriši nalog',
     'delete_account_warning' => 'Kada obrišete nalog, svi vaši podaci i resursi biće trajno obrisani. Pre brisanja preuzmite sve podatke koje želite da sačuvate.',
@@ -2554,7 +2554,7 @@ return [
     'delete_account_confirmation' => 'Kada obrišete nalog, svi vaši podaci i resursi biće trajno obrisani. Unesite lozinku da potvrdite brisanje naloga.',
     'password' => 'Lozinka',
     'cancel' => 'Otkaži',
-    
+
     // Profile Update Password Form
     'update_password' => 'Ažuriraj lozinku',
     'password_security_message' => 'Koristite dugu, nasumičnu lozinku radi sigurnosti naloga.',
@@ -2563,7 +2563,7 @@ return [
     'confirm_password' => 'Potvrdi lozinku',
     'save' => 'Sačuvaj',
     'saved' => 'Sačuvano.',
-    
+
     // Profile Update Profile Information Form
     'profile_information' => 'Informacije o profilu',
     'update_profile_message' => 'Ažurirajte informacije o profilu i email adresu.',
@@ -2572,13 +2572,13 @@ return [
     'email_unverified' => 'Vaša email adresa nije verifikovana.',
     'resend_verification' => 'Kliknite ovde da ponovo pošaljete email za verifikaciju.',
     'verification_link_sent' => 'Novi verifikacioni link je poslat na vašu email adresu.',
-    
+
     // Profile Edit Page
     'profile' => 'Profil',
-    
+
     // Shared Course Card
     'reviews_count' => 'recenzija',
-    
+
     // Shared Mentor Session Card
     'hour_session' => 'čas sesije',
     'minute_session' => 'minut sesije',
@@ -2587,7 +2587,7 @@ return [
     'drag_to_navigate' => 'Prevucite za navigaciju recenzijama',
     'auto_scroll' => 'Automatsko pomicanje',
     'toggle_auto_scroll' => 'Uključi/isključi automatsko pomicanje',
-    
+
     // Message Deletion
     'delete_message' => 'Obriši poruku',
     'delete_message_confirm' => 'Da li ste sigurni da želite da obrišete ovu poruku?',

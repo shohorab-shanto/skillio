@@ -25,7 +25,7 @@
                                 <img src="{{ asset('assets/images/user_dashboard-1.png') }}" alt="{{ __('trans.total_courses') }}" class="w-5 h-5 sm:w-6 sm:h-6 object-contain" />
                             </div>
                             <div class="min-w-0 flex-1">
-                                <p class="text-xs sm:text-sm text-gray-600 truncate">{{ __('trans.total_courses') }}</p>
+                                <p class="text-xs sm:text-sm text-gray-600 break-words leading-tight">{{ __('trans.total_courses') }}</p>
                                 <p class="text-lg sm:text-2xl font-bold text-gray-900 truncate">{{ $totalCourses }}</p>
                         </div>
                         </div>

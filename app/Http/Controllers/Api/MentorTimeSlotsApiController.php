@@ -61,6 +61,7 @@ class MentorTimeSlotsApiController extends Controller
                 'end_time' => $timeSlot->end_time,
                 'formatted_time_slot' => $timeSlot->formatted_time_slot,
                 'fee' => round($timeSlot->fee, 2),
+                'currency' => $timeSlot->currency ?? 'USD',
                 'status' => $timeSlot->status,
                 'is_booked' => $timeSlot->user_id != null,
                 'category' => [
@@ -120,55 +121,90 @@ class MentorTimeSlotsApiController extends Controller
         }
 
         $validated = $request->validate([
+            'dates' => 'required|array|min:1',
+            'dates.*' => 'required|date',
+            'time_slots' => 'required|array|min:1',
+            'time_slots.*.start_time' => 'required|date_format:H:i',
+            'time_slots.*.end_time' => 'required|date_format:H:i|after:time_slots.*.start_time',
             'category_id' => 'required|exists:categories,id',
-            'sub_category_id' => 'nullable|exists:sub_categories,id',
-            'date' => 'required|date|after:today',
-            'start_time' => 'required|date_format:H:i',
-            'end_time' => 'required|date_format:H:i|after:start_time',
+            'sub_category_id' => 'required|exists:sub_categories,id',
+            'currency' => 'required|in:USD,EUR',
             'fee' => 'required|numeric|min:0',
         ]);
 
-        $timeSlot = SessionBooking::create([
-            'mentor_id' => $mentor->id,
-            'category_id' => $validated['category_id'],
-            'date' => $validated['date'],
-            'start_time' => $validated['start_time'],
-            'end_time' => $validated['end_time'],
-            'fee' => $validated['fee'],
-            'status' => 'active',
-        ]);
-
-        // Attach single subcategory (even though model supports multiple)
-        if ($validated['sub_category_id']) {
-            $timeSlot->subCategories()->attach($validated['sub_category_id']);
+        // Additional validation: Check if dates are not in the past
+        $today = now()->startOfDay();
+        foreach ($validated['dates'] as $date) {
+            $dateObj = \Carbon\Carbon::parse($date)->startOfDay();
+            if ($dateObj->lt($today)) {
+                return response()->json([
+                    'success' => false,
+                    'message' => 'Cannot create time slots for past dates.',
+                    'errors' => [
+                        'dates' => ['Cannot create time slots for past dates.']
+                    ]
+                ], 422);
+            }
         }
 
-        // Load relationships for response
-        $timeSlot->load(['category', 'subCategories']);
+        $createdSlots = [];
+        $createdCount = 0;
+
+        // Loop through each selected date
+        foreach ($validated['dates'] as $date) {
+            // Loop through each time slot
+            foreach ($validated['time_slots'] as $timeSlot) {
+                $booking = SessionBooking::create([
+                    'mentor_id' => $mentor->id,
+                    'category_id' => $validated['category_id'],
+                    'date' => $date,
+                    'start_time' => $timeSlot['start_time'],
+                    'end_time' => $timeSlot['end_time'],
+                    'fee' => $validated['fee'],
+                    'currency' => $validated['currency'],
+                    'status' => 'active',
+                ]);
+
+                // Attach subcategory
+                if ($validated['sub_category_id']) {
+                    $booking->subCategories()->attach($validated['sub_category_id']);
+                }
+
+                $booking->load(['category', 'subCategories']);
+                
+                $createdSlots[] = [
+                    'id' => $booking->id,
+                    'date' => $booking->date ? $booking->date->format('Y-m-d') : null,
+                    'start_time' => $booking->start_time,
+                    'end_time' => $booking->end_time,
+                    'formatted_time_slot' => $booking->formatted_time_slot,
+                    'fee' => round($booking->fee, 2),
+                    'currency' => $booking->currency ?? 'USD',
+                    'status' => $booking->status,
+                    'is_booked' => false,
+                    'category' => [
+                        'id' => $booking->category->id,
+                        'name' => $booking->category->name,
+                    ],
+                    'sub_categories' => $booking->subCategories->map(function($subCategory) {
+                        return [
+                            'id' => $subCategory->id,
+                            'name' => $subCategory->name,
+                        ];
+                    }),
+                    'created_at' => $booking->created_at->format('Y-m-d H:i:s'),
+                ];
+
+                $createdCount++;
+            }
+        }
 
         return response()->json([
             'success' => true,
-            'message' => 'Time slot created successfully!',
+            'message' => "Successfully created {$createdCount} time slot" . ($createdCount > 1 ? 's' : '') . "!",
             'data' => [
-                'id' => $timeSlot->id,
-                'date' => $timeSlot->date ? $timeSlot->date->format('Y-m-d') : null,
-                'start_time' => $timeSlot->start_time,
-                'end_time' => $timeSlot->end_time,
-                'formatted_time_slot' => $timeSlot->formatted_time_slot,
-                'fee' => round($timeSlot->fee, 2),
-                'status' => $timeSlot->status,
-                'is_booked' => false,
-                'category' => [
-                    'id' => $timeSlot->category->id,
-                    'name' => $timeSlot->category->name,
-                ],
-                'sub_categories' => $timeSlot->subCategories->map(function($subCategory) {
-                    return [
-                        'id' => $subCategory->id,
-                        'name' => $subCategory->name,
-                    ];
-                }),
-                'created_at' => $timeSlot->created_at->format('Y-m-d H:i:s'),
+                'created_count' => $createdCount,
+                'time_slots' => $createdSlots,
             ]
         ], 201);
     }
@@ -205,6 +241,7 @@ class MentorTimeSlotsApiController extends Controller
                 'end_time' => $time_slot->end_time,
                 'formatted_time_slot' => $time_slot->formatted_time_slot,
                 'fee' => round($time_slot->fee, 2),
+                'currency' => $time_slot->currency ?? 'USD',
                 'status' => $time_slot->status,
                 'is_booked' => $time_slot->user_id != null,
                 'category' => [
@@ -258,6 +295,7 @@ class MentorTimeSlotsApiController extends Controller
             'start_time' => 'required|date_format:H:i',
             'end_time' => 'required|date_format:H:i|after:start_time',
             'fee' => 'required|numeric|min:0',
+            'currency' => 'required|in:USD,EUR',
         ]);
 
         $time_slot->update([
@@ -266,6 +304,7 @@ class MentorTimeSlotsApiController extends Controller
             'start_time' => $validated['start_time'],
             'end_time' => $validated['end_time'],
             'fee' => $validated['fee'],
+            'currency' => $validated['currency'],
         ]);
 
         // Update single subcategory
@@ -288,6 +327,7 @@ class MentorTimeSlotsApiController extends Controller
                 'end_time' => $time_slot->end_time,
                 'formatted_time_slot' => $time_slot->formatted_time_slot,
                 'fee' => round($time_slot->fee, 2),
+                'currency' => $time_slot->currency ?? 'USD',
                 'status' => $time_slot->status,
                 'is_booked' => $time_slot->user_id != null,
                 'category' => [
@@ -365,10 +405,16 @@ class MentorTimeSlotsApiController extends Controller
             ];
         });
 
+        $currencies = [
+            ['value' => 'USD', 'label' => 'USD ($)', 'symbol' => '$'],
+            ['value' => 'EUR', 'label' => 'EUR (€)', 'symbol' => '€'],
+        ];
+
         return response()->json([
             'success' => true,
             'data' => [
                 'categories' => $categories,
+                'currencies' => $currencies,
             ]
         ]);
     }

@@ -33,9 +33,11 @@ class UserDashboardApiController extends Controller
         // Filter enrollments by search
         if ($search) {
             $enrollments = $enrollments->filter(function($enrollment) use ($search) {
-                if ($enrollment->enrollable_type == Course::class) {
-                    return stripos($enrollment->enrollable->title, $search) != false ||
-                           stripos($enrollment->enrollable->mentor->user->name, $search) != false;
+                if ($enrollment->enrollable_type == Course::class && $enrollment->enrollable) {
+                    $title = $enrollment->enrollable->title ?? '';
+                    $mentorName = $enrollment->enrollable->mentor->user->name ?? '';
+                    return stripos($title, $search) !== false ||
+                           stripos($mentorName, $search) !== false;
                 }
                 return false;
             });
@@ -75,10 +77,19 @@ class UserDashboardApiController extends Controller
         
         // Get current courses for display
         $currentCourses = $enrollments->where('enrollable_type', Course::class)
+            ->filter(function($enrollment) {
+                return $enrollment->enrollable !== null;
+            })
             ->take(3)
             ->values()
             ->map(function($enrollment) use ($user) {
                 $course = $enrollment->enrollable;
+                
+                // Check if mentor and user exist
+                if (!$course->mentor || !$course->mentor->user) {
+                    return null;
+                }
+                
                 $mentor = $course->mentor->user;
                 
                 // Get conversation with mentor
@@ -90,7 +101,7 @@ class UserDashboardApiController extends Controller
                     'id' => $enrollment->id,
                     'course' => [
                         'id' => $course->id,
-                        'title' => $course->title,
+                        'title' => $course->title ?? '',
                         'thumbnail' => $course->thumbnail ? asset('storage/' . $course->thumbnail) : null,
                         'average_rating' => round($course->averageRating(), 1),
                         'start_date' => $course->start_date ? $course->start_date->format('M d, Y') : null,
@@ -98,23 +109,38 @@ class UserDashboardApiController extends Controller
                     ],
                     'mentor' => [
                         'id' => $mentor->id,
-                        'name' => $mentor->name,
+                        'name' => $mentor->name ?? '',
                         'photo' => $mentor->photo ? asset('storage/' . $mentor->photo) : null,
                     ],
                     'enrollment_status' => $enrollment->enrollment_status,
-                    'progress_percentage' => round($enrollment->progress_percentage, 2),
+                    'progress_percentage' => round($enrollment->progress_percentage ?? 0, 2),
                     'enrolled_at' => $enrollment->enrolled_at ? $enrollment->enrolled_at->format('Y-m-d H:i:s') : null,
                     'conversation' => $conversation ? [
                         'id' => $conversation->id,
                         'unique_code' => $conversation->unique_code,
                     ] : null,
                 ];
-            });
+            })
+            ->filter(function($course) {
+                return $course !== null;
+            })
+            ->values();
         
         // Get upcoming sessions for display
-        $upcomingSessionsDisplay = $upcomingSessions->take(3)->values()
+        $upcomingSessionsDisplay = $upcomingSessions
+            ->filter(function($enrollment) {
+                return $enrollment->enrollable !== null;
+            })
+            ->take(3)
+            ->values()
             ->map(function($enrollment) use ($user) {
                 $session = $enrollment->enrollable;
+                
+                // Check if mentor and user exist
+                if (!$session->mentor || !$session->mentor->user) {
+                    return null;
+                }
+                
                 $mentor = $session->mentor->user;
                 
                 // Get conversation with mentor
@@ -128,12 +154,12 @@ class UserDashboardApiController extends Controller
                         'id' => $session->id,
                         'date' => $session->date ? $session->date->format('M d, Y') : null,
                         'start_time' => $session->start_time ? Carbon::parse($session->start_time)->format('g:i A') : null,
-                        'formatted_time_slot' => $session->formatted_time_slot,
-                        'sub_categories' => $session->subCategories->pluck('name')->toArray(),
+                        'formatted_time_slot' => $session->formatted_time_slot ?? '',
+                        'sub_categories' => $session->subCategories ? $session->subCategories->pluck('name')->toArray() : [],
                     ],
                     'mentor' => [
                         'id' => $mentor->id,
-                        'name' => $mentor->name,
+                        'name' => $mentor->name ?? '',
                         'photo' => $mentor->photo ? asset('storage/' . $mentor->photo) : null,
                     ],
                     'enrollment_status' => $enrollment->enrollment_status,
@@ -143,7 +169,11 @@ class UserDashboardApiController extends Controller
                         'unique_code' => $conversation->unique_code,
                     ] : null,
                 ];
-            });
+            })
+            ->filter(function($session) {
+                return $session !== null;
+            })
+            ->values();
         
         return response()->json([
             'success' => true,

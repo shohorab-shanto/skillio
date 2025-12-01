@@ -66,9 +66,12 @@ class MentorCoursesApiController extends Controller
                 'thumbnail' => $course->thumbnail ? asset('storage/' . $course->thumbnail) : null,
                 'cover_photo' => $course->cover_photo ? asset('storage/' . $course->cover_photo) : null,
                 'price' => round($course->price, 2),
+                'currency' => $course->currency ?? 'USD',
                 'discount' => round($course->discount, 2),
                 'final_price' => round($course->finalPrice, 2),
+                'duration_type' => $course->duration_type ?? 'days',
                 'duration_days' => $course->duration_days,
+                'duration_hours' => $course->duration_hours,
                 'status' => $course->status,
                 'needs_reapproval' => $course->needs_reapproval,
                 'type' => 'Online',
@@ -135,8 +138,11 @@ class MentorCoursesApiController extends Controller
             'sub_category_ids' => 'required|array|min:1',
             'sub_category_ids.*' => 'exists:sub_categories,id',
             'price' => 'required|numeric|min:0',
+            'currency' => 'required|in:USD,EUR',
             'discount' => 'nullable|numeric|min:0|max:100',
-            'duration_days' => 'required|integer|min:1|max:365',
+            'duration_type' => 'required|in:days,hours',
+            'duration_days' => 'required_if:duration_type,days|nullable|integer|min:1|max:365',
+            'duration_hours' => 'required_if:duration_type,hours|nullable|integer|min:1|max:8760',
             'course_image' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
         ]);
 
@@ -169,10 +175,13 @@ class MentorCoursesApiController extends Controller
             'thumbnail' => $thumbnailPath,
             'cover_photo' => $coverPhotoPath,
             'price' => $validated['price'],
+            'currency' => $validated['currency'],
             'discount' => $validated['discount'] ?? 0,
             'start_date' => null,
             'end_date' => null,
-            'duration_days' => $validated['duration_days'],
+            'duration_type' => $validated['duration_type'],
+            'duration_days' => $validated['duration_type'] === 'days' ? $validated['duration_days'] : null,
+            'duration_hours' => $validated['duration_type'] === 'hours' ? $validated['duration_hours'] : null,
             'status' => 'pending',
             'needs_reapproval' => false,
         ]);
@@ -196,9 +205,12 @@ class MentorCoursesApiController extends Controller
                 'thumbnail' => $course->thumbnail ? asset('storage/' . $course->thumbnail) : null,
                 'cover_photo' => $course->cover_photo ? asset('storage/' . $course->cover_photo) : null,
                 'price' => round($course->price, 2),
+                'currency' => $course->currency ?? 'USD',
                 'discount' => round($course->discount, 2),
                 'final_price' => round($course->finalPrice, 2),
+                'duration_type' => $course->duration_type ?? 'days',
                 'duration_days' => $course->duration_days,
+                'duration_hours' => $course->duration_hours,
                 'status' => $course->status,
                 'needs_reapproval' => $course->needs_reapproval,
                 'category' => [
@@ -266,9 +278,12 @@ class MentorCoursesApiController extends Controller
                     'thumbnail' => $course->thumbnail ? asset('storage/' . $course->thumbnail) : null,
                     'cover_photo' => $course->cover_photo ? asset('storage/' . $course->cover_photo) : null,
                     'price' => round($course->price, 2),
+                    'currency' => $course->currency ?? 'USD',
                     'discount' => round($course->discount, 2),
                     'final_price' => round($course->finalPrice, 2),
+                    'duration_type' => $course->duration_type ?? 'days',
                     'duration_days' => $course->duration_days,
+                    'duration_hours' => $course->duration_hours,
                     'status' => $course->status,
                     'needs_reapproval' => $course->needs_reapproval,
                     'type' => 'Online',
@@ -483,8 +498,11 @@ class MentorCoursesApiController extends Controller
             'sub_category_ids' => 'required|array|min:1',
             'sub_category_ids.*' => 'exists:sub_categories,id',
             'price' => 'required|numeric|min:0',
+            'currency' => 'required|in:USD,EUR',
             'discount' => 'nullable|numeric|min:0|max:100',
-            'duration_days' => 'required|integer|min:1|max:365',
+            'duration_type' => 'required|in:days,hours',
+            'duration_days' => 'required_if:duration_type,days|nullable|integer|min:1|max:365',
+            'duration_hours' => 'required_if:duration_type,hours|nullable|integer|min:1|max:8760',
             'course_image' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
         ]);
 
@@ -520,9 +538,9 @@ class MentorCoursesApiController extends Controller
         $needsReapproval = false;
         if ($course->status == 'approved') {
             // Check if any significant changes were made
-            $significantFields = ['title', 'description', 'price', 'duration_days'];
+            $significantFields = ['title', 'description', 'price', 'currency', 'duration_type', 'duration_days', 'duration_hours'];
             foreach ($significantFields as $field) {
-                if ($course->{$field} != $validated[$field]) {
+                if ($course->{$field} != ($validated[$field] ?? null)) {
                     $needsReapproval = true;
                     break;
                 }
@@ -547,10 +565,13 @@ class MentorCoursesApiController extends Controller
             'title' => $validated['title'],
             'description' => $validated['description'],
             'price' => $validated['price'],
+            'currency' => $validated['currency'],
             'discount' => $validated['discount'] ?? 0,
             'start_date' => null,
             'end_date' => null,
-            'duration_days' => $validated['duration_days'],
+            'duration_type' => $validated['duration_type'],
+            'duration_days' => $validated['duration_type'] === 'days' ? $validated['duration_days'] : null,
+            'duration_hours' => $validated['duration_type'] === 'hours' ? $validated['duration_hours'] : null,
             'needs_reapproval' => $needsReapproval,
             'status' => $needsReapproval ? 'pending' : $course->status,
         ];
@@ -588,9 +609,12 @@ class MentorCoursesApiController extends Controller
                 'thumbnail' => $course->thumbnail ? asset('storage/' . $course->thumbnail) : null,
                 'cover_photo' => $course->cover_photo ? asset('storage/' . $course->cover_photo) : null,
                 'price' => round($course->price, 2),
+                'currency' => $course->currency ?? 'USD',
                 'discount' => round($course->discount, 2),
                 'final_price' => round($course->finalPrice, 2),
+                'duration_type' => $course->duration_type ?? 'days',
                 'duration_days' => $course->duration_days,
+                'duration_hours' => $course->duration_hours,
                 'status' => $course->status,
                 'needs_reapproval' => $course->needs_reapproval,
                 'category' => [
@@ -667,10 +691,22 @@ class MentorCoursesApiController extends Controller
             ];
         });
 
+        $currencies = [
+            ['value' => 'USD', 'label' => 'USD ($)', 'symbol' => '$'],
+            ['value' => 'EUR', 'label' => 'EUR (€)', 'symbol' => '€'],
+        ];
+
+        $durationTypes = [
+            ['value' => 'days', 'label' => 'Days'],
+            ['value' => 'hours', 'label' => 'Hours'],
+        ];
+
         return response()->json([
             'success' => true,
             'data' => [
                 'categories' => $categories,
+                'currencies' => $currencies,
+                'duration_types' => $durationTypes,
             ]
         ]);
     }

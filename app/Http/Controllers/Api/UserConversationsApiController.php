@@ -21,54 +21,81 @@ class UserConversationsApiController extends Controller
      */
     public function index()
     {
-        $user = Auth::user();
-        
-        // Get user's conversations with latest message and unread count
-        $conversations = Conversation::where(function($query) use ($user) {
-            // User is a student in conversation
-            $query->where('user_id', $user->id);
-        })->orWhereHas('mentor', function($query) use ($user) {
-            // User is a mentor in conversation
-            $query->where('user_id', $user->id);
-        })
-        ->with(['mentor.user', 'user', 'latestMessage', 'enrollment.enrollable'])
-        ->orderBy('last_message_at', 'desc')
-        ->get()
-        ->map(function($conversation) use ($user) {
-            $isUser = $conversation->user_id == $user->id;
-            $otherUser = $isUser ? $conversation->mentor->user : $conversation->user;
+        try {
+            $user = Auth::user();
             
-            return [
-                'id' => $conversation->id,
-                'unique_code' => $conversation->unique_code,
-                'other_user' => [
-                    'id' => $otherUser->id,
-                    'name' => $otherUser->name,
-                    'photo' => $otherUser->photo ? asset('storage/' . $otherUser->photo) : null,
-                    'role' => $otherUser->role,
-                ],
-                'is_active' => $conversation->isConversationActive(),
-                'last_message' => $conversation->latestMessage ? [
-                    'id' => $conversation->latestMessage->id,
-                    'content' => $conversation->latestMessage->content,
-                    'type' => $conversation->latestMessage->type,
-                    'sender_id' => $conversation->latestMessage->sender_id,
-                    'is_from_me' => $conversation->latestMessage->sender_id == $user->id,
-                    'created_at' => $conversation->latestMessage->created_at->format('Y-m-d H:i:s'),
-                ] : null,
-                'last_message_at' => $conversation->last_message_at ? $conversation->last_message_at->format('Y-m-d H:i:s') : null,
-                'enrollment' => $conversation->enrollment ? [
-                    'id' => $conversation->enrollment->id,
-                    'enrollable_type' => class_basename($conversation->enrollment->enrollable_type),
-                    'enrollable_id' => $conversation->enrollment->enrollable_id,
-                ] : null,
-            ];
-        });
-        
-        return response()->json([
-            'success' => true,
-            'data' => $conversations
-        ]);
+            if (!$user) {
+                return response()->json([
+                    'success' => false,
+                    'message' => 'Unauthenticated'
+                ], 401);
+            }
+            
+            // Get user's conversations with latest message and unread count
+            $conversations = Conversation::where(function($query) use ($user) {
+                // User is a student in conversation
+                $query->where('user_id', $user->id);
+            })->orWhereHas('mentor', function($query) use ($user) {
+                // User is a mentor in conversation
+                $query->where('user_id', $user->id);
+            })
+            ->with(['mentor.user', 'user', 'latestMessage', 'enrollment.enrollable'])
+            ->orderBy('last_message_at', 'desc')
+            ->get()
+            ->map(function($conversation) use ($user) {
+                // Safety checks for null relationships
+                if (!$conversation->mentor || !$conversation->mentor->user || !$conversation->user) {
+                    return null;
+                }
+                
+                $isUser = $conversation->user_id == $user->id;
+                $otherUser = $isUser ? $conversation->mentor->user : $conversation->user;
+                
+                return [
+                    'id' => $conversation->id,
+                    'unique_code' => $conversation->unique_code,
+                    'other_user' => [
+                        'id' => $otherUser->id,
+                        'name' => $otherUser->name ?? '',
+                        'photo' => $otherUser->photo ? asset('storage/' . $otherUser->photo) : null,
+                        'role' => $otherUser->role ?? 'user',
+                    ],
+                    'is_active' => $conversation->isConversationActive(),
+                    'last_message' => $conversation->latestMessage ? [
+                        'id' => $conversation->latestMessage->id,
+                        'content' => $conversation->latestMessage->content ?? '',
+                        'type' => $conversation->latestMessage->type ?? 'text',
+                        'sender_id' => $conversation->latestMessage->sender_id,
+                        'is_from_me' => $conversation->latestMessage->sender_id == $user->id,
+                        'created_at' => $conversation->latestMessage->created_at->format('Y-m-d H:i:s'),
+                    ] : null,
+                    'last_message_at' => $conversation->last_message_at ? $conversation->last_message_at->format('Y-m-d H:i:s') : null,
+                    'enrollment' => $conversation->enrollment ? [
+                        'id' => $conversation->enrollment->id,
+                        'enrollable_type' => class_basename($conversation->enrollment->enrollable_type),
+                        'enrollable_id' => $conversation->enrollment->enrollable_id,
+                    ] : null,
+                ];
+            })
+            ->filter(function($conversation) {
+                return $conversation !== null;
+            })
+            ->values();
+            
+            return response()->json([
+                'success' => true,
+                'data' => $conversations
+            ]);
+            
+        } catch (\Exception $e) {
+            \Log::error('Error in UserConversationsApiController@index: ' . $e->getMessage());
+            
+            return response()->json([
+                'success' => false,
+                'message' => 'Failed to retrieve conversations',
+                'error' => config('app.debug') ? $e->getMessage() : 'Internal server error'
+            ], 500);
+        }
     }
 
     /**

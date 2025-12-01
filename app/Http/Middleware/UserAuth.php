@@ -33,6 +33,6 @@ class UserAuth
         // User is not authenticated - store intended URL and redirect to login
         $request->session()->put('url.intended', $request->fullUrl());
         
-        return redirect()->route('login')->with('error', 'Please log in to continue.');
+        return redirect()->route('user.onboarding.login')->with('error', 'Please log in to continue.');
     }
 }

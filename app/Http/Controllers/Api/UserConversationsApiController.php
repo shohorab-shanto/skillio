@@ -88,12 +88,21 @@ class UserConversationsApiController extends Controller
             ]);
             
         } catch (\Exception $e) {
-            \Log::error('Error in UserConversationsApiController@index: ' . $e->getMessage());
+            \Log::error('Error in UserConversationsApiController@index', [
+                'message' => $e->getMessage(),
+                'file' => $e->getFile(),
+                'line' => $e->getLine(),
+                'trace' => $e->getTraceAsString()
+            ]);
             
             return response()->json([
                 'success' => false,
                 'message' => 'Failed to retrieve conversations',
-                'error' => config('app.debug') ? $e->getMessage() : 'Internal server error'
+                'error' => config('app.debug') ? $e->getMessage() : 'Internal server error',
+                'debug_info' => config('app.debug') ? [
+                    'file' => $e->getFile(),
+                    'line' => $e->getLine()
+                ] : null
             ], 500);
         }
     }

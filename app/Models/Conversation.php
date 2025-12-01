@@ -131,15 +131,27 @@ class Conversation extends Model
         
         if ($enrollment->enrollable_type == 'App\Models\Course') {
             $course = $enrollment->enrollable;
+            
+            if (!$course) {
+                return false;
+            }
+            
             $enrolledAt = $enrollment->enrolled_at;
             
-            // Course validity period - handle NULL duration
-            if (is_null($course->duration) || $course->duration <= 0) {
-                // If no duration set, course is active for 365 days (1 year)
-                $courseEndDate = $enrolledAt->addDays(365);
-            } else {
-                $courseEndDate = $enrolledAt->addDays($course->duration);
+            // Course validity period - use duration_days or duration_hours
+            $durationDays = 365; // Default to 1 year
+            
+            if ($course->duration_type === 'hours' && $course->duration_hours) {
+                // Convert hours to days (assuming 8 hours per day)
+                $durationDays = ceil($course->duration_hours / 8);
+            } elseif ($course->duration_type === 'days' && $course->duration_days) {
+                $durationDays = $course->duration_days;
+            } elseif ($course->duration_days) {
+                // Fallback to duration_days if duration_type not set
+                $durationDays = $course->duration_days;
             }
+            
+            $courseEndDate = $enrolledAt->copy()->addDays($durationDays);
             
             return now()->lte($courseEndDate);
         }
@@ -180,12 +192,24 @@ class Conversation extends Model
         if ($enrollment->enrollable_type == 'App\Models\Course') {
             $course = $enrollment->enrollable;
             
-            // Handle NULL duration
-            if (is_null($course->duration) || $course->duration <= 0) {
-                $courseEndDate = $enrollment->enrolled_at->addDays(365);
-            } else {
-                $courseEndDate = $enrollment->enrolled_at->addDays($course->duration);
+            if (!$course) {
+                return null;
             }
+            
+            // Calculate duration in days
+            $durationDays = 365; // Default to 1 year
+            
+            if ($course->duration_type === 'hours' && $course->duration_hours) {
+                // Convert hours to days (assuming 8 hours per day)
+                $durationDays = ceil($course->duration_hours / 8);
+            } elseif ($course->duration_type === 'days' && $course->duration_days) {
+                $durationDays = $course->duration_days;
+            } elseif ($course->duration_days) {
+                // Fallback to duration_days if duration_type not set
+                $durationDays = $course->duration_days;
+            }
+            
+            $courseEndDate = $enrollment->enrolled_at->copy()->addDays($durationDays);
             
             return [
                 'start' => $enrollment->enrolled_at,

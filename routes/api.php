@@ -27,6 +27,7 @@ use App\Http\Controllers\Api\MentorStudentsApiController;
 use App\Http\Controllers\Api\CourseApiController;
 use App\Http\Controllers\Api\MentorApiController;
 use App\Http\Controllers\Api\SliderApiController;
+use App\Http\Controllers\Api\SearchApiController;
 
 /*
 |--------------------------------------------------------------------------
@@ -62,6 +63,10 @@ Route::get('courses', [CourseApiController::class, 'getAllCourses']);
 Route::get('courses/filter-options', [CourseApiController::class, 'getFilterOptions']);
 Route::get('mentors', [MentorApiController::class, 'getAllMentors']);
 Route::get('mentors/filter-options', [MentorApiController::class, 'getFilterOptions']);
+
+    // Unified search endpoints
+    Route::get('search', [SearchApiController::class, 'search']);
+    Route::get('search/suggestions', [SearchApiController::class, 'suggestions']);
 
 // Sliders endpoint
 Route::get('sliders', [SliderApiController::class, 'index']);

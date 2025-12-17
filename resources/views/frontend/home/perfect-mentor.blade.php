@@ -101,7 +101,7 @@
 
             <div class="mt-auto pt-4 flex justify-between items-center">
                 <div class="text-xl font-bold text-gray-900">
-                    ${{ $mentor->lowest_session_rate ?? 'N/A' }}<span class="text-sm font-normal text-gray-500">{{ __('trans.per_hour') }}</span>
+                    <!-- ${{ $mentor->lowest_session_rate ?? 'N/A' }}<span class="text-sm font-normal text-gray-500">{{ __('trans.per_hour') }}</span> -->
                 </div>
                 <a href="{{ route('mentor.sessions', $mentor->id) }}" 
                    class="bg-violet-600 hover:bg-violet-700 text-white px-5 py-2 rounded-lg text-sm font-semibold">

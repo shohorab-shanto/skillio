@@ -86,10 +86,10 @@
     <div class="flex items-center justify-between mb-4">
         <div class="text-sm text-gray-600">
             @php
-                $currencySymbol = ($session->currency ?? 'USD') == 'EUR' ? '€' : '$';
+                $currencyCode = strtoupper($session->currency ?? 'USD');
+                $currencySymbol = $currencyCode === 'EUR' ? '€' : '$';
             @endphp
-            <i class="fa-solid fa-{{ ($session->currency ?? 'USD') == 'EUR' ? 'euro-sign' : 'dollar-sign' }} mr-1"></i>
-            {{ $currencySymbol }}{{ number_format($session->fee ?? 0, 2) }}
+            <span class="mr-1">{{ $currencySymbol }}</span>{{ number_format($session->fee ?? 0, 2) }}
         </div>
         <div class="text-sm text-gray-600">
             @if(($session->type ?? 'online') == 'online')

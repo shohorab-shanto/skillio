@@ -27,7 +27,7 @@
             </div>
             
                                 <!-- Search Section -->
-                    <div class="max-w-2xl mx-auto">
+                    {{-- <div class="max-w-2xl mx-auto">
                         <form method="GET" action="{{ route('mentors') }}" class="relative">
                             <div class="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none">
                                 <svg class="h-5 w-5 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -58,7 +58,7 @@
                                 </a>
                             </div>
                         @endif
-                    </div>
+                    </div> --}}
         </div>
     </section>
 

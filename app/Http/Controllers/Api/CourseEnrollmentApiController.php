@@ -112,7 +112,7 @@ class CourseEnrollmentApiController extends Controller
                         'final_price' => round($finalPrice, 2),
                         'stripe_fee' => round($stripeFee, 2),
                         'net_amount' => round($netAmount, 2),
-                        'currency' => 'USD',
+                        'currency' => strtoupper($course->currency ?? 'USD'),
                     ],
                     'eligibility' => [
                         'can_enroll' => true,
@@ -205,7 +205,7 @@ class CourseEnrollmentApiController extends Controller
                 // Create Stripe Payment Intent
                 $paymentIntent = PaymentIntent::create([
                     'amount' => (int)($grossAmount * 100), // Convert to cents
-                    'currency' => 'usd',
+                    'currency' => strtolower($course->currency ?? 'USD'),
                     'customer' => $stripeCustomerId,
                     'payment_method' => $request->payment_method_id,
                     'confirm' => true,
@@ -239,7 +239,7 @@ class CourseEnrollmentApiController extends Controller
                         'enrollable_type' => Course::class,
                         'enrollable_id' => $course->id,
                         'amount' => $grossAmount,
-                        'currency' => 'USD',
+                        'currency' => strtoupper($course->currency ?? 'USD'),
                         'payment_status' => 'paid',
                         'payment_method' => 'stripe',
                         'enrolled_at' => now(),
@@ -255,7 +255,7 @@ class CourseEnrollmentApiController extends Controller
                         'net_amount' => $netAmount,
                         'mentor_amount' => $mentorAmount,
                         'admin_amount' => $adminAmount,
-                        'currency' => 'USD',
+                        'currency' => strtoupper($course->currency ?? 'USD'),
                         'stripe_payment_intent_id' => $paymentIntent->id,
                         'stripe_customer_id' => $stripeCustomerId,
                         'stripe_charge_id' => $paymentIntent->latest_charge,
@@ -377,7 +377,7 @@ class CourseEnrollmentApiController extends Controller
             // Create Payment Intent WITHOUT confirming
             $paymentIntent = PaymentIntent::create([
                 'amount' => (int)($grossAmount * 100), // Convert to cents
-                'currency' => 'usd',
+                'currency' => strtolower($course->currency ?? 'USD'),
                 'customer' => $stripeCustomerId,
                 'automatic_payment_methods' => [
                     'enabled' => true,
@@ -403,7 +403,7 @@ class CourseEnrollmentApiController extends Controller
                     'client_secret' => $paymentIntent->client_secret,
                     'payment_intent_id' => $paymentIntent->id,
                     'amount' => $grossAmount,
-                    'currency' => 'USD',
+                    'currency' => strtoupper($course->currency ?? 'USD'),
                     'course' => [
                         'id' => $course->id,
                         'title' => $course->title,
@@ -538,7 +538,7 @@ class CourseEnrollmentApiController extends Controller
                     'enrollable_type' => Course::class,
                     'enrollable_id' => $course->id,
                     'amount' => $grossAmount,
-                    'currency' => 'USD',
+                    'currency' => strtoupper($course->currency ?? 'USD'),
                     'payment_status' => 'paid',
                     'payment_method' => 'stripe',
                     'enrolled_at' => now(),
@@ -554,7 +554,7 @@ class CourseEnrollmentApiController extends Controller
                     'net_amount' => $netAmount,
                     'mentor_amount' => $mentorAmount,
                     'admin_amount' => $adminAmount,
-                    'currency' => 'USD',
+                    'currency' => strtoupper($course->currency ?? 'USD'),
                     'stripe_payment_intent_id' => $paymentIntent->id,
                     'stripe_customer_id' => $paymentIntent->customer,
                     'stripe_charge_id' => $paymentIntent->latest_charge,
@@ -870,7 +870,7 @@ class CourseEnrollmentApiController extends Controller
             // Create transfer
             $transfer = Transfer::create([
                 'amount' => (int)($mentorAmount * 100), // Convert to cents
-                'currency' => 'usd',
+                'currency' => strtolower($transaction->currency ?? $course->currency ?? 'USD'),
                 'destination' => $mentor->stripe_connect_account_id,
                 'transfer_group' => $transaction->transaction_id,
                 'metadata' => [

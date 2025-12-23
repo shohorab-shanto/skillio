@@ -60,7 +60,7 @@ class SessionBookingApiController extends Controller
                     'duration_minutes' => $session->duration_in_minutes,
                     'formatted_time_slot' => $session->formatted_time_slot,
                     'fee' => $session->fee,
-                    'currency' => 'USD',
+                    'currency' => $session->currency ?? 'USD',
                     'mentor' => [
                         'id' => $session->mentor->id,
                         'name' => $session->mentor->user->name,
@@ -285,9 +285,9 @@ class SessionBookingApiController extends Controller
                 // Create Stripe Payment Intent
                 $paymentIntent = PaymentIntent::create([
                     'amount' => (int)($grossAmount * 100), // Convert to cents
-                    'currency' => 'usd',
-                    'customer' => $stripeCustomerId,
-                    'payment_method' => $request->payment_method_id,
+                'currency' => strtolower($session->currency ?? 'usd'),
+                'customer' => $stripeCustomerId,
+                'payment_method' => $request->payment_method_id,
                     'confirm' => true,
                     'automatic_payment_methods' => [
                         'enabled' => true,
@@ -319,7 +319,7 @@ class SessionBookingApiController extends Controller
                         'enrollable_type' => SessionBooking::class,
                         'enrollable_id' => $session->id,
                         'amount' => $grossAmount,
-                        'currency' => 'USD',
+                        'currency' => strtoupper($session->currency ?? 'USD'),
                         'payment_status' => 'paid',
                         'payment_method' => 'stripe',
                         'enrolled_at' => now(),
@@ -335,7 +335,7 @@ class SessionBookingApiController extends Controller
                         'net_amount' => $netAmount,
                         'mentor_amount' => $mentorAmount,
                         'admin_amount' => $adminAmount,
-                        'currency' => 'USD',
+                        'currency' => strtoupper($session->currency ?? 'USD'),
                         'stripe_payment_intent_id' => $paymentIntent->id,
                         'stripe_customer_id' => $stripeCustomerId,
                         'stripe_charge_id' => $paymentIntent->latest_charge,
@@ -466,7 +466,7 @@ class SessionBookingApiController extends Controller
             // Create Payment Intent WITHOUT confirming
             $paymentIntent = PaymentIntent::create([
                 'amount' => (int)($grossAmount * 100), // Convert to cents
-                'currency' => 'usd',
+                'currency' => strtolower($session->currency ?? 'usd'),
                 'customer' => $stripeCustomerId,
                 'automatic_payment_methods' => [
                     'enabled' => true,
@@ -492,7 +492,7 @@ class SessionBookingApiController extends Controller
                     'client_secret' => $paymentIntent->client_secret,
                     'payment_intent_id' => $paymentIntent->id,
                     'amount' => $grossAmount,
-                    'currency' => 'USD',
+                    'currency' => $session->currency ?? 'USD',
                     'session' => [
                         'id' => $session->id,
                         'date' => $session->date->format('Y-m-d'),
@@ -625,7 +625,7 @@ class SessionBookingApiController extends Controller
                     'enrollable_type' => SessionBooking::class,
                     'enrollable_id' => $session->id,
                     'amount' => $grossAmount,
-                    'currency' => 'USD',
+                    'currency' => strtoupper($session->currency ?? 'USD'),
                     'payment_status' => 'paid',
                     'payment_method' => 'stripe',
                     'enrolled_at' => now(),
@@ -644,7 +644,7 @@ class SessionBookingApiController extends Controller
                     'net_amount' => $netAmount,
                     'mentor_amount' => $mentorAmount,
                     'admin_amount' => $adminAmount,
-                    'currency' => 'USD',
+                    'currency' => strtoupper($session->currency ?? 'USD'),
                     'stripe_payment_intent_id' => $paymentIntent->id,
                     'stripe_customer_id' => $paymentIntent->customer,
                     'stripe_charge_id' => $paymentIntent->latest_charge,

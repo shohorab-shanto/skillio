@@ -192,7 +192,7 @@ class SessionBookingApiController extends Controller
                         'fee' => round($fee, 2),
                         'stripe_fee' => round($stripeFee, 2),
                         'net_amount' => round($netAmount, 2),
-                        'currency' => 'USD',
+                        'currency' => $session->currency ?? 'USD',
                     ],
                     'eligibility' => [
                         'can_book' => true,

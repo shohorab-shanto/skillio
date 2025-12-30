@@ -29,9 +29,17 @@ class DashboardController extends Controller
         // Filter enrollments by search
         if ($search) {
             $enrollments = $enrollments->filter(function($enrollment) use ($search) {
-                if ($enrollment->enrollable_type == Course::class) {
-                    return stripos($enrollment->enrollable->title, $search) != false ||
-                           stripos($enrollment->enrollable->mentor->user->name, $search) != false;
+                if ($enrollment->enrollable_type == Course::class && $enrollment->enrollable) {
+                    $title = $enrollment->enrollable->title ?? '';
+                    
+                    // Safe access for mentor name
+                    $mentorName = '';
+                    if ($enrollment->enrollable->mentor && $enrollment->enrollable->mentor->user) {
+                        $mentorName = $enrollment->enrollable->mentor->user->name ?? '';
+                    }
+                    
+                    return stripos($title, $search) !== false ||
+                           stripos($mentorName, $search) !== false;
                 }
                 return false;
             });
@@ -71,11 +79,19 @@ class DashboardController extends Controller
         
         // Get current courses for display
         $currentCourses = $enrollments->where('enrollable_type', Course::class)
+            ->filter(function($enrollment) {
+                return $enrollment->enrollable !== null;
+            })
             ->take(3)
             ->values();
         
         // Get upcoming sessions for display
-        $upcomingSessionsDisplay = $upcomingSessions->take(3)->values();
+        $upcomingSessionsDisplay = $upcomingSessions
+            ->filter(function($enrollment) {
+                return $enrollment->enrollable !== null;
+            })
+            ->take(3)
+            ->values();
         
         return view('backend.user.dashboard.index', compact(
             'activeCourses',

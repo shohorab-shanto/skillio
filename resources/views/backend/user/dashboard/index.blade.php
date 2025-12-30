@@ -112,21 +112,21 @@
             @forelse($currentCourses as $enrollment)
                 @php
                     $course = $enrollment->enrollable;
-                    $mentor = $course->mentor->user;
+                    $mentor = $course->mentor ? $course->mentor->user : null;
                 @endphp
                 <div class="border p-5 rounded-3xl mb-4 hover:shadow-md transition-shadow">
                     <h1 class="text-xl font-semibold mb-3">{{ $course->title }}</h1>
                     <div class="flex justify-between w-full h-32">
                         <div>
                             <div class="flex items-center mb-2">
-                                @if($mentor->photo)
+                                @if($mentor && $mentor->photo)
                                     <img src="{{ asset('storage/' . $mentor->photo) }}" class="w-10 h-10 rounded-full object-cover" alt="{{ $mentor->name }}">
                                 @else
                                     <div class="w-10 h-10 rounded-full bg-purple-100 flex items-center justify-center">
                                         <i class="fa-solid fa-user text-purple-600"></i>
                                     </div>
                                 @endif
-                                <p class="text-sm text-gray-500 ml-2">{{ $mentor->name }}</p>
+                                <p class="text-sm text-gray-500 ml-2">{{ $mentor ? $mentor->name : __('trans.unknown_mentor') }}</p>
                             </div>
                             <p class="text-sm text-gray-600">
                                 @if($course->start_date && $course->end_date)
@@ -194,20 +194,20 @@
                 @forelse($upcomingSessionsDisplay as $enrollment)
                     @php
                         $session = $enrollment->enrollable;
-                        $mentor = $session->mentor->user;
+                        $mentor = $session->mentor ? $session->mentor->user : null;
                     @endphp
                     <div class="border p-5 rounded-3xl mb-4 hover:shadow-md transition-shadow">
                         <div class="flex justify-between w-full">
                             <div>
                                 <div class="flex items-center mb-2">
-                                    @if($mentor->photo)
+                                    @if($mentor && $mentor->photo)
                                         <img src="{{ asset('storage/' . $mentor->photo) }}" class="w-10 h-10 rounded-full object-cover" alt="{{ $mentor->name }}">
                                     @else
                                         <div class="w-10 h-10 rounded-full bg-purple-100 flex items-center justify-center">
                                             <i class="fa-solid fa-user text-purple-600"></i>
                                         </div>
                                     @endif
-                                    <p class="text-sm text-gray-500 ml-2">{{ $mentor->name }}</p>
+                                    <p class="text-sm text-gray-500 ml-2">{{ $mentor ? $mentor->name : __('trans.unknown_mentor') }}</p>
                                 </div>
                                 <p class="text-sm text-gray-600">
                                     @if($session->subCategories && $session->subCategories->count() > 0)

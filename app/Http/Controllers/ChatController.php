@@ -79,7 +79,11 @@ class ChatController extends Controller
                     continue;
                 }
                 
-                if ($currentTime >= $session->start_time && $currentTime <= $session->end_time) {
+                // Convert times to comparable format
+                $sessionStart = Carbon::parse($session->start_time)->format('H:i:s');
+                $sessionEnd = Carbon::parse($session->end_time)->format('H:i:s');
+                
+                if ($currentTime >= $sessionStart && $currentTime <= $sessionEnd) {
                     $canChat = true;
                     $chatReason = 'Session is currently active';
                     $chatType = 'session';
@@ -91,19 +95,27 @@ class ChatController extends Controller
             
             // Check if there are upcoming sessions today (only if no active session found)
             if (!$canChat) {
-                $upcomingToday = $todaySessions->where('start_time', '>', $currentTime)->first();
+                $upcomingToday = $todaySessions->filter(function($session) use ($currentTime) {
+                    $sessionStart = Carbon::parse($session->start_time)->format('H:i:s');
+                    return $sessionStart > $currentTime;
+                })->first();
+                
                 if ($upcomingToday) {
-                    $startTimeOnly = $upcomingToday->start_time->format('H:i:s');
-                    $timeUntil = Carbon::parse("{$today} {$startTimeOnly}")->diffForHumans();
+                    $startTimeFormatted = Carbon::parse($upcomingToday->start_time)->format('H:i:s');
+                    $timeUntil = Carbon::parse("{$today} {$startTimeFormatted}")->diffForHumans();
                     $chatReason = 'Session not started yet';
                     $chatType = 'session';
-                    $chatDetails = "Your session starts {$timeUntil} (at {$startTimeOnly})";
+                    $chatDetails = "Your session starts {$timeUntil} (at {$startTimeFormatted})";
                 }
             }
             
             // Check if there were sessions earlier today (only if no active session found)
             if (!$canChat) {
-                $earlierToday = $todaySessions->where('end_time', '<', $currentTime)->first();
+                $earlierToday = $todaySessions->filter(function($session) use ($currentTime) {
+                    $sessionEnd = Carbon::parse($session->end_time)->format('H:i:s');
+                    return $sessionEnd < $currentTime;
+                })->first();
+                
                 if ($earlierToday) {
                     $chatReason = 'Session not started yet';
                     $chatType = 'session';

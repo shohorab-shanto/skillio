@@ -138,6 +138,37 @@ class SessionBooking extends Model
         return $sessionDateTime > now();
     }
 
+    // public function getIsCompletedAttribute(): bool
+    // {
+    //     $sessionEndDateTime = $this->date->format('Y-m-d') . ' ' . $this->end_time->format('H:i:s');
+    //     return $sessionEndDateTime < now();
+    // }
+
+    // public function getDisplayStatusAttribute(): string
+    // {
+    //     // If session end time has passed, show as completed
+    //     if ($this->is_completed) {
+    //         return 'completed';
+    //     }
+        
+    //     // If session hasn't started yet, show as upcoming
+    //     if ($this->has_not_started) {
+    //         return 'upcoming';
+    //     }
+        
+    //     // If session is currently active (between start and end time)
+    //     $sessionStartDateTime = $this->date->format('Y-m-d') . ' ' . $this->start_time->format('H:i:s');
+    //     $sessionEndDateTime = $this->date->format('Y-m-d') . ' ' . $this->end_time->format('H:i:s');
+    //     $now = now();
+        
+    //     if ($now >= $sessionStartDateTime && $now <= $sessionEndDateTime) {
+    //         return 'active';
+    //     }
+        
+    //     // Default to the database status
+    //     return $this->status;
+    // }
+
     // Methods
     public function bookSession($userId): bool
     {

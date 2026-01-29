@@ -25,7 +25,7 @@
         </div>
 
         <!-- Rating and Reviews -->
-        <div class="flex items-center text-sm text-gray-600 mb-4">
+        {{-- <div class="flex items-center text-sm text-gray-600 mb-4">
             <div class="flex text-yellow-500 mr-2">
                 @for($i = 0; $i < $mentor['star_rating']['full_stars']; $i++)
                     <svg class="w-4 h-4 fill-current" viewBox="0 0 20 20">
@@ -45,7 +45,7 @@
                 </div>
             <span class="font-semibold text-gray-900">{{ $mentor['formatted_rating'] }}</span>
             <span class="ml-1 text-gray-500">({{ $mentor['total_reviews'] }} {{ __('trans.reviews') }})</span>
-        </div>
+        </div> --}}
 
         <!-- Bio -->
         <p class="text-gray-700 text-sm mb-4 leading-relaxed">

@@ -30,7 +30,7 @@
                     @endphp
 
                     <div class="flex items-center gap-2 mb-3">
-                        <div class="flex text-orange-400">
+                        {{-- <div class="flex text-orange-400">
                             @for($i = 1; $i <= 5; $i++)
                                 @if($i <= $fullStars)
                                     <svg class="w-4 h-4 fill-current" viewBox="0 0 20 20">
@@ -47,7 +47,7 @@
                                 @endif
                             @endfor
                         </div>
-                        <span class="text-sm text-gray-600">{{ number_format($averageRating, 1) }} ({{ $totalReviews }} {{ __('trans.reviews_count') }})</span>
+                        <span class="text-sm text-gray-600">{{ number_format($averageRating, 1) }} ({{ $totalReviews }} {{ __('trans.reviews_count') }})</span> --}}
                     </div>
                     
                     <!-- Title -->

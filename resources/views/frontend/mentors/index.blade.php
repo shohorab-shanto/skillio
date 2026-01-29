@@ -87,7 +87,7 @@
                             </div>
                         </div>
 
-                        <div class="mt-3 flex items-center space-x-2">
+                        {{-- <div class="mt-3 flex items-center space-x-2">
                             <!-- Star Rating Display -->
                             <div class="flex items-center">
                                 @php
@@ -130,7 +130,7 @@
                                 <span class="font-bold text-gray-900 text-sm">{{ number_format($rating, 1) }}</span>
                                                                     <span class="text-gray-500 text-xs">({{ $mentor['total_reviews'] ?? 0 }} {{ __('trans.reviews') }})</span>
                             </div>
-                        </div>
+                        </div> --}}
 
                         <p class="mt-4 text-gray-700 text-sm">
                             {{ $mentor['bio'] ? Str::limit($mentor['bio'], 100) : __('trans.experienced_mentor_bio_alt') }}

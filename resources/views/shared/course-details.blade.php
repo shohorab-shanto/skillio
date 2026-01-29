@@ -43,7 +43,7 @@
                 </div>
                 
                 <div class="flex items-center">
-                    @php
+                    {{-- @php
                         $averageRating = $course->averageRating() ?? 0;
                         $totalReviews = $course->totalReviews();
                     @endphp
@@ -55,7 +55,7 @@
                         <span class="font-semibold text-gray-900">{{ number_format($averageRating, 1) }}</span>
                         <span class="text-gray-500 ml-1">({{ $totalReviews }} {{ __('trans.reviews') }})</span>
                     </div>
-                    @endif
+                    @endif --}}
                 </div>
             </div>
             
@@ -134,8 +134,8 @@
                 <nav class="-mb-px flex space-x-8">
                     <button onclick="showTab('about')" id="about-tab"
                         class="tab-button text-purple-600 border-purple-600 py-4 px-1 border-b-2 text-sm font-medium">{{ __('trans.about') }}</button>
-                    <button onclick="showTab('review')" id="review-tab"
-                        class="tab-button text-gray-500 hover:text-gray-700 py-4 px-1 border-b-2 border-transparent text-sm font-medium">{{ __('trans.reviews_tab') }}</button>
+                    {{-- <button onclick="showTab('review')" id="review-tab"
+                        class="tab-button text-gray-500 hover:text-gray-700 py-4 px-1 border-b-2 border-transparent text-sm font-medium">{{ __('trans.reviews_tab') }}</button> --}}
                     @if($showEarningTab)
                     <button onclick="showTab('earning')" id="earning-tab"
                         class="tab-button text-gray-500 hover:text-gray-700 py-4 px-1 border-b-2 border-transparent text-sm font-medium">{{ __('trans.earning_history') }}</button>
@@ -169,7 +169,7 @@
                 </div>
 
                 <!-- Review Tab -->
-                <div id="review-content" class="tab-content hidden">
+                {{-- <div id="review-content" class="tab-content hidden">
                     <h3 class="text-lg font-semibold mb-6">{{ __('trans.student_reviews') }}</h3>
                     
                     @if($course->reviews->count() > 0)
@@ -258,7 +258,7 @@
                             'existingReview' => $existingReview
                         ])
                     @endif
-                </div>
+                </div> --}}
 
                 @if($showEarningTab)
                 <!-- Earning Tab -->

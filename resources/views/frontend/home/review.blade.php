@@ -67,6 +67,7 @@
                             <!-- Testimonial Card 1 -->
                             <div class="bg-white rounded-2xl shadow-lg hover:shadow-xl transition-shadow duration-300 p-6 border border-gray-100">
                                 <!-- Rating -->
+                                 {{--
                                 <div class="flex items-center gap-2 mb-4">
                                     <div class="flex text-orange-400">
                                         <svg class="w-5 h-5 fill-current" viewBox="0 0 20 20">
@@ -87,6 +88,7 @@
                                     </div>
                                     <span class="text-sm font-medium text-gray-700">4.8</span>
                                 </div>
+                                --}}
                                 
                                 <!-- Quote Icon -->
                                 <div class="mb-4">
@@ -115,6 +117,7 @@
                             <!-- Testimonial Card 2 -->
                             <div class="bg-white rounded-2xl shadow-lg hover:shadow-xl transition-shadow duration-300 p-6 border border-gray-100">
                                 <!-- Rating -->
+                                 {{--
                                 <div class="flex items-center gap-2 mb-4">
                                     <div class="flex text-orange-400">
                                         <svg class="w-5 h-5 fill-current" viewBox="0 0 20 20">
@@ -135,6 +138,7 @@
                                     </div>
                                     <span class="text-sm font-medium text-gray-700">4.8 (120 {{ __('trans.reviews_count_with_number') }})</span>
                                 </div>
+                                --}}
                                 
                                 <!-- Quote Icon -->
                                 <div class="mb-4">
@@ -163,6 +167,7 @@
                             <!-- Testimonial Card 3 -->
                             <div class="bg-white rounded-2xl shadow-lg hover:shadow-xl transition-shadow duration-300 p-6 border border-gray-100">
                                 <!-- Rating -->
+                                 {{--
                                 <div class="flex items-center gap-2 mb-4">
                                     <div class="flex text-orange-400">
                                         <svg class="w-5 h-5 fill-current" viewBox="0 0 20 20">
@@ -183,6 +188,7 @@
                                     </div>
                                     <span class="text-sm font-medium text-gray-700">4.8</span>
                                 </div>
+                                --}}
                                 
                                 <!-- Quote Icon -->
                                 <div class="mb-4">
@@ -211,6 +217,7 @@
                             <!-- Testimonial Card 4 -->
                             <div class="bg-white rounded-2xl shadow-lg hover:shadow-xl transition-shadow duration-300 p-6 border border-gray-100">
                                 <!-- Rating -->
+                                 {{--
                                 <div class="flex items-center gap-2 mb-4">
                                     <div class="flex text-orange-400">
                                         <svg class="w-5 h-5 fill-current" viewBox="0 0 20 20">
@@ -231,6 +238,7 @@
                                     </div>
                                     <span class="text-sm font-medium text-gray-700">4.8 (120 Reviews)</span>
                                 </div>
+                                --}}
                                 
                                 <!-- Quote Icon -->
                                 <div class="mb-4">

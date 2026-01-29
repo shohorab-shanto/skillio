@@ -721,7 +721,7 @@ function displaySearchResults(results, container) {
                             <p class="text-xs text-gray-600 mb-2 leading-relaxed">${truncateText(safeGet(result, 'category', 'N/A') + (safeGet(result, 'sub_categories') ? ' • ' + safeGet(result, 'sub_categories') : ''), 80)}</p>
                             <p class="text-xs text-gray-500 mb-2">${t('by', 'by')} ${truncateText(safeGet(result, 'mentor', t('unknown_mentor', 'Unknown Mentor')), 40)}</p>
                             <div class="flex items-center justify-between">
-                                <div class="flex items-center space-x-3">
+                                {{-- <div class="flex items-center space-x-3">
                                     <div class="flex items-center space-x-1">
                                         <svg class="w-3 h-3 text-yellow-400" fill="currentColor" viewBox="0 0 20 20">
                                             <path d="M10 15l-5.878 3.09 1.123-6.545L.489 6.91l6.572-.955L10 0l2.939 5.955 6.572.955-4.756 4.635 1.123 6.545z"/>
@@ -729,7 +729,7 @@ function displaySearchResults(results, container) {
                                         <span class="text-xs text-gray-600 font-medium">${safeGet(result, 'rating') ? Number(safeGet(result, 'rating')).toFixed(1) : 'N/A'}</span>
                                     </div>
                                     <span class="text-xs text-gray-500">(${safeGet(result, 'reviews_count', 0)} ${t('reviews', 'reviews')})</span>
-                                </div>
+                                </div> --}}
                                 <span class="text-sm font-semibold text-gray-900">$${safeGet(result, 'price', '0')}</span>
                             </div>
                         </div>
@@ -754,7 +754,7 @@ function displaySearchResults(results, container) {
                             </div>
                             <p class="text-xs text-gray-600 mb-2 leading-relaxed">${truncateText(safeGet(result, 'category', 'N/A') + (safeGet(result, 'sub_categories') ? ' • ' + safeGet(result, 'sub_categories') : ''), 80)}</p>
                             <p class="text-xs text-gray-500 mb-2">${safeGet(result, 'experience', 'N/A')}</p>
-                            <div class="flex items-center space-x-3">
+                            {{-- <div class="flex items-center space-x-3">
                                 <div class="flex items-center space-x-1">
                                     <svg class="w-3 h-3 text-yellow-400" fill="currentColor" viewBox="0 0 20 20">
                                         <path d="M10 15l-5.878 3.09 1.123-6.545L.489 6.91l6.572-.955L10 0l2.939 5.955 6.572.955-4.756 4.635 1.123 6.545z"/>
@@ -762,7 +762,7 @@ function displaySearchResults(results, container) {
                                     <span class="text-xs text-gray-600 font-medium">${safeGet(result, 'rating') ? Number(safeGet(result, 'rating')).toFixed(1) : 'N/A'}</span>
                                 </div>
                                 <span class="text-xs text-gray-500">(${safeGet(result, 'reviews_count', 0)} ${t('reviews', 'reviews')})</span>
-                            </div>
+                            </div> --}}
                         </div>
                     </div>
                 </a>

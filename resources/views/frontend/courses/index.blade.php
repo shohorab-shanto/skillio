@@ -122,7 +122,7 @@
                                     @foreach($reviewGroup as $review)
                                         <div class="bg-white rounded-2xl shadow-sm hover:shadow-xl transition-shadow duration-300 p-6 border border-gray-100">
                                             <!-- Rating -->
-                                            <div class="flex items-center gap-2 mb-4">
+                                            {{-- <div class="flex items-center gap-2 mb-4">
                                                 <div class="flex text-orange-400">
                                                     @for($i = 1; $i <= 5; $i++)
                                                         @if($i <= $review->rating)
@@ -142,7 +142,7 @@
                                                         ({{ $topReviews->count() }} {{ __('trans.reviews_count_with_number') }})
                                                     @endif
                                                 </span>
-                                            </div>
+                                            </div> --}}
                                             
                                             <!-- Review Text -->
                                             <p class="text-gray-700 mb-6 leading-relaxed">
@@ -176,7 +176,7 @@
                                     <!-- Testimonial Card 1 -->
                                     <div class="bg-white rounded-2xl shadow-lg hover:shadow-xl transition-shadow duration-300 p-6 border border-gray-100">
                                         <!-- Rating -->
-                                        <div class="flex items-center gap-2 mb-4">
+                                        {{-- <div class="flex items-center gap-2 mb-4">
                                             <div class="flex text-orange-400">
                                                 <svg class="w-5 h-5 fill-current" viewBox="0 0 20 20">
                                                     <path d="M10 15l-5.878 3.09 1.123-6.545L.489 6.91l6.572-.955L10 0l2.939 5.955 6.572.955-4.756 4.635 1.123 6.545z"/>
@@ -195,7 +195,7 @@
                                                 </svg>
                                             </div>
                                             <span class="text-sm font-medium text-gray-700">4.8</span>
-                                        </div>
+                                        </div> --}}
                                         
                                         <!-- Quote Icon -->
                                         <div class="mb-4">
@@ -224,7 +224,7 @@
                                     <!-- Testimonial Card 2 -->
                                     <div class="bg-white rounded-2xl shadow-lg hover:shadow-xl transition-shadow duration-300 p-6 border border-gray-100">
                                         <!-- Rating -->
-                                        <div class="flex items-center gap-2 mb-4">
+                                        {{-- <div class="flex items-center gap-2 mb-4">
                                             <div class="flex text-orange-400">
                                                 <svg class="w-5 h-5 fill-current" viewBox="0 0 20 20">
                                                     <path d="M10 15l-5.878 3.09 1.123-6.545L.489 6.91l6.572-.955L10 0l2.939 5.955 6.572.955-4.756 4.635 1.123 6.545z"/>
@@ -243,7 +243,7 @@
                                                 </svg>
                                             </div>
                                             <span class="text-sm font-medium text-gray-700">4.8 (120 {{ __('trans.reviews_count_with_number') }})</span>
-                                        </div>
+                                        </div> --}}
                                         
                                         <!-- Quote Icon -->
                                         <div class="mb-4">
@@ -272,7 +272,7 @@
                                     <!-- Testimonial Card 3 -->
                                     <div class="bg-white rounded-2xl shadow-lg hover:shadow-xl transition-shadow duration-300 p-6 border border-gray-100">
                                         <!-- Rating -->
-                                        <div class="flex items-center gap-2 mb-4">
+                                        {{-- <div class="flex items-center gap-2 mb-4">
                                             <div class="flex text-orange-400">
                                                 <svg class="w-5 h-5 fill-current" viewBox="0 0 20 20">
                                                     <path d="M10 15l-5.878 3.09 1.123-6.545L.489 6.91l6.572-.955L10 0l2.939 5.955 6.572.955-4.756 4.635 1.123 6.545z"/>
@@ -291,7 +291,7 @@
                                                 </svg>
                                             </div>
                                             <span class="text-sm font-medium text-gray-700">4.8</span>
-                                        </div>
+                                        </div> --}}
                                         
                                         <!-- Quote Icon -->
                                         <div class="mb-4">
@@ -320,7 +320,7 @@
                                     <!-- Testimonial Card 4 -->
                                     <div class="bg-white rounded-2xl shadow-lg hover:shadow-xl transition-shadow duration-300 p-6 border border-gray-100">
                                         <!-- Rating -->
-                                        <div class="flex items-center gap-2 mb-4">
+                                        {{-- <div class="flex items-center gap-2 mb-4">
                                             <div class="flex text-orange-400">
                                                 <svg class="w-5 h-5 fill-current" viewBox="0 0 20 20">
                                                     <path d="M10 15l-5.878 3.09 1.123-6.545L.489 6.91l6.572-.955L10 0l2.939 5.955 6.572.955-4.756 4.635 1.123 6.545z"/>
@@ -339,7 +339,7 @@
                                                 </svg>
                                             </div>
                                             <span class="text-sm font-medium text-gray-700">4.8 (120 {{ __('trans.reviews_count_with_number') }})</span>
-                                        </div>
+                                        </div> --}}
                                         
                                         <!-- Quote Icon -->
                                         <div class="mb-4">

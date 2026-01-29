@@ -30,47 +30,49 @@
 
             <div class="mt-3 flex items-center space-x-2">
                 <!-- Star Rating Display -->
-                <div class="flex items-center">
-                    @php
-                        $rating = $mentor->reviews_avg_rating ?? 0;
-                        $fullStars = floor($rating);
-                        $hasHalfStar = ($rating - $fullStars) >= 0.5;
-                        $emptyStars = 5 - $fullStars - ($hasHalfStar ? 1 : 0);
-                    @endphp
+                 {{--
+                    <div class="flex items-center">
+                        @php
+                            $rating = $mentor->reviews_avg_rating ?? 0;
+                            $fullStars = floor($rating);
+                            $hasHalfStar = ($rating - $fullStars) >= 0.5;
+                            $emptyStars = 5 - $fullStars - ($hasHalfStar ? 1 : 0);
+                        @endphp
+                        
+                        <!-- Full Stars -->
+                        @for($i = 0; $i < $fullStars; $i++)
+                            <svg class="w-4 h-4 text-yellow-400 fill-current" viewBox="0 0 20 20">
+                                <path d="M10 15l-5.878 3.09 1.123-6.545L.489 6.91l6.572-.955L10 0l2.939 5.955 6.572.955-4.756 4.635 1.123 6.545z"/>
+                            </svg>
+                        @endfor
+                        
+                        <!-- Half Star -->
+                        @if($hasHalfStar)
+                            <svg class="w-4 h-4 text-yellow-400 fill-current" viewBox="0 0 20 20">
+                                <defs>
+                                    <linearGradient id="half-star-{{ $mentor->id }}">
+                                        <stop offset="50%" stop-color="#fbbf24"/>
+                                        <stop offset="50%" stop-color="#e5e7eb"/>
+                                    </linearGradient>
+                                </defs>
+                                <path d="M10 15l-5.878 3.09 1.123-6.545L.489 6.91l6.572-.955L10 0l2.939 5.955 6.572.955-4.756 4.635 1.123 6.545z" fill="url(#half-star-{{ $mentor->id }})"/>
+                            </svg>
+                        @endif
+                        
+                        <!-- Empty Stars -->
+                        @for($i = 0; $i < $emptyStars; $i++)
+                            <svg class="w-4 h-4 text-gray-300 fill-current" viewBox="0 0 20 20">
+                                <path d="M10 15l-5.878 3.09 1.123-6.545L.489 6.91l6.572-.955L10 0l2.939 5.955 6.572.955-4.756 4.635 1.123 6.545z"/>
+                            </svg>
+                        @endfor
+                    </div>
                     
-                    <!-- Full Stars -->
-                    @for($i = 0; $i < $fullStars; $i++)
-                        <svg class="w-4 h-4 text-yellow-400 fill-current" viewBox="0 0 20 20">
-                            <path d="M10 15l-5.878 3.09 1.123-6.545L.489 6.91l6.572-.955L10 0l2.939 5.955 6.572.955-4.756 4.635 1.123 6.545z"/>
-                        </svg>
-                    @endfor
-                    
-                    <!-- Half Star -->
-                    @if($hasHalfStar)
-                        <svg class="w-4 h-4 text-yellow-400 fill-current" viewBox="0 0 20 20">
-                            <defs>
-                                <linearGradient id="half-star-{{ $mentor->id }}">
-                                    <stop offset="50%" stop-color="#fbbf24"/>
-                                    <stop offset="50%" stop-color="#e5e7eb"/>
-                                </linearGradient>
-                            </defs>
-                            <path d="M10 15l-5.878 3.09 1.123-6.545L.489 6.91l6.572-.955L10 0l2.939 5.955 6.572.955-4.756 4.635 1.123 6.545z" fill="url(#half-star-{{ $mentor->id }})"/>
-                        </svg>
-                    @endif
-                    
-                    <!-- Empty Stars -->
-                    @for($i = 0; $i < $emptyStars; $i++)
-                        <svg class="w-4 h-4 text-gray-300 fill-current" viewBox="0 0 20 20">
-                            <path d="M10 15l-5.878 3.09 1.123-6.545L.489 6.91l6.572-.955L10 0l2.939 5.955 6.572.955-4.756 4.635 1.123 6.545z"/>
-                        </svg>
-                    @endfor
-                </div>
-                
-                <!-- Rating Number and Reviews Count -->
-                <div class="flex items-center space-x-2">
-                    <span class="font-bold text-gray-900 text-sm">{{ number_format($rating, 1) }}</span>
-                    <span class="text-gray-500 text-xs">({{ $mentor->total_reviews ?? 0 }} {{ __('trans.reviews') }})</span>
-                </div>
+                    <!-- Rating Number and Reviews Count -->
+                    <div class="flex items-center space-x-2">
+                        <span class="font-bold text-gray-900 text-sm">{{ number_format($rating, 1) }}</span>
+                        <span class="text-gray-500 text-xs">({{ $mentor->total_reviews ?? 0 }} {{ __('trans.reviews') }})</span>
+                    </div>   
+                --}}
             </div>
 
             <p class="mt-4 text-gray-700 text-sm">

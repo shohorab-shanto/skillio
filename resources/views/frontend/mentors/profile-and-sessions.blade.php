@@ -37,7 +37,7 @@
                         <div class="text-center md:text-left space-y-6 min-w-0 flex-4 px-4 py-2">
                             <h2 class="text-xl font-bold text-gray-900">{{ $mentorInfo['name'] }}</h2>
                             <div class="flex items-center justify-center md:justify-start gap-2 text-sm text-gray-600">
-                                @php
+                                {{-- @php
                                     $fullStars = $mentorInfo['star_rating']['full_stars'] ?? 0;
                                     $halfStar = $mentorInfo['star_rating']['half_star'] ?? 0;
                                     $emptyStars = $mentorInfo['star_rating']['empty_stars'] ?? 0;
@@ -66,7 +66,7 @@
                                     @endfor
                                     <span class="font-semibold text-gray-900 ml-2">{{ $mentorInfo['formatted_rating'] }}</span>
                                     <span class="text-gray-400 ml-1">({{ $mentorInfo['total_reviews'] }} {{ Str::plural(__('trans.reviews'), $mentorInfo['total_reviews']) }})</span>
-                                </span>
+                                </span> --}}
                             </div>
                             <div class="space-y-2">
                                 <p class="text-sm text-gray-500">{{ __('trans.mentor') }}</p>
@@ -110,9 +110,9 @@
                             @endif
                         </div>
                         <div class="ml-auto">
-                            <button @click="activeTab = 'review'" class="block px-4 py-2 bg-purple-700 text-white rounded hover:bg-purple-800 transition-colors duration-300 text-center whitespace-nowrap">
+                            {{-- <button @click="activeTab = 'review'" class="block px-4 py-2 bg-purple-700 text-white rounded hover:bg-purple-800 transition-colors duration-300 text-center whitespace-nowrap">
                                 {{ __('trans.review') }}
-                            </button>
+                            </button> --}}
                         </div>
                     </div>
                 </div>
@@ -126,9 +126,9 @@
                             <button @click="activeTab = 'timeslots'" 
                                 :class="activeTab == 'timeslots' ? 'text-purple-600 border-purple-600' : 'text-gray-500 border-transparent'"
                                 class="mentor-profile-tab-button py-4 px-1 border-b-2 text-sm font-medium hover:text-gray-700 transition-colors">{{ __('trans.time_slots') }}</button>
-                            <button @click="activeTab = 'review'" 
+                            {{-- <button @click="activeTab = 'review'" 
                                 :class="activeTab == 'review' ? 'text-purple-600 border-purple-600' : 'text-gray-500 border-transparent'"
-                                class="mentor-profile-tab-button py-4 px-1 border-b-2 text-sm font-medium hover:text-gray-700 transition-colors">{{ __('trans.reviews') }}</button>
+                                class="mentor-profile-tab-button py-4 px-1 border-b-2 text-sm font-medium hover:text-gray-700 transition-colors">{{ __('trans.reviews') }}</button> --}}
                         </nav>
                     </div>
 
@@ -254,7 +254,7 @@
                         </div>
 
                         <!-- Review Tab -->
-                        <div x-show="activeTab == 'review'" class="mentor-profile-tab-content">
+                        {{-- <div x-show="activeTab == 'review'" class="mentor-profile-tab-content">
                             <h3 class="text-lg font-semibold mb-6">{{ __('trans.mentor_reviews') }}</h3>
                             
                             @php
@@ -384,7 +384,7 @@
                                     ])
                                 @endif
                             @endif
-                        </div>
+                        </div> --}}
                     </div>
                 </div>
             </section>
